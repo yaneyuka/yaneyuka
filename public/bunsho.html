@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章校正・要約ツール</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        textarea { width: 90%; min-height: 150px; margin-bottom: 10px; }
+        #output { margin-top: 10px; padding: 10px; border: 1px solid #ccc; background-color: #f9f9f9; min-height: 100px; }
+    </style>
+</head>
+<body>
+    <h1>文章校正・要約ツール</h1>
+    <p>文章を下のテキストエリアに貼り付けてください。</p>
+    <textarea id="inputText" placeholder="ここに文章を入力..."></textarea>
+    <br>
+    <button onclick="processText()">AIで処理する</button>
+
+    <h2>結果:</h2>
+    <div id="output"></div>
+
+    <script>
+        async function processText() {
+            const inputText = document.getElementById('inputText').value;
+            const outputDiv = document.getElementById('output');
+            outputDiv.textContent = '処理中...';
+
+            // ここでAI処理を呼び出す (例: サーバーサイドAPIへのフェッチ)
+            // 現時点ではダミーの応答を返します
+            try {
+                // ---- AI処理の呼び出し部分 (仮) ----
+                // const response = await fetch('/api/process', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify({ text: inputText })
+                // });
+                // if (!response.ok) {
+                //     throw new Error('APIエラー');
+                // }
+                // const result = await response.json();
+                // outputDiv.textContent = result.processedText;
+                // ---- ここまで ----
+
+                // ダミーの遅延と応答
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                outputDiv.textContent = `AIによる処理結果がここに表示されます。
+入力されたテキスト:
+${inputText}`;
+
+            } catch (error) {
+                console.error('処理エラー:', error);
+                outputDiv.textContent = 'エラーが発生しました。';
+            }
+        }
+    </script>
+</body>
+</html>

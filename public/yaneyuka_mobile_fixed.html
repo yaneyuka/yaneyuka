@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>yaneyuka - 建築土木の総合情報サイト</title>
+  <style>
+    body { margin: 0; padding: 0; font-family: sans-serif; }
+    #header { background: #fff; padding: 10px; overflow: hidden; }
+    #logo-container { float: left; margin-right: 20px; }
+    #logo-container img { vertical-align: middle; max-height: 50px; }
+    #logo-container .tagline { display: block; font-size: 1em; margin-top: 5px; }
+    #links-container { float: right; }
+    #links-container a { text-decoration: none; color: #000; margin: 0 5px; font-size: 12px; }
+    #sidebar { float: left; width: 200px; padding: 10px; box-sizing: border-box; }
+    #sidebar h2 { font-size: 1.1em; margin: 0 0 5px; }
+    .category-list { list-style: none; padding: 0; margin: 0; }
+    .category-list li { margin: 5px 0; white-space: nowrap; }
+    #content { margin-left: 210px; padding: 10px; box-sizing: border-box; }
+    #content h2 { font-size: 1.2em; margin-top: 0; }
+    .company-list { list-style: none; padding: 0; margin: 0; }
+    .company-list li { margin: 10px 0; }
+    .company-name { white-space: nowrap; font-weight: bold; }
+    .company-links a { text-decoration: none; color: #0066cc; margin-right: 10px; font-size: 13px; }
+    @media screen and (max-width: 768px) {
+      #logo-container, #links-container { float: none; width: 100%; text-align: left; }
+      #links-container { margin-top: 10px; }
+      #sidebar { float: none; width: 100%; margin: 0; }
+      #content { margin-left: 0; }
+      .category-list { padding-left: 1em; }
+      .category-list li { white-space: nowrap; }
+      .company-links { display: block; font-size: 12px; margin-top: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header id="header">
+    <div id="logo-container">
+      <a href="/"><img src="yaneyuka.jpeg" alt="yaneyukaロゴ"></a>
+      <div class="tagline">〜建築土木の総合情報サイト〜</div>
+    </div>
+    <div id="links-container">
+      <a href="#">新規会員登録</a> | 
+      <a href="#">掲載希望はコチラ</a> | 
+      <a href="#">ご意見・ご要望</a>
+    </div>
+  </header>
+
+  <nav id="sidebar">
+    <h2>カテゴリ</h2>
+    <ul class="category-list">
+      <li>ALC</li>
+      <li>ECPパネル</li>
+      <li>金属サイディング</li>
+      <li>窯業サイディング</li>
+      <li>サイディング</li>
+      <li>金属パネル</li>
+    </ul>
+  </nav>
+
+  <main id="content">
+    <h2>ALC〜金属パネル</h2>
+    <ul class="company-list">
+      <li>
+        <span class="company-name">旭化成建材株式会社</span>
+        <span class="company-links">
+          <a href="#">商品ページ</a>
+          <a href="#">カタログ</a>
+          <a href="#">営業所</a>
+          <a href="#">お問い合わせ</a>
+          <a href="#">サンプル</a>
+          <a href="#">CADDOWNLOAD</a>
+        </span>
+      </li>
+    </ul>
+  </main>
+
+</body>
+</html>
