@@ -1,0 +1,13 @@
+{
+  "diffEditor.codeLens": true,
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "comment",
+        "settings": {
+          "foreground": "#00FF66"
+        }
+      }
+    ]
+  }
+}

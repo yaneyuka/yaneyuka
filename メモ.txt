@@ -1,0 +1,89 @@
+mongoDB：ユーザー登録の機能時に登録させられたヤツ(512MBフリー)　slime-a@outlook.com(ユーザー名:slimea)6Q7/N3-vzBprSXt
+
+mongodb+srv://slimea:RHfuOPcc06YpqBbr@cluster0.bo9mt0j.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+MongoDB Atlas情報:
+ユーザー名: slimea
+パスワード: RHfuOPoo06YpqBbr
+
+明日の作業:
+1. PC再起動
+2. node server.js 実行
+3. http://localhost:3000/register.html でテスト
+
+なんか登録させられたGoogle2段階認証
+
+slimematsumoto@gmail.com
+yaneyuka:nkbq griq bjwo qynn
+
+Github:yaneyuka.service@gmail.com PS:yaneyukaTomas10
+
+
+🏗️ システム全体のアーキテクチャ
+🔥 Firebase Hosting（フロントエンド配信）
+役割: 静的ファイルのホスティング
+配信するもの: HTML, CSS, JavaScript
+具体的なファイル:
+register.html（登録ページ）
+login.html（ログインページ）
+userpage.html（認証後のページ）
+URL例: https://testsite-7f2a6.web.app
+制限: サーバーサイドコード（server.js）は実行できない
+
+⚡ Vercel（バックエンドAPI）
+役割: サーバーレス関数でAPIを提供
+実行するもの: Node.js + Express（server.js）
+提供するAPI:
+/api/register - 新規登録
+/api/login - ログイン
+/api/logout - ログアウト
+/verify-email - メール認証
+URL例: https://your-app.vercel.app
+特徴: サーバーレス環境で自動スケーリング
+
+🍃 MongoDB Atlas（データベース）
+役割: ユーザーデータの永続化
+保存するデータ:
+Apply to memo.md
+接続: Vercel → MongoDB Atlas
+特徴: クラウド管理、自動バックアップ
+
+📧 Gmail SMTP（メール送信）
+役割: 認証メールの送信
+送信するメール: アカウント認証リンク
+使用: Nodemailer + Gmailアプリパスワード
+実行場所: Vercel functions内
+
+1. ユーザー（Firebase） → register.html でフォーム入力
+2. JavaScript → Vercel API `/api/register` に POST
+3. Vercel → MongoDB にユーザー情報保存
+4. Vercel → Gmail SMTP で認証メール送信
+5. ユーザー → メール内リンクをクリック
+6. ブラウザ → Vercel `/verify-email?token=xxx`
+7. Vercel → MongoDB でユーザー認証状態を更新
+
+1. ユーザー（Firebase） → login.html でログイン
+2. JavaScript → Vercel API `/api/login` に POST  
+3. Vercel → MongoDB でユーザー認証
+4. Vercel → JWTトークン生成して返却
+5. JavaScript → localStorage にトークン保存
+6. ページ遷移 → userpage.html
+
+🌐 環境の使い分け
+開発環境（ローカル）
+フロントエンド: http://localhost:3000/register.html
+バックエンド: http://localhost:3000/api/register
+同じサーバーで両方動作
+本番環境（ハイブリッド）
+フロントエンド: https://testsite-7f2a6.web.app/register.html
+バックエンド: https://your-app.vercel.app/api/register
+異なるドメインでAPIを呼び出し
+💡 なぜこの構成？
+Firebase: 静的ファイル配信が高速・安価
+Vercel: Node.js APIが簡単にデプロイ可能
+MongoDB: ユーザーデータの永続化・検索が高性能
+Gmail: 信頼性の高いメール送信
+この構成で、フロントエンドとバックエンドを分離しつつ、それぞれに最適なサービスを使っています。
+
+
+

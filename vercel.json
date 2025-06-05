@@ -1,0 +1,36 @@
+{
+  "version": 2,
+  "functions": {
+    "server.js": {
+      "maxDuration": 10
+    }
+  },
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/verify-email",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/userpage",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/login",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/server.js"
+    }
+  ]
+}

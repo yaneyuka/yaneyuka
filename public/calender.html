@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>シンプルカレンダー</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            background-color: #f5f7fa;
+            padding: 15px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        
+        .main-layout {
+            display: flex;
+            margin: 0 auto;
+            gap: 15px;
+            align-items: stretch;
+        }
+        
+        .today-view {
+            flex: 0 0 352px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .today-category-wrapper {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            padding: 15px;
+            box-sizing: border-box;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .today-view h2 {
+            margin-top: 0;
+            font-size: 1.0rem;
+            color: #4a6fa5;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .today-view-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .today-nav-button {
+            background: none;
+            border: none;
+            color: #4a6fa5;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 0;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .today-nav-button:hover {
+            background-color: #e6f2ff;
+        }
+        
+        .today-date {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #555;
+            margin: 0 5px;
+        }
+        
+        #today-events {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        #today-events li {
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            padding: 8px;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        #today-events li:hover {
+            background-color: #e9ecef;
+        }
+        
+        #today-events .event-time {
+            font-weight: bold;
+            margin-right: 5px;
+            color: #4a6fa5;
+        }
+        
+        #today-events .event-title {
+            display: inline;
+        }
+        
+        #today-events .event-category {
+            display: block;
+            font-size: 0.75rem;
+            color: #777;
+            margin-top: 3px;
+        }
+        
+        #today-events .no-events {
+            color: #888;
+            font-style: italic;
+            text-align: center;
+            padding: 10px 0;
+            background-color: transparent;
+            cursor: default;
+        }
+        #today-events .no-events:hover {
+             background-color: transparent;
+        }
+        
+        .calendar-container {
+            flex: 1 1 auto;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            background-color: white;
+            border-radius: 8px;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: #4a6fa5;
+            color: white;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .nav-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 5px 8px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: 3fr 3fr 3fr 3fr 3fr 2fr 2fr; /* Mon-Fri: 3fr, Sat-Sun: 2fr */
+            padding: 5px;
+            border-top: 1px solid #eee;
+        }
+        
+        .day-header {
+            text-align: left;
+            font-weight: bold;
+            padding: 8px 5px;
+            border-bottom: 1px solid #eee;
+            background-color: #f8f9fa;
+            font-size: 0.8rem;
+        }
+        
+        .saturday-header {
+            color: #1976D2; /* Desaturated blue */
+        }
+        
+        .sunday-header {
+            color: #D32F2F; /* Desaturated red */
+        }
+        
+        .day-cell {
+            min-height: 120px;
+            padding: 5px;
+            border: 1px solid #eee;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-size: 0.8rem;
+            position: relative;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        
+        .day-cell:hover {
+            background-color: #f0f4f8;
+        }
+        
+        .day-number {
+            font-weight: bold;
+            margin-bottom: 3px;
+            display: block;
+            text-align: left;
+        }
+        
+        .day-number.sunday {
+            color: #D32F2F; /* Desaturated red */
+        }
+        
+        .day-number.saturday {
+            color: #1976D2; /* Desaturated blue */
+        }
+        
+        .today {
+            background-color: #e6f2ff;
+            font-weight: bold;
+            border: 2px solid #003366;
+        }
+        
+        .other-month {
+            color: #aaa;
+            background-color: #f9f9f9;
+        }
+        
+        .past-day:not(.other-month):not(.today) {
+            background-color: #f0f0f0;
+            color: #999;
+            cursor: default;
+        }
+        .past-day:not(.other-month):not(.today):hover { 
+            background-color: #e5e5e5; 
+        }
+        
+        /* Empty .holiday ruleset removed */
+        
+        /* Empty .holiday .day-number ruleset removed */
+       
+        .event-list {
+            margin-top: 4px;
+            font-size: 0.75rem;
+            max-height: 80px;
+            overflow: hidden;
+        }
+        
+        .event-item {
+            padding: 1px 4px;
+            margin-bottom: 2px;
+            background-color: #e9ecef;
+            border-radius: 3px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .event-count {
+             position: absolute;
+             bottom: 3px;
+             right: 3px;
+             font-size: 0.7rem;
+             color: #888;
+             background: rgba(255, 255, 255, 0.7);
+             padding: 0 3px;
+             border-radius: 2px;
+        }
+        
+        .event-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        
+        .event-modal-content {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 450px;
+        }
+
+        .event-modal-content h2 {
+            font-size: 1.3rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #4a6fa5;
+        }
+        
+        .event-form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group {
+            margin-bottom: 10px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 6px 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 0.9rem;
+            resize: none; /* Disable resizing for textarea */
+        }
+        
+        .modal-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        
+        .btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .btn-primary {
+            background-color: #4a6fa5;
+            color: white;
+        }
+        
+        .btn-delete {
+            background-color: #ff6b6b;
+            color: white;
+        }
+        
+        .btn-cancel {
+            background-color: #ddd;
+            color: #333;
+        }
+        
+        .today-btn {
+            margin-left: 10px;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .month-year-selector { 
+            display: flex;
+            align-items: center;
+        }
+        
+        select {
+            margin: 0 5px;
+            padding: 4px 6px; /* Slightly smaller select */
+            border-radius: 4px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.3);
+            color: white; /* Default color */
+            font-size: 1rem; /* Ensure readability */
+        }
+        
+        /* Ensure header select text is white */
+        .calendar-header select#month-select,
+        .calendar-header select#year-select {
+            color: white; 
+        }
+        
+        /* Ensure header select option text is visible (might be needed for dropdown) */
+        .calendar-header select option {
+             color: #333; /* Standard text color for options list */
+             background-color: white;
+        }
+        
+        .category-1 { background-color: #fffae6; border-left: 3px solid #ffcc00; }
+        .category-2 { background-color: #e6f7ff; border-left: 3px solid #1890ff; } 
+        .category-3 { background-color: #f6ffed; border-left: 3px solid #52c41a; } 
+        .category-4 { background-color: #fff0f6; border-left: 3px solid #eb2f96; } 
+
+         /* Category colors for today's view items */
+        #today-events .category-1 { background-color: #fffae6; border-left: 3px solid #ffcc00; }
+        #today-events .category-2 { background-color: #e6f7ff; border-left: 3px solid #1890ff; } 
+        #today-events .category-3 { background-color: #f6ffed; border-left: 3px solid #52c41a; } 
+        #today-events .category-4 { background-color: #fff0f6; border-left: 3px solid #eb2f96; } 
+        
+        @media (max-width: 1200px) {
+            .main-layout {
+                flex-direction: column;
+            }
+            .today-view,
+            .calendar-container,
+            .todo-list-container {
+                width: 100%;
+                max-width: none;
+                margin: 0 auto 15px auto;
+            }
+            .todo-list-container {
+                margin-bottom: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .calendar-container {
+                max-width: 100%;
+                border-radius: 0;
+            }
+            
+            .day-cell {
+                min-height: 60px;
+                padding: 4px; 
+                font-size: 0.75rem;
+            }
+            .day-header {
+                 font-size: 0.7rem;
+                 padding: 6px 3px;
+            }
+            .event-list {
+                 max-height: 30px;
+            }
+        }
+
+        /* Todo List Styles */
+        .todo-list-container {
+            flex: 0 0 225px;
+            padding: 15px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .todo-list-container h3 {
+            margin-top: 0;
+            color: #4a6fa5;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+            font-size: 1.0rem;
+        }
+
+        .todo-input-group {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        #todo-input {
+            flex-grow: 1;
+            padding: 4px 6px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            margin-right: -1px;
+            font-size: 0.8rem;
+            box-sizing: border-box; 
+        }
+
+        #add-todo-btn {
+            padding: 4px 8px;
+            background-color: #4a6fa5;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.8rem;
+            transition: background-color 0.3s;
+            box-sizing: border-box; 
+        }
+        #add-todo-btn:hover {
+            background-color: #3b5998;
+        }
+
+        #todo-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        #todo-list li {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+        #todo-list li:last-child {
+            border-bottom: none;
+        }
+
+        #todo-list .todo-text {
+            flex-grow: 1;
+            margin: 0 8px;
+            cursor: pointer;
+        }
+
+        #todo-list .todo-text.completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        #todo-list .todo-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 5px;
+            margin-left: 5px;
+            color: #aaa;
+            transition: color 0.2s;
+            line-height: 1;
+        }
+        #todo-list .todo-actions .toggle-btn {
+            color: #6fbf73; 
+        }
+        #todo-list .todo-actions .toggle-btn.completed {
+             color: #ffb347; 
+        }
+        #todo-list .todo-actions .delete-btn {
+            color: #ff6b6b; 
+        }
+
+        #todo-list .todo-actions button:hover {
+            color: #555;
+        }
+         #todo-list .no-events {
+             justify-content: center;
+             color: #888;
+             font-style: italic;
+             padding: 10px 0;
+             cursor: default;
+         }
+         #todo-list .no-events:hover {
+              background-color: transparent;
+         }
+
+        /* Category Manager Styles */
+        #category-manager {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .category-manager-header {
+             display: flex;
+             justify-content: flex-start; /* Align items to the left */
+             align-items: center;
+             cursor: pointer; /* Make header clickable */
+             margin-bottom: 10px;
+        }
+
+        #category-manager h3 {
+            font-size: 0.9rem;
+            color: #4a6fa5;
+            margin: 0; /* Removed margins */
+        }
+
+        .toggle-button {
+             background: none;
+             border: none;
+             font-size: 0.8rem; /* Make icon smaller */
+             cursor: pointer;
+             color: #666;
+             padding: 0 5px 0 0; /* Reduced right padding */
+             line-height: 1; 
+             display: inline-flex; /* Align icon better */
+             align-items: center;
+        }
+        .toggle-button::before {
+             content: '\25B6'; /* Right-pointing triangle */
+             display: inline-block;
+             transition: transform 0.2s ease-in-out;
+             transform: rotate(0deg);
+         }
+         #category-manager.open .toggle-button::before {
+             transform: rotate(90deg); /* Down-pointing triangle */
+         }
+
+        .collapsible-content { /* Initially hidden content */
+             display: none;
+             padding-top: 10px; /* Add some space when open */
+        }
+
+        #category-manager.open .collapsible-content { /* Show content when open */
+             display: block;
+        }
+
+        #category-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        #category-name-input {
+            padding: 6px 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        #color-palette {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .color-swatch {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .color-swatch.selected {
+            border-color: #4a6fa5; /* Highlight selected color */
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #4a6fa5;
+        }
+
+        #add-category-btn {
+            padding: 6px 10px;
+            font-size: 0.85rem;
+            background-color: #6fbf73; /* Green color for add */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            align-self: flex-start; /* Align button left */
+            transition: background-color 0.3s;
+        }
+        #add-category-btn:hover {
+            background-color: #5aae61;
+        }
+
+        #category-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 0 0;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        #category-list li {
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+            padding: 5px 0;
+            border-bottom: 1px solid #f0f0f0;
+            justify-content: space-between;
+        }
+         #category-list li:last-child {
+             border-bottom: none;
+         }
+
+        .category-list-color {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        .category-list-name {
+            flex-grow: 1;
+            margin: 0 8px;
+        }
+
+        .category-list-actions {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-shrink: 0;
+        }
+
+        .edit-category-btn,
+        .delete-category-btn {
+             background: none;
+             border: none;
+             color: #ff6b6b;
+             cursor: pointer;
+             font-size: 0.9rem;
+             padding: 2px 4px;
+             line-height: 1;
+             transition: color 0.2s;
+        }
+
+        .edit-category-btn:hover,
+        .delete-category-btn:hover {
+             color: #555;
+        }
+
+        .time-group {
+             display: flex;
+             gap: 15px;
+        }
+        .time-group > div {
+            flex: 1;
+            display: flex; /* Align label and selects horizontally */
+            flex-direction: column; /* Stack label above selects */
+        }
+
+        .time-selects {
+            display: flex;
+            gap: 5px; /* Space between hour and minute selects */
+        }
+
+        .time-selects select {
+            flex: 1; /* Distribute space equally */
+        }
+
+        /* Style for placeholder text */
+        select.hour-select.placeholder-selected,
+        select.minute-select.placeholder-selected {
+             color: #888; /* Gray color for placeholder */
+        }
+
+        /* Ensure selected value is visible */
+        select.hour-select:not(.placeholder-selected),
+        select.minute-select:not(.placeholder-selected) {
+            color: #333; /* Dark gray for selected value */
+        }
+
+        /* Ensure option text is visible */
+        .event-modal select option {
+            color: #333; /* Dark gray for option text */
+            background-color: white; /* Ensure standard background */
+        }
+
+        /* Attempt to force square corners on the category dropdown */
+        .event-modal select#event-category,
+        .event-modal select#event-category option { /* Applying to option might not work */
+            border-radius: 2px !important; /* Apply a very small radius */
+            /* Note: This often doesn't affect the dropdown list appearance due to browser/OS styling */
+        }
+    </style>
+</head>
+<body>
+    <div class="main-layout">
+        <div class="today-view" id="today-view">
+            <div class="today-category-wrapper">
+                <h2>本日の予定</h2>
+                <div class="today-view-header">
+                    <button id="prev-day-view" class="today-nav-button">&#10094;</button>
+                    <div class="today-date" id="today-date"></div>
+                    <button id="next-day-view" class="today-nav-button">&#10095;</button>
+                </div>
+                <ul id="today-events">
+                    <!-- Today's events will be loaded here by JavaScript -->
+                </ul>
+
+                <div id="category-manager">
+                    <div class="category-manager-header" id="category-manager-header">
+                        <button id="toggle-category-manager" class="toggle-button" title="開閉"></button>
+                        <h3>カテゴリー管理</h3>
+                    </div>
+                    <div id="category-manager-content" class="collapsible-content">
+                        <div id="category-form">
+                            <input type="text" id="category-name-input" placeholder="新しいカテゴリ名">
+                            <div id="color-palette">
+                            </div>
+                            <button id="add-category-btn">カテゴリ追加</button>
+                        </div>
+                        <ul id="category-list">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <button id="prev-month" class="nav-button">&#10094;</button>
+                <div class="month-year-selector">
+                    <select id="year-select"></select>
+                    <select id="month-select"></select>
+                    <button id="today-btn" class="nav-button today-btn">今日</button>
+                </div>
+                <button id="next-month" class="nav-button">&#10095;</button>
+            </div>
+            <div class="calendar-grid" id="calendar-grid"></div>
+        </div>
+
+        <div class="todo-list-container" id="todo-list-container">
+            <h3>Todoリスト</h3>
+            <div class="todo-input-group">
+                <input type="text" id="todo-input" placeholder="新しいタスクを入力...">
+                <button id="add-todo-btn">追加</button>
+            </div>
+            <ul id="todo-list">
+            </ul>
+        </div>
+    </div>
+    
+    <div class="event-modal" id="event-modal">
+        <div class="event-modal-content">
+            <h2 id="modal-title">イベントを追加</h2>
+            <form id="event-form" class="event-form">
+                <input type="hidden" id="event-id">
+                <input type="hidden" id="event-date">
+                
+                <div class="form-group">
+                    <label for="event-title">予定</label>
+                    <input type="text" id="event-title" required>
+                </div>
+                
+                <div class="form-group time-group">
+                    <div>
+                        <label>開始時間</label>
+                        <div class="time-selects">
+                            <select id="event-start-hour" class="hour-select"></select>
+                            <select id="event-start-minute" class="minute-select"></select>
+                        </div>
+                    </div>
+                    <div>
+                        <label>終了時間</label>
+                        <div class="time-selects">
+                            <select id="event-end-hour" class="hour-select"></select>
+                            <select id="event-end-minute" class="minute-select"></select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="event-category">カテゴリー</label>
+                    <select id="event-category">
+                        <option value="1">個人</option>
+                        <option value="2">仕事</option>
+                        <option value="3">重要</option>
+                        <option value="4">その他</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="event-description">詳細</label>
+                    <textarea id="event-description" rows="3"></textarea>
+                </div>
+                
+                <div class="modal-buttons">
+                    <div>
+                        <button type="button" id="delete-event" class="btn btn-delete" style="display: none;">削除</button>
+                    </div>
+                    <div>
+                        <button type="button" id="cancel-event" class="btn btn-cancel">キャンセル</button>
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const calendarGrid = document.getElementById('calendar-grid');
+            const monthSelect = document.getElementById('month-select');
+            const yearSelect = document.getElementById('year-select');
+            const prevMonthBtn = document.getElementById('prev-month');
+            const nextMonthBtn = document.getElementById('next-month');
+            const todayBtn = document.getElementById('today-btn');
+            const eventModal = document.getElementById('event-modal');
+            const eventForm = document.getElementById('event-form');
+            const modalTitle = document.getElementById('modal-title');
+            const eventIdInput = document.getElementById('event-id');
+            const eventDateInput = document.getElementById('event-date');
+            const eventTitleInput = document.getElementById('event-title');
+            const eventTimeInput = document.getElementById('event-time');
+            const eventStartTimeSelect = document.getElementById('event-start-time');
+            const eventEndTimeSelect = document.getElementById('event-end-time');
+            const eventCategoryInput = document.getElementById('event-category');
+            const eventDescriptionInput = document.getElementById('event-description');
+            const deleteEventBtn = document.getElementById('delete-event');
+            const eventStartHourSelect = document.getElementById('event-start-hour');
+            const eventStartMinuteSelect = document.getElementById('event-start-minute');
+            const eventEndHourSelect = document.getElementById('event-end-hour');
+            const eventEndMinuteSelect = document.getElementById('event-end-minute');
+            const cancelEventBtn = document.getElementById('cancel-event');
+            const prevDayViewBtn = document.getElementById('prev-day-view');
+            const nextDayViewBtn = document.getElementById('next-day-view');
+            const todoInput = document.getElementById('todo-input');
+            const addTodoBtn = document.getElementById('add-todo-btn');
+            const todoListUl = document.getElementById('todo-list');
+            const categoryManagerDiv = document.getElementById('category-manager');
+            const categoryNameInput = document.getElementById('category-name-input');
+            const colorPaletteDiv = document.getElementById('color-palette');
+            const addCategoryBtn = document.getElementById('add-category-btn');
+            const categoryListUl = document.getElementById('category-list');
+            const eventCategorySelect = document.getElementById('event-category');
+            const categoryManagerHeader = document.getElementById('category-manager-header');
+            
+            let currentDate = new Date();
+            let viewingDate = new Date();
+            let currentMonth = currentDate.getMonth();
+            let currentYear = currentDate.getFullYear();
+            let events = JSON.parse(localStorage.getItem('calendarEvents')) || [];
+            let todos = JSON.parse(localStorage.getItem('todos')) || [];
+            let categories = []; // 全カテゴリを格納
+            let selectedColor = null;
+
+            function findCategoryById(id) {
+                return categories.find(cat => cat.id === id);
+            }
+
+            function saveCategories() {
+                localStorage.setItem('calendarCategories', JSON.stringify(categories));
+            }
+
+            function initializeCategories() {
+                const storedCategories = localStorage.getItem('calendarCategories');
+                if (storedCategories) {
+                    categories = JSON.parse(storedCategories);
+                } else {
+                    // 初回起動時またはデータがない場合、デフォルトを設定
+                    categories = [
+                        { id: 'cat-1', name: '個人', color: '#fffae6', borderColor: '#ffcc00', isDeletable: true, isEditable: true }, // 編集・削除可能に
+                        { id: 'cat-2', name: '仕事', color: '#e6f7ff', borderColor: '#1890ff', isDeletable: true, isEditable: true }, // 編集・削除可能に
+                        { id: 'cat-3', name: '重要', color: '#f6ffed', borderColor: '#52c41a', isDeletable: true, isEditable: true }, // 編集・削除可能に
+                        { id: 'cat-4', name: 'その他', color: '#fff0f6', borderColor: '#eb2f96', isDeletable: false, isEditable: false } // その他は編集・削除不可
+                    ];
+                    saveCategories(); // 初期値を保存
+                }
+                // 念のため、古いカスタムカテゴリデータを削除
+                localStorage.removeItem('customCategories');
+            }
+
+            // --- Holiday Check (Simple Example) ---
+            // IMPORTANT: This is a very basic check and needs a proper holiday data source/library for accuracy.
+            function getJapaneseHolidayName(date) {
+                const month = date.getMonth() + 1; // getMonth is 0-indexed
+                const day = date.getDate();
+                const year = date.getFullYear(); // Needed for some holidays
+                const dayOfWeek = date.getDay(); // 0 = Sunday, 1 = Monday, ...
+
+                // Fixed date holidays (examples)
+                if (month === 1 && day === 1) return "元日";
+                if (month === 2 && day === 11) return "建国記念の日";
+                if (month === 2 && day === 23) return "天皇誕生日";
+                if (month === 4 && day === 29) return "昭和の日";
+                if (month === 5 && day === 3) return "憲法記念日";
+                if (month === 5 && day === 4) return "みどりの日";
+                if (month === 5 && day === 5) return "こどもの日";
+                if (month === 11 && day === 3) return "文化の日";
+                if (month === 11 && day === 23) return "勤労感謝の日";
+                // Add more fixed holidays...
+
+                // Happy Monday System (examples - need refinement for specific years)
+                // Coming of Age Day (Second Monday of January)
+                if (month === 1 && dayOfWeek === 1 && day >= 8 && day <= 14) return "成人の日";
+                // Marine Day (Third Monday of July)
+                if (month === 7 && dayOfWeek === 1 && day >= 15 && day <= 21) return "海の日";
+                // Respect for the Aged Day (Third Monday of September)
+                if (month === 9 && dayOfWeek === 1 && day >= 15 && day <= 21) return "敬老の日";
+                // Sports Day (Second Monday of October)
+                if (month === 10 && dayOfWeek === 1 && day >= 8 && day <= 14) return "スポーツの日";
+
+                // Mountain Day (August 11) - Adjust if falls on Sunday
+                if (month === 8 && day === 11) return "山の日";
+                // If Aug 11 is Sunday, Mountain Day is Aug 12
+                if (month === 8 && day === 12 && new Date(year, 7, 11).getDay() === 0) return "山の日 (振替休日)";
+
+                // Vernal Equinox Day & Autumnal Equinox Day require complex calculations
+                // Substitute holidays also require more logic
+
+                return null; // Not a holiday (based on this simple check)
+            }
+            // --- End Holiday Check ---
+
+            const paletteColors = [
+                '#ffadad', '#ffd6a5', '#fdffb6', '#caffbf', '#9bf6ff', '#a0c4ff', '#bdb2ff', '#ffc6ff',
+                '#ff8a80', '#ffb480', '#ffff80', '#bfff80', '#80ffea', '#80b3ff', '#9f80ff', '#ff80ed'
+            ];
+            
+            const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; // Start from Monday
+            
+            const monthNames = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
+            
+            function initializeSelectors() {
+                monthSelect.innerHTML = '';
+                monthNames.forEach((month, index) => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.textContent = month;
+                    monthSelect.appendChild(option);
+                });
+                monthSelect.value = currentMonth;
+                
+                yearSelect.innerHTML = '';
+                const currentYearInt = currentYear;
+                for (let year = currentYearInt - 10; year <= currentYearInt + 10; year++) {
+                    const option = document.createElement('option');
+                    option.value = year;
+                    option.textContent = year + '年';
+                    yearSelect.appendChild(option);
+                }
+                yearSelect.value = currentYear;
+            }
+            
+            function renderCalendar() {
+                const firstDay = new Date(currentYear, currentMonth, 1);
+                const lastDay = new Date(currentYear, currentMonth + 1, 0);
+                calendarGrid.innerHTML = '';
+                dayNames.forEach((day, index) => {
+                    const dayHeader = document.createElement('div');
+                    dayHeader.className = 'day-header';
+                    if (day === 'Sat') {
+                        dayHeader.classList.add('saturday-header');
+                    } else if (day === 'Sun') {
+                        dayHeader.classList.add('sunday-header');
+                    }
+                    dayHeader.textContent = day;
+                    calendarGrid.appendChild(dayHeader);
+                });
+                // Calculate offset for Monday start (0=Mon, 1=Tue, ..., 6=Sun)
+                let prevMonthDays = (firstDay.getDay() + 6) % 7;
+                const prevMonthLastDay = new Date(currentYear, currentMonth, 0).getDate();
+                for (let i = prevMonthDays - 1; i >= 0; i--) {
+                    const dayCell = createDayCell(prevMonthLastDay - i, true, new Date(currentYear, currentMonth - 1, prevMonthLastDay - i));
+                    calendarGrid.appendChild(dayCell);
+                }
+                for (let day = 1; day <= lastDay.getDate(); day++) {
+                    const date = new Date(currentYear, currentMonth, day);
+                    const dayCell = createDayCell(day, false, date);
+                    calendarGrid.appendChild(dayCell);
+                }
+                const remainingCells = 7 - (prevMonthDays + lastDay.getDate()) % 7;
+                if (remainingCells < 7) {
+                    for (let day = 1; day <= remainingCells; day++) {
+                        const dayCell = createDayCell(day, true, new Date(currentYear, currentMonth + 1, day));
+                        calendarGrid.appendChild(dayCell);
+                    }
+                }
+                monthSelect.value = currentMonth;
+                yearSelect.value = currentYear;
+            }
+            
+            function createDayCell(day, isOtherMonth, date) {
+                const dayCell = document.createElement('div');
+                dayCell.className = 'day-cell';
+                if (isOtherMonth) {
+                    dayCell.classList.add('other-month');
+                }
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const cellDate = new Date(date);
+                cellDate.setHours(0, 0, 0, 0);
+                if (cellDate.getTime() === today.getTime()) {
+                    dayCell.classList.add('today');
+                } else if (!isOtherMonth && cellDate < today) {
+                    dayCell.classList.add('past-day');
+                }
+                const dayNumber = document.createElement('div');
+                dayNumber.className = 'day-number';
+                dayNumber.textContent = day;
+
+                // Add classes for weekends
+                const dayOfWeek = cellDate.getDay(); // Use cellDate which has time reset
+                if (dayOfWeek === 0) { // Sunday
+                    dayNumber.classList.add('sunday');
+                }
+                if (dayOfWeek === 6) { // Saturday
+                    dayNumber.classList.add('saturday');
+                }
+
+                // Check for Japanese holidays
+                const holidayName = getJapaneseHolidayName(cellDate);
+                if (holidayName) {
+                     dayCell.classList.add('holiday');
+                     dayCell.setAttribute('data-holiday-name', holidayName);
+                     // Optionally modify day number color or add indicator
+                     if (!dayNumber.classList.contains('sunday')) { // Example: Don't override Sunday red
+                         // dayNumber.style.color = '#D9534F'; // Example holiday color if not Sunday
+                     }
+                     // You might add a title attribute for hover info
+                     // dayCell.title = holidayName;
+                }
+
+                dayCell.appendChild(dayNumber);
+                
+                const eventList = document.createElement('div');
+                eventList.className = 'event-list';
+                const dateStr = formatDate(date);
+                const dayEvents = events.filter(event => event.date === dateStr);
+                if (dayEvents.length > 0) {
+                    dayCell.classList.add('has-event');
+                    const eventsWithCategory = dayEvents.map(event => ({
+                        ...event,
+                        category: findCategoryById(event.category) || { name: '未分類', color: '#eee', borderColor: '#ccc' }
+                    })).slice(0, 2);
+                    eventsWithCategory.forEach(event => {
+                        const eventItem = document.createElement('div');
+                        eventItem.className = 'event-item';
+                        eventItem.style.backgroundColor = event.category.color;
+                        eventItem.style.borderLeft = `3px solid ${event.category.borderColor}`;
+                        eventItem.style.paddingLeft = '4px'; 
+                        let eventText = '';
+                        if (event.startTime) {
+                            eventText += event.startTime;
+                            if (event.endTime) {
+                                eventText += `-${event.endTime}`;
+                            }
+                            eventText += ' ';
+                        }
+                        eventText += event.title;
+                        eventItem.textContent = eventText;
+                        eventItem.setAttribute('data-event-id', event.id);
+                        eventList.appendChild(eventItem);
+                        eventItem.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            const originalEvent = events.find(ev => ev.id === event.id);
+                            if (originalEvent) {
+                                openEditEventModal(originalEvent);
+                            }
+                        });
+                    });
+                    if (dayEvents.length > 2) {
+                        const eventCount = document.createElement('div');
+                        eventCount.className = 'event-count';
+                        eventCount.textContent = `+${dayEvents.length - 2}`;
+                        dayCell.appendChild(eventCount);
+                    }
+                }
+                dayCell.appendChild(eventList);
+                dayCell.addEventListener('dblclick', function() {
+                    viewingDate = new Date(date);
+                    renderTodayView(viewingDate);
+                    openAddEventModal(date);
+                });
+                return dayCell;
+            }
+            
+            function formatDate(date) {
+                return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+            }
+            
+            function generateHourOptions() {
+                const options = [];
+                for (let h = 0; h < 24; h++) {
+                    options.push(String(h).padStart(2, '0'));
+                }
+                return options;
+            }
+            
+            function generateMinuteOptions() {
+                return ['00', '15', '30', '45'];
+            }
+            
+            function populateSelectWithOptions(selectElement, options, placeholder) {
+                selectElement.innerHTML = '';
+                const emptyOption = document.createElement('option');
+                emptyOption.value = '';
+                emptyOption.textContent = '--';
+                selectElement.appendChild(emptyOption);
+                options.forEach(value => {
+                    const option = document.createElement('option');
+                    option.value = value;
+                    option.textContent = value;
+                    selectElement.appendChild(option);
+                });
+                selectElement.addEventListener('change', (e) => {
+                    if (e.target.value === '') {
+                        e.target.classList.add('placeholder-selected');
+                    } else {
+                        e.target.classList.remove('placeholder-selected');
+                    }
+                });
+                if (selectElement.value === '') {
+                    selectElement.classList.add('placeholder-selected');
+                } else {
+                    selectElement.classList.remove('placeholder-selected');
+                }
+            }
+            
+            function openAddEventModal(date) {
+                modalTitle.textContent = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 イベントを追加`;
+                eventIdInput.value = '';
+                eventDateInput.value = formatDate(date);
+                eventTitleInput.value = '';
+                const hourOptions = generateHourOptions();
+                const minuteOptions = generateMinuteOptions();
+                populateSelectWithOptions(eventStartHourSelect, hourOptions, '--');
+                populateSelectWithOptions(eventStartMinuteSelect, minuteOptions, '--');
+                populateSelectWithOptions(eventEndHourSelect, hourOptions, '--');
+                populateSelectWithOptions(eventEndMinuteSelect, minuteOptions, '--');
+                const nextHour = new Date();
+                nextHour.setHours(nextHour.getHours() + 1, 0, 0, 0);
+                eventStartHourSelect.value = String(nextHour.getHours()).padStart(2, '0');
+                eventStartMinuteSelect.value = '00';
+                eventEndHourSelect.value = String(nextHour.getHours() + 1).padStart(2, '0');
+                eventEndMinuteSelect.value = '00';
+                eventStartHourSelect.dispatchEvent(new Event('change'));
+                eventStartMinuteSelect.dispatchEvent(new Event('change'));
+                eventEndHourSelect.dispatchEvent(new Event('change'));
+                eventEndMinuteSelect.dispatchEvent(new Event('change'));
+                populateCategoryDropdown();
+                eventCategorySelect.value = categories[0]?.id || '';
+                eventDescriptionInput.value = '';
+                deleteEventBtn.style.display = 'none';
+                eventModal.style.display = 'flex';
+            }
+            
+            function openEditEventModal(event) {
+                modalTitle.textContent = 'イベントを編集';
+                eventIdInput.value = event.id;
+                eventDateInput.value = event.date;
+                eventTitleInput.value = event.title;
+                const hourOptions = generateHourOptions();
+                const minuteOptions = generateMinuteOptions();
+                populateSelectWithOptions(eventStartHourSelect, hourOptions, '--');
+                populateSelectWithOptions(eventStartMinuteSelect, minuteOptions, '--');
+                populateSelectWithOptions(eventEndHourSelect, hourOptions, '--');
+                populateSelectWithOptions(eventEndMinuteSelect, minuteOptions, '--');
+                if (event.startTime && event.startTime.includes(':')) {
+                    const [startH, startM] = event.startTime.split(':');
+                    eventStartHourSelect.value = startH;
+                    eventStartMinuteSelect.value = startM;
+                } else {
+                    eventStartHourSelect.value = '';
+                    eventStartMinuteSelect.value = '';
+                }
+                if (event.endTime && event.endTime.includes(':')) {
+                    const [endH, endM] = event.endTime.split(':');
+                    eventEndHourSelect.value = endH;
+                    eventEndMinuteSelect.value = endM;
+                } else {
+                    eventEndHourSelect.value = '';
+                    eventEndMinuteSelect.value = '';
+                }
+                eventStartHourSelect.dispatchEvent(new Event('change'));
+                eventStartMinuteSelect.dispatchEvent(new Event('change'));
+                eventEndHourSelect.dispatchEvent(new Event('change'));
+                eventEndMinuteSelect.dispatchEvent(new Event('change'));
+                populateCategoryDropdown();
+                eventCategorySelect.value = event.category;
+                eventDescriptionInput.value = event.description || '';
+                deleteEventBtn.style.display = 'block';
+                eventModal.style.display = 'flex';
+            }
+            
+            function populateCategoryDropdown() {
+                const currentValue = eventCategorySelect.value;
+                eventCategorySelect.innerHTML = '';
+                categories.forEach(cat => {
+                    const option = document.createElement('option');
+                    option.value = cat.id;
+                    option.textContent = cat.name;
+                    eventCategorySelect.appendChild(option);
+                });
+                if (categories.some(c => c.id === currentValue)) {
+                    eventCategorySelect.value = currentValue;
+                } else if (categories.length > 0) {
+                    eventCategorySelect.value = categories[0].id;
+                }
+            }
+
+            function saveEvent(e) {
+                e.preventDefault();
+                const eventData = {
+                    id: eventIdInput.value || Date.now().toString(),
+                    date: eventDateInput.value,
+                    title: eventTitleInput.value,
+                    startTime: (eventStartHourSelect.value && eventStartMinuteSelect.value)
+                                ? `${eventStartHourSelect.value}:${eventStartMinuteSelect.value}` : '',
+                    endTime: (eventEndHourSelect.value && eventEndMinuteSelect.value)
+                                ? `${eventEndHourSelect.value}:${eventEndMinuteSelect.value}` : '',
+                    category: eventCategorySelect.value,
+                    description: eventDescriptionInput.value
+                };
+                if (!eventData.title) { alert('タイトルを入力してください。'); return; }
+                if (!eventData.date) { alert('日付が不正です。'); return; }
+                if (!eventData.category) { alert('カテゴリを選択してください。'); return; }
+
+                if (eventIdInput.value) {
+                    events = events.map(event => event.id === eventData.id ? eventData : event);
+                } else {
+                    events.push(eventData);
+                }
+                localStorage.setItem('calendarEvents', JSON.stringify(events));
+                closeModal();
+                renderCalendar();
+                renderTodayView(viewingDate);
+            }
+            
+            function deleteEvent() {
+                const eventId = eventIdInput.value;
+                if (eventId && confirm('このイベントを削除してもよろしいですか？')) {
+                    events = events.filter(event => event.id !== eventId);
+                    localStorage.setItem('calendarEvents', JSON.stringify(events));
+                    closeModal();
+                    renderCalendar();
+                    renderTodayView(viewingDate);
+                }
+            }
+            
+            function closeModal() {
+                eventModal.style.display = 'none';
+            }
+            
+            function goToPrevMonth() {
+                currentMonth--;
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                }
+                renderCalendar();
+            }
+            
+            function goToNextMonth() {
+                currentMonth++;
+                if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                renderCalendar();
+            }
+            
+            function goToToday() {
+                const today = new Date();
+                currentMonth = today.getMonth();
+                currentYear = today.getFullYear();
+                viewingDate = new Date();
+                renderCalendar();
+                renderTodayView(viewingDate);
+            }
+            
+            function renderTodayView(dateToRender) {
+                const todayDateElem = document.getElementById('today-date');
+                const todayEventsElem = document.getElementById('today-events');
+                const dateStr = formatDate(dateToRender);
+                const dayOfWeek = dayNames[dateToRender.getDay()];
+                todayDateElem.textContent = `${dateToRender.getFullYear()}年${dateToRender.getMonth() + 1}月${dateToRender.getDate()}日 (${dayOfWeek})`;
+                const eventsForDay = events
+                    .filter(event => event.date === dateStr)
+                    .sort((a, b) => {
+                        if (a.startTime && b.startTime) return a.startTime.localeCompare(b.startTime);
+                        if (a.startTime) return -1;
+                        if (b.startTime) return 1;
+                        return 0;
+                    });
+                todayEventsElem.innerHTML = '';
+                if (eventsForDay.length === 0) {
+                    todayEventsElem.innerHTML = '<li class="no-events">本日の予定はありません</li>';
+                    return;
+                }
+                eventsForDay.forEach(event => {
+                    const category = findCategoryById(event.category) || { name: '未分類', color: '#eee', borderColor: '#ccc' };
+                    const li = document.createElement('li');
+                    li.style.backgroundColor = category.color;
+                    li.style.borderLeft = `3px solid ${category.borderColor}`;
+                    li.style.paddingLeft = '5px';
+                    li.setAttribute('data-event-id', event.id);
+
+                    let timeText = '';
+                    if (event.startTime) {
+                        timeText += event.startTime;
+                        if (event.endTime) {
+                            timeText += ` - ${event.endTime}`;
+                        }
+                        timeText += ': ';
+                    }
+
+                    const timeSpan = document.createElement('span');
+                    timeSpan.className = 'event-time';
+                    timeSpan.textContent = timeText;
+                    const titleSpan = document.createElement('span');
+                    titleSpan.className = 'event-title';
+                    titleSpan.textContent = event.title;
+                    const categorySpan = document.createElement('span');
+                    categorySpan.className = 'event-category';
+                    categorySpan.textContent = `カテゴリ: ${category.name}`;
+                    li.appendChild(timeSpan);
+                    li.appendChild(titleSpan);
+                    li.appendChild(categorySpan);
+                    li.addEventListener('click', () => {
+                         const originalEvent = events.find(ev => ev.id === event.id);
+                         if (originalEvent) {
+                            openEditEventModal(originalEvent);
+                         }
+                    });
+                    todayEventsElem.appendChild(li);
+                });
+            }
+            
+            function goToPrevDayView() {
+                viewingDate.setDate(viewingDate.getDate() - 1);
+                renderTodayView(viewingDate);
+            }
+
+            function goToNextDayView() {
+                viewingDate.setDate(viewingDate.getDate() + 1);
+                renderTodayView(viewingDate);
+            }
+
+            function initializeColorPalette() {
+                colorPaletteDiv.innerHTML = '';
+                paletteColors.forEach(color => {
+                    const swatch = document.createElement('div');
+                    swatch.className = 'color-swatch';
+                    swatch.style.backgroundColor = color;
+                    swatch.addEventListener('click', () => {
+                        const currentSelected = colorPaletteDiv.querySelector('.selected');
+                        if (currentSelected) {
+                            currentSelected.classList.remove('selected');
+                        }
+                        swatch.classList.add('selected');
+                        selectedColor = color;
+                    });
+                    colorPaletteDiv.appendChild(swatch);
+                });
+                if (!selectedColor && colorPaletteDiv.firstChild) {
+                     colorPaletteDiv.firstChild.click();
+                }
+            }
+
+            function renderCategoryList() {
+                const currentlyEditingName = { id: null, originalName: '' }; // 現在編集中のカテゴリ名を追跡
+
+                categoryListUl.innerHTML = '';
+                categories.forEach(cat => {
+                    const li = document.createElement('li');
+                    li.setAttribute('data-category-id', cat.id);
+
+                    const colorDiv = document.createElement('div');
+                    colorDiv.className = 'category-list-color';
+                    colorDiv.style.backgroundColor = cat.color;
+                    colorDiv.title = '色を変更'; // Add tooltip
+                    // Make color swatch clickable only if editable
+                    if (cat.isEditable !== false) {
+                        colorDiv.style.cursor = 'pointer';
+                        colorDiv.addEventListener('click', (e) => {
+                            e.stopPropagation(); // Prevent li click event if any
+                            startEditCategoryColor(cat.id, colorDiv);
+                        });
+                    }
+
+                    const nameSpan = document.createElement('span');
+                    nameSpan.className = 'category-list-name';
+                    nameSpan.textContent = cat.name;
+
+                    // Make name editable only if editable
+                    if (cat.isEditable !== false) {
+                        nameSpan.contentEditable = "true";
+                        nameSpan.title = 'クリックして編集'; // Add tooltip
+                        nameSpan.style.cursor = 'text';
+                        nameSpan.addEventListener('focus', () => {
+                            // Store original name when editing starts
+                            currentlyEditingName.id = cat.id;
+                            currentlyEditingName.originalName = nameSpan.textContent.trim();
+                        });
+                        nameSpan.addEventListener('blur', () => {
+                            // Save changes when focus is lost, only if it was the one being edited
+                            if (currentlyEditingName.id === cat.id) {
+                                saveCategoryNameChange(cat.id, nameSpan.textContent.trim(), currentlyEditingName.originalName);
+                                currentlyEditingName.id = null; // Reset editing state
+                                currentlyEditingName.originalName = '';
+                            }
+                        });
+                        nameSpan.addEventListener('keypress', (e) => {
+                            // Save on Enter key press
+                            if (e.key === 'Enter') {
+                                e.preventDefault(); // Prevent creating new line
+                                nameSpan.blur(); // Trigger blur event to save
+                            }
+                        });
+                    } else {
+                         nameSpan.contentEditable = "false";
+                         nameSpan.style.cursor = 'default';
+                    }
+
+                    li.appendChild(colorDiv);
+                    li.appendChild(nameSpan);
+
+                    const actionsDiv = document.createElement('div');
+                    actionsDiv.className = 'category-list-actions';
+                    li.appendChild(actionsDiv);
+
+                    if (cat.isDeletable !== false) {
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.className = 'delete-category-btn';
+                        deleteBtn.innerHTML = '&#x1F5D1;';
+                        deleteBtn.title = 'カテゴリ削除';
+                        deleteBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            deleteCategory(cat.id);
+                        });
+                        actionsDiv.appendChild(deleteBtn);
+                    }
+
+                    categoryListUl.appendChild(li);
+                });
+            }
+
+            let activeColorPicker = null; // Track the active color picker element
+
+            function startEditCategoryColor(categoryId, colorDivElement) {
+                // Close any existing color picker
+                if (activeColorPicker && activeColorPicker.parentNode) {
+                    activeColorPicker.parentNode.removeChild(activeColorPicker);
+                    activeColorPicker = null;
+                }
+
+                // Create a temporary color palette pop-up near the clicked element
+                const pickerPopup = document.createElement('div');
+                pickerPopup.style.position = 'absolute';
+                pickerPopup.style.backgroundColor = 'white';
+                pickerPopup.style.border = '1px solid #ccc';
+                pickerPopup.style.borderRadius = '4px';
+                pickerPopup.style.padding = '5px';
+                pickerPopup.style.display = 'flex';
+                pickerPopup.style.flexWrap = 'wrap';
+                pickerPopup.style.gap = '4px';
+                pickerPopup.style.zIndex = '1001'; // Ensure it's above other elements
+                pickerPopup.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
+                pickerPopup.style.width = '100px'; // Adjust width as needed
+
+                paletteColors.forEach(color => {
+                    const swatch = document.createElement('div');
+                    swatch.style.width = '20px';
+                    swatch.style.height = '20px';
+                    swatch.style.borderRadius = '50%';
+                    swatch.style.backgroundColor = color;
+                    swatch.style.cursor = 'pointer';
+                    swatch.addEventListener('click', () => {
+                        updateCategoryColor(categoryId, color);
+                        if (pickerPopup.parentNode) {
+                             pickerPopup.parentNode.removeChild(pickerPopup); // Close picker
+                        }
+                        activeColorPicker = null;
+                    });
+                    pickerPopup.appendChild(swatch);
+                });
+
+                // Position the picker near the clicked color div
+                const rect = colorDivElement.getBoundingClientRect();
+                document.body.appendChild(pickerPopup); // Append to body to avoid layout issues
+                pickerPopup.style.top = `${window.scrollY + rect.bottom + 2}px`;
+                pickerPopup.style.left = `${window.scrollX + rect.left}px`;
+
+                activeColorPicker = pickerPopup; // Set as active
+
+                // Add a listener to close the picker if clicking outside
+                const closePickerHandler = (event) => {
+                    if (activeColorPicker && !pickerPopup.contains(event.target) && event.target !== colorDivElement) {
+                        if (pickerPopup.parentNode) {
+                           pickerPopup.parentNode.removeChild(pickerPopup);
+                        }
+                        activeColorPicker = null;
+                        document.removeEventListener('click', closePickerHandler, true); // Clean up listener
+                    }
+                };
+                // Use setTimeout to avoid immediate closing due to the click that opened it
+                setTimeout(() => {
+                   document.addEventListener('click', closePickerHandler, true);
+                }, 0);
+            }
+
+            function updateCategoryColor(categoryId, newColor) {
+                const categoryIndex = categories.findIndex(cat => cat.id === categoryId);
+                if (categoryIndex !== -1) {
+                    categories[categoryIndex].color = newColor;
+                    categories[categoryIndex].borderColor = newColor; // Update border color too
+                    saveCategories();
+                    renderCategoryList(); // Update the list display
+                    populateCategoryDropdown(); // Update the dropdown in the modal
+                    renderCalendar(); // Update calendar event colors
+                    renderTodayView(viewingDate); // Update today view event colors
+                }
+            }
+
+            function saveCategoryNameChange(categoryId, newName, originalName) {
+                if (newName === originalName) return; // No change
+
+                if (!newName) {
+                    alert('カテゴリ名は空にできません。');
+                    // Re-render to restore original name visually
+                    renderCategoryList();
+                    return;
+                }
+
+                // Check for duplicate names (case-insensitive), excluding the current category being edited
+                if (categories.some(cat => cat.id !== categoryId && cat.name.toLowerCase() === newName.toLowerCase())) {
+                    alert('同じ名前のカテゴリが既に存在します。');
+                    // Re-render to restore original name visually
+                    renderCategoryList();
+                    return;
+                }
+
+                // Find and update the category
+                const categoryIndex = categories.findIndex(cat => cat.id === categoryId);
+                if (categoryIndex !== -1) {
+                    categories[categoryIndex].name = newName;
+                    saveCategories();
+                    // No need to re-render list here as blur handles the visual update
+                    // Just update the dropdown and potentially other views if name is shown there
+                    populateCategoryDropdown();
+                    renderTodayView(viewingDate); // Re-render today view as category name might be shown
+                }
+            }
+
+            function addCategory() {
+                const name = categoryNameInput.value.trim();
+                if (!name) {
+                    alert('カテゴリ名を入力してください。');
+                    return;
+                }
+                if (!selectedColor) {
+                    // Automatically select the first color if none is selected
+                    const firstSwatch = colorPaletteDiv.querySelector('.color-swatch');
+                    if (firstSwatch) {
+                        firstSwatch.click(); // Simulate click to select and set selectedColor
+                    } else {
+                       alert('色を選択してください。');
+                       return;
+                    }
+                }
+                if (categories.some(cat => cat.name.toLowerCase() === name.toLowerCase())) {
+                    alert('同じ名前のカテゴリが既に存在します。');
+                    return;
+                }
+                const newCategory = {
+                    id: 'custom-' + Date.now().toString(), 
+                    name: name,
+                    color: selectedColor,
+                    borderColor: selectedColor,
+                    isDeletable: true,
+                    isEditable: true
+                };
+                categories.push(newCategory);
+                saveCategories();
+                renderCategoryList();
+                populateCategoryDropdown();
+                categoryNameInput.value = ''; 
+                const currentSelected = colorPaletteDiv.querySelector('.selected');
+                if (currentSelected) currentSelected.classList.remove('selected');
+                if (colorPaletteDiv.firstChild) colorPaletteDiv.firstChild.click();
+            }
+
+            function deleteCategory(idToDelete) {
+                const categoryToDelete = findCategoryById(idToDelete);
+                if (!categoryToDelete || categoryToDelete.isDeletable === false) {
+                    alert('このカテゴリは削除できません。');
+                    return;
+                }
+
+                if (!confirm(`カテゴリ「${categoryToDelete.name}」を削除してもよろしいですか？\n関連するイベントは「その他」カテゴリに移動されます。`)) {
+                    return;
+                }
+
+                categories = categories.filter(cat => cat.id !== idToDelete);
+                saveCategories();
+
+                const fallbackCategory = categories.find(cat => cat.name === 'その他');
+                const fallbackCategoryId = fallbackCategory ? fallbackCategory.id : null;
+
+                if (fallbackCategoryId) {
+                    events = events.map(event => {
+                        if (event.category === idToDelete) {
+                            return { ...event, category: fallbackCategoryId };
+                        }
+                        return event;
+                    });
+                    localStorage.setItem('calendarEvents', JSON.stringify(events));
+                } else {
+                    console.error("Fallback category 'その他' not found. Cannot reassign events.");
+                }
+
+                renderCategoryList();
+                populateCategoryDropdown();
+                renderCalendar(); 
+                renderTodayView(viewingDate); 
+            }
+
+            function renderTodoList() {
+                todoListUl.innerHTML = ''; 
+                if (todos.length === 0) {
+                    todoListUl.innerHTML = '<li class="no-events" style="font-style: italic; color: #888; justify-content: center;">タスクはありません</li>';
+                    return;
+                }
+                todos.forEach((todo, index) => {
+                    const li = document.createElement('li');
+                    li.setAttribute('data-index', index);
+                    const textSpan = document.createElement('span');
+                    textSpan.className = 'todo-text';
+                    textSpan.textContent = todo.text;
+                    if (todo.completed) {
+                        textSpan.classList.add('completed');
+                    }
+                    textSpan.addEventListener('click', () => toggleTodoComplete(index));
+                    const actionsDiv = document.createElement('div');
+                    actionsDiv.className = 'todo-actions';
+                    const toggleBtn = document.createElement('button');
+                    toggleBtn.className = 'toggle-btn';
+                    toggleBtn.innerHTML = todo.completed ? '&#x21B6;' : '&#x2714;'; 
+                    toggleBtn.title = todo.completed ? '未完了に戻す' : '完了にする';
+                    if(todo.completed) toggleBtn.classList.add('completed');
+                    toggleBtn.addEventListener('click', () => toggleTodoComplete(index));
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'delete-btn';
+                    deleteBtn.innerHTML = '&#x1F5D1;'; 
+                    deleteBtn.title = '削除';
+                    deleteBtn.addEventListener('click', () => deleteTodo(index));
+                    actionsDiv.appendChild(toggleBtn);
+                    actionsDiv.appendChild(deleteBtn);
+                    li.appendChild(textSpan);
+                    li.appendChild(actionsDiv);
+                    todoListUl.appendChild(li);
+                });
+                 saveTodos();
+            }
+
+            function addTodo() {
+                const text = todoInput.value.trim();
+                if (text === '') return; 
+                todos.push({ text: text, completed: false });
+                todoInput.value = ''; 
+                renderTodoList();
+            }
+
+            function toggleTodoComplete(index) {
+                if (todos[index]) {
+                    todos[index].completed = !todos[index].completed;
+                    renderTodoList();
+                }
+            }
+
+            function deleteTodo(index) {
+                 if (confirm('このTodoを削除しますか？')) {
+                    todos.splice(index, 1);
+                    renderTodoList();
+                 }
+            }
+
+            function saveTodos() {
+                 localStorage.setItem('todos', JSON.stringify(todos));
+            }
+
+            prevMonthBtn.addEventListener('click', goToPrevMonth);
+            nextMonthBtn.addEventListener('click', goToNextMonth);
+            todayBtn.addEventListener('click', goToToday);
+            monthSelect.addEventListener('change', function() {
+                currentMonth = parseInt(this.value);
+                renderCalendar();
+            });
+            yearSelect.addEventListener('change', function() {
+                currentYear = parseInt(this.value);
+                renderCalendar();
+            });
+            eventForm.addEventListener('submit', saveEvent);
+            deleteEventBtn.addEventListener('click', deleteEvent);
+            cancelEventBtn.addEventListener('click', closeModal);
+            prevDayViewBtn.addEventListener('click', goToPrevDayView);
+            nextDayViewBtn.addEventListener('click', goToNextDayView);
+            eventModal.addEventListener('click', function(e) {
+                if (e.target === eventModal) {
+                    closeModal();
+                }
+            });
+            addTodoBtn.addEventListener('click', addTodo);
+            todoInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addTodo();
+                }
+            });
+            addCategoryBtn.addEventListener('click', addCategory);
+            categoryManagerHeader.addEventListener('click', () => {
+                categoryManagerDiv.classList.toggle('open');
+            });
+
+            initializeCategories();
+            initializeSelectors();
+            populateCategoryDropdown();
+            renderCalendar();
+            renderTodayView(viewingDate); 
+            renderTodoList(); 
+            initializeColorPalette();
+            renderCategoryList();
+        });
+    </script>
+</body>
+</html>
+
