@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const mongoose = require('mongoose');
 const User = require('./models/user');
 const { sendVerificationEmail } = require('./config/email');
@@ -30,15 +31,24 @@ mongoose.connect(process.env.MONGODB_URI)
 
 // ミドルウェア設定
 app.use(express.json());
+
+// MongoDBベースのセッションストア
 app.use(session({
   secret: process.env.SESSION_SECRET || 'your-secret-key',
   resave: false,
   saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI,
+    touchAfter: 24 * 3600 // セッションを24時間ごとに更新
+  }),
   cookie: { 
     secure: process.env.NODE_ENV === 'production',
     maxAge: 24 * 60 * 60 * 1000 // 24時間
   }
 }));
+
+// favicon.ico の404エラーを防ぐ
+app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 // === 認証関連のAPIエンドポイント ===
 
@@ -144,6 +154,7 @@ app.post('/api/login', async (req, res) => {
 app.post('/api/logout', (req, res) => {
   req.session.destroy((err) => {
     if (err) {
+      console.error('セッション削除エラー:', err);
       return res.status(500).json({ error: 'ログアウトに失敗しました' });
     }
     res.json({ success: true, message: 'ログアウト完了' });
@@ -162,6 +173,14 @@ app.get('/api/auth-status', (req, res) => {
 app.get('/verify-email', async (req, res) => {
   try {
     const { token } = req.query;
+    
+    if (!token) {
+      return res.status(400).send(`
+        <h2>認証エラー</h2>
+        <p>認証トークンが指定されていません。</p>
+        <a href="https://yaneyuka.web.app/login.html">ログインページに戻る</a>
+      `);
+    }
     
     const user = await User.findOne({ verificationToken: token });
     
@@ -195,7 +214,22 @@ app.get('/verify-email', async (req, res) => {
 
 // ヘルスチェック用エンドポイント
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', timestamp: new Date().toISOString() });
+  res.json({ 
+    status: 'OK', 
+    timestamp: new Date().toISOString(),
+    mongodb: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+  });
+});
+
+// エラーハンドリング
+app.use((err, req, res, next) => {
+  console.error('サーバーエラー:', err);
+  res.status(500).json({ error: 'サーバーエラーが発生しました' });
+});
+
+// 404ハンドリング
+app.use((req, res) => {
+  res.status(404).json({ error: 'エンドポイントが見つかりません' });
 });
 
 // Vercel用エクスポート
