@@ -24,10 +24,34 @@ app.use((req, res, next) => {
   }
 });
 
-// MongoDB接続
+// MongoDB接続（デバッグ情報追加）
+console.log('=== MongoDB接続デバッグ ===');
+console.log('MONGODB_URI exists:', !!process.env.MONGODB_URI);
+console.log('MONGODB_URI length:', process.env.MONGODB_URI ? process.env.MONGODB_URI.length : 0);
+console.log('MONGODB_URI start:', process.env.MONGODB_URI ? process.env.MONGODB_URI.substring(0, 30) + '...' : 'undefined');
+
 mongoose.connect(process.env.MONGODB_URI)
-.then(() => console.log('MongoDB接続成功'))
-.catch(err => console.error('MongoDB接続エラー:', err));
+.then(() => {
+  console.log('✅ MongoDB接続成功');
+})
+.catch(err => {
+  console.error('❌ MongoDB接続エラー:', err.message);
+  console.error('エラーコード:', err.code);
+  console.error('エラー名:', err.name);
+});
+
+// 接続状態の監視
+mongoose.connection.on('connected', () => {
+  console.log('MongoDB: 接続確立');
+});
+
+mongoose.connection.on('error', (err) => {
+  console.error('MongoDB: 接続エラー', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('MongoDB: 接続切断');
+});
 
 // ミドルウェア設定
 app.use(express.json());
