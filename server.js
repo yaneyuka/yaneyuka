@@ -47,6 +47,24 @@ app.use(session({
   }
 }));
 
+// ルートパスのハンドリング（APIサーバーの説明）
+app.get('/', (req, res) => {
+  res.json({
+    name: 'Yaneyuka Authentication API',
+    version: '1.0.0',
+    status: 'running',
+    endpoints: {
+      register: 'POST /api/register',
+      login: 'POST /api/login',
+      logout: 'POST /api/logout',
+      authStatus: 'GET /api/auth-status',
+      verifyEmail: 'GET /verify-email',
+      health: 'GET /api/health'
+    },
+    timestamp: new Date().toISOString()
+  });
+});
+
 // favicon.ico の404エラーを防ぐ
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 
@@ -176,9 +194,18 @@ app.get('/verify-email', async (req, res) => {
     
     if (!token) {
       return res.status(400).send(`
-        <h2>認証エラー</h2>
-        <p>認証トークンが指定されていません。</p>
-        <a href="https://yaneyuka.web.app/login.html">ログインページに戻る</a>
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>認証エラー</title>
+          <meta charset="utf-8">
+        </head>
+        <body>
+          <h2>認証エラー</h2>
+          <p>認証トークンが指定されていません。</p>
+          <a href="https://yaneyuka.web.app/login.html">ログインページに戻る</a>
+        </body>
+        </html>
       `);
     }
     
@@ -186,9 +213,18 @@ app.get('/verify-email', async (req, res) => {
     
     if (!user) {
       return res.status(400).send(`
-        <h2>認証エラー</h2>
-        <p>無効な認証トークンです。</p>
-        <a href="https://yaneyuka.web.app/login.html">ログインページに戻る</a>
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>認証エラー</title>
+          <meta charset="utf-8">
+        </head>
+        <body>
+          <h2>認証エラー</h2>
+          <p>無効な認証トークンです。</p>
+          <a href="https://yaneyuka.web.app/login.html">ログインページに戻る</a>
+        </body>
+        </html>
       `);
     }
     
@@ -197,17 +233,35 @@ app.get('/verify-email', async (req, res) => {
     await user.save();
     
     res.send(`
-      <h2>メール認証完了</h2>
-      <p>アカウントが有効化されました。</p>
-      <a href="https://yaneyuka.web.app/login.html">ログインページに戻る</a>
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>メール認証完了</title>
+        <meta charset="utf-8">
+      </head>
+      <body>
+        <h2>メール認証完了</h2>
+        <p>アカウントが有効化されました。</p>
+        <a href="https://yaneyuka.web.app/login.html">ログインページに戻る</a>
+      </body>
+      </html>
     `);
     
   } catch (error) {
     console.error('認証エラー:', error);
     res.status(500).send(`
-      <h2>認証エラー</h2>
-      <p>認証に失敗しました。</p>
-      <a href="https://yaneyuka.web.app/login.html">ログインページに戻る</a>
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>認証エラー</title>
+        <meta charset="utf-8">
+      </head>
+      <body>
+        <h2>認証エラー</h2>
+        <p>認証に失敗しました。</p>
+        <a href="https://yaneyuka.web.app/login.html">ログインページに戻る</a>
+      </body>
+      </html>
     `);
   }
 });
