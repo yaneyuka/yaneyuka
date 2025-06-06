@@ -1,44 +1,41 @@
 const nodemailer = require('nodemailer');
 
-// メール送信設定
-const createTransporter = () => {
-  return nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
-  });
-};
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 
-// 認証メール送信
-const sendVerificationEmail = async (email, username, token) => {
+const sendVerificationEmail = async (to, username, token) => {
+  // バックエンドのAPIサーバーのURLを環境変数から取得
+  const backendUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
+  
+  // 正しい認証用URLを生成
+  const verificationUrl = `${backendUrl}/api/verify-email?token=${token}`;
+
+  const mailOptions = {
+    from: `"yaneyuka" <${process.env.EMAIL_USER}>`,
+    to: to,
+    subject: 'メール認証のお願い',
+    html: `
+      <h2>メール認証のお願い</h2>
+      <p>こんにちは、${username}さん</p>
+      <p>以下のリンクをクリックして、アカウントの認証を完了してください。</p>
+      <a href="${verificationUrl}">${verificationUrl}</a>
+      <p>このリンクの有効期限は24時間です。</p>
+    `,
+  };
+
   try {
-    const transporter = createTransporter();
-    const verificationUrl = `${process.env.BASE_URL}/verify-email?token=${token}`;
-    
-    const mailOptions = {
-      from: `"yaneyuka" <${process.env.EMAIL_USER}>`,
-      to: email,
-      subject: 'yaneyuka - メール認証のお願い',
-      html: `
-        <h2>こんにちは、${username}さん</h2>
-        <p>yaneyukaへのご登録ありがとうございます。</p>
-        <p>以下のリンクをクリックして認証を完了してください：</p>
-        <a href="${verificationUrl}">アカウントを認証する</a>
-        <p>このリンクは24時間有効です。</p>
-      `
-    };
-    
     await transporter.sendMail(mailOptions);
-    console.log('認証メール送信成功');
-    
+    console.log(`認証メールを ${to} に送信しました。`);
   } catch (error) {
-    console.error('メール送信エラー:', error);
-    throw new Error('メール送信に失敗しました');
+    console.error(`認証メールの送信に失敗しました: ${to}`, error);
+    // エラーを再スローして、呼び出し元で処理できるようにする
+    throw new Error('メールの送信に失敗しました');
   }
 };
 
-module.exports = {
-  sendVerificationEmail
-};
+module.exports = { sendVerificationEmail };
