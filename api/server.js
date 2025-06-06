@@ -128,35 +128,34 @@ app.get('/api/auth-status', (req, res) => {
   }
 });
 
-// メール認証エンドポイント（最終診断モード）
+// メール認証エンドポイント（最終形態）
 app.get('/api/verify-email', async (req, res) => {
   try {
-    console.log('--- メール認証APIが呼び出されました ---');
     const { token } = req.query;
-    console.log('受け取ったトークン:', token);
 
     if (!token) {
-      console.log('エラー: トークンがありません。');
-      return res.redirect(`${process.env.BASE_URL}/login?verified=error`);
+      return res.redirect(`${process.env.BASE_URL}/verification-failure.html`);
     }
 
-    console.log('データベースでこのトークンを検索します...');
     const user = await User.findOne({ verificationToken: token });
 
+    // ユーザーが見つかった場合（これが最初のアクセス）
     if (user) {
-      console.log('成功: ユーザーが見つかりました:', user.email);
       user.isVerified = true;
-      user.verificationToken = undefined;
+      user.verificationToken = undefined; // トークンを無効化
       await user.save();
-      console.log('ユーザー情報を更新し、認証成功でリダイレクトします。');
-      res.redirect(`${process.env.BASE_URL}/login?verified=true`);
-    } else {
-      console.log('失敗: トークンに一致するユーザーが見つかりませんでした。');
-      res.redirect(`${process.env.BASE_URL}/login?verified=false`);
+      // 成功ページへリダイレクト
+      return res.redirect(`${process.env.BASE_URL}/verification-success.html`);
+    } 
+    // ユーザーが見つからなかった場合（スキャン後、本人がクリックした場合など）
+    else {
+      // 失敗ページへリダイレクト
+      return res.redirect(`${process.env.BASE_URL}/verification-failure.html`);
     }
   } catch (error) {
     console.error('致命的なエラー: メール認証プロセスがクラッシュしました。', error);
-    res.status(500).redirect(`${process.env.BASE_URL}/login?verified=error`);
+    // 致命的なエラーでも失敗ページへ
+    res.redirect(`${process.env.BASE_URL}/verification-failure.html`);
   }
 });
 
