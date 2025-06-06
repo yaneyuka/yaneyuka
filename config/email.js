@@ -9,11 +9,14 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendVerificationEmail = async (to, username, token) => {
-  // 手順①で設定した「バックエンドの住所」を必ず使うように修正
   const backendUrl = process.env.BACKEND_URL;
-  
-  // このURLがメールに記載される
   const verificationUrl = `${backendUrl}/api/verify-email?token=${token}`;
+
+  // ★★★ここから診断コード★★★
+  console.log('--- 認証メール送信プロセス開始 ---');
+  console.log('環境変数 BACKEND_URL:', process.env.BACKEND_URL);
+  console.log('生成された認証URL:', verificationUrl);
+  // ★★★ここまで診断コード★★★
 
   const mailOptions = {
     from: `"yaneyuka" <${process.env.EMAIL_USER}>`,
