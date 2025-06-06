@@ -433,6 +433,4 @@ if (process.env.NODE_ENV !== 'production') {
     console.log(`サーバーが http://localhost:${port} で起動しました`);
   });
 }
-
-// Vercel用のエクスポート（この行を追加）
 module.exports = app;
