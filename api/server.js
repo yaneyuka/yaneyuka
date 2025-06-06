@@ -4,50 +4,41 @@ const express = require('express');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const cors = require('cors');
-const User = require('../models/user'); // 階層が変わるので `../` を追加
-const { sendVerificationEmail } = require('../config/email'); // 階層が変わるので `../` を追加
+const User = require('../models/user');
+const { sendVerificationEmail } = require('../config/email');
 const crypto = require('crypto');
 
 const app = express();
 
-// CORSミドルウェア
 app.use(cors({
   origin: process.env.BASE_URL,
   credentials: true
 }));
-
-// JSONリクエストボディのパース
 app.use(express.json());
 
-// MongoDBへの接続URI
 const mongoUri = process.env.MONGODB_URI;
 
-// セッション管理のミドルウェア
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
     mongoUrl: mongoUri,
-    ttl: 14 * 24 * 60 * 60 // 14日間
+    ttl: 14 * 24 * 60 * 60
   }),
   cookie: {
-    secure: true, // HTTPSでのみCookieを送信
+    secure: true,
     httpOnly: true,
-    sameSite: 'none', // クロスドメインでのCookie送信に必須
-    maxAge: 24 * 60 * 60 * 1000 // 24時間
+    sameSite: 'none',
+    maxAge: 24 * 60 * 60 * 1000
   }
 }));
 
-// MongoDB接続関数
 const connectDB = async () => {
-  if (mongoose.connection.readyState >= 1) {
-    return;
-  }
+  if (mongoose.connection.readyState >= 1) return;
   return mongoose.connect(mongoUri);
 };
 
-// 全てのリクエストの前にDB接続を確立するミドルウェア
 app.use(async (req, res, next) => {
   try {
     await connectDB();
@@ -60,13 +51,12 @@ app.use(async (req, res, next) => {
 
 // === APIエンドポイント ===
 
-// ヘルスチェック用API
+// ヘルスチェック用API（診断モード）
 app.get('/api/health', (req, res) => {
   const dbStatus = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
   res.json({
     status: 'ok',
     mongodb: dbStatus,
-    // ↓↓ 環境変数が正しく読み込まれているかを確認するための診断コード ↓↓
     BASE_URL_from_Vercel: process.env.BASE_URL,
     BACKEND_URL_from_Vercel: process.env.BACKEND_URL
   });
@@ -138,27 +128,34 @@ app.get('/api/auth-status', (req, res) => {
   }
 });
 
-// メール認証エンドポイント
+// メール認証エンドポイント（最終診断モード）
 app.get('/api/verify-email', async (req, res) => {
   try {
+    console.log('--- メール認証APIが呼び出されました ---');
     const { token } = req.query;
+    console.log('受け取ったトークン:', token);
+
     if (!token) {
-      // トークンがない場合は、エラーページにリダイレクト
+      console.log('エラー: トークンがありません。');
       return res.redirect(`${process.env.BASE_URL}/login?verified=error`);
     }
+
+    console.log('データベースでこのトークンを検索します...');
     const user = await User.findOne({ verificationToken: token });
+
     if (user) {
+      console.log('成功: ユーザーが見つかりました:', user.email);
       user.isVerified = true;
       user.verificationToken = undefined;
       await user.save();
-      // 認証成功後、ログインページにリダイレクト
+      console.log('ユーザー情報を更新し、認証成功でリダイレクトします。');
       res.redirect(`${process.env.BASE_URL}/login?verified=true`);
     } else {
-      // トークンが無効な場合、エラーページにリダイレクト
+      console.log('失敗: トークンに一致するユーザーが見つかりませんでした。');
       res.redirect(`${process.env.BASE_URL}/login?verified=false`);
     }
   } catch (error) {
-    console.error('メール認証エラー:', error);
+    console.error('致命的なエラー: メール認証プロセスがクラッシュしました。', error);
     res.status(500).redirect(`${process.env.BASE_URL}/login?verified=error`);
   }
 });
