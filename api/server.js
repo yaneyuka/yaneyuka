@@ -66,7 +66,9 @@ app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
     mongodb: dbStatus,
-    timestamp: new Date().toISOString()
+    // ↓↓ 環境変数が正しく読み込まれているかを確認するための診断コード ↓↓
+    BASE_URL_from_Vercel: process.env.BASE_URL,
+    BACKEND_URL_from_Vercel: process.env.BACKEND_URL
   });
 });
 
