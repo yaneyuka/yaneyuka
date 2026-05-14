@@ -15,6 +15,7 @@ const LEGAL_APPS: LegalApp[] = [
   { href: '/shoubouhou-app-privacy-policy/', label: '消防法アプリ' },
   { href: '/epoch-camera-privacy-policy/', label: 'Epoch Camera' },
   { href: '/fx-signal-privacy-policy/', label: 'FX Signal' },
+  { href: '/cfd-signal-privacy-policy/', label: 'CFD Signal' },
   { href: '/world-folkbook-privacy-policy/', label: 'World Folkbook' },
   { href: '/news-filter-privacy-policy/', label: 'News Filter' },
 ];
