@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | CFD Signal | yaneyuka',
+  title: 'Privacy Policy | CFD Signal',
   description: 'Privacy Policy for the CFD Signal iOS app. This page is also available in Japanese.',
   alternates: {
     canonical: 'https://yaneyuka.com/cfd-signal-privacy-policy',

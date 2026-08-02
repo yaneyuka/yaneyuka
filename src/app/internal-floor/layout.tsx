@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'yaneyuka | 内部床材',
+  title: '内部床材',
   description: '建築・建設業界の内部床材情報をまとめて紹介。フローリング、ビニールタイル、カーペット、タイル、畳など各種内部床材のメーカー情報をお届けします。',
   alternates: {
     canonical: 'https://yaneyuka.com/internal-floor',

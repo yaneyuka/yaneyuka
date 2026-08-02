@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'サポート | yaneyuka',
+  title: 'サポート',
   description: 'yaneyuka.com で配信中の iOS アプリ全般のサポート情報。お問い合わせ・FAQ・対応アプリ一覧。日本語/英語対応。',
   alternates: {
     canonical: 'https://yaneyuka.com/support',

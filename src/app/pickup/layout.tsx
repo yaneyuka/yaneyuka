@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'yaneyuka | Pickup',
+  title: 'Pickup',
   description: '建築・建設業界の注目情報をピックアップ。おすすめの建材、製品、サービスなどを紹介します。',
   alternates: {
     canonical: 'https://yaneyuka.com/pickup',

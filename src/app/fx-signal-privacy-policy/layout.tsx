@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | FX Signal | yaneyuka',
+  title: 'Privacy Policy | FX Signal',
   description: 'Privacy Policy for the FX Signal iOS app. This page is also available in Japanese.',
   alternates: {
     canonical: 'https://yaneyuka.com/fx-signal-privacy-policy',

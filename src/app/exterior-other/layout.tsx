@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'yaneyuka | 外部その他',
+  title: '外部その他',
   description: '建築・建設業界の外部その他建材情報をまとめて紹介。笠木・水切、庇・オーニング、雨どい、手摺など各種外部建材のメーカー情報をお届けします。',
   alternates: {
     canonical: 'https://yaneyuka.com/exterior-other',

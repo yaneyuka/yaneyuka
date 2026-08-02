@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Terms of Use | FX Signal | yaneyuka',
+  title: 'Terms of Use | FX Signal',
   description: 'Terms of Use for the FX Signal iOS app. This page is also available in Japanese.',
   alternates: {
     canonical: 'https://yaneyuka.com/fx-signal-terms',

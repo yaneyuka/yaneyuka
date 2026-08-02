@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'yaneyuka | エクステリア',
+  title: 'エクステリア',
   description: '建築・建設業界のエクステリア情報をまとめて紹介。宅配ボックス、郵便受け、表札、門扉、フェンス、カーポートなど各種エクステリアのメーカー情報をお届けします。',
   alternates: {
     canonical: 'https://yaneyuka.com/exterior',

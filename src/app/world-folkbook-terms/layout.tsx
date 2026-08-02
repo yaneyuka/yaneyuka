@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Terms of Service | World Folkbook | yaneyuka',
+  title: 'Terms of Service | World Folkbook',
   description: 'Terms of Service for the World Folkbook iOS app. This page is also available in Japanese.',
   alternates: {
     canonical: 'https://yaneyuka.com/world-folkbook-terms',

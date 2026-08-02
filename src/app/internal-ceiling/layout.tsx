@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'yaneyuka | 内装天井材',
+  title: '内装天井材',
   description: '建築・建設業界の内装天井材情報をまとめて紹介。天井ボード、化粧材、装飾材、システム天井など各種内装天井材のメーカー情報をお届けします。',
   alternates: {
     canonical: 'https://yaneyuka.com/internal-ceiling',

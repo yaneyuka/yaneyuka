@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'yaneyuka | 資格試験',
+  title: '資格試験',
   description: '建築・建設業界の資格試験情報をまとめて紹介。建築士試験、施工管理技士試験などの情報をお届けします。',
   alternates: {
     canonical: 'https://yaneyuka.com/qualifications',

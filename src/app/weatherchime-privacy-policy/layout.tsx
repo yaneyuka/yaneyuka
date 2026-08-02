@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Weatherchime プライバシーポリシー | 合同会社slime',
+  title: 'プライバシーポリシー | Weatherchime',
   description: 'Weatherchimeアプリのプライバシーポリシーです。地点情報・通知設定・プッシュ通知の取り扱いに関する方針をご説明します。',
   alternates: {
     canonical: 'https://yaneyuka.com/weatherchime-privacy-policy',

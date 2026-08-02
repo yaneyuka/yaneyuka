@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'yaneyuka | 求人情報',
+  title: '求人情報',
   description: '建築・建設業界の求人情報をまとめて紹介。設計、施工、管理など様々な職種の求人をお届けします。',
   alternates: {
     canonical: 'https://yaneyuka.com/job-info',

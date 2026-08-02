@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'プライバシーポリシー | 建築基準法アプリ | yaneyuka',
+  title: 'プライバシーポリシー | 建築基準法アプリ',
   description: '建築基準法アプリのプライバシーポリシーです。個人情報の取り扱いに関する方針をご説明します。',
   alternates: {
     canonical: 'https://yaneyuka.com/kijyunhou-app-privacy-policy',

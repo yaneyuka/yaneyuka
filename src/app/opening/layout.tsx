@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'yaneyuka | 開口部',
+  title: '開口部',
   description: '建築・建設業界の開口部情報をまとめて紹介。アルミサッシ、樹脂サッシ、木製サッシ、シャッターなど各種開口部のメーカー情報をお届けします。',
   alternates: {
     canonical: 'https://yaneyuka.com/opening',

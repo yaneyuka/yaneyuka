@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'yaneyuka | 外壁材',
+  title: '外壁材',
   description: '建築・建設業界の外壁材情報をまとめて紹介。ALC、ECP、サイディング、金属パネルなど各種外壁材のメーカー情報をお届けします。',
   alternates: {
     canonical: 'https://yaneyuka.com/exterior-wall',

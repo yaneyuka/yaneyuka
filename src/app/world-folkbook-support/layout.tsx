@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Support | World Folkbook | yaneyuka',
+  title: 'Support | World Folkbook',
   description: 'Support page for the World Folkbook iOS app — FAQ and contact information. Available in Japanese and English.',
   alternates: {
     canonical: 'https://yaneyuka.com/world-folkbook-support',

@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'プライバシーポリシー | Rules | yaneyuka',
+  title: 'プライバシーポリシー | Rules',
   description: 'Rulesアプリのプライバシーポリシーです。個人情報の取り扱いに関する方針をご説明します。',
   alternates: {
     canonical: 'https://yaneyuka.com/rules-app-privacy-policy',

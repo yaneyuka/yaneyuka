@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'yaneyuka | 掲示板',
+  title: '掲示板',
   description: '建築・建設業界の掲示板。質問・相談、情報交換、技術的な議論などを行えます。',
   alternates: {
     canonical: 'https://yaneyuka.com/forum',

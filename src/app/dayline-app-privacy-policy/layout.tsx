@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'プライバシーポリシー | DayLine | yaneyuka',
+  title: 'プライバシーポリシー | DayLine',
   description: 'DayLineアプリのプライバシーポリシーです。個人情報の取り扱いに関する方針をご説明します。',
   alternates: {
     canonical: 'https://yaneyuka.com/dayline-app-privacy-policy',

@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'yaneyuka | 機械設備',
+  title: '機械設備',
   description: '建築・建設業界の機械設備情報をまとめて紹介。水栓、衛生機器、住宅設備、キッチン、空調機など各種機械設備のメーカー情報をお届けします。',
   alternates: {
     canonical: 'https://yaneyuka.com/mechanical-systems',

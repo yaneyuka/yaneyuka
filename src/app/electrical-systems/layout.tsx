@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'yaneyuka | 電気設備',
+  title: '電気設備',
   description: '建築・建設業界の電気設備情報をまとめて紹介。照明、外構照明、スイッチコンセント、発電機など各種電気設備のメーカー情報をお届けします。',
   alternates: {
     canonical: 'https://yaneyuka.com/electrical-systems',

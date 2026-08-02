@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'yaneyuka | NEWS',
+  title: 'NEWS',
   description: '建築・建設業界の最新ニュースをお届けします。建材メーカー、施工会社、設計事務所の情報をまとめて紹介。',
   alternates: {
     canonical: 'https://yaneyuka.com/news',

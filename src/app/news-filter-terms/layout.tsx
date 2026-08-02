@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: '利用規約 | News Filter | yaneyuka',
+  title: '利用規約 | News Filter',
   description: 'iOSアプリ News Filter の利用規約です。',
   alternates: {
     canonical: 'https://yaneyuka.com/news-filter-terms',

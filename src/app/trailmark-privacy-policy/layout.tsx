@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'プライバシーポリシー | Trailmark | yaneyuka',
+  title: 'プライバシーポリシー | Trailmark',
   description: 'Trailmarkアプリのプライバシーポリシーです。位置情報・移動記録の取り扱いに関する方針をご説明します。',
   alternates: {
     canonical: 'https://yaneyuka.com/trailmark-privacy-policy',

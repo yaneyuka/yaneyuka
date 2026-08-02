@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'yaneyuka | 書籍・ソフト',
+  title: '書籍・ソフト',
   description: '建築・建設業界向けの書籍・ソフトウェア情報をまとめて紹介。CADソフト、建築計算ソフト、専門書籍など。',
   alternates: {
     canonical: 'https://yaneyuka.com/books-software',

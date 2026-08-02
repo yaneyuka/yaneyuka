@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'yaneyuka | 内装その他',
+  title: '内装その他',
   description: '建築・建設業界の内装その他建材情報をまとめて紹介。トイレブース、内装サッシ、手摺、グレーチングなど各種内装建材のメーカー情報をお届けします。',
   alternates: {
     canonical: 'https://yaneyuka.com/internal-other',

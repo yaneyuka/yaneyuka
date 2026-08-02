@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'yaneyuka | 法規',
+  title: '法規',
   description: '建築・建設業界の法規情報をまとめて紹介。建築基準法、消防法、関連法規の情報をお届けします。',
   alternates: {
     canonical: 'https://yaneyuka.com/regulations',

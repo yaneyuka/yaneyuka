@@ -8,6 +8,15 @@ interface SitemapEntry {
   priority: number;
 }
 
+// next.config.js の trailingSlash: true により、末尾スラッシュ無しの URL は 308 で
+// リダイレクトされる。sitemap には最終形（スラッシュ付き）を載せる。
+const withSlash = (p: string) => (p.endsWith('/') ? p : `${p}/`);
+
+// 安定コンテンツの更新日。内容を改訂したらこの定数を更新する。
+const STABLE_LAST_MODIFIED = new Date('2026-08-02');
+// 頻繁に中身が変わるページはビルド日を使う。
+const BUILD_TIME = new Date();
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = 'https://yaneyuka.com'
 
@@ -59,16 +68,48 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/exterior', changeFrequency: 'monthly', priority: 0.5 },
   ];
 
-  // 静的ページ
-  const staticPages: SitemapEntry[] = [
-    { path: '/kijyunhou-app-privacy-policy', changeFrequency: 'yearly', priority: 0.2 },
+  // iOS アプリの法的文書 + 全アプリ共通サポート。
+  // App Store のメタデータから参照されるので、インデックスされている必要がある。
+  // 新規アプリ追加時はここにも追加する
+  // （RelatedPrivacyLinks.tsx の LEGAL_APPS と MainLayout.tsx の正規表現もセットで更新）。
+  const legalPaths = [
+    '/support',
+    '/rules-app-privacy-policy',
+    '/dayline-app-privacy-policy',
+    '/kijyunhou-app-privacy-policy',
+    '/shoubouhou-app-privacy-policy',
+    '/epoch-camera-privacy-policy',
+    '/epoch-camera-terms',
+    '/fx-signal-privacy-policy',
+    '/fx-signal-terms',
+    '/fx-signal-support',
+    '/cfd-signal-privacy-policy',
+    '/cfd-signal-terms',
+    '/cfd-signal-support',
+    '/world-folkbook-privacy-policy',
+    '/world-folkbook-terms',
+    '/world-folkbook-support',
+    '/news-filter-privacy-policy',
+    '/news-filter-terms',
+    '/paslog-privacy-policy',
+    '/trailmark-privacy-policy',
+    '/noteleaf-app-privacy-policy',
+    '/weatherchime-privacy-policy',
   ];
+  const legal: SitemapEntry[] = legalPaths.map((path) => ({
+    path,
+    changeFrequency: 'yearly' as ChangeFreq,
+    priority: 0.3,
+  }));
 
-  const allEntries = [...top, ...frequent, ...moderate, ...materials, ...staticPages];
+  // /userpage は robots.txt で Disallow しているため sitemap にも載せない。
+
+  const frequentPaths = new Set<string>([...frequent.map((e) => e.path), '/']);
+  const allEntries = [...top, ...frequent, ...moderate, ...materials, ...legal];
 
   return allEntries.map((entry) => ({
-    url: `${base}${entry.path}`,
-    lastModified: new Date('2025-06-01'),
+    url: `${base}${withSlash(entry.path)}`,
+    lastModified: frequentPaths.has(entry.path) ? BUILD_TIME : STABLE_LAST_MODIFIED,
     changeFrequency: entry.changeFrequency,
     priority: entry.priority,
   }));

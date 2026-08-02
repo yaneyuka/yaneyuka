@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | PasLog | yaneyuka',
+  title: 'Privacy Policy | PasLog',
   description: 'Privacy Policy for the PasLog iOS app. PasLog stores all data only on your device. This page is also available in Japanese.',
   alternates: {
     canonical: 'https://yaneyuka.com/paslog-privacy-policy',

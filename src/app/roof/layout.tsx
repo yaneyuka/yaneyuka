@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'yaneyuka | 屋根材',
+  title: '屋根材',
   description: '建築・建設業界の屋根材情報をまとめて紹介。折板、金属屋根、スレート、瓦など各種屋根材のメーカー情報をお届けします。',
   alternates: {
     canonical: 'https://yaneyuka.com/roof',

@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'yaneyuka | イベント情報',
+  title: 'イベント情報',
   description: '建築・建設業界の展示会・セミナー・イベント情報をまとめて紹介。JAPAN BUILD、建築建材展、リフォーム産業フェアなど最新のイベント情報をお届けします。',
   alternates: {
     canonical: 'https://yaneyuka.com/event',

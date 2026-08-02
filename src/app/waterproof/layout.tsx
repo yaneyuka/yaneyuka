@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'yaneyuka | 防水材',
+  title: '防水材',
   description: '建築・建設業界の防水材情報をまとめて紹介。ウレタン防水、アスファルト防水、シート防水、FRP防水など各種防水材のメーカー情報をお届けします。',
   alternates: {
     canonical: 'https://yaneyuka.com/waterproof',

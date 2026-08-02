@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'プライバシーポリシー | Noteleaf | yaneyuka',
+  title: 'プライバシーポリシー | Noteleaf',
   description: 'Noteleafアプリのプライバシーポリシー。本アプリはデータを一切収集しません。アカウント不要、サーバーなし、すべて端末内完結。',
   alternates: {
     canonical: 'https://yaneyuka.com/noteleaf-app-privacy-policy',

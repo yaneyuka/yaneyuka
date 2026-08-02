@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Terms of Use | Epoch Camera | yaneyuka',
+  title: 'Terms of Use | Epoch Camera',
   description: 'Terms of Use for the Epoch Camera iOS app. This page is also available in Japanese.',
   alternates: {
     canonical: 'https://yaneyuka.com/epoch-camera-terms',

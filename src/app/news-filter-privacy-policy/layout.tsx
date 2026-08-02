@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'プライバシーポリシー | News Filter | yaneyuka',
+  title: 'プライバシーポリシー | News Filter',
   description: 'iOSアプリ News Filter のプライバシーポリシーです。個人情報の取り扱いに関する方針をご説明します。',
   alternates: {
     canonical: 'https://yaneyuka.com/news-filter-privacy-policy',

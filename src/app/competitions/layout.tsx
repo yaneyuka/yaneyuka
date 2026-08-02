@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'yaneyuka | コンペ',
+  title: 'コンペ',
   description: '建築・建設業界のコンペティション情報をまとめて紹介。設計コンペ、施工コンペなどの情報をお届けします。',
   alternates: {
     canonical: 'https://yaneyuka.com/competitions',

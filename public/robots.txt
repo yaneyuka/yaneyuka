@@ -1,0 +1,6 @@
+User-Agent: *
+Allow: /
+Disallow: /userpage
+
+Host: https://yaneyuka.com
+Sitemap: https://yaneyuka.com/sitemap.xml

@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'yaneyuka | ファニチャー',
+  title: 'ファニチャー',
   description: '建築・建設業界のファニチャー情報をまとめて紹介。家具、カーテン、ブラインド、生地など各種ファニチャーのメーカー情報をお届けします。',
   alternates: {
     canonical: 'https://yaneyuka.com/furniture',

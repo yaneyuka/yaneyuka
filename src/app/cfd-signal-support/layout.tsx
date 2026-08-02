@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Support | CFD Signal | yaneyuka',
+  title: 'Support | CFD Signal',
   description: 'Support page for the CFD Signal iOS app — FAQ and contact information. Available in Japanese and English.',
   alternates: {
     canonical: 'https://yaneyuka.com/cfd-signal-support',

@@ -5,7 +5,7 @@ import { Metadata } from 'next';
 export const revalidate = 1800;
 
 export const metadata: Metadata = {
-  title: 'yaneyuka | 新製品',
+  title: '新製品',
   description: '建築・建設業界の新製品情報をまとめて紹介。建材、設備、工具などの最新製品をお届けします。',
   alternates: {
     canonical: 'https://yaneyuka.com/new-products',

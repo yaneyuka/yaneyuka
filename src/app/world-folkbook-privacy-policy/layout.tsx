@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | World Folkbook | yaneyuka',
+  title: 'Privacy Policy | World Folkbook',
   description: 'Privacy Policy for the World Folkbook iOS app. This page is also available in Japanese.',
   alternates: {
     canonical: 'https://yaneyuka.com/world-folkbook-privacy-policy',
