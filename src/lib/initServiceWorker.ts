@@ -1,7 +1,45 @@
 /**
- * Service Workerの初期化
- * 環境変数からFirebase設定を読み込んでService Workerを登録
+ * FCM 用 Service Worker の登録。
+ *
+ * ⚠️ 2026-08-02 時点で、この関数はどこからも呼ばれていない。
+ * バックグラウンドのプッシュ通知を有効にするには、以下が揃う必要がある:
+ *
+ *   1. `NEXT_PUBLIC_FIREBASE_VAPID_KEY` を .env.local に設定
+ *      （Firebase Console → プロジェクトの設定 → Cloud Messaging → ウェブプッシュ証明書）
+ *   2. この関数をクライアント側から呼ぶ
+ *   3. getFCMToken()（firebaseClient.ts）でトークンを取得してサーバーに保存
+ *
+ * 2 を入れる際は慎重に。過去に next-pwa の Service Worker が /_next/static を
+ * CacheFirst で握ってしまい、デプロイしても古い画面が出る事故が起きたため、
+ * public/sw.js にキルスイッチ（全キャッシュ削除 + 自身の unregister）を置いて
+ * 収拾した経緯がある。Service Worker を戻すのは、その影響を理解した上で。
+ *
+ * なお、タブを開いている間のチャット通知は ChatNotificationListener が
+ * Firestore の onSnapshot と Notification API で処理しており、Service Worker には
+ * 依存していない。
  */
+
+function buildConfigQuery(): string | null {
+  const config = {
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  };
+
+  if (!config.apiKey || !config.projectId || !config.messagingSenderId) {
+    console.error('[initServiceWorker] Firebase の環境変数が不足しています');
+    return null;
+  }
+
+  const params = new URLSearchParams();
+  for (const [key, value] of Object.entries(config)) {
+    if (value) params.set(key, value);
+  }
+  return params.toString();
+}
 
 export async function initServiceWorker(): Promise<ServiceWorkerRegistration | null> {
   if (typeof window === 'undefined' || !('serviceWorker' in navigator)) {
@@ -9,103 +47,24 @@ export async function initServiceWorker(): Promise<ServiceWorkerRegistration | n
     return null;
   }
 
-  // ローカル開発環境ではService Workerのエラーを抑制
-  const isLocalhost = typeof window !== 'undefined' && 
-    (window.location.hostname === 'localhost' || 
-     window.location.hostname === '127.0.0.1' ||
-     window.location.hostname === '');
+  const query = buildConfigQuery();
+  if (!query) return null;
 
   try {
-    // 既に登録されているService Workerを確認
-    const existingRegistration = await navigator.serviceWorker.getRegistration('/');
-    if (existingRegistration && existingRegistration.active) {
-      console.log('[initServiceWorker] 既存のService Workerが見つかりました');
-      
-      // Firebase設定をService Workerに送信
-      if (existingRegistration.active) {
-        existingRegistration.active.postMessage({
-          type: 'FIREBASE_CONFIG',
-          config: {
-            apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-            authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-            projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-            storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-            messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-            appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-          },
-        });
-      }
-      
-      return existingRegistration;
-    }
+    // 設定はクエリ文字列で渡す。Service Worker からは process.env を読めず、
+    // postMessage は「起動直後の onBackgroundMessage 登録」に間に合わないため。
+    // URL が変わればブラウザが新しい Worker として扱うので、設定変更も反映される。
+    const registration = await navigator.serviceWorker.register(
+      `/firebase-messaging-sw.js?${query}`,
+      { scope: '/' }
+    );
 
-    // 静的ファイルを優先的に使用（リダイレクトエラーを回避）
-    console.log('[initServiceWorker] 静的Service Workerを登録します...');
-    const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js', {
-      scope: '/',
-    });
-
+    // getFCMToken() 側が navigator.serviceWorker.ready を待つので、
+    // ここでアクティブ化まで待つ必要はない。
     console.log('[initServiceWorker] Service Worker登録成功');
-
-    // Firebase設定をService Workerに送信
-    if (registration.active) {
-      registration.active.postMessage({
-        type: 'FIREBASE_CONFIG',
-        config: {
-          apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-          authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-          projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-          storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-          messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-          appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-        },
-      });
-    } else if (registration.installing) {
-      registration.installing.addEventListener('statechange', () => {
-        if (registration.installing?.state === 'activated' && registration.active) {
-          registration.active.postMessage({
-            type: 'FIREBASE_CONFIG',
-            config: {
-              apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-              authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-              projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-              storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-              messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-              appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-            },
-          });
-        }
-      });
-    }
-
-    // Service Workerがアクティブになるまで待つ（最大10秒）
-    if (registration.installing) {
-      console.log('[initServiceWorker] Service Workerをインストール中...');
-      await new Promise<void>((resolve, reject) => {
-        const timeout = setTimeout(() => {
-          reject(new Error('Service Workerのインストールがタイムアウトしました'));
-        }, 10000);
-
-        registration.installing!.addEventListener('statechange', () => {
-          if (registration.installing!.state === 'activated') {
-            clearTimeout(timeout);
-            console.log('[initServiceWorker] Service Workerがアクティブになりました');
-            resolve();
-          }
-        });
-      });
-    } else if (registration.waiting) {
-      console.log('[initServiceWorker] Service Workerが待機中です');
-      // 既存のService Workerをスキップして新しいものを有効化
-      registration.waiting.postMessage({ type: 'SKIP_WAITING' });
-    } else if (registration.active) {
-      console.log('[initServiceWorker] Service Workerが既にアクティブです');
-    }
-
     return registration;
   } catch (error) {
     console.error('[initServiceWorker] Service Worker登録エラー:', error);
     return null;
   }
 }
-
