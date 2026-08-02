@@ -1471,7 +1471,6 @@ export default ShopContent;
 // Next.js の styled-jsx を利用して、このコンポーネント内でのみ有効にする
 // - 埋め込み側の <img> の固定幅/高さを上書きし、枠内で収まるようにする
 // - オブジェクトフィットは contain（全体表示）
-// eslint-disable-next-line @next/next/no-css-tags
 <style jsx>{`
   :global(.shop-embed-container img) {
     max-width: 100%;

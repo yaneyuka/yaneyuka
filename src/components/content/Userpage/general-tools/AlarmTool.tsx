@@ -816,7 +816,7 @@ const AlarmTool: React.FC = () => {
       {showOverlay && (
         <div className="fixed inset-0 bg-gradient-to-br from-red-500 to-orange-500 text-white flex flex-col items-center justify-center" style={{ display: 'flex', zIndex: 2147483647 }}>
           <div className="text-center px-4">
-            <div className="text-6xl font-bold mb-6 animate-pulse">TIME'S UP!</div>
+            <div className="text-6xl font-bold mb-6 animate-pulse">TIME&apos;S UP!</div>
             <p className="text-xl mb-8 opacity-90">予定時刻になりました</p>
             <button onClick={stopTimer} className="px-8 py-3 bg-white text-red-600 rounded-full font-bold text-lg hover:bg-gray-100 transition-colors shadow-lg">アラームを停止</button>
           </div>

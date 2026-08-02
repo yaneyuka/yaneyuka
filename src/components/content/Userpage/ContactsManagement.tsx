@@ -140,7 +140,7 @@ const ContactsManagement: React.FC = () => {
   };
 
   const getSortedContacts = () => {
-    let sortedContacts = [...contacts];
+    const sortedContacts = [...contacts];
     
     switch(currentSortOrder) {
       case 'input-asc':

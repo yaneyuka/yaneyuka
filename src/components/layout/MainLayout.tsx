@@ -69,7 +69,7 @@ import { AuthProvider, useAuth } from '../../lib/AuthContext';
 import CookieConsent from './CookieConsent';
 import Footer from './Footer';
 import UserpageBottomBar from './UserpageBottomBar';
-import { db } from '../../lib/firebaseClient';
+import { db, logEvent } from '../../lib/firebaseClient';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import { usePersistentState } from '../../lib/usePersistentState';
 
@@ -2675,7 +2675,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, initialContent = 'top
                             href={ad.link}
                             target="_blank"
                             rel="noopener noreferrer nofollow sponsored"
-                            onClick={() => { try { const { logEvent } = require('@/lib/firebaseClient'); logEvent?.('pr_click', { area: activeContent, index }) } catch {} }}
+                            onClick={() => { try { logEvent('pr_click', { area: activeContent, index }) } catch {} }}
                           >
                             <div className={borderClass ? `rounded overflow-hidden ${borderClass}` : 'rounded overflow-hidden'}>
                               <img 
@@ -2703,7 +2703,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, initialContent = 'top
                         href={ad.link}
                         target="_blank"
                         rel="noopener noreferrer nofollow sponsored"
-                        onClick={() => { try { const { logEvent } = require('@/lib/firebaseClient'); logEvent?.('pr_click', { area: activeContent, index }) } catch {} }}
+                        onClick={() => { try { logEvent('pr_click', { area: activeContent, index }) } catch {} }}
                         className={marginClass || undefined}
                       >
                         <div className={borderClass ? `rounded overflow-hidden ${borderClass}` : 'rounded overflow-hidden'}>

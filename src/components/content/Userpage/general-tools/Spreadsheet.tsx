@@ -155,7 +155,7 @@ const Spreadsheet: React.FC = () => {
     const cleaned = expr.replace(/\s+/g, '')
     if (!/^[-+*/().0-9]+$/.test(cleaned)) return NaN
     try {
-      // eslint-disable-next-line no-new-func
+       
       return Function(`return (${cleaned})`)()
     } catch { return NaN }
   }

@@ -46,7 +46,9 @@ const formatNumberString = (value: string): string => {
 
   const sign = trimmed.startsWith('-') ? '-' : '';
   const numericPart = trimmed.replace(/^[-+]/, '');
-  let [integerPart, fractionPart] = numericPart.split('.');
+  const parts = numericPart.split('.');
+  const fractionPart = parts[1];
+  let integerPart = parts[0];
 
   if (!integerPart || integerPart === '') integerPart = '0';
   const formattedInt = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -430,7 +432,7 @@ const GeneralTools: React.FC = () => {
   // 計算結果を履歴に追加する関数を更新
   const calculateResult = async () => {
     try {
-      let expression = calculatorExpression
+      const expression = calculatorExpression
         .replace(/sin\(/g, 'Math.sin(')
         .replace(/cos\(/g, 'Math.cos(')
         .replace(/tan\(/g, 'Math.tan(')

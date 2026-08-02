@@ -436,7 +436,7 @@ const MyCalendar: React.FC = () => {
     const endDate = new Date(lastDayOfMonth);
     endDate.setDate(endDate.getDate() + (6 - endDate.getDay()));
 
-    let relevantEvents = events.filter(e => {
+    const relevantEvents = events.filter(e => {
         const d = new Date(e.date);
         return d >= startDate && d <= endDate;
     });

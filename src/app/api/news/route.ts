@@ -145,7 +145,7 @@ export async function GET() {
     }
 
     const xmlList = await Promise.allSettled(sources.map(s => fetchXML(s.url)))
-    let results: NewsItem[] = []
+    const results: NewsItem[] = []
     xmlList.forEach((r, idx) => {
       if (r.status === 'fulfilled' && r.value) {
         const xml = r.value

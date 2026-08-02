@@ -884,7 +884,7 @@ const MultiLayerCondensation: React.FC<MultiLayerCondensationProps> = ({ hideHea
     const indoorSatPressure = getSatPressure(ti);
     const outdoorSatPressure = getSatPressure(te);
 
-    let leftAirVal1, leftAirVal2, rightAirVal1, rightAirVal2, leftSurfX, rightSurfX;
+    let leftAirVal1, leftAirVal2, rightAirVal1, rightAirVal2;
     let leftAirTemp, rightAirTemp;
     
     if (graphMode === 'pressure') {
@@ -906,7 +906,8 @@ const MultiLayerCondensation: React.FC<MultiLayerCondensationProps> = ({ hideHea
         rightAirVal1 = te; rightAirVal2 = outdoorDew;
       }
     }
-    leftSurfX = ZONE_WIDTH; rightSurfX = 100 - ZONE_WIDTH;
+    const leftSurfX = ZONE_WIDTH;
+    const rightSurfX = 100 - ZONE_WIDTH;
 
     const visualPoints = pts.map((p, ptsIndex) => ({
         x: toX(p.distance),
@@ -1127,7 +1128,7 @@ const MultiLayerCondensation: React.FC<MultiLayerCondensationProps> = ({ hideHea
     const indoorSatPressure = getSatPressure(ti);
     const outdoorSatPressure = getSatPressure(te);
 
-    let leftAirVal1, leftAirVal2, rightAirVal1, rightAirVal2, leftSurfX, rightSurfX;
+    let leftAirVal1, leftAirVal2, rightAirVal1, rightAirVal2;
     let leftAirTemp, rightAirTemp;
     
     if (graphMode === 'pressure') {
@@ -1149,7 +1150,8 @@ const MultiLayerCondensation: React.FC<MultiLayerCondensationProps> = ({ hideHea
         rightAirVal1 = te; rightAirVal2 = outdoorDew;
       }
     }
-    leftSurfX = ZONE_WIDTH; rightSurfX = 100 - ZONE_WIDTH;
+    const leftSurfX = ZONE_WIDTH;
+    const rightSurfX = 100 - ZONE_WIDTH;
 
     const visualPoints = pts.map((p, ptsIndex) => ({
         x: toX(p.distance),
