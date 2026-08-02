@@ -84,7 +84,9 @@ const organizationJsonLd = {
   contactPoint: [
     {
       '@type': 'ContactPoint',
-      email: 'yaneyuka.service@gmail.com',
+      // 公開する連絡先は info@yaneyuka.com で統一（法務ページ・サポートページと同じ）。
+      // 配信先の実メールボックスは CONTACT_TO（api/contact）で別に設定する。
+      email: 'info@yaneyuka.com',
       contactType: 'customer support',
       availableLanguage: ['ja'],
     },

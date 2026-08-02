@@ -99,6 +99,8 @@ function validatePayload(payload: unknown): { valid: boolean; error?: string; da
 }
 
 function buildMail(payload: ContactPayload) {
+  // 配信先の実メールボックス。公開する連絡先（info@yaneyuka.com）とは別物なので、
+  // 表記を揃えようとしてここを書き換えないこと。通常は CONTACT_TO が設定される。
   const to = process.env.CONTACT_TO || 'yaneyuka.service@gmail.com'
   const from = process.env.CONTACT_FROM || (process.env.SMTP_USER || 'noreply@yaneyuka.local')
 
