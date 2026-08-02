@@ -18,6 +18,10 @@ const LEGAL_APPS: LegalApp[] = [
   { href: '/cfd-signal-privacy-policy/', label: 'CFD Signal' },
   { href: '/world-folkbook-privacy-policy/', label: 'World Folkbook' },
   { href: '/news-filter-privacy-policy/', label: 'News Filter' },
+  { href: '/paslog-privacy-policy/', label: 'PasLog' },
+  { href: '/trailmark-privacy-policy/', label: 'Trailmark' },
+  { href: '/noteleaf-app-privacy-policy/', label: 'Noteleaf' },
+  { href: '/weatherchime-privacy-policy/', label: 'Weatherchime' },
 ];
 
 interface RelatedPrivacyLinksProps {

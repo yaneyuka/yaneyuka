@@ -2616,7 +2616,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, initialContent = 'top
             // - 個別アプリページ: URLパス /xxx-app-privacy-policy/ で開いている
             // - yaneyuka.com 本体のプライポリ: フッターバー「プライバシーポリシー」から SPA遷移 → URLは / のまま、activeContent='privacy-policy'
             const isPrivacyPolicyPage =
-              /^\/(rules-app|dayline-app|kijyunhou-app|shoubouhou-app|epoch-camera|fx-signal|cfd-signal|world-folkbook|news-filter)-privacy-policy(\/|$)/.test(pathname) ||
+              /^\/(rules-app|dayline-app|kijyunhou-app|shoubouhou-app|epoch-camera|fx-signal|cfd-signal|world-folkbook|news-filter|paslog|trailmark|noteleaf-app|weatherchime)-privacy-policy(\/|$)/.test(pathname) ||
               activeContent === 'privacy-policy';
             return (
             <aside className="w-[200px] 2xl:w-[300px] min-w-[200px] shrink bg-white px-1 pt-0 pb-4 rounded text-sm overflow-y-auto overflow-x-hidden hidden md:block">
