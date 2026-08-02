@@ -1,9 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
+import nodemailer from 'nodemailer'
+import { isPurpose, resolveManufacturerEmail } from '@/lib/makerContacts'
+
+export const runtime = 'nodejs'
 
 // シンプルなインメモリレート制限（IPベース、1分あたり3リクエスト）
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
 const RATE_LIMIT_WINDOW = 60_000
 const RATE_LIMIT_MAX = 3
+
+const MAX_BODY_LEN = 5000
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now()
@@ -25,18 +31,29 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json()
-    const { to, subject, text } = body
+    const { category, manufacturer, purpose, text } = body
 
-    // バリデーション
-    if (!to || typeof to !== 'string' || !subject || typeof subject !== 'string' || !text || typeof text !== 'string') {
+    // 宛先はクライアントから受け取らず、サーバー側のレジストリから解決する。
+    // `to` を受け付けるとオープンメールリレーになり、第三者宛のなりすまし送信に悪用される。
+    const to = resolveManufacturerEmail(category, manufacturer)
+    if (!to) {
+      return NextResponse.json({ error: 'unknown_recipient' }, { status: 400 })
+    }
+    if (!isPurpose(purpose)) {
+      return NextResponse.json({ error: 'invalid_purpose' }, { status: 400 })
+    }
+    if (typeof text !== 'string' || !text.trim()) {
       return NextResponse.json({ error: 'invalid payload' }, { status: 400 })
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) {
-      return NextResponse.json({ error: 'invalid email address' }, { status: 400 })
-    }
-    if (subject.length > 200 || text.length > 5000) {
+    if (text.length > MAX_BODY_LEN) {
       return NextResponse.json({ error: 'field too long' }, { status: 400 })
     }
+
+    // 件名もサーバー側で組み立てる（クライアント指定の文字列は使わない）
+    const subject =
+      purpose === '打合せ依頼'
+        ? 'yaneyuka.comより打合せ依頼が届いています'
+        : `yaneyuka.comより${purpose}が届いています`
 
     const host = process.env.SMTP_HOST
     const port = process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : undefined
@@ -47,13 +64,6 @@ export async function POST(req: NextRequest) {
     // 開発中や未設定時はドライラン
     if (!host || !port || !user || !pass || !from) {
       console.log('[makerconect/send] DRY RUN =>', { to, subject, text: text.slice(0, 100) })
-      return NextResponse.json({ ok: true, dryRun: true })
-    }
-
-    // nodemailerは必須ではない（未導入でも動くように）
-    let nodemailer: any
-    try { nodemailer = require('nodemailer') } catch (e) {
-      console.warn('[makerconect/send] nodemailer not installed, fallback DRY RUN')
       return NextResponse.json({ ok: true, dryRun: true })
     }
 

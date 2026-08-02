@@ -2,32 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from 'react'
 import { useAuth } from '@/lib/AuthContext'
-
-type Purpose = '打合せ依頼' | 'カタログ請求' | 'サンプル請求'
-
-const MATERIAL_CATEGORIES = [
-  '屋根','外壁','開口部','外壁仕上げ','外部床','外部その他','内部床材','内装壁材','内装天井材','内装その他','防水','金物','ファニチャー','電気設備','機械設備','外構','エクステリア'
-]
-
-const MANUFACTURERS: Record<string, { name: string; email: string }[]> = {
-  '屋根': [ { name: 'サンプル屋根A', email: 'roof-a@example.com' }, { name: 'サンプル屋根B', email: 'roof-b@example.com' } ],
-  '外壁': [ { name: 'サンプル外壁A', email: 'wall-a@example.com' } ],
-  '開口部': [ { name: 'サンプル開口A', email: 'opening-a@example.com' } ],
-  '外壁仕上げ': [ { name: 'サンプル仕上A', email: 'finish-a@example.com' } ],
-  '外部床': [ { name: 'サンプル外部床A', email: 'extfloor-a@example.com' } ],
-  '外部その他': [ { name: 'サンプル外部その他A', email: 'extetc-a@example.com' } ],
-  '内部床材': [ { name: 'サンプル内部床A', email: 'intfloor-a@example.com' } ],
-  '内装壁材': [ { name: 'サンプル内装壁A', email: 'intwall-a@example.com' } ],
-  '内装天井材': [ { name: 'サンプル内装天井A', email: 'intceil-a@example.com' } ],
-  '内装その他': [ { name: 'サンプル内装その他A', email: 'intetc-a@example.com' } ],
-  '防水': [ { name: 'サンプル防水A', email: 'waterproof-a@example.com' } ],
-  '金物': [ { name: 'サンプル金物A', email: 'hardware-a@example.com' } ],
-  'ファニチャー': [ { name: 'サンプル家具A', email: 'furniture-a@example.com' } ],
-  '電気設備': [ { name: 'サンプル電気A', email: 'electrical-a@example.com' } ],
-  '機械設備': [ { name: 'サンプル機械A', email: 'mechanical-a@example.com' } ],
-  '外構': [ { name: 'サンプル外構A', email: 'exinfra-a@example.com' } ],
-  'エクステリア': [ { name: 'サンプルエクステリアA', email: 'exterior-a@example.com' } ],
-}
+import { MATERIAL_CATEGORIES, MANUFACTURERS, type Purpose } from '@/lib/makerContacts'
 
 type ContactProfile = {
   companyName: string
@@ -79,7 +54,6 @@ export default function MakerConect() {
     if (!canSend) { setMessage('依頼者情報が不足しています'); return }
     setSending(true)
     try {
-      const subject = purpose === '打合せ依頼' ? 'yaneyuka.comより打合せ依頼が届いています' : `yaneyuka.comより${purpose}が届いています`
       const lines: string[] = []
       lines.push('依頼者情報')
       lines.push(`会社名: ${profile.companyName}`)
@@ -106,11 +80,14 @@ export default function MakerConect() {
       const res = await fetch('/api/makerconect/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        // 宛先・件名はサーバー側が category / manufacturer / purpose から解決する。
+        // クライアントから to を渡すとオープンメールリレーになるため送らない。
         body: JSON.stringify({
-          to: selectedMfg.email,
-          subject,
+          category,
+          manufacturer,
+          purpose,
           text: lines.join('\n'),
-          meta: { category, manufacturer, purpose, uid }
+          meta: { uid }
         })
       })
       const json = await res.json().catch(() => ({}))
