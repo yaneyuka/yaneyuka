@@ -74,6 +74,49 @@ console.log(`\n最終確認: A の投稿本文 = "${content}"`);
 const intact = content === 'edited by owner';
 console.log(intact ? '  → 改竄されていない' : '  → ★改竄された★');
 
+// ===== 使用量メトリクス (usage/*) =====
+console.log('\n--- 使用量メトリクス ---');
+const uidC = await as('carol@example.com');
+const MB50 = 52428800;
+
+await check('C: 自分の使用量を作成', 'allow', () =>
+  setDoc(doc(db, 'usage', `${uidC}_202608`), { uploadedBytes: 1000 }));
+await check('C: 自分の使用量を加算', 'allow', () =>
+  setDoc(doc(db, 'usage', `${uidC}_202608`), { uploadedBytes: 2000 }));
+await check('C: 一度に50MB超を加算', 'deny', () =>
+  setDoc(doc(db, 'usage', `${uidC}_202608`), { uploadedBytes: 2000 + MB50 + 1 }));
+await check('C: 使用量を減らして枠を回復', 'deny', () =>
+  setDoc(doc(db, 'usage', `${uidC}_202608`), { uploadedBytes: 0 }));
+await check('C: 他人の使用量を書き換え', 'deny', () =>
+  setDoc(doc(db, 'usage', `${uidA}_202608`), { uploadedBytes: 999 }));
+await check('C: サイト全体の使用量を加算（正規の利用）', 'allow', () =>
+  setDoc(doc(db, 'usage', 'site_202608'), { uploadedBytes: 3000 }));
+await check('C: サイト全体の使用量を巨大な値に改竄  ★今回の修正対象', 'deny', () =>
+  setDoc(doc(db, 'usage', 'site_202608'), { uploadedBytes: 999999999999 }));
+await check('C: 想定外フィールドを混入', 'deny', () =>
+  setDoc(doc(db, 'usage', `${uidC}_202608`), { uploadedBytes: 2500, isAdmin: true }));
+
+// ===== 公開スケジュールの回答 (schedules/*/participants, responses) =====
+console.log('\n--- 公開スケジュールの回答 ---');
+await as('alice@example.com');
+const SCHED = 'public-schedule-1';
+await check('A: 公開スケジュールを作成', 'allow', () =>
+  setDoc(doc(db, 'schedules', SCHED), { ownerUid: uidA, isPublic: true, title: '打合せ' }));
+
+await signOut(auth); // ここから未ログイン（公開スケジュールの想定利用者）
+await check('未ログイン: 参加者として登録（正規の利用）', 'allow', () =>
+  setDoc(doc(db, 'schedules', SCHED, 'participants', 'p1'), { name: '山田', comment: 'よろしく', createdAt: new Date(), updatedAt: new Date() }));
+await check('未ログイン: 回答を送信（正規の利用）', 'allow', () =>
+  setDoc(doc(db, 'schedules', SCHED, 'responses', 'r1'), { participantId: 'p1', optionId: 'o1', value: 'ok' }));
+await check('未ログイン: 巨大な名前を登録  ★今回の修正対象', 'deny', () =>
+  setDoc(doc(db, 'schedules', SCHED, 'participants', 'p2'), { name: 'x'.repeat(100000), createdAt: new Date(), updatedAt: new Date() }));
+await check('未ログイン: 想定外フィールドで容量を埋める  ★今回の修正対象', 'deny', () =>
+  setDoc(doc(db, 'schedules', SCHED, 'participants', 'p3'), { name: '山田', payload: 'x'.repeat(100000), createdAt: new Date(), updatedAt: new Date() }));
+await check('未ログイン: 回答に巨大な値を入れる  ★今回の修正対象', 'deny', () =>
+  setDoc(doc(db, 'schedules', SCHED, 'responses', 'r2'), { participantId: 'p1', optionId: 'o1', value: 'x'.repeat(100000) }));
+await check('未ログイン: 参加者を削除', 'deny', () =>
+  deleteDoc(doc(db, 'schedules', SCHED, 'participants', 'p1')));
+
 const failed = results.filter((r) => !r.pass).length;
 console.log(`\n${results.length - failed}/${results.length} 件成功`);
 process.exit(failed === 0 && intact ? 0 : 1);

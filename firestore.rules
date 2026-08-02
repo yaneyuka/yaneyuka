@@ -81,19 +81,35 @@ service cloud.firestore {
     }
 
     // ファイル転送ツールの使用量メトリクス
+    // クライアントが increment() で加算する設計のため、1回の書き込みで動かせる量を
+    // 1ファイル上限（storage.rules と同じ 50MB）に制限し、減算も禁止する。
+    // 旧ルールは site_* を誰でも自由な値に書き換えられ、サイト全体の残量表示を
+    // 改竄して他ユーザーのアップロードを止められた。
+    function usageIdAllowed(usageId) {
+      return usageId.matches('^site_.*')
+        || usageId.matches('^' + request.auth.uid + '_.*');
+    }
+    function usageShapeOk() {
+      return request.resource.data.keys().hasOnly(['uploadedBytes', 'downloadedBytes'])
+        && request.resource.data.get('uploadedBytes', 0) is number
+        && request.resource.data.get('downloadedBytes', 0) is number;
+    }
+    function usageStepOk(field) {
+      return request.resource.data.get(field, 0) - resource.data.get(field, 0) >= 0
+        && request.resource.data.get(field, 0) - resource.data.get(field, 0) <= 52428800;
+    }
     match /usage/{usageId} {
-      allow read: if request.auth != null
-        && (
-          usageId.matches('^site_.*')
-          || usageId.matches('^' + request.auth.uid + '_.*')
-        );
-      // 書き込み: 自分の使用量またはサイト全体の使用量のみ
-      allow write: if request.auth != null
-        && (
-          usageId.matches('^' + request.auth.uid + '_.*')
-          || usageId.matches('^site_.*')
-        )
-        && request.resource.data.keys().hasOnly(['uploadedBytes', 'downloadedBytes']);
+      allow read: if request.auth != null && usageIdAllowed(usageId);
+      allow create: if request.auth != null
+        && usageIdAllowed(usageId)
+        && usageShapeOk()
+        && request.resource.data.get('uploadedBytes', 0) <= 52428800
+        && request.resource.data.get('downloadedBytes', 0) <= 52428800;
+      allow update: if request.auth != null
+        && usageIdAllowed(usageId)
+        && usageShapeOk()
+        && usageStepOk('uploadedBytes')
+        && usageStepOk('downloadedBytes');
     }
 
     // ファイル転送ツールのアップロードメタデータ
@@ -208,14 +224,25 @@ service cloud.firestore {
       }
 
       // 参加者
+      // 公開スケジュールは未ログインでも回答できる仕様なので auth は要求できない。
+      // 代わりにフィールドと文字数を固定し、1件あたりのサイズを抑える
+      // （旧ルールは項目数・サイズ無制限で、巨大ドキュメントを量産して
+      //   Firestore の課金を膨らませることができた）。
       match /participants/{participantId} {
         allow read: if get(/databases/$(database)/documents/schedules/$(scheduleId)).data.isPublic == true
           || (request.auth != null && get(/databases/$(database)/documents/schedules/$(scheduleId)).data.ownerUid == request.auth.uid);
-        // 作成: 公開なら誰でも、非公開ならログインユーザーのみ
-        allow create: if get(/databases/$(database)/documents/schedules/$(scheduleId)).data.isPublic == true
-          || request.auth != null;
-        // 更新・削除: オーナーまたは本人（名前で判定は難しいので、オーナーのみ）
-        allow update, delete: if request.auth != null
+        // 作成・更新: 公開なら誰でも、非公開ならログインユーザーのみ
+        allow create, update: if (get(/databases/$(database)/documents/schedules/$(scheduleId)).data.isPublic == true
+            || request.auth != null)
+          && request.resource.data.keys().hasOnly(['name', 'comment', 'createdAt', 'updatedAt'])
+          && request.resource.data.name is string
+          && request.resource.data.name.size() > 0
+          && request.resource.data.name.size() <= 100
+          && (!request.resource.data.keys().hasAny(['comment'])
+              || request.resource.data.comment == null
+              || (request.resource.data.comment is string && request.resource.data.comment.size() <= 500));
+        // 削除: オーナーのみ
+        allow delete: if request.auth != null
           && get(/databases/$(database)/documents/schedules/$(scheduleId)).data.ownerUid == request.auth.uid;
       }
 
@@ -224,8 +251,15 @@ service cloud.firestore {
         allow read: if get(/databases/$(database)/documents/schedules/$(scheduleId)).data.isPublic == true
           || (request.auth != null && get(/databases/$(database)/documents/schedules/$(scheduleId)).data.ownerUid == request.auth.uid);
         // 作成・更新: 公開なら誰でも、非公開ならログインユーザーのみ
-        allow create, update: if get(/databases/$(database)/documents/schedules/$(scheduleId)).data.isPublic == true
-          || request.auth != null;
+        allow create, update: if (get(/databases/$(database)/documents/schedules/$(scheduleId)).data.isPublic == true
+            || request.auth != null)
+          && request.resource.data.keys().hasOnly(['participantId', 'optionId', 'value'])
+          && request.resource.data.participantId is string
+          && request.resource.data.participantId.size() <= 128
+          && request.resource.data.optionId is string
+          && request.resource.data.optionId.size() <= 128
+          && request.resource.data.value is string
+          && request.resource.data.value.size() <= 20;
         // 削除: オーナーのみ
         allow delete: if request.auth != null
           && get(/databases/$(database)/documents/schedules/$(scheduleId)).data.ownerUid == request.auth.uid;
