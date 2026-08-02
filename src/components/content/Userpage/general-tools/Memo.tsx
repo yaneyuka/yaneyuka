@@ -53,8 +53,16 @@ const MemoTool: React.FC = () => {
   const autoSaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isComposingRef = useRef<boolean>(false);
   const isEditingRef = useRef<boolean>(false);
+  // onSnapshot リスナーは [currentUser] で一度だけ登録されるため、
+  // クロージャ内の currentMemo が古い値で固定される（stale closure）。
+  // 常に最新の currentMemo を ref で参照できるようにしてジャンプを防ぐ。
+  const currentMemoRef = useRef<Memo | null>(null);
 
   const { currentUser, isLoggedIn } = useAuth();
+
+  useEffect(() => {
+    currentMemoRef.current = currentMemo;
+  }, [currentMemo]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -114,16 +122,18 @@ const MemoTool: React.FC = () => {
       try { localStorage.setItem(`generalMemos:${currentUser.uid}`, JSON.stringify(list.map(m => ({ ...m, createdAt: m.createdAt.getTime(), updatedAt: m.updatedAt.getTime() })))) } catch {}
       
       if (!isEditingRef.current && document.activeElement !== editorRef.current) {
-        if (list.length && (!currentMemo || !list.find(m => m.id === currentMemo.id))) {
-          setCurrentMemo(list[0]); 
-          setMemoTitle(list[0].title); 
-          setMemoCategory(list[0].category); 
-          setMemoTags(list[0].tags.join(', ')); 
+        const activeMemo = currentMemoRef.current;
+        if (list.length && (!activeMemo || !list.find(m => m.id === activeMemo.id))) {
+          setCurrentMemo(list[0]);
+          setMemoTitle(list[0].title);
+          setMemoCategory(list[0].category);
+          setMemoTags(list[0].tags.join(', '));
           if (editorRef.current) {
             editorRef.current.innerHTML = list[0].content;
+            editorRef.current.scrollTop = 0;
           }
-        } else if (currentMemo) {
-          const updatedMemo = list.find(m => m.id === currentMemo.id);
+        } else if (activeMemo) {
+          const updatedMemo = list.find(m => m.id === activeMemo.id);
           if (updatedMemo) {
             if (editorRef.current && updatedMemo.content !== editorRef.current.innerHTML) {
               const cursorPos = saveCursorPosition();
@@ -523,6 +533,7 @@ const MemoTool: React.FC = () => {
     setMemoTags(memo.tags.join(', '));
     if (editorRef.current) {
       editorRef.current.innerHTML = memo.content;
+      editorRef.current.scrollTop = 0; // 別メモ選択時は本文を常に最上部から表示
     }
     updateCharCount();
   };
