@@ -15,6 +15,7 @@
     "start": "next start",
     "lint": "next lint",
     "export": "npm run clean && next build",
+    "test:rules": "firebase emulators:exec --only firestore,auth \"node scripts/firestore-rules-test.mjs\"",
     "deploy": "npm run predeploy && npx firebase-tools deploy",
     "deploy:preview": "npm run export && npx firebase-tools hosting:channel:deploy yane-preview --expires 7d"
   },

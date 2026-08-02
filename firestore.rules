@@ -2,23 +2,38 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null && request.auth.token.email == 'slime-a@outlook.com';
+    }
+    // 投稿者本人か管理者か。uid 未設定の既存ドキュメントは管理者のみ触れる。
+    function isOwnerOrAdmin() {
+      return isAdmin()
+        || (request.auth != null
+            && resource.data.get('uid', null) == request.auth.uid);
+    }
+
     // 掲示板本体（未ログインでも閲覧可）
     match /forumPosts/{postId} {
       allow read: if true;
-      allow create, update: if request.auth != null;
+      // 作成: 他人になりすませないよう uid を自分のものに固定する
+      allow create: if request.auth != null
+        && request.resource.data.uid == request.auth.uid;
+      // 更新: 自分の投稿または管理者のみ。かつ uid の付け替えを禁止
+      // （旧ルールは「ログイン済みなら誰でも update 可」で、他人の投稿を改竄できた）
+      allow update: if isOwnerOrAdmin()
+        && request.resource.data.uid == resource.data.uid;
       // 削除: 自分の投稿または管理者（slime-a@outlook.com）のみ
-      allow delete: if request.auth != null
-        && (resource.data.uid == request.auth.uid
-            || request.auth.token.email == 'slime-a@outlook.com');
+      allow delete: if isOwnerOrAdmin();
 
       // 返信（未ログインでも閲覧可）
       match /replies/{replyId} {
         allow read: if true;
-        allow create, update: if request.auth != null;
+        allow create: if request.auth != null
+          && request.resource.data.uid == request.auth.uid;
+        allow update: if isOwnerOrAdmin()
+          && request.resource.data.uid == resource.data.uid;
         // 削除: 自分の返信または管理者（slime-a@outlook.com）のみ
-        allow delete: if request.auth != null
-          && (resource.data.uid == request.auth.uid
-              || request.auth.token.email == 'slime-a@outlook.com');
+        allow delete: if isOwnerOrAdmin();
       }
     }
 
