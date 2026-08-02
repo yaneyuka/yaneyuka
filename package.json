@@ -11,7 +11,7 @@
     "clean": "powershell -Command \"if (Test-Path .next) { Remove-Item -Recurse -Force .next -ErrorAction SilentlyContinue }; exit 0\"",
     "clean:firebase": "rimraf .firebase || echo Firebase directory cleanup skipped",
     "predeploy": "npm run clean && npm run clean:firebase",
-    "build": "next build --webpack",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint .",
     "export": "npm run clean && next build",
