@@ -4,6 +4,7 @@ import React, { useState, useEffect, startTransition, useCallback, useRef } from
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Navigation from './Navigation';
 import RelatedPrivacyLinks from '../RelatedPrivacyLinks';
+import { isPrivacyPolicyPath } from '@/lib/legalPages';
 import ReferenceResources from '../content/ReferenceResources';
 import Settings from '../content/Userpage/Settings';
 import Sidebar from './Sidebar';
@@ -2615,8 +2616,11 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, initialContent = 'top
             // プライバシーポリシーページ判定（広告を非表示にして関連プライポリ一覧を出す）
             // - 個別アプリページ: URLパス /xxx-app-privacy-policy/ で開いている
             // - yaneyuka.com 本体のプライポリ: フッターバー「プライバシーポリシー」から SPA遷移 → URLは / のまま、activeContent='privacy-policy'
+            // 対象パスの一覧は src/lib/legalPages.ts が唯一の定義。
+            // 以前はここに正規表現でアプリ名を並べていたため、新アプリ追加時に
+            // 更新を忘れると右カラムのリンク一覧が出ない状態になっていた。
             const isPrivacyPolicyPage =
-              /^\/(rules-app|dayline-app|kijyunhou-app|shoubouhou-app|epoch-camera|fx-signal|cfd-signal|world-folkbook|news-filter|paslog|trailmark|noteleaf-app|weatherchime)-privacy-policy(\/|$)/.test(pathname) ||
+              isPrivacyPolicyPath(pathname) ||
               activeContent === 'privacy-policy';
             return (
             <aside className="w-[200px] 2xl:w-[300px] min-w-[200px] shrink bg-white px-1 pt-0 pb-4 rounded text-sm overflow-y-auto overflow-x-hidden hidden md:block">

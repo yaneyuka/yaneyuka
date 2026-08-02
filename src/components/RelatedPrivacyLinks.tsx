@@ -1,27 +1,17 @@
 import Link from 'next/link';
+import { LEGAL_APPS as APP_REGISTRY, normalizePath } from '@/lib/legalPages';
 
-type LegalApp = {
+type LinkEntry = {
   href: string;
   label: string;
   isYaneyukaMain?: boolean; // yaneyuka.com本体のプラポリはSPA遷移
 };
 
-// プライバシーポリシーの一覧。新アプリ追加時はここに追加。
-const LEGAL_APPS: LegalApp[] = [
+// アプリ一覧は src/lib/legalPages.ts が唯一の定義。新アプリ追加時はそちらへ 1 行足す。
+// yaneyuka.com 本体のプラポリだけは独立URLを持たない SPA 表示なので、ここで先頭に足す。
+const LINKS: LinkEntry[] = [
   { href: '/', label: 'yaneyuka.com', isYaneyukaMain: true },
-  { href: '/rules-app-privacy-policy/', label: 'Rules' },
-  { href: '/dayline-app-privacy-policy/', label: 'DayLine' },
-  { href: '/kijyunhou-app-privacy-policy/', label: '建築基準法yaneyuka' },
-  { href: '/shoubouhou-app-privacy-policy/', label: '消防法アプリ' },
-  { href: '/epoch-camera-privacy-policy/', label: 'Epoch Camera' },
-  { href: '/fx-signal-privacy-policy/', label: 'FX Signal' },
-  { href: '/cfd-signal-privacy-policy/', label: 'CFD Signal' },
-  { href: '/world-folkbook-privacy-policy/', label: 'World Folkbook' },
-  { href: '/news-filter-privacy-policy/', label: 'News Filter' },
-  { href: '/paslog-privacy-policy/', label: 'PasLog' },
-  { href: '/trailmark-privacy-policy/', label: 'Trailmark' },
-  { href: '/noteleaf-app-privacy-policy/', label: 'Noteleaf' },
-  { href: '/weatherchime-privacy-policy/', label: 'Weatherchime' },
+  ...APP_REGISTRY.map((app) => ({ href: app.privacy, label: app.label })),
 ];
 
 interface RelatedPrivacyLinksProps {
@@ -45,9 +35,7 @@ export default function RelatedPrivacyLinks({
   isYaneyukaPrivacyActive,
   onYaneyukaPrivacyClick,
 }: RelatedPrivacyLinksProps) {
-  // パスの末尾スラッシュ正規化
-  const normalize = (p: string) => (p.endsWith('/') && p !== '/' ? p.slice(0, -1) : p);
-  const cur = normalize(currentPath);
+  const cur = normalizePath(currentPath);
 
   const linkClass = 'block text-[11px] text-gray-200 hover:text-white hover:underline';
   const activeClass = 'block text-[11px] font-semibold text-white';
@@ -58,10 +46,10 @@ export default function RelatedPrivacyLinks({
         関連プライバシーポリシー
       </h4>
       <ul className="space-y-1">
-        {LEGAL_APPS.map((app) => {
+        {LINKS.map((app) => {
           const isActive = app.isYaneyukaMain
             ? !!isYaneyukaPrivacyActive
-            : normalize(app.href) === cur;
+            : normalizePath(app.href) === cur;
 
           if (isActive) {
             return (

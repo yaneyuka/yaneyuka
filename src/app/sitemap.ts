@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { allLegalPaths } from '@/lib/legalPages'
 
 type ChangeFreq = 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
 
@@ -70,33 +71,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // iOS アプリの法的文書 + 全アプリ共通サポート。
   // App Store のメタデータから参照されるので、インデックスされている必要がある。
-  // 新規アプリ追加時はここにも追加する
-  // （RelatedPrivacyLinks.tsx の LEGAL_APPS と MainLayout.tsx の正規表現もセットで更新）。
-  const legalPaths = [
-    '/support',
-    '/rules-app-privacy-policy',
-    '/dayline-app-privacy-policy',
-    '/kijyunhou-app-privacy-policy',
-    '/shoubouhou-app-privacy-policy',
-    '/epoch-camera-privacy-policy',
-    '/epoch-camera-terms',
-    '/fx-signal-privacy-policy',
-    '/fx-signal-terms',
-    '/fx-signal-support',
-    '/cfd-signal-privacy-policy',
-    '/cfd-signal-terms',
-    '/cfd-signal-support',
-    '/world-folkbook-privacy-policy',
-    '/world-folkbook-terms',
-    '/world-folkbook-support',
-    '/news-filter-privacy-policy',
-    '/news-filter-terms',
-    '/paslog-privacy-policy',
-    '/trailmark-privacy-policy',
-    '/noteleaf-app-privacy-policy',
-    '/weatherchime-privacy-policy',
-  ];
-  const legal: SitemapEntry[] = legalPaths.map((path) => ({
+  // 一覧は src/lib/legalPages.ts が唯一の定義。新規アプリ追加時はそちらに 1 行足せば、
+  // 右カラムのリンク一覧・その表示判定・この sitemap の 3 つすべてに反映される。
+  const legal: SitemapEntry[] = allLegalPaths().map((path) => ({
     path,
     changeFrequency: 'yearly' as ChangeFreq,
     priority: 0.3,
