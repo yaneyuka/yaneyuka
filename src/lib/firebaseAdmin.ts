@@ -1,5 +1,6 @@
 import { cert, getApps, initializeApp, App, applicationDefault } from 'firebase-admin/app'
 import { getFirestore, Firestore } from 'firebase-admin/firestore'
+import { getAuth, Auth } from 'firebase-admin/auth'
 
 // Server-side Firebase Admin 初期化。
 // FIREBASE_SERVICE_ACCOUNT_JSON 環境変数にサービスアカウントJSON（文字列）を設定する。
@@ -34,6 +35,20 @@ export function getAdminDb(): Firestore | null {
   } catch (e) {
     console.error('[firebaseAdmin] init error:', e)
     _initFailed = true
+    return null
+  }
+}
+
+/**
+ * Admin Auth。ID トークン検証に使う。
+ * 初期化は getAdminDb() と共通なので、そちらを先に呼んで App を用意する。
+ */
+export function getAdminAuth(): Auth | null {
+  if (!getAdminDb()) return null
+  try {
+    return getAuth()
+  } catch (e) {
+    console.error('[firebaseAdmin] auth init error:', e)
     return null
   }
 }

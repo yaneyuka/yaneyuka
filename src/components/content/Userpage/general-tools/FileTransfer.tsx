@@ -16,7 +16,7 @@ import {
   increment,
 } from 'firebase/firestore';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebase/storage';
-import { db, app } from '@/lib/firebaseClient';
+import { db, app, auth } from '@/lib/firebaseClient';
 import { useAuth } from '@/lib/AuthContext';
 // JSZipは動的インポートで使用（SSR対応）
 
@@ -420,9 +420,19 @@ const FileTransferTool: React.FC = () => {
 
     setUploadStatus('アップロード前チェック中...');
     try {
+      // 上の各チェックはあくまで即時フィードバック用。実際の判定はサーバー側で行うので、
+      // 本人確認のための ID トークンを渡す。
+      const idToken = await auth.currentUser?.getIdToken();
+      if (!idToken) {
+        setUploadStatus('ログイン情報を確認できませんでした。再ログインしてお試しください。');
+        return;
+      }
       const guardResp = await fetch('/api/upload/guard', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${idToken}`,
+        },
         body: JSON.stringify({ fileSize: fileToUpload.size }),
       });
       if (!guardResp.ok) {
