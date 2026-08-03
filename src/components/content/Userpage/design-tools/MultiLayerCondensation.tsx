@@ -695,8 +695,8 @@ const MultiLayerCondensation: React.FC<MultiLayerCondensationProps> = ({ hideHea
     };
 
     // パス生成: 等エンタルピー線 (h: -10 ~ 120 kJ/kg)
-    const generateEnthalpyPaths = (): JSX.Element[] => {
-        const paths: JSX.Element[] = [];
+    const generateEnthalpyPaths = (): React.JSX.Element[] => {
+        const paths: React.JSX.Element[] = [];
         // 5kJ/kg刻み
         for (let h = -10; h <= 120; h += 5) {
             let d = "";
@@ -723,8 +723,8 @@ const MultiLayerCondensation: React.FC<MultiLayerCondensationProps> = ({ hideHea
     };
 
     // パス生成: 等比容積線 (v: 0.75 ~ 0.95 m3/kg)
-    const generateVolumePaths = (): JSX.Element[] => {
-        const paths: JSX.Element[] = [];
+    const generateVolumePaths = (): React.JSX.Element[] => {
+        const paths: React.JSX.Element[] = [];
         // 0.01 m3/kg刻み
         for (let v = 75; v <= 95; v += 1) {
             const vol = v / 100;

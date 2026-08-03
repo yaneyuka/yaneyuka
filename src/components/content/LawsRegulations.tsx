@@ -41,7 +41,7 @@ const LawsRegulations: React.FC = () => {
   }, [isModalOpen]);
   
   // モーダル外でホイールを動かしたときにモーダル内をスクロール
-  const handleModalWheel = (e: React.WheelEvent, modalRef: React.RefObject<HTMLDivElement>) => {
+  const handleModalWheel = (e: React.WheelEvent, modalRef: React.RefObject<HTMLDivElement | null>) => {
     const target = e.target as HTMLElement;
     // モーダルコンテンツ内でホイールが動いた場合は通常のスクロールを許可
     if (modalRef.current && modalRef.current.contains(target)) {

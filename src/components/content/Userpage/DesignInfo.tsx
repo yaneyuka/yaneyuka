@@ -229,7 +229,7 @@ const DesignInfo: React.FC = () => {
     // （前回のロジックを維持：空行調整、見出し判定など）
     const normalizedContent = content.replace(/\n{3,}/g, '\n\n');
     const lines = normalizedContent.split('\n').map(l => l.trim());
-    const formatted: JSX.Element[] = [];
+    const formatted: React.JSX.Element[] = [];
     let currentParagraph: string[] = [];
     let isFirstElement = true;
 

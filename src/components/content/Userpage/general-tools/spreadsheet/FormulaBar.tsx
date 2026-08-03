@@ -11,7 +11,7 @@ interface FormulaBarProps {
   onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onFocus?: () => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  inputRef?: React.RefObject<HTMLInputElement>;
+  inputRef?: React.RefObject<HTMLInputElement | null>;
   onFormulaBarFocus?: () => void;
 }
 

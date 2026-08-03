@@ -40,7 +40,7 @@ interface GridProps {
   fillTarget?: { start: { r: number; c: number }; end: { r: number; c: number } } | null;
   onFillStart?: (r: number, c: number, e: React.MouseEvent) => void;
   isLoggedIn: boolean;
-  gridRef: React.RefObject<HTMLDivElement>;
+  gridRef: React.RefObject<HTMLDivElement | null>;
   isFormulaEditing?: boolean;
   formulaReferenceCells?: Map<string, { r: number; c: number; color: string }>;
   onContextMenu?: (e: React.MouseEvent, type: 'row' | 'col' | 'cell', r?: number, c?: number) => void;

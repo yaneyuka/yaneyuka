@@ -609,7 +609,7 @@ const Schedule: React.FC = () => {
           {(() => {
             let start = 0;
             let m = dateArray[0].getMonth();
-            const els: JSX.Element[] = [];
+            const els: React.JSX.Element[] = [];
             dateArray.forEach((d, i) => {
               const isChange = i === dateArray.length - 1 || dateArray[i+1].getMonth() !== m;
               if (isChange) {
