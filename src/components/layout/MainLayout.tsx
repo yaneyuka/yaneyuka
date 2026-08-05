@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, startTransition, useCallback, useRef } from 'react';
+import React, { useState, useEffect, startTransition, useCallback, useRef, lazy, Suspense } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Navigation from './Navigation';
 import RelatedPrivacyLinks from '../RelatedPrivacyLinks';
@@ -34,15 +34,19 @@ import YyChat from '../content/Userpage/YyChat';
 import MyRegulations from '../content/Userpage/MyRegulations';
 import MyTasks from '../content/Userpage/MyTasks';
 import TeamTasks from '../content/Userpage/TeamTasks';
-import PdfDiffTool from '../content/Userpage/PdfDiffTool';
-import GeneralTools from '../content/Userpage/general-tools/GeneralTools';
+// 重い外部ライブラリを抱える画面は、開かれたときに初めて読み込む。
+// MainLayout は全ページ共通の土台なので、ここで静的 import すると
+// トップページを開いただけで Excel / PDF 系のライブラリまで配信されてしまう
+// （実測 561KB、初期 JS の 53%）。Userpage_top.tsx は元から lazy にしてある。
+const PdfDiffTool = lazy(() => import('../content/Userpage/PdfDiffTool'));
+const GeneralTools = lazy(() => import('../content/Userpage/general-tools/GeneralTools'));
 import ContactsManagement from '../content/Userpage/ContactsManagement';
 import DesignTools from '../content/Userpage/DesignTools';
 import DesignInfo from '../content/Userpage/DesignInfo';
 import MaterialInfo from '../content/Userpage/MaterialInfo';
 import Userpage_top from '../content/Userpage/Userpage_top';
 import Qualifications from '../content/Qualifications';
-import QualificationsVideos from '../content/QualificationsVideos';
+const QualificationsVideos = lazy(() => import('../content/QualificationsVideos'));
 import UserpageMusicPanel from '../content/Userpage/UserpageMusicPanel';
 import ShopContent from '../content/ShopContent';
 import Forum from '../content/Forum';
@@ -78,6 +82,13 @@ interface MainLayoutProps {
   children?: React.ReactNode;
   initialContent?: string;
 }
+
+/** lazy 読み込み中のつなぎ表示。切り替え時に高さが潰れないよう最低限の余白を持たせる。 */
+const ToolLoading = () => (
+  <div className="flex items-center justify-center py-16 text-sm text-gray-500">
+    読み込み中...
+  </div>
+);
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children, initialContent = 'topix' }) => {
   const pathname = usePathname();
@@ -1711,9 +1722,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, initialContent = 'top
       case 'team-tasks':
         return <TeamTasks />;
       case 'pdf-diff':
-        return <PdfDiffTool />;
+        return <Suspense fallback={<ToolLoading />}><PdfDiffTool /></Suspense>;
       case 'general-tools':
-        return <GeneralTools />;
+        return <Suspense fallback={<ToolLoading />}><GeneralTools /></Suspense>;
       case 'design-tools':
         return <DesignTools />;
       case 'design-info':
@@ -2597,7 +2608,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, initialContent = 'top
                     {activeContent === 'regulations' ? (
                       <ReferenceResources />
                     ) : (
-                      <QualificationsVideos />
+                      <Suspense fallback={<ToolLoading />}>
+                        <QualificationsVideos />
+                      </Suspense>
                     )}
                   </div>
                 </aside>
