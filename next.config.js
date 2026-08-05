@@ -7,6 +7,13 @@ const nextConfig = {
   // 指すシンボリックリンクが作られ、Linux のコンテナ上では解決できず、
   // このパッケージを使う API ルートが 500 を返す。
   serverExternalPackages: ['firebase-admin'],
+  compiler: {
+    // 本番ビルドからだけ console.log を取り除く（開発中はそのまま見える）。
+    // 開発用のログが 117 箇所ほど本番バンドルに残っていて、ユーザーIDなどが
+    // ブラウザの開発者ツールから読める状態だった。
+    // error / warn は障害調査に必要なので残す。
+    removeConsole: { exclude: ['error', 'warn'] },
+  },
   reactStrictMode: false, // Leafletマップの初期化エラーを防ぐため
   turbopack: {}, // 空の設定でエラーを回避（実際には--webpackフラグでwebpackを使用）
   // 画像最適化: 環境変数で制御可能（デフォルトは無効化）
