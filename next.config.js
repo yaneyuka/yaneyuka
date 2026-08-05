@@ -2,6 +2,11 @@
 const nextConfig = {
   output: 'standalone',
   trailingSlash: true,
+  // firebase-admin を Next のファイル追跡から外し、実行時に node_modules から
+  // 解決させる。追跡させると .next/node_modules/ に「ビルドしたマシンの絶対パス」を
+  // 指すシンボリックリンクが作られ、Linux のコンテナ上では解決できず、
+  // このパッケージを使う API ルートが 500 を返す。
+  serverExternalPackages: ['firebase-admin'],
   reactStrictMode: false, // Leafletマップの初期化エラーを防ぐため
   turbopack: {}, // 空の設定でエラーを回避（実際には--webpackフラグでwebpackを使用）
   // 画像最適化: 環境変数で制御可能（デフォルトは無効化）
