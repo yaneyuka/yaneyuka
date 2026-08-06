@@ -1,61 +1,37 @@
 // mak_*.tsx に直書きされている建材メーカー情報を src/data/makers.json へ抽出する。
+//   npm run makers:extract
 //
-// 移行用のスクリプト。抽出後は各コンポーネントが JSON を読む形にするため、
-// 通常運用で再実行する必要はない。取りこぼしの検証（verify-makers.mjs）と
-// 対で使うことを前提にしている。
-//
-// 対応している書式は 2 つ:
-//   形式A: メーカー1社ぶんの JSX を直書き（11ファイル）
-//   形式B: renderCompanyRow('社名', { products: '...', ... }) （5ファイル）
+// 抽出したら必ず npm run makers:verify で元ファイルと突き合わせること。
+// 読み取りの実装は scripts/lib/maker-parse.mjs に置き、照合側と共有している
+// （別実装にしていたとき、9 ファイルぶんの取り違えが照合をすり抜けた）。
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { SLOTS, pageRegions, makerEvents, groupHeadings } from './lib/maker-parse.mjs';
 
 const DIR = 'src/components/content/leftcolumn-menu';
 const OUT = 'src/data/makers.json';
 
-// リンクの並び順は全ファイル共通（商品ページ/カタログ/営業所/お問い合わせ/サンプル/CAD）
-const SLOTS = ['products', 'catalog', 'office', 'contact', 'sample', 'cad'];
-
 const clean = (url) => (url && url !== '#' && url.trim() !== '' ? url.trim() : '');
 
-/** 出現順にサブカテゴリ見出しとメーカー行を拾い、直前の見出しに属させる */
 function extract(text) {
-  const events = [];
+  const regions = pageRegions(text);
+  const headings = groupHeadings(text);
 
-  // サブカテゴリ見出し（丸タグ）。{変数} を含むものは動的なので除外
-  for (const m of text.matchAll(/rounded-full">([^<{][^<]*)<\/span>/g)) {
-    events.push({ at: m.index, kind: 'sub', name: m[1].trim() });
-  }
+  const regionAt = (pos) => regions.find((r) => pos >= r.start && pos < r.end) || null;
 
-  // 形式A
-  const jsxEntry = /<span className="w-\[\d+px\]">・([^<{][^<]*)<\/span>\s*<span[^>]*>([\s\S]*?)<\/span>/g;
-  for (const m of text.matchAll(jsxEntry)) {
-    const urls = [...m[2].matchAll(/renderLink\('([^']*)'/g)].map((x) => x[1]);
-    events.push({ at: m.index, kind: 'maker', name: m[1].trim(), urls });
-  }
+  return makerEvents(text).map((e) => {
+    const pages = regions.filter((r) => e.at >= r.start && e.at < r.end).map((r) => r.name);
+    // 直前の見出し。ただし同じページ範囲の中のものだけ有効
+    const region = regionAt(e.at);
+    const heading = headings
+      .filter((h) => h.at < e.at && (!region || (h.at >= region.start && h.at < region.end)))
+      .pop();
 
-  // 形式B
-  const rowCall = /renderCompanyRow\(\s*'([^']+)'\s*,\s*\{([\s\S]*?)\}\s*\)/g;
-  for (const m of text.matchAll(rowCall)) {
-    const byKey = {};
-    for (const kv of m[2].matchAll(/(\w+)\s*:\s*'([^']*)'/g)) byKey[kv[1]] = kv[2];
-    // キー名が products/catalog/... で来るので順序に並べ直す
-    const urls = SLOTS.map((s) => byKey[s] ?? '');
-    events.push({ at: m.index, kind: 'maker', name: m[1].trim(), urls });
-  }
-
-  events.sort((a, b) => a.at - b.at);
-
-  const out = [];
-  let sub = '';
-  for (const e of events) {
-    if (e.kind === 'sub') { sub = e.name; continue; }
     const links = {};
     SLOTS.forEach((slot, i) => { links[slot] = clean(e.urls[i]); });
-    out.push({ name: e.name, subcategory: sub, ...links });
-  }
-  return out;
+    return { name: e.name, pages, group: heading ? heading.name : '', ...links };
+  });
 }
 
 const data = {};

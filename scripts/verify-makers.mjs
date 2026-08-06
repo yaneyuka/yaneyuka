@@ -1,33 +1,29 @@
-// extract-makers.mjs の抽出結果が、元の mak_*.tsx と一致しているかを照合する。
+// src/data/makers.json が元の mak_*.tsx と一致しているかを照合する。
+//   npm run makers:verify
 //
 // 確認するのは 2 点:
-//   1. 元ファイルに現れる外部URLが、すべて JSON 側にも存在するか（取りこぼし）
-//   2. JSON 側に、元ファイルに無いURLが混ざっていないか（作り込み）
+//   1. 元ファイルの外部URLが、すべて JSON 側にも存在するか（取りこぼし）
+//   2. 各メーカーが正しい表示ページに割り当てられているか（取り違え）
 //
-// 社名は表記ゆれの判定が難しいので URL を基準に突き合わせる。
-// URL は 1 社あたり最大 6 本あり、これが一致していれば実質的な情報は保たれている。
+// JSON 側にしか無いURLは、抽出後に補ったもの（CADリンクの追加など）として許容する。
+// 読み取りは scripts/lib/maker-parse.mjs を抽出側と共有している。
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { pageRegions, sourceUrls, SLOTS } from './lib/maker-parse.mjs';
 
 const DIR = 'src/components/content/leftcolumn-menu';
 const data = JSON.parse(fs.readFileSync('src/data/makers.json', 'utf8'));
 
-const SLOTS = ['products', 'catalog', 'office', 'contact', 'sample', 'cad'];
+let missingNg = 0;
+let pageChecked = 0;
+let pageNg = 0;
 
-let ng = 0;
 for (const file of fs.readdirSync(DIR).filter((f) => f.startsWith('mak_') && f.endsWith('.tsx'))) {
   const category = file.replace(/^mak_\d+_/, '').replace('.tsx', '');
   const text = fs.readFileSync(path.join(DIR, file), 'utf8');
 
-  // 元ファイル側: renderLink / renderCompanyRow が実際に参照している http(s) URL
-  const source = new Set();
-  for (const m of text.matchAll(/renderLink\('(https?:\/\/[^']*)'/g)) source.add(m[1]);
-  for (const m of text.matchAll(/renderCompanyRow\(\s*'[^']+'\s*,\s*\{([\s\S]*?)\}\s*\)/g)) {
-    for (const kv of m[1].matchAll(/\w+\s*:\s*'(https?:\/\/[^']*)'/g)) source.add(kv[1]);
-  }
-
-  // JSON 側
+  const source = sourceUrls(text);
   const extracted = new Set();
   for (const maker of data[category] || []) {
     for (const slot of SLOTS) {
@@ -37,19 +33,38 @@ for (const file of fs.readdirSync(DIR).filter((f) => f.startsWith('mak_') && f.e
   }
 
   const missing = [...source].filter((u) => !extracted.has(u));
-  const extra = [...extracted].filter((u) => !source.has(u));
+  const added = [...extracted].filter((u) => !source.has(u));
+  if (missing.length) missingNg++;
 
-  // JSON 側にしかない URL は、抽出後に補ったもの（CAD リンクの追加など）。
-  // 情報が増えるぶんには構わないので、件数だけ出して合否には含めない。
-  if (missing.length) ng++;
+  // ページ割り当て: メーカーのURLが、割り当てられたページの範囲内に実在するか
+  const regions = pageRegions(text);
+  let catPageNg = 0;
+  for (const maker of data[category] || []) {
+    const probe = maker.products || maker.catalog || maker.office || maker.contact;
+    if (!probe || !source.has(probe)) continue; // 抽出後に補ったURLは対象外
+    pageChecked++;
+    const ok = (maker.pages || []).some((p) =>
+      regions.some((r) => r.name === p && text.slice(r.start, r.end).includes(probe))
+    );
+    if (!ok) {
+      catPageNg++;
+      pageNg++;
+      if (pageNg <= 5) {
+        console.log(`      ページ不一致: ${category} / ${maker.name} -> [${(maker.pages || []).join(', ')}]`);
+      }
+    }
+  }
+
   console.log(
-    `${missing.length ? 'NG  ' : 'OK  '}${category.padEnd(12)} 元:${String(source.size).padStart(4)}  抽出:${String(extracted.size).padStart(4)}` +
+    `${missing.length || catPageNg ? 'NG  ' : 'OK  '}${category.padEnd(12)} 元:${String(source.size).padStart(4)}  抽出:${String(extracted.size).padStart(4)}` +
     (missing.length ? `  取りこぼし:${missing.length}` : '') +
-    (extra.length ? `  追加分:${extra.length}` : '')
+    (added.length ? `  追加分:${added.length}` : '') +
+    (catPageNg ? `  ページ不一致:${catPageNg}` : '')
   );
   for (const u of missing.slice(0, 3)) console.log(`      取りこぼし: ${u}`);
 }
 
 console.log('');
-console.log(ng === 0 ? '取りこぼしなし（元データのURLはすべて保持されている）' : `${ng} カテゴリで取りこぼしあり`);
-process.exit(ng === 0 ? 0 : 1);
+console.log(missingNg === 0 ? '取りこぼしなし（元データのURLはすべて保持されている）' : `${missingNg} カテゴリで取りこぼしあり`);
+console.log(pageNg === 0 ? `ページ割り当て一致（${pageChecked} 件を照合）` : `ページ割り当てに ${pageNg} 件の不一致（照合 ${pageChecked} 件）`);
+process.exit(missingNg === 0 && pageNg === 0 ? 0 : 1);
