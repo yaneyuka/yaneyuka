@@ -18,7 +18,7 @@
       "office": "https://www.comany.co.jp/company/base/",
       "contact": "https://www.comany.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.comany.co.jp/cad/"
     },
     {
       "name": "アイカ工業",
@@ -68,7 +68,7 @@
       "office": "https://www.ykkap.co.jp/showroom/",
       "contact": "https://www.ykkap.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.ykkap.co.jp/"
     },
     {
       "name": "大建工業",
@@ -88,7 +88,7 @@
       "office": "https://alumi.st-grp.co.jp/company/base/",
       "contact": "https://alumi.st-grp.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://alumi.st-grp.co.jp/data/download/cad.html"
     },
     {
       "name": "不二サッシ",
@@ -108,7 +108,7 @@
       "office": "https://www.hinaka.co.jp/company/#list",
       "contact": "https://www.hinaka.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.hinaka.co.jp/new_hp/item/cad_download_list.php"
     },
     {
       "name": "アシスト",
@@ -128,7 +128,7 @@
       "office": "https://www.hinaka.co.jp/company/#list",
       "contact": "https://www.hinaka.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.hinaka.co.jp/new_hp/item/cad_download_list.php"
     },
     {
       "name": "シンドウ工業",
@@ -148,7 +148,7 @@
       "office": "https://www.naka-kogyo.co.jp/company/office.html",
       "contact": "https://mailform.naka-kogyo.co.jp/support/script/mailform/inquiry/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.naka-kogyo.co.jp/index.php"
     },
     {
       "name": "アシスト",
@@ -168,7 +168,7 @@
       "office": "https://www.naka-kogyo.co.jp/company/base/",
       "contact": "https://www.naka-kogyo.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.naka-kogyo.co.jp/index.php"
     },
     {
       "name": "アルミス",
@@ -248,7 +248,7 @@
       "office": "https://www.woodone.co.jp/showroom/",
       "contact": "https://www.woodone.co.jp/support/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.woodone.co.jp/static/business/downloads"
     },
     {
       "name": "ノダ",
@@ -278,7 +278,7 @@
       "office": "https://www.naka-kogyo.co.jp/company/office.html",
       "contact": "https://mailform.naka-kogyo.co.jp/support/script/mailform/inquiry/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.naka-kogyo.co.jp/index.php"
     },
     {
       "name": "久力製作所",
@@ -348,7 +348,7 @@
       "office": "https://www.makitech.co.jp/company/kyoten.html#s1",
       "contact": "https://www.makitech.co.jp/support/form01.html",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.makitech.co.jp/support/form03.html"
     },
     {
       "name": "カワグレ",
@@ -378,7 +378,7 @@
       "office": "https://www.takara-kizai.com/company/outline/",
       "contact": "https://www.takara-kizai.com/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.takara-kizai.com/download/cad/"
     },
     {
       "name": "すがたかたち",
@@ -398,7 +398,7 @@
       "office": "https://www.fukuvi.co.jp/company/office",
       "contact": "https://www.fukuvi.co.jp/contact",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.fukuvi.co.jp/contact/cad"
     },
     {
       "name": "ダイケン",
@@ -418,7 +418,7 @@
       "office": "https://www.rikenkeikinzoku.co.jp/company/info/",
       "contact": "https://www.rikenkeikinzoku.co.jp/company/inquiry/index.html",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.rikenkeikinzoku.co.jp/cad-bim/index.html"
     },
     {
       "name": "ナカ工業",
@@ -428,7 +428,7 @@
       "office": "https://www.naka-kogyo.co.jp/company/office.html",
       "contact": "https://mailform.naka-kogyo.co.jp/support/script/mailform/inquiry/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.naka-kogyo.co.jp/index.php"
     },
     {
       "name": "城東テクノ",
@@ -528,7 +528,7 @@
       "office": "https://www.naka-kogyo.co.jp/company/office.html",
       "contact": "https://www.naka-kogyo.co.jp/support/qr_ad/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.naka-kogyo.co.jp/index.php"
     },
     {
       "name": "奥岡製作所",
@@ -588,7 +588,7 @@
       "office": "https://www.fukuvi.co.jp/company/base/",
       "contact": "https://www.fukuvi.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.fukuvi.co.jp/contact/cad"
     },
     {
       "name": "エスケー化研",
@@ -608,7 +608,7 @@
       "office": "https://www.kondotec.co.jp/company/",
       "contact": "https://www.kondotec.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.kondotec.co.jp/products/cad/"
     },
     {
       "name": "日本ハートビル工業",
@@ -628,7 +628,7 @@
       "office": "https://www.comany.co.jp/company/base/",
       "contact": "https://www.comany.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.comany.co.jp/cad/"
     },
     {
       "name": "イトーキ",
@@ -658,7 +658,7 @@
       "office": "https://www.fukuvi.co.jp/company/base/",
       "contact": "https://www.fukuvi.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.fukuvi.co.jp/contact/cad"
     },
     {
       "name": "大建工業",
@@ -678,7 +678,7 @@
       "office": "https://www.naka-kogyo.co.jp/company/base/",
       "contact": "https://www.naka-kogyo.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.naka-kogyo.co.jp/index.php"
     },
     {
       "name": "ダイケン",
@@ -698,7 +698,7 @@
       "office": "https://www.fukuvi.co.jp/company/base/",
       "contact": "https://www.fukuvi.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.fukuvi.co.jp/contact/cad"
     }
   ],
   "防水": [
@@ -790,7 +790,7 @@
       "office": "https://www.a-yamade.co.jp/company/group/",
       "contact": "https://www.a-yamade.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.a-yamade.co.jp/data/cad/"
     },
     {
       "name": "日本特殊塗料",
@@ -810,7 +810,7 @@
       "office": "https://www.nisshinkogyo.co.jp/company/office/",
       "contact": "https://www.nisshinkogyo.co.jp/contact/product/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.nisshinkogyo.co.jp/document/cad/"
     },
     {
       "name": "田島ルーフィング",
@@ -860,7 +860,7 @@
       "office": "https://www.nisshinkogyo.co.jp/company/office/",
       "contact": "https://www.nisshinkogyo.co.jp/contact/product/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.nisshinkogyo.co.jp/document/cad/"
     },
     {
       "name": "アーキヤマデ",
@@ -870,7 +870,7 @@
       "office": "https://www.a-yamade.co.jp/company/group/",
       "contact": "https://www.a-yamade.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.a-yamade.co.jp/data/cad/"
     },
     {
       "name": "シーカ・ジャパン",
@@ -950,7 +950,7 @@
       "office": "https://www.sunloid-dn.jp/company/office/office.html",
       "contact": "https://www.sunloid-dn.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.sunloid-dn.jp/kenchiku/cad.php"
     },
     {
       "name": "アイカ工業",
@@ -1050,7 +1050,7 @@
       "office": "https://www.nisshinkogyo.co.jp/company/office/",
       "contact": "https://www.nisshinkogyo.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.nisshinkogyo.co.jp/document/cad/"
     },
     {
       "name": "日本特殊塗料",
@@ -1090,7 +1090,7 @@
       "office": "https://www.nisshinkogyo.co.jp/company/office/",
       "contact": "https://www.nisshinkogyo.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.nisshinkogyo.co.jp/document/cad/"
     },
     {
       "name": "日本特殊塗料",
@@ -1122,7 +1122,7 @@
       "office": "https://www.naka-kogyo.co.jp/company/office.html",
       "contact": "https://mailform.naka-kogyo.co.jp/support/script/mailform/inquiry/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.naka-kogyo.co.jp/index.php"
     },
     {
       "name": "スガツネ工業",
@@ -1162,7 +1162,7 @@
       "office": "https://www3.best-x.co.jp/company/index.html#work",
       "contact": "https://www3.best-x.co.jp/form.html",
       "sample": "",
-      "cad": ""
+      "cad": "https://www3.best-x.co.jp/cad.html"
     },
     {
       "name": "長沢製作所",
@@ -1272,7 +1272,7 @@
       "office": "https://apro1965.jp/about/",
       "contact": "https://apro1965.jp/form-contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://apro1965.jp/search-cad/"
     },
     {
       "name": "すがたかたち",
@@ -1372,7 +1372,7 @@
       "office": "https://www.atomlt.com/company/about/about/",
       "contact": "https://www.atomlt.com/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.atomlt.com/caddata/"
     },
     {
       "name": "ｼﾞｬﾊﾟﾝﾓﾄﾞﾘｯｸ",
@@ -1402,7 +1402,7 @@
       "office": "https://www.atomlt.com/showroom/",
       "contact": "https://www.atomlt.com/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.atomlt.com/caddata/"
     },
     {
       "name": "久力製作所",
@@ -1582,7 +1582,7 @@
       "office": "https://www.atomlt.com/showroom/",
       "contact": "https://www.atomlt.com/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.atomlt.com/caddata/"
     },
     {
       "name": "アルファ",
@@ -1622,7 +1622,7 @@
       "office": "https://www.hinaka.co.jp/company/#list",
       "contact": "https://www.hinaka.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.hinaka.co.jp/new_hp/item/cad_download_list.php"
     },
     {
       "name": "川喜金物",
@@ -1662,7 +1662,7 @@
       "office": "https://www.naka-kogyo.co.jp/company/office.html",
       "contact": "https://mailform.naka-kogyo.co.jp/support/script/mailform/inquiry/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.naka-kogyo.co.jp/index.php"
     },
     {
       "name": "井上商事",
@@ -1672,7 +1672,7 @@
       "office": "https://www.inoue-s.co.jp/contents/company/office.html",
       "contact": "https://www.inoue-s.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.inoue-s.co.jp/cad/catalog/"
     },
     {
       "name": "カネソウ",
@@ -1722,7 +1722,7 @@
       "office": "https://www.inoue-s.co.jp/contents/company/office.html",
       "contact": "https://www.inoue-s.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.inoue-s.co.jp/cad/catalog/"
     },
     {
       "name": "理研軽金属工業",
@@ -1732,7 +1732,7 @@
       "office": "https://www.rikenkeikinzoku.co.jp/company/info/",
       "contact": "https://www.rikenkeikinzoku.co.jp/company/inquiry/index.html",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.rikenkeikinzoku.co.jp/cad-bim/index.html"
     },
     {
       "name": "ツヅキ",
@@ -1742,7 +1742,7 @@
       "office": "https://tuzuki.co.jp/company/branch/",
       "contact": "https://tuzuki.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://tuzuki.co.jp/contact/cad_bim/"
     },
     {
       "name": "パラキャップ社",
@@ -1762,7 +1762,7 @@
       "office": "https://umc.uacj-group.com/company/network/index.html#office",
       "contact": "https://umc.uacj-group.com/inquiry/",
       "sample": "",
-      "cad": ""
+      "cad": "https://umc.uacj-group.com/download/cad/"
     },
     {
       "name": "スガツネ工業",
@@ -2226,7 +2226,7 @@
       "office": "https://led.shibasaki-inc.jp/access/",
       "contact": "https://led.shibasaki-inc.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://led.shibasaki-inc.jp/cad_dl/"
     },
     {
       "name": "上手工作所",
@@ -2326,7 +2326,7 @@
       "office": "",
       "contact": "https://www2.panasonic.biz/jp/support/?_gl=1*smahuz*_gcl_au*MTc1NDU0NDE0NS4xNzQzMzg1MDkx#tabPurp",
       "sample": "",
-      "cad": ""
+      "cad": "https://www2.panasonic.biz/jp/ai/cad/download/"
     },
     {
       "name": "大光電機",
@@ -2346,7 +2346,7 @@
       "office": "https://led.shibasaki-inc.jp/access/",
       "contact": "https://led.shibasaki-inc.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://led.shibasaki-inc.jp/cad_dl/"
     },
     {
       "name": "上手工作所",
@@ -2386,7 +2386,7 @@
       "office": "https://www.unison-net.com/company/location/",
       "contact": "https://www.unison-net.com/contact_top/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.unison-net.com/download/gardenexterior_cad/"
     },
     {
       "name": "御田製作所",
@@ -2426,7 +2426,7 @@
       "office": "",
       "contact": "https://www2.panasonic.biz/jp/support/call/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www2.panasonic.biz/jp/ai/cad/download/"
     },
     {
       "name": "スガツネ工業",
@@ -2466,7 +2466,7 @@
       "office": "https://www2.panasonic.biz/jp/company/",
       "contact": "https://www2.panasonic.biz/jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www2.panasonic.biz/jp/ai/cad/download/"
     },
     {
       "name": "コイズミ照明",
@@ -2536,7 +2536,7 @@
       "office": "https://www2.panasonic.biz/jp/company/",
       "contact": "https://www2.panasonic.biz/jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www2.panasonic.biz/jp/ai/cad/download/"
     },
     {
       "name": "コイズミ照明",
@@ -2880,7 +2880,7 @@
       "office": "https://www.nippon-c.co.jp/company/section/",
       "contact": "https://www.nippon-c.co.jp/inquiry/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.nippon-c.co.jp/download/"
     },
     {
       "name": "イワタ",
@@ -2940,7 +2940,7 @@
       "office": "https://www.sanyo-ube.co.jp/company.html",
       "contact": "https://www.sanyo-ube.co.jp/contact.html",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.sanyo-ube.co.jp/cataloglist.html"
     },
     {
       "name": "美建工業",
@@ -2950,7 +2950,7 @@
       "office": "https://www.bikenkougyou.co.jp/company/network/",
       "contact": "https://www.bikenkougyou.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.bikenkougyou.co.jp/cad/"
     },
     {
       "name": "翔飛工業",
@@ -2970,7 +2970,7 @@
       "office": "https://www.unison-net.com/company/location/",
       "contact": "https://www.unison-net.com/contact_top/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.unison-net.com/download/gardenexterior_cad/"
     },
     {
       "name": "三和グランド",
@@ -3110,7 +3110,7 @@
       "office": "https://www.kokensangyo.co.jp/company/place/",
       "contact": "https://www.kokensangyo.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.kokensangyo.co.jp/catalogue_cad/"
     },
     {
       "name": "日本コンクリート",
@@ -3120,7 +3120,7 @@
       "office": "https://www.nippon-c.co.jp/company/section/",
       "contact": "https://www.nippon-c.co.jp/inquiry/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.nippon-c.co.jp/download/"
     },
     {
       "name": "前澤化成工業",
@@ -3252,7 +3252,7 @@
       "office": "https://www.nasta.co.jp/company/",
       "contact": "https://www.nasta.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.nasta.co.jp/catalog/"
     },
     {
       "name": "ナスタ",
@@ -3262,7 +3262,7 @@
       "office": "https://www.nasta.co.jp/company/",
       "contact": "https://www.nasta.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.nasta.co.jp/catalog/"
     },
     {
       "name": "パナソニック",
@@ -3322,7 +3322,7 @@
       "office": "https://alumi.st-grp.co.jp/showroom/",
       "contact": "https://alumi.st-grp.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://alumi.st-grp.co.jp/data/download/cad.html"
     },
     {
       "name": "YKK AP",
@@ -3332,7 +3332,7 @@
       "office": "https://www.ykkap.co.jp/company/",
       "contact": "https://www.ykkap.co.jp/support/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.ykkap.co.jp/"
     },
     {
       "name": "LIXIL",
@@ -3352,7 +3352,7 @@
       "office": "https://alumi.st-grp.co.jp/showroom/",
       "contact": "https://alumi.st-grp.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://alumi.st-grp.co.jp/data/download/cad.html"
     },
     {
       "name": "YKK AP",
@@ -3362,7 +3362,7 @@
       "office": "https://www.ykkap.co.jp/company/",
       "contact": "https://www.ykkap.co.jp/support/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.ykkap.co.jp/"
     },
     {
       "name": "LIXIL",
@@ -3382,7 +3382,7 @@
       "office": "https://alumi.st-grp.co.jp/showroom/",
       "contact": "https://alumi.st-grp.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://alumi.st-grp.co.jp/data/download/cad.html"
     },
     {
       "name": "YKK AP",
@@ -3392,7 +3392,7 @@
       "office": "https://www.ykkap.co.jp/company/",
       "contact": "https://www.ykkap.co.jp/support/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.ykkap.co.jp/"
     },
     {
       "name": "LIXIL",
@@ -3412,7 +3412,7 @@
       "office": "https://alumi.st-grp.co.jp/showroom/",
       "contact": "https://alumi.st-grp.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://alumi.st-grp.co.jp/data/download/cad.html"
     },
     {
       "name": "YKK AP",
@@ -3422,7 +3422,7 @@
       "office": "https://www.ykkap.co.jp/company/",
       "contact": "https://www.ykkap.co.jp/support/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.ykkap.co.jp/"
     }
   ],
   "屋根": [
@@ -3444,7 +3444,7 @@
       "office": "https://www.gantan.co.jp/company/organization.html",
       "contact": "https://www.gantan.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.gantan.co.jp/cad/"
     },
     {
       "name": "日鉄鋼板",
@@ -3454,7 +3454,7 @@
       "office": "https://www.niscs.nipponsteel.com/company/access.html",
       "contact": "https://www.niscs.nipponsteel.com/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.niscs.nipponsteel.com/data/"
     },
     {
       "name": "ハイデッキ",
@@ -3474,7 +3474,7 @@
       "office": "https://www.tsukiboshi-shoji.co.jp/company/office/",
       "contact": "https://www.tsukiboshi-shoji.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.tsukiboshi-shoji.co.jp/document/cad/"
     },
     {
       "name": "協和",
@@ -3514,7 +3514,7 @@
       "office": "https://www.inagakishoji.jp/jigyousyoitirann",
       "contact": "https://web.gogo.jp/inagakishoji/form/otoiawase-mailform",
       "sample": "",
-      "cad": ""
+      "cad": "https://web.gogo.jp/inagakishoji/form/caddlform"
     },
     {
       "name": "大島応用",
@@ -3534,7 +3534,7 @@
       "office": "http://www.nsos.co.jp/about/",
       "contact": "http://www.nsos.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "http://www.nsos.co.jp/info/"
     },
     {
       "name": "ｵﾘｴﾝﾀﾙﾒﾀﾙ",
@@ -3594,7 +3594,7 @@
       "office": "https://www.gantan.co.jp/company/organization.html",
       "contact": "https://www.gantan.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.gantan.co.jp/cad/"
     },
     {
       "name": "三晃金属工業",
@@ -3614,7 +3614,7 @@
       "office": "https://www.gantan.co.jp/company/organization.html",
       "contact": "https://www.gantan.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.gantan.co.jp/cad/"
     },
     {
       "name": "三晃金属工業",
@@ -3634,7 +3634,7 @@
       "office": "https://www.igkogyo.co.jp/company/kyoten.html",
       "contact": "https://www.igkogyo.co.jp/igkogyo-cgi/form/CI01",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.igkogyo.co.jp/download/cad/"
     },
     {
       "name": "セキノ興産",
@@ -3644,7 +3644,7 @@
       "office": "https://www.sekino.co.jp/company/network/",
       "contact": "https://www.sekino.co.jp/support/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.sekino.co.jp/download-cad/"
     },
     {
       "name": "JFE日建板",
@@ -3664,7 +3664,7 @@
       "office": "https://www.tsukiboshi-shoji.co.jp/company/office/",
       "contact": "https://www.tsukiboshi-shoji.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.tsukiboshi-shoji.co.jp/document/cad/"
     },
     {
       "name": "ケイミュー",
@@ -3684,7 +3684,7 @@
       "office": "http://www.nsos.co.jp/about/",
       "contact": "http://www.nsos.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "http://www.nsos.co.jp/info/"
     },
     {
       "name": "カナメ",
@@ -3754,7 +3754,7 @@
       "office": "https://www.fujislate.com/company/",
       "contact": "https://www.fujislate.com/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.fujislate.com/download/cad/"
     },
     {
       "name": "大和スレート",
@@ -3824,7 +3824,7 @@
       "office": "https://www.try110.com/company/",
       "contact": "https://www.try110.com/inquiry/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.try110.com/technical/data/cad/"
     },
     {
       "name": "マルスギ",
@@ -3834,7 +3834,7 @@
       "office": "https://www.marusugi.co.jp/info/info.shtml",
       "contact": "https://www.marusugi.co.jp/info/toiawase.shtml",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.marusugi.co.jp/cad/index.shtml"
     },
     {
       "name": "岩福セラミックス",
@@ -3844,7 +3844,7 @@
       "office": "https://www.iwafuku.co.jp/company-profile.html",
       "contact": "",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.iwafuku.co.jp/cad-data.html"
     },
     {
       "name": "丸鹿セラミックス",
@@ -3884,7 +3884,7 @@
       "office": "https://www.sekino.co.jp/company/network/",
       "contact": "https://www.sekino.co.jp/support/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.sekino.co.jp/download-cad/"
     },
     {
       "name": "カナメ",
@@ -3954,7 +3954,7 @@
       "office": "https://www.niscs.nipponsteel.com/company/access.html",
       "contact": "https://www.niscs.nipponsteel.com/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.niscs.nipponsteel.com/data/"
     },
     {
       "name": "中山化成",
@@ -4024,7 +4024,7 @@
       "office": "https://www.tanita-hw.co.jp/access",
       "contact": "https://www.tanita-hw.co.jp/q-a",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.tanita-hw.co.jp/login"
     },
     {
       "name": "LIXIL",
@@ -4086,7 +4086,7 @@
       "office": "https://www.asahikasei-kenzai.com/company/#ACCESS",
       "contact": "https://www.asahikasei-kenzai.com/akk/alc/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.asahikasei-kenzai.com/dataservice/"
     },
     {
       "name": "クリオン",
@@ -4096,7 +4096,7 @@
       "office": "https://www.clion.co.jp/company/office/",
       "contact": "https://www.clion.co.jp/inquiry/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.clion.co.jp/documents/"
     },
     {
       "name": "ケイミューシポレックス",
@@ -4106,7 +4106,7 @@
       "office": "https://www.kmew-siporex.jp/company/office.html",
       "contact": "https://www.kmew-siporex.jp/inquiry/index",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.kmew-siporex.jp/download/cad.html"
     },
     {
       "name": "旭トステム外装",
@@ -4126,7 +4126,7 @@
       "office": "https://www.ykkap.co.jp/showroom/",
       "contact": "https://www.ykkap.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.ykkap.co.jp/"
     },
     {
       "name": "ノザワ",
@@ -4136,7 +4136,7 @@
       "office": "https://www.nozawa-kobe.co.jp/corporate/corporate_06.html",
       "contact": "https://www.nozawa-kobe.co.jp/other/inquiry.html",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.asloc.co.jp/download/document.php?c=document2&tmp=X83tHW3Exp"
     },
     {
       "name": "アイカテック建材",
@@ -4176,7 +4176,7 @@
       "office": "https://www.ykkap.co.jp/showroom/",
       "contact": "https://www.ykkap.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.ykkap.co.jp/"
     },
     {
       "name": "YKK AP",
@@ -4186,7 +4186,7 @@
       "office": "https://www.ykkap.co.jp/about/network/",
       "contact": "https://www.ykkap.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.ykkap.co.jp/"
     },
     {
       "name": "旭トステム外装",
@@ -4266,7 +4266,7 @@
       "office": "https://www.fukuvi.co.jp/company/branch/",
       "contact": "https://www.fukuvi.co.jp/support/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.fukuvi.co.jp/contact/cad"
     },
     {
       "name": "三協立山",
@@ -4316,7 +4316,7 @@
       "office": "https://www.almic.co.jp/company/office/",
       "contact": "https://www.almic.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.almic.co.jp/cad.html"
     },
     {
       "name": "タケムラ金属工業",
@@ -4366,7 +4366,7 @@
       "office": "https://www.fukuvi.co.jp/company/branch/",
       "contact": "https://www.fukuvi.co.jp/support/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.fukuvi.co.jp/contact/cad"
     },
     {
       "name": "LIXIL",
@@ -4386,7 +4386,7 @@
       "office": "https://www.ykkap.co.jp/about/network/",
       "contact": "https://www.ykkap.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.ykkap.co.jp/"
     },
     {
       "name": "三協立山",
@@ -4406,7 +4406,7 @@
       "office": "https://www.daiken.jp/company/network/",
       "contact": "https://www.daiken.jp/support/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.daiken.jp/product/DispCate.do?volumeName=00001&pageType=dataSearch&para=cad"
     },
     {
       "name": "アルミック",
@@ -4416,7 +4416,7 @@
       "office": "https://www.almic.co.jp/company/office/",
       "contact": "https://www.almic.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.almic.co.jp/cad.html"
     },
     {
       "name": "旭トステム外装",
@@ -4486,7 +4486,7 @@
       "office": "https://www.ykkap.co.jp/showroom/",
       "contact": "https://www.ykkap.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.ykkap.co.jp/"
     },
     {
       "name": "日鉄鋼板",
@@ -4526,7 +4526,7 @@
       "office": "https://www.ykkap.co.jp/showroom/",
       "contact": "https://www.ykkap.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.ykkap.co.jp/"
     },
     {
       "name": "旭トステム外装",
@@ -4546,7 +4546,7 @@
       "office": "https://www.ykkap.co.jp/showroom/",
       "contact": "https://www.ykkap.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.ykkap.co.jp/"
     },
     {
       "name": "日鉄鋼板",
@@ -4586,7 +4586,7 @@
       "office": "https://www.ykkap.co.jp/showroom/",
       "contact": "https://www.ykkap.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.ykkap.co.jp/"
     },
     {
       "name": "山本窯業化工",
@@ -4666,7 +4666,7 @@
       "office": "https://www.lixil.co.jp/showroom/",
       "contact": "https://www.lixil.co.jp/support/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.biz-lixil.com/"
     },
     {
       "name": "ミラタップ",
@@ -4766,7 +4766,7 @@
       "office": "https://www.unison-net.com/company/location/",
       "contact": "https://www.unison-net.com/contact_top/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.unison-net.com/download/gardenexterior_cad/"
     },
     {
       "name": "安城資材",
@@ -4818,7 +4818,7 @@
       "office": "https://www.ykkap.co.jp/business/showroom/",
       "contact": "https://www.ykkap.co.jp/business/support/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.ykkap.co.jp/"
     },
     {
       "name": "三協立山",
@@ -4828,7 +4828,7 @@
       "office": "https://alumi.st-grp.co.jp/shr/",
       "contact": "https://alumi.st-grp.co.jp/inquiry/",
       "sample": "",
-      "cad": ""
+      "cad": "https://alumi.st-grp.co.jp/data/download/cad.html"
     },
     {
       "name": "不二サッシ",
@@ -4848,7 +4848,7 @@
       "office": "https://www.sfn.co.jp/company/office.html",
       "contact": "https://www.sfn.co.jp/contact.html",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.sfn.co.jp/data_service.html"
     },
     {
       "name": "豊和工業",
@@ -4888,7 +4888,7 @@
       "office": "https://www.ykkap.co.jp/business/showroom/",
       "contact": "https://www.ykkap.co.jp/business/support/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.ykkap.co.jp/"
     },
     {
       "name": "三協立山",
@@ -4898,7 +4898,7 @@
       "office": "https://alumi.st-grp.co.jp/shr/",
       "contact": "https://alumi.st-grp.co.jp/inquiry/",
       "sample": "",
-      "cad": ""
+      "cad": "https://alumi.st-grp.co.jp/data/download/cad.html"
     },
     {
       "name": "エクセルシャノン",
@@ -4918,7 +4918,7 @@
       "office": "https://www.fukuvi.co.jp/company/office",
       "contact": "https://www.fukuvi.co.jp/contact",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.fukuvi.co.jp/contact/cad"
     },
     {
       "name": "ハウディー",
@@ -4948,7 +4948,7 @@
       "office": "https://www.sfn.co.jp/company/office.html",
       "contact": "https://www.sfn.co.jp/contact.html",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.sfn.co.jp/data_service.html"
     },
     {
       "name": "セイキ販売",
@@ -4958,7 +4958,7 @@
       "office": "https://www.seiki.gr.jp/showroom.html",
       "contact": "https://www.seiki.gr.jp/form/trade/form.php",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.seiki.gr.jp/pro/download/"
     },
     {
       "name": "YKK AP",
@@ -4968,7 +4968,7 @@
       "office": "https://www.ykkap.co.jp/business/showroom/",
       "contact": "https://www.ykkap.co.jp/business/support/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.ykkap.co.jp/"
     },
     {
       "name": "NORD",
@@ -4988,7 +4988,7 @@
       "office": "https://www.bunka-s.co.jp/corporate/group/",
       "contact": "https://faq-bunka-s.dga.jp/",
       "sample": "",
-      "cad": ""
+      "cad": "https://bunka-s-pro.jp/cad/"
     },
     {
       "name": "ハウディー",
@@ -5058,7 +5058,7 @@
       "office": "https://www.newxt.co.jp/corp/",
       "contact": "",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.newxt.co.jp/download/"
     },
     {
       "name": "三和シヤッター工業",
@@ -5068,7 +5068,7 @@
       "office": "https://www.sanwa-ss.co.jp/company/list/",
       "contact": "https://www.sanwa-ss.co.jp/ask/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.sanwa-ss.co.jp/professional/cad/login/members?url=https://www.sanwa-ss.co.jp/professional/cad/weight_shutter/fire_shutter/"
     },
     {
       "name": "文化シャッター",
@@ -5078,7 +5078,7 @@
       "office": "https://www.bunka-s.co.jp/corporate/group/",
       "contact": "https://faq-bunka-s.dga.jp/",
       "sample": "",
-      "cad": ""
+      "cad": "https://bunka-s-pro.jp/cad/"
     },
     {
       "name": "東洋シヤッター",
@@ -5118,7 +5118,7 @@
       "office": "https://suzuki-sh.co.jp/corporate/base/",
       "contact": "https://suzuki-sh.co.jp/support/",
       "sample": "",
-      "cad": ""
+      "cad": "https://suzuki-sh.co.jp/catalogue/"
     },
     {
       "name": "安中製作所",
@@ -5138,7 +5138,7 @@
       "office": "https://www.sanwa-ss.co.jp/company/list/",
       "contact": "https://www.sanwa-ss.co.jp/ask/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.sanwa-ss.co.jp/professional/cad/login/members?url=https://www.sanwa-ss.co.jp/professional/cad/weight_shutter/fire_shutter/"
     },
     {
       "name": "文化シャッター",
@@ -5148,7 +5148,7 @@
       "office": "https://www.bunka-s.co.jp/corporate/group/",
       "contact": "https://faq-bunka-s.dga.jp/",
       "sample": "",
-      "cad": ""
+      "cad": "https://bunka-s-pro.jp/cad/"
     },
     {
       "name": "東洋シャッター",
@@ -5188,7 +5188,7 @@
       "office": "https://suzuki-sh.co.jp/corporate/base/",
       "contact": "https://suzuki-sh.co.jp/support/",
       "sample": "",
-      "cad": ""
+      "cad": "https://suzuki-sh.co.jp/catalogue/"
     },
     {
       "name": "安中製作所",
@@ -5208,7 +5208,7 @@
       "office": "https://www.bunka-s.co.jp/network/hokkaido/",
       "contact": "https://faq-bunka-s.dga.jp/",
       "sample": "",
-      "cad": ""
+      "cad": "https://bunka-s-pro.jp/cad/"
     },
     {
       "name": "東洋シャッター",
@@ -5258,7 +5258,7 @@
       "office": "https://www.pla-part.com/company/%e4%bc%9a%e7%a4%be%e6%a6%82%e8%a6%81/",
       "contact": "https://www.pla-part.com/%e3%81%8a%e5%95%8f%e3%81%84%e5%90%88%e3%82%8f%e3%81%9b/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.pla-part.com/service/%e8%a3%bd%e5%93%81%e4%b8%80%e8%a6%a7/"
     },
     {
       "name": "日本ドアコーポレーション",
@@ -5310,7 +5310,7 @@
       "office": "https://www.lixil.co.jp/showroom/",
       "contact": "https://www.lixil.co.jp/support/?_gl=1*vbpak9*_gcl_au*NjI4NTkzNjY2LjE3NDMzOTY5MzI.*_ga*MTYwNjUxMDY5NC4xNzQzMzk2OTMx*_ga_L1RLBQ788C*MTc0MzM5NjkzMS4xLjEuMTc0MzM5NzA5OC40My4wLjA.*_ga_81CGHJ6TE8*MTc0MzM5Njg5My4zLjEuMTc0MzM5NzA5OC4yLjAuMA..",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.biz-lixil.com/"
     },
     {
       "name": "ミラタップ",
@@ -5400,7 +5400,7 @@
       "office": "https://www.sekisui.co.jp/company/network/domestic/",
       "contact": "https://www.eslontimes.com/kenzai/inquiry/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.eslontimes.com/special-bim/"
     },
     {
       "name": "ユニソン",
@@ -5410,7 +5410,7 @@
       "office": "https://www.unison-net.com/company/location/",
       "contact": "https://www.unison-net.com/contact_top/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.unison-net.com/download/gardenexterior_cad/"
     },
     {
       "name": "東洋工業",
@@ -5582,7 +5582,7 @@
       "office": "https://www.abc-t.co.jp/company/establishments.html",
       "contact": "https://www.abc-t.co.jp/apps/contact/select",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.abc-t.co.jp/download/bim/"
     },
     {
       "name": "理研軽金属工業",
@@ -5592,7 +5592,7 @@
       "office": "https://www.rikenkeikinzoku.co.jp/company/info/",
       "contact": "https://www.rikenkeikinzoku.co.jp/company/inquiry/index.html",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.rikenkeikinzoku.co.jp/cad-bim/index.html"
     },
     {
       "name": "城東テクノ",
@@ -5612,7 +5612,7 @@
       "office": "https://www.kume-ind.co.jp/branches",
       "contact": "https://www.kume-ind.co.jp/contact",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.kume-ind.co.jp/cad"
     },
     {
       "name": "三洋工業",
@@ -5622,7 +5622,7 @@
       "office": "https://www.sanyo-industries.co.jp/company/location.html",
       "contact": "https://www.sanyo-industries.co.jp/inquiry/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.sanyo-industries.co.jp/cad/"
     },
     {
       "name": "アーキヤマデ",
@@ -5632,7 +5632,7 @@
       "office": "https://www.a-yamade.co.jp/company/group/",
       "contact": "https://www.a-yamade.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.a-yamade.co.jp/data/cad/"
     },
     {
       "name": "井上商事",
@@ -5642,7 +5642,7 @@
       "office": "https://www.inoue-s.co.jp/contents/company/office.html",
       "contact": "https://www.inoue-s.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.inoue-s.co.jp/cad/catalog/"
     },
     {
       "name": "ツヅキ",
@@ -5652,7 +5652,7 @@
       "office": "https://tuzuki.co.jp/company/branch/",
       "contact": "https://tuzuki.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://tuzuki.co.jp/contact/cad_bim/"
     },
     {
       "name": "白水興産",
@@ -5662,7 +5662,7 @@
       "office": "https://hakusui-k.co.jp/company/about/",
       "contact": "https://hakusui-k.co.jp/contact-us/",
       "sample": "",
-      "cad": ""
+      "cad": "https://hakusui-k.co.jp/cad_data/"
     },
     {
       "name": "サンレール",
@@ -5672,7 +5672,7 @@
       "office": "https://www.sunrail.co.jp/office",
       "contact": "https://www.sunrail.co.jp/contact",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.sunrail.co.jp/caddata"
     },
     {
       "name": "三昌",
@@ -5692,7 +5692,7 @@
       "office": "https://www.swan-group.co.jp/company/",
       "contact": "https://www.swan-group.co.jp/company/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.swan-group.co.jp/cad/"
     },
     {
       "name": "ビニフレーム工業",
@@ -5702,7 +5702,7 @@
       "office": "https://www.vinyframe.co.jp/company/net.html",
       "contact": "https://www.vinyframe.co.jp/inquiry/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.vinyframe.co.jp/dl_cad/"
     },
     {
       "name": "タイセイ",
@@ -5712,7 +5712,7 @@
       "office": "https://www.expantay.co.jp/company/access/",
       "contact": "https://www.expantay.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.expantay.co.jp/download/"
     },
     {
       "name": "YKK AP",
@@ -5722,7 +5722,7 @@
       "office": "https://www.ykkap.co.jp/business/showroom/",
       "contact": "https://www.ykkap.co.jp/business/support/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.ykkap.co.jp/"
     },
     {
       "name": "ダイケン",
@@ -5742,7 +5742,7 @@
       "office": "https://www.rikenkeikinzoku.co.jp/company/info/",
       "contact": "https://www.rikenkeikinzoku.co.jp/company/inquiry/index.html",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.rikenkeikinzoku.co.jp/cad-bim/index.html"
     },
     {
       "name": "井上商事",
@@ -5752,7 +5752,7 @@
       "office": "https://www.inoue-s.co.jp/contents/company/office.html",
       "contact": "https://www.inoue-s.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.inoue-s.co.jp/cad/catalog/"
     },
     {
       "name": "アルフィン",
@@ -5762,7 +5762,7 @@
       "office": "https://www.alfin.co.jp/about/",
       "contact": "https://www.alfin.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.alfin.co.jp/pro/"
     },
     {
       "name": "ツヅキ",
@@ -5772,7 +5772,7 @@
       "office": "https://tuzuki.co.jp/company/branch/",
       "contact": "https://tuzuki.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://tuzuki.co.jp/contact/cad_bim/"
     },
     {
       "name": "ヒガノ",
@@ -5782,7 +5782,7 @@
       "office": "https://higano.co.jp/company/",
       "contact": "https://higano.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://higano.co.jp/catalog/"
     },
     {
       "name": "有限会社岩井工業所",
@@ -5812,7 +5812,7 @@
       "office": "https://www.fjp-ahp.jp/company/",
       "contact": "https://www.fjp-ahp.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.fjp-ahp.jp/catalog/"
     },
     {
       "name": "丸豊建硝",
@@ -5842,7 +5842,7 @@
       "office": "https://www.artgiken.co.jp/company/index.php",
       "contact": "https://www.artgiken.co.jp/contact/index.php",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.artgiken.co.jp/cad/index.php"
     },
     {
       "name": "日軽エンジニアリング",
@@ -5872,7 +5872,7 @@
       "office": "https://www.alfin.co.jp/about/",
       "contact": "https://www.alfin.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.alfin.co.jp/pro/"
     },
     {
       "name": "デバイス",
@@ -5882,7 +5882,7 @@
       "office": "https://www.device-inc.com/information/",
       "contact": "https://www.device-inc.com/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.device-inc.com/support/cad/"
     },
     {
       "name": "白水興産",
@@ -5892,7 +5892,7 @@
       "office": "https://hakusui-k.co.jp/company/about/",
       "contact": "https://hakusui-k.co.jp/contact-us/",
       "sample": "",
-      "cad": ""
+      "cad": "https://hakusui-k.co.jp/cad_data/"
     },
     {
       "name": "丸豊建硝",
@@ -5912,7 +5912,7 @@
       "office": "https://www.artgiken.co.jp/company/index.php",
       "contact": "https://www.artgiken.co.jp/contact/index.php",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.artgiken.co.jp/cad/index.php"
     },
     {
       "name": "アートホクストン",
@@ -5932,7 +5932,7 @@
       "office": "https://www.takano-net.co.jp/exterior/exhibit/",
       "contact": "https://www.takano-net.co.jp/exterior/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.takano-net.co.jp/exterior/support/download_cad-step1/"
     },
     {
       "name": "YKK AP",
@@ -5942,7 +5942,7 @@
       "office": "https://www.ykkap.co.jp/business/showroom/",
       "contact": "https://www.ykkap.co.jp/business/support/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.ykkap.co.jp/"
     },
     {
       "name": "協和興業",
@@ -6022,7 +6022,7 @@
       "office": "https://www.tenpal.co.jp/company/access.html",
       "contact": "https://www.tenpal.co.jp/inquiry_v2.html",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.tenpal.co.jp/download.html"
     },
     {
       "name": "パナソニック",
@@ -6032,7 +6032,7 @@
       "office": "https://www2.panasonic.biz/sumai/exterior/gutters/showroom.html",
       "contact": "https://www2.panasonic.biz/sumai/exterior/gutters/contact.html",
       "sample": "",
-      "cad": ""
+      "cad": "https://www2.panasonic.biz/jp/ai/cad/download/"
     },
     {
       "name": "積水化学工業",
@@ -6132,7 +6132,7 @@
       "office": "https://www.ykkap.co.jp/business/showroom/",
       "contact": "https://www.ykkap.co.jp/business/support/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.ykkap.co.jp/"
     },
     {
       "name": "アトリエテクニカ",
@@ -6192,7 +6192,7 @@
       "office": "https://www2.panasonic.biz/jp/solar/showroom/",
       "contact": "https://www2.panasonic.biz/jp/solar/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www2.panasonic.biz/jp/ai/cad/download/"
     },
     {
       "name": "京セラ",
@@ -6242,7 +6242,7 @@
       "office": "https://www.ykkap.co.jp/business/showroom/",
       "contact": "https://www.ykkap.co.jp/business/support/",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.ykkap.co.jp/"
     },
     {
       "name": "サンレール",
@@ -6252,7 +6252,7 @@
       "office": "https://www.sunrail.co.jp/office",
       "contact": "https://www.sunrail.co.jp/contact",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.sunrail.co.jp/caddata"
     },
     {
       "name": "三協アルミ",
@@ -6262,7 +6262,7 @@
       "office": "https://alumi.st-grp.co.jp/support/showroom/",
       "contact": "https://alumi.st-grp.co.jp/support/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://alumi.st-grp.co.jp/data/download/cad.html"
     },
     {
       "name": "田中金属",
@@ -6314,7 +6314,7 @@
       "office": "https://www.daiken.jp/showroom/",
       "contact": "https://faq.daiken.jp/faq/show/948?site_domain=user",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.daiken.jp/product/DispCate.do?volumeName=00001&pageType=dataSearch&para=cad"
     },
     {
       "name": "永大産業",
@@ -6344,7 +6344,7 @@
       "office": "https://www.woodone.co.jp/showroom/",
       "contact": "https://www.woodone.co.jp/support/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.woodone.co.jp/static/business/downloads"
     },
     {
       "name": "イクタ",
@@ -6534,7 +6534,7 @@
       "office": "https://forest.toppan.com/divison/office-list/",
       "contact": "https://forest.toppan.com/form/contact_jp_privacy.html",
       "sample": "",
-      "cad": ""
+      "cad": "https://forest.toppan.com/sample-search/"
     },
     {
       "name": "サンゲツ",
@@ -6814,7 +6814,7 @@
       "office": "https://www.lixil.co.jp/showroom/",
       "contact": "",
       "sample": "",
-      "cad": ""
+      "cad": "https://cad.biz-lixil.com/"
     },
     {
       "name": "田島ルーフィング",
@@ -6834,7 +6834,7 @@
       "office": "https://www.sekistone.com/company/access/",
       "contact": "https://www.sekistone.com/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.sekistone.com/products/cad/"
     },
     {
       "name": "ABC商会",
@@ -6844,7 +6844,7 @@
       "office": "https://www.abc-t.co.jp/company/establishments.html",
       "contact": "https://www.abc-t.co.jp/apps/contact/select",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.abc-t.co.jp/download/bim/"
     },
     {
       "name": "オオムラ",
@@ -6884,7 +6884,7 @@
       "office": "https://www.daiken.jp/showroom/",
       "contact": "https://faq.daiken.jp/faq/show/948?site_domain=user",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.daiken.jp/product/DispCate.do?volumeName=00001&pageType=dataSearch&para=cad"
     },
     {
       "name": "光洋産業",
@@ -6974,7 +6974,7 @@
       "office": "https://www.daiken.jp/showroom/",
       "contact": "https://faq.daiken.jp/faq/show/948?site_domain=user",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.daiken.jp/product/DispCate.do?volumeName=00001&pageType=dataSearch&para=cad"
     },
     {
       "name": "永大産業",
@@ -7004,7 +7004,7 @@
       "office": "https://www.woodone.co.jp/showroom/",
       "contact": "https://www.woodone.co.jp/support/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.woodone.co.jp/static/business/downloads"
     },
     {
       "name": "ノダ",
@@ -7054,7 +7054,7 @@
       "office": "https://www.fukuvi.co.jp/company/office/",
       "contact": "https://www.fukuvi.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.fukuvi.co.jp/contact/cad"
     },
     {
       "name": "タマリ",
@@ -7094,7 +7094,7 @@
       "office": "https://www.daiken.jp/showroom/",
       "contact": "https://faq.daiken.jp/faq/show/948?site_domain=user",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.daiken.jp/product/DispCate.do?volumeName=00001&pageType=dataSearch&para=cad"
     },
     {
       "name": "フクビ化学工業",
@@ -7104,7 +7104,7 @@
       "office": "https://www.fukuvi.co.jp/company/office/",
       "contact": "https://www.fukuvi.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.fukuvi.co.jp/contact/cad"
     },
     {
       "name": "積水化学工業",
@@ -7346,7 +7346,7 @@
       "office": "https://www.daiken.jp/showroom/",
       "contact": "https://faq.daiken.jp/faq/show/948?site_domain=user",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.daiken.jp/product/DispCate.do?volumeName=00001&pageType=dataSearch&para=cad"
     },
     {
       "name": "アイカ工業",
@@ -7626,7 +7626,7 @@
       "office": "https://www.abc-t.co.jp/company/establishments.html",
       "contact": "https://www.abc-t.co.jp/apps/contact/select",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.abc-t.co.jp/download/bim/"
     },
     {
       "name": "フッコー",
@@ -7796,7 +7796,7 @@
       "office": "https://www.abc-t.co.jp/company/establishments.html",
       "contact": "https://www.abc-t.co.jp/apps/contact/select",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.abc-t.co.jp/download/bim/"
     },
     {
       "name": "ｷｬﾝｴﾝﾀｰﾌﾟﾗｲｾﾞｽﾞ",
@@ -7866,7 +7866,7 @@
       "office": "https://dupont-mcc.co.jp/company/",
       "contact": "https://dupont-mcc.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://dupont-mcc.co.jp/cad/"
     },
     {
       "name": "ﾛｯﾃｹﾐｶﾙｼﾞｬﾊﾟﾝ",
@@ -7916,7 +7916,7 @@
       "office": "https://www.daiken.jp/showroom/",
       "contact": "https://faq.daiken.jp/faq/show/948?site_domain=user",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.daiken.jp/product/DispCate.do?volumeName=00001&pageType=dataSearch&para=cad"
     },
     {
       "name": "エービーシー商会",
@@ -7926,7 +7926,7 @@
       "office": "https://www.abc-t.co.jp/company/establishments.html",
       "contact": "https://www.abc-t.co.jp/apps/contact/select",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.abc-t.co.jp/download/bim/"
     },
     {
       "name": "理研軽金属工業",
@@ -7936,7 +7936,7 @@
       "office": "https://www.rikenkeikinzoku.co.jp/company/info/",
       "contact": "https://www.rikenkeikinzoku.co.jp/company/inquiry/index.html",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.rikenkeikinzoku.co.jp/cad-bim/index.html"
     },
     {
       "name": "恩加島木材工業",
@@ -7956,7 +7956,7 @@
       "office": "https://www.woodone.co.jp/showroom/",
       "contact": "https://www.woodone.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.woodone.co.jp/static/business/downloads"
     },
     {
       "name": "エービーシー商会",
@@ -7966,7 +7966,7 @@
       "office": "https://www.abc-t.co.jp/company/establishments.html",
       "contact": "https://www.abc-t.co.jp/apps/contact/select",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.abc-t.co.jp/download/bim/"
     },
     {
       "name": "三洋工業",
@@ -7976,7 +7976,7 @@
       "office": "https://www.sanyo-industries.co.jp/company/location.html#office",
       "contact": "https://www.sanyo-industries.co.jp/inquiry/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.sanyo-industries.co.jp/cad/"
     },
     {
       "name": "名古屋モザイク工業",
@@ -7996,7 +7996,7 @@
       "office": "https://www.fukuvi.co.jp/company/office",
       "contact": "https://www.fukuvi.co.jp/contact",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.fukuvi.co.jp/contact/cad"
     },
     {
       "name": "ie-mon",
@@ -8068,7 +8068,7 @@
       "office": "https://www.kirii.co.jp/company/base/",
       "contact": "https://www.kirii.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.kirii.co.jp/download/cad/?category_id=2"
     },
     {
       "name": "吉野石膏",
@@ -8088,7 +8088,7 @@
       "office": "https://www.daiken.jp/about/base/japan.html",
       "contact": "https://faq.daiken.jp/faq/show/948?site_domain=user",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.daiken.jp/product/DispCate.do?volumeName=00001&pageType=dataSearch&para=cad"
     },
     {
       "name": "吉野石膏",
@@ -8118,7 +8118,7 @@
       "office": "https://www.daiken.jp/about/base/japan.html",
       "contact": "https://faq.daiken.jp/faq/show/948?site_domain=user",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.daiken.jp/product/DispCate.do?volumeName=00001&pageType=dataSearch&para=cad"
     },
     {
       "name": "フクビ化学工業",
@@ -8128,7 +8128,7 @@
       "office": "https://www.fukuvi.co.jp/company/office",
       "contact": "https://www.fukuvi.co.jp/contact",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.fukuvi.co.jp/contact/cad"
     },
     {
       "name": "理研軽金属工業",
@@ -8138,7 +8138,7 @@
       "office": "https://www.rikenkeikinzoku.co.jp/company/info/",
       "contact": "https://www.rikenkeikinzoku.co.jp/company/inquiry/index.html",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.rikenkeikinzoku.co.jp/cad-bim/index.html"
     },
     {
       "name": "難波金属",
@@ -8168,7 +8168,7 @@
       "office": "https://www.kirii.co.jp/company/base/",
       "contact": "https://www.kirii.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.kirii.co.jp/download/cad/?category_id=2"
     },
     {
       "name": "南海プライウッド",
@@ -8218,7 +8218,7 @@
       "office": "https://www.daiken.jp/showroom/",
       "contact": "https://faq.daiken.jp/faq/show/948?site_domain=user",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.daiken.jp/product/DispCate.do?volumeName=00001&pageType=dataSearch&para=cad"
     },
     {
       "name": "エービーシー商会",
@@ -8228,7 +8228,7 @@
       "office": "https://www.abc-t.co.jp/company/establishments.html",
       "contact": "https://www.abc-t.co.jp/apps/contact/select",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.abc-t.co.jp/download/bim/"
     },
     {
       "name": "理研軽金属工業",
@@ -8238,7 +8238,7 @@
       "office": "https://www.rikenkeikinzoku.co.jp/company/info/",
       "contact": "https://www.rikenkeikinzoku.co.jp/company/inquiry/index.html",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.rikenkeikinzoku.co.jp/cad-bim/index.html"
     },
     {
       "name": "難波金属",
@@ -8268,7 +8268,7 @@
       "office": "https://www.abc-t.co.jp/company/establishments.html",
       "contact": "https://www.abc-t.co.jp/apps/contact/select",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.abc-t.co.jp/download/bim/"
     },
     {
       "name": "エービーシー商会",
@@ -8278,7 +8278,7 @@
       "office": "https://www.abc-t.co.jp/company/establishments.html",
       "contact": "https://www.abc-t.co.jp/apps/contact/select",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.abc-t.co.jp/download/bim/"
     },
     {
       "name": "日幸産業",
@@ -8288,7 +8288,7 @@
       "office": "https://www.nikko-ind.co.jp/about/",
       "contact": "https://www.nikko-ind.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.nikko-ind.co.jp/data/index.html"
     },
     {
       "name": "東京興業貿易商会",
@@ -8348,7 +8348,7 @@
       "office": "https://www.kirii.co.jp/company/location/",
       "contact": "https://www.kirii.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.kirii.co.jp/download/cad/?category_id=2"
     },
     {
       "name": "ロックウール工業会",
@@ -8398,7 +8398,7 @@
       "office": "https://www.kirii.co.jp/company/base/",
       "contact": "https://www.kirii.co.jp/contact/",
       "sample": "",
-      "cad": ""
+      "cad": "https://www.kirii.co.jp/download/cad/?category_id=2"
     }
   ]
 }

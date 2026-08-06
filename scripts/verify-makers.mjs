@@ -39,17 +39,17 @@ for (const file of fs.readdirSync(DIR).filter((f) => f.startsWith('mak_') && f.e
   const missing = [...source].filter((u) => !extracted.has(u));
   const extra = [...extracted].filter((u) => !source.has(u));
 
-  const mark = missing.length === 0 && extra.length === 0 ? 'OK  ' : 'NG  ';
-  if (mark === 'NG  ') ng++;
+  // JSON 側にしかない URL は、抽出後に補ったもの（CAD リンクの追加など）。
+  // 情報が増えるぶんには構わないので、件数だけ出して合否には含めない。
+  if (missing.length) ng++;
   console.log(
-    `${mark}${category.padEnd(12)} 元:${String(source.size).padStart(4)}  抽出:${String(extracted.size).padStart(4)}` +
+    `${missing.length ? 'NG  ' : 'OK  '}${category.padEnd(12)} 元:${String(source.size).padStart(4)}  抽出:${String(extracted.size).padStart(4)}` +
     (missing.length ? `  取りこぼし:${missing.length}` : '') +
-    (extra.length ? `  余分:${extra.length}` : '')
+    (extra.length ? `  追加分:${extra.length}` : '')
   );
   for (const u of missing.slice(0, 3)) console.log(`      取りこぼし: ${u}`);
-  for (const u of extra.slice(0, 3)) console.log(`      余分      : ${u}`);
 }
 
 console.log('');
-console.log(ng === 0 ? '全カテゴリ一致（URLの取りこぼし・余分ともに0）' : `${ng} カテゴリで不一致`);
+console.log(ng === 0 ? '取りこぼしなし（元データのURLはすべて保持されている）' : `${ng} カテゴリで取りこぼしあり`);
 process.exit(ng === 0 ? 0 : 1);

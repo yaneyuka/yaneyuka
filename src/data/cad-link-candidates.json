@@ -1,0 +1,1380 @@
+{
+  "generatedAt": "2026-08-06",
+  "scanned": 411,
+  "found": 75,
+  "affectedEntries": 193,
+  "candidates": [
+    {
+      "origin": "http://www.nsos.co.jp",
+      "cad": "http://www.nsos.co.jp/info/",
+      "label": "はぜ締め形折板屋根シリーズへ",
+      "confirmHits": 84,
+      "entries": [
+        {
+          "category": "屋根",
+          "name": "NST奥平"
+        },
+        {
+          "category": "屋根",
+          "name": "NST奥平"
+        }
+      ]
+    },
+    {
+      "origin": "https://alumi.st-grp.co.jp",
+      "cad": "https://alumi.st-grp.co.jp/data/download/cad.html",
+      "label": "CAD�f�[�^�_�E�����[�h",
+      "confirmHits": 24,
+      "entries": [
+        {
+          "category": "内装その他",
+          "name": "三協立山"
+        },
+        {
+          "category": "エクステリア",
+          "name": "三協アルミ"
+        },
+        {
+          "category": "エクステリア",
+          "name": "三協アルミ"
+        },
+        {
+          "category": "エクステリア",
+          "name": "三協アルミ"
+        },
+        {
+          "category": "エクステリア",
+          "name": "三協アルミ"
+        },
+        {
+          "category": "開口部",
+          "name": "三協立山"
+        },
+        {
+          "category": "開口部",
+          "name": "三協立山"
+        },
+        {
+          "category": "外部その他",
+          "name": "三協アルミ"
+        }
+      ]
+    },
+    {
+      "origin": "https://apro1965.jp",
+      "cad": "https://apro1965.jp/search-cad/",
+      "label": "CAD",
+      "confirmHits": 71,
+      "entries": [
+        {
+          "category": "金物",
+          "name": "ジュケン"
+        }
+      ]
+    },
+    {
+      "origin": "https://bunka-s-pro.jp",
+      "cad": "https://bunka-s-pro.jp/cad/",
+      "label": "CADデータ",
+      "confirmHits": 8,
+      "entries": [
+        {
+          "category": "開口部",
+          "name": "文化シャッター"
+        },
+        {
+          "category": "開口部",
+          "name": "文化シャッター"
+        },
+        {
+          "category": "開口部",
+          "name": "文化シャッター"
+        },
+        {
+          "category": "開口部",
+          "name": "文化シャッター"
+        }
+      ]
+    },
+    {
+      "origin": "https://dupont-mcc.co.jp",
+      "cad": "https://dupont-mcc.co.jp/cad/",
+      "label": "(URL推測)",
+      "confirmHits": 18,
+      "entries": [
+        {
+          "category": "内装壁材",
+          "name": "デュポン・MCC"
+        }
+      ]
+    },
+    {
+      "origin": "https://forest.toppan.com",
+      "cad": "https://forest.toppan.com/sample-search/",
+      "label": "色柄・CADデータ検索",
+      "confirmHits": 20,
+      "entries": [
+        {
+          "category": "内部床",
+          "name": "TOPPAN"
+        }
+      ]
+    },
+    {
+      "origin": "https://hakusui-k.co.jp",
+      "cad": "https://hakusui-k.co.jp/cad_data/",
+      "label": "CADデータ",
+      "confirmHits": 9,
+      "entries": [
+        {
+          "category": "外部その他",
+          "name": "白水興産"
+        },
+        {
+          "category": "外部その他",
+          "name": "白水興産"
+        }
+      ]
+    },
+    {
+      "origin": "https://higano.co.jp",
+      "cad": "https://higano.co.jp/catalog/",
+      "label": "カタログ・価格表 CAD・施工要領書 ダウンロード",
+      "confirmHits": 14,
+      "entries": [
+        {
+          "category": "外部その他",
+          "name": "ヒガノ"
+        }
+      ]
+    },
+    {
+      "origin": "https://led.shibasaki-inc.jp",
+      "cad": "https://led.shibasaki-inc.jp/cad_dl/",
+      "label": "CADデータダウンロード",
+      "confirmHits": 89,
+      "entries": [
+        {
+          "category": "電気設備",
+          "name": "シバサキ"
+        },
+        {
+          "category": "電気設備",
+          "name": "シバサキ"
+        }
+      ]
+    },
+    {
+      "origin": "https://suzuki-sh.co.jp",
+      "cad": "https://suzuki-sh.co.jp/catalogue/",
+      "label": "カタログ CADデータ",
+      "confirmHits": 6,
+      "entries": [
+        {
+          "category": "開口部",
+          "name": "鈴木シャッター"
+        },
+        {
+          "category": "開口部",
+          "name": "鈴木シャッター"
+        }
+      ]
+    },
+    {
+      "origin": "https://tuzuki.co.jp",
+      "cad": "https://tuzuki.co.jp/contact/cad_bim/",
+      "label": "CAD・BIMデータに関するお問い合わせ",
+      "confirmHits": 14,
+      "entries": [
+        {
+          "category": "金物",
+          "name": "ツヅキ"
+        },
+        {
+          "category": "外部その他",
+          "name": "ツヅキ"
+        },
+        {
+          "category": "外部その他",
+          "name": "ツヅキ"
+        }
+      ]
+    },
+    {
+      "origin": "https://umc.uacj-group.com",
+      "cad": "https://umc.uacj-group.com/download/cad/",
+      "label": "CAD",
+      "confirmHits": 4,
+      "entries": [
+        {
+          "category": "金物",
+          "name": "UACJ金属加工"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.a-yamade.co.jp",
+      "cad": "https://www.a-yamade.co.jp/data/cad/",
+      "label": "(URL推測)",
+      "confirmHits": 88,
+      "entries": [
+        {
+          "category": "防水",
+          "name": "アーキヤマデ"
+        },
+        {
+          "category": "防水",
+          "name": "アーキヤマデ"
+        },
+        {
+          "category": "外部その他",
+          "name": "アーキヤマデ"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.abc-t.co.jp",
+      "cad": "https://www.abc-t.co.jp/download/bim/",
+      "label": "(URL推測)",
+      "confirmHits": 13,
+      "entries": [
+        {
+          "category": "外部その他",
+          "name": "ABC商会"
+        },
+        {
+          "category": "内部床",
+          "name": "ABC商会"
+        },
+        {
+          "category": "内装壁材",
+          "name": "エービーシー商会"
+        },
+        {
+          "category": "内装壁材",
+          "name": "エービーシー商会"
+        },
+        {
+          "category": "内装壁材",
+          "name": "エービーシー商会"
+        },
+        {
+          "category": "内装壁材",
+          "name": "エービーシー商会"
+        },
+        {
+          "category": "内装天井材",
+          "name": "エービーシー商会"
+        },
+        {
+          "category": "内装天井材",
+          "name": "エービーシー商会"
+        },
+        {
+          "category": "内装天井材",
+          "name": "エービーシー商会"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.alfin.co.jp",
+      "cad": "https://www.alfin.co.jp/pro/",
+      "label": "ALFIN PRO SITE (見積りシミュレーション・CAD DATAはこちら",
+      "confirmHits": 4,
+      "entries": [
+        {
+          "category": "外部その他",
+          "name": "アルフィン"
+        },
+        {
+          "category": "外部その他",
+          "name": "アルフィン"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.almic.co.jp",
+      "cad": "https://www.almic.co.jp/cad.html",
+      "label": "CADデータ",
+      "confirmHits": 142,
+      "entries": [
+        {
+          "category": "外壁",
+          "name": "アルミック"
+        },
+        {
+          "category": "外壁",
+          "name": "アルミック"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.artgiken.co.jp",
+      "cad": "https://www.artgiken.co.jp/cad/index.php",
+      "label": "庇CADデータダウンロードリスト",
+      "confirmHits": 6,
+      "entries": [
+        {
+          "category": "外部その他",
+          "name": "アート技研工業"
+        },
+        {
+          "category": "外部その他",
+          "name": "アート技研工業"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.asahikasei-kenzai.com",
+      "cad": "https://www.asahikasei-kenzai.com/dataservice/",
+      "label": "パネル強度計算書・CADデータ・検討ソフト 等",
+      "confirmHits": 11,
+      "entries": [
+        {
+          "category": "外壁",
+          "name": "旭化成建材"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.asloc.co.jp",
+      "cad": "https://www.asloc.co.jp/download/document.php?c=document2&tmp=X83tHW3Exp",
+      "label": "CADデータ",
+      "confirmHits": 58,
+      "entries": [
+        {
+          "category": "外壁",
+          "name": "ノザワ"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.atomlt.com",
+      "cad": "https://www.atomlt.com/caddata/",
+      "label": "住まいの金物CAD集",
+      "confirmHits": 16,
+      "entries": [
+        {
+          "category": "金物",
+          "name": "ｱﾄﾑﾘﾋﾞﾝﾃｯｸ"
+        },
+        {
+          "category": "金物",
+          "name": "アトムリビンテック"
+        },
+        {
+          "category": "金物",
+          "name": "ｱﾄﾑﾘﾋﾞﾝﾃｯｸ"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.bikenkougyou.co.jp",
+      "cad": "https://www.bikenkougyou.co.jp/cad/",
+      "label": "CADダウンロード",
+      "confirmHits": 6,
+      "entries": [
+        {
+          "category": "外構",
+          "name": "美建工業"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.biz-lixil.com",
+      "cad": "https://cad.biz-lixil.com/",
+      "label": "BIM�f�[�^",
+      "confirmHits": 12,
+      "entries": [
+        {
+          "category": "外壁",
+          "name": "LIXIL"
+        },
+        {
+          "category": "外部床",
+          "name": "LIXIL"
+        },
+        {
+          "category": "内部床",
+          "name": "LIXIL"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.clion.co.jp",
+      "cad": "https://www.clion.co.jp/documents/",
+      "label": "確認申請書類 （認定書・CAD データなど）",
+      "confirmHits": 9,
+      "entries": [
+        {
+          "category": "外壁",
+          "name": "クリオン"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.comany.co.jp",
+      "cad": "https://www.comany.co.jp/cad/",
+      "label": "CAD/BIMダウンロード",
+      "confirmHits": 36,
+      "entries": [
+        {
+          "category": "内装その他",
+          "name": "コマニー"
+        },
+        {
+          "category": "内装その他",
+          "name": "コマニー"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.daiken.jp",
+      "cad": "https://www.daiken.jp/product/DispCate.do?volumeName=00001&pageType=dataSearch&para=cad",
+      "label": "CAD",
+      "confirmHits": 5,
+      "entries": [
+        {
+          "category": "外壁",
+          "name": "ダイケン"
+        },
+        {
+          "category": "内部床",
+          "name": "大建工業"
+        },
+        {
+          "category": "内部床",
+          "name": "大建工業"
+        },
+        {
+          "category": "内部床",
+          "name": "大建工業"
+        },
+        {
+          "category": "内部床",
+          "name": "大建工業"
+        },
+        {
+          "category": "内装壁材",
+          "name": "大建工業"
+        },
+        {
+          "category": "内装壁材",
+          "name": "大建工業"
+        },
+        {
+          "category": "内装天井材",
+          "name": "大建工業"
+        },
+        {
+          "category": "内装天井材",
+          "name": "大建工業"
+        },
+        {
+          "category": "内装天井材",
+          "name": "大建工業"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.device-inc.com",
+      "cad": "https://www.device-inc.com/support/cad/",
+      "label": "(URL推測)",
+      "confirmHits": 41,
+      "entries": [
+        {
+          "category": "外部その他",
+          "name": "デバイス"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.eslontimes.com",
+      "cad": "https://www.eslontimes.com/special-bim/",
+      "label": "",
+      "confirmHits": 15,
+      "entries": [
+        {
+          "category": "外部床",
+          "name": "積水化学工業"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.expantay.co.jp",
+      "cad": "https://www.expantay.co.jp/download/",
+      "label": "CADデータ",
+      "confirmHits": 4,
+      "entries": [
+        {
+          "category": "外部その他",
+          "name": "タイセイ"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.fjp-ahp.jp",
+      "cad": "https://www.fjp-ahp.jp/catalog/",
+      "label": "カタログ・CAD ダウンロード",
+      "confirmHits": 8,
+      "entries": [
+        {
+          "category": "外部その他",
+          "name": "フジカケ"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.fujislate.com",
+      "cad": "https://www.fujislate.com/download/cad/",
+      "label": "CAD",
+      "confirmHits": 2,
+      "entries": [
+        {
+          "category": "屋根",
+          "name": "富士スレート"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.fukuvi.co.jp",
+      "cad": "https://www.fukuvi.co.jp/contact/cad",
+      "label": "CADダウンロード",
+      "confirmHits": 14,
+      "entries": [
+        {
+          "category": "内装その他",
+          "name": "フクビ化学工業"
+        },
+        {
+          "category": "内装その他",
+          "name": "フクビ化学"
+        },
+        {
+          "category": "内装その他",
+          "name": "フクビ化学工業"
+        },
+        {
+          "category": "内装その他",
+          "name": "フクビ化学"
+        },
+        {
+          "category": "外壁",
+          "name": "フクビ化学工業"
+        },
+        {
+          "category": "外壁",
+          "name": "フクビ化学工業"
+        },
+        {
+          "category": "開口部",
+          "name": "フクビ化学工業"
+        },
+        {
+          "category": "内部床",
+          "name": "フクビ化学工業"
+        },
+        {
+          "category": "内部床",
+          "name": "フクビ化学工業"
+        },
+        {
+          "category": "内装壁材",
+          "name": "フクビ化学工業"
+        },
+        {
+          "category": "内装天井材",
+          "name": "フクビ化学工業"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.gantan.co.jp",
+      "cad": "https://www.gantan.co.jp/cad/",
+      "label": "CADデータ",
+      "confirmHits": 173,
+      "entries": [
+        {
+          "category": "屋根",
+          "name": "元旦ビューティ工業"
+        },
+        {
+          "category": "屋根",
+          "name": "元旦ビューティ工業"
+        },
+        {
+          "category": "屋根",
+          "name": "元旦ビューティ工業"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.hinaka.co.jp",
+      "cad": "https://www.hinaka.co.jp/new_hp/item/cad_download_list.php",
+      "label": "CADデータ",
+      "confirmHits": 6,
+      "entries": [
+        {
+          "category": "内装その他",
+          "name": "日中製作所"
+        },
+        {
+          "category": "内装その他",
+          "name": "ヒナカ"
+        },
+        {
+          "category": "金物",
+          "name": "ヒナカ"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.igkogyo.co.jp",
+      "cad": "https://www.igkogyo.co.jp/download/cad/",
+      "label": "CADデータ",
+      "confirmHits": 7,
+      "entries": [
+        {
+          "category": "屋根",
+          "name": "アイジー工業"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.inagakishoji.jp",
+      "cad": "https://web.gogo.jp/inagakishoji/form/caddlform",
+      "label": "CADデータ",
+      "confirmHits": 10,
+      "entries": [
+        {
+          "category": "屋根",
+          "name": "稲垣商事"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.inoue-s.co.jp",
+      "cad": "https://www.inoue-s.co.jp/cad/catalog/",
+      "label": "",
+      "confirmHits": 6,
+      "entries": [
+        {
+          "category": "金物",
+          "name": "井上商事"
+        },
+        {
+          "category": "金物",
+          "name": "井上商事"
+        },
+        {
+          "category": "外部その他",
+          "name": "井上商事"
+        },
+        {
+          "category": "外部その他",
+          "name": "井上商事"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.iwafuku.co.jp",
+      "cad": "https://www.iwafuku.co.jp/cad-data.html",
+      "label": "",
+      "confirmHits": 4,
+      "entries": [
+        {
+          "category": "屋根",
+          "name": "岩福セラミックス"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.kirii.co.jp",
+      "cad": "https://www.kirii.co.jp/download/cad/?category_id=2",
+      "label": "CADデータ",
+      "confirmHits": 901,
+      "entries": [
+        {
+          "category": "内装天井材",
+          "name": "桐井製作所"
+        },
+        {
+          "category": "内装天井材",
+          "name": "桐井製作所"
+        },
+        {
+          "category": "内装天井材",
+          "name": "桐井製作所"
+        },
+        {
+          "category": "内装天井材",
+          "name": "桐井製作所"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.kmew-siporex.jp",
+      "cad": "https://www.kmew-siporex.jp/download/cad.html",
+      "label": "CAD納まり図",
+      "confirmHits": 39,
+      "entries": [
+        {
+          "category": "外壁",
+          "name": "ケイミューシポレックス"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.kokensangyo.co.jp",
+      "cad": "https://www.kokensangyo.co.jp/catalogue_cad/",
+      "label": "カタログ・CADダウンロード Design Samples",
+      "confirmHits": 16,
+      "entries": [
+        {
+          "category": "外構",
+          "name": "興建産業"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.kondotec.co.jp",
+      "cad": "https://www.kondotec.co.jp/products/cad/",
+      "label": "CAD",
+      "confirmHits": 8,
+      "entries": [
+        {
+          "category": "内装その他",
+          "name": "コンドーテック"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.kume-ind.co.jp",
+      "cad": "https://www.kume-ind.co.jp/cad",
+      "label": "(URL推測)",
+      "confirmHits": 4,
+      "entries": [
+        {
+          "category": "外部その他",
+          "name": "久米工業"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.makitech.co.jp",
+      "cad": "https://www.makitech.co.jp/support/form03.html",
+      "label": "CADデータダウンロードご希望の方",
+      "confirmHits": 4,
+      "entries": [
+        {
+          "category": "内装その他",
+          "name": "マキテック"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.marusugi.co.jp",
+      "cad": "https://www.marusugi.co.jp/cad/index.shtml",
+      "label": "",
+      "confirmHits": 7,
+      "entries": [
+        {
+          "category": "屋根",
+          "name": "マルスギ"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.naka-kogyo.co.jp",
+      "cad": "https://cad.naka-kogyo.co.jp/index.php",
+      "label": "(URL推測)",
+      "confirmHits": 8,
+      "entries": [
+        {
+          "category": "内装その他",
+          "name": "ナカ工業"
+        },
+        {
+          "category": "内装その他",
+          "name": "ナカ工業"
+        },
+        {
+          "category": "内装その他",
+          "name": "ナカ工業"
+        },
+        {
+          "category": "内装その他",
+          "name": "ナカ工業"
+        },
+        {
+          "category": "内装その他",
+          "name": "ナカ工業"
+        },
+        {
+          "category": "内装その他",
+          "name": "ナカ工業"
+        },
+        {
+          "category": "金物",
+          "name": "ナカ工業"
+        },
+        {
+          "category": "金物",
+          "name": "ナカ工業"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.nasta.co.jp",
+      "cad": "https://www.nasta.co.jp/catalog/",
+      "label": "CADデータ",
+      "confirmHits": 5,
+      "entries": [
+        {
+          "category": "エクステリア",
+          "name": "ナスタ"
+        },
+        {
+          "category": "エクステリア",
+          "name": "ナスタ"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.newxt.co.jp",
+      "cad": "https://www.newxt.co.jp/download/",
+      "label": "図面・DXFダウンロード",
+      "confirmHits": 48,
+      "entries": [
+        {
+          "category": "開口部",
+          "name": "ニュースト"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.nikko-ind.co.jp",
+      "cad": "https://www.nikko-ind.co.jp/data/index.html",
+      "label": "CADデータ",
+      "confirmHits": 245,
+      "entries": [
+        {
+          "category": "内装天井材",
+          "name": "日幸産業"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.nippon-c.co.jp",
+      "cad": "https://www.nippon-c.co.jp/download/",
+      "label": "CADダウンロード",
+      "confirmHits": 51,
+      "entries": [
+        {
+          "category": "外構",
+          "name": "日本コンクリート"
+        },
+        {
+          "category": "外構",
+          "name": "日本コンクリート"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.niscs.nipponsteel.com",
+      "cad": "https://www.niscs.nipponsteel.com/data/",
+      "label": "カタログ・CAD・資料",
+      "confirmHits": 7,
+      "entries": [
+        {
+          "category": "屋根",
+          "name": "日鉄鋼板"
+        },
+        {
+          "category": "屋根",
+          "name": "日鉄鋼板"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.nisshinkogyo.co.jp",
+      "cad": "https://www.nisshinkogyo.co.jp/document/cad/",
+      "label": "CAD",
+      "confirmHits": 5,
+      "entries": [
+        {
+          "category": "防水",
+          "name": "日新工業"
+        },
+        {
+          "category": "防水",
+          "name": "日新工業"
+        },
+        {
+          "category": "防水",
+          "name": "日新工業"
+        },
+        {
+          "category": "防水",
+          "name": "日新工業"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.pla-part.com",
+      "cad": "https://www.pla-part.com/service/%e8%a3%bd%e5%93%81%e4%b8%80%e8%a6%a7/",
+      "label": "CADデータ",
+      "confirmHits": 2,
+      "entries": [
+        {
+          "category": "開口部",
+          "name": "石黒製作所"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.rikenkeikinzoku.co.jp",
+      "cad": "https://www.rikenkeikinzoku.co.jp/cad-bim/index.html",
+      "label": "CAD・BIM",
+      "confirmHits": 17,
+      "entries": [
+        {
+          "category": "内装その他",
+          "name": "理研軽金属工業"
+        },
+        {
+          "category": "金物",
+          "name": "理研軽金属工業"
+        },
+        {
+          "category": "外部その他",
+          "name": "理研軽金属工業"
+        },
+        {
+          "category": "外部その他",
+          "name": "理研軽金属工業"
+        },
+        {
+          "category": "内装壁材",
+          "name": "理研軽金属工業"
+        },
+        {
+          "category": "内装天井材",
+          "name": "理研軽金属工業"
+        },
+        {
+          "category": "内装天井材",
+          "name": "理研軽金属工業"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.sanwa-ss.co.jp",
+      "cad": "https://www.sanwa-ss.co.jp/professional/cad/login/members?url=https://www.sanwa-ss.co.jp/professional/cad/weight_shutter/fire_shutter/",
+      "label": "CADダウンロード",
+      "confirmHits": 14,
+      "entries": [
+        {
+          "category": "開口部",
+          "name": "三和シヤッター工業"
+        },
+        {
+          "category": "開口部",
+          "name": "三和シャッター工業"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.sanyo-industries.co.jp",
+      "cad": "https://www.sanyo-industries.co.jp/cad/",
+      "label": "CAD図面",
+      "confirmHits": 8,
+      "entries": [
+        {
+          "category": "外部その他",
+          "name": "三洋工業"
+        },
+        {
+          "category": "内装壁材",
+          "name": "三洋工業"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.sanyo-ube.co.jp",
+      "cad": "https://www.sanyo-ube.co.jp/cataloglist.html",
+      "label": "CADデータ",
+      "confirmHits": 16,
+      "entries": [
+        {
+          "category": "外構",
+          "name": "サンヨー宇部"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.seiki.gr.jp",
+      "cad": "https://www.seiki.gr.jp/pro/download/",
+      "label": "データダウンロード CAD データ、取付説明書等",
+      "confirmHits": 3,
+      "entries": [
+        {
+          "category": "開口部",
+          "name": "セイキ販売"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.sekino.co.jp",
+      "cad": "https://www.sekino.co.jp/download-cad/",
+      "label": "CADデータダウンロード",
+      "confirmHits": 11,
+      "entries": [
+        {
+          "category": "屋根",
+          "name": "セキノ興産"
+        },
+        {
+          "category": "屋根",
+          "name": "セキノ興産"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.sekistone.com",
+      "cad": "https://www.sekistone.com/products/cad/",
+      "label": "(URL推測)",
+      "confirmHits": 4,
+      "entries": [
+        {
+          "category": "内部床",
+          "name": "関ケ原石材"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.sfn.co.jp",
+      "cad": "https://www.sfn.co.jp/data_service.html",
+      "label": "データダウンロード (CAD・BIM・認定書)",
+      "confirmHits": 14,
+      "entries": [
+        {
+          "category": "開口部",
+          "name": "昭和フロント"
+        },
+        {
+          "category": "開口部",
+          "name": "昭和フロント"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.sunloid-dn.jp",
+      "cad": "https://www.sunloid-dn.jp/kenchiku/cad.php",
+      "label": "【建築設計士様向け情報】スミルーフDNのCADデータを更新しました。",
+      "confirmHits": 62,
+      "entries": [
+        {
+          "category": "防水",
+          "name": "住べシート防水"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.sunrail.co.jp",
+      "cad": "https://www.sunrail.co.jp/caddata",
+      "label": "CADデータ",
+      "confirmHits": 6,
+      "entries": [
+        {
+          "category": "外部その他",
+          "name": "サンレール"
+        },
+        {
+          "category": "外部その他",
+          "name": "サンレール"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.swan-group.co.jp",
+      "cad": "https://www.swan-group.co.jp/cad/",
+      "label": "CADダウンロード",
+      "confirmHits": 35,
+      "entries": [
+        {
+          "category": "外部その他",
+          "name": "スワン商事"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.takano-net.co.jp",
+      "cad": "https://www.takano-net.co.jp/exterior/support/download_cad-step1/",
+      "label": "CAD図面",
+      "confirmHits": 7,
+      "entries": [
+        {
+          "category": "外部その他",
+          "name": "タカノ"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.takara-kizai.com",
+      "cad": "https://www.takara-kizai.com/download/cad/",
+      "label": "CADデータ一覧",
+      "confirmHits": 18,
+      "entries": [
+        {
+          "category": "内装その他",
+          "name": "宝機材"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.tanita-hw.co.jp",
+      "cad": "https://www.tanita-hw.co.jp/login",
+      "label": "CAD データダウンロード",
+      "confirmHits": 3,
+      "entries": [
+        {
+          "category": "屋根",
+          "name": "ﾀﾆﾀﾊｳｼﾞﾝｸﾞｳｪｱ"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.tenpal.co.jp",
+      "cad": "https://www.tenpal.co.jp/download.html",
+      "label": "カタログ・CADダウンロード",
+      "confirmHits": 9,
+      "entries": [
+        {
+          "category": "外部その他",
+          "name": "BXテンパル"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.try110.com",
+      "cad": "https://www.try110.com/technical/data/cad/",
+      "label": "テクニカル情報",
+      "confirmHits": 10,
+      "entries": [
+        {
+          "category": "屋根",
+          "name": "鶴弥"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.tsukiboshi-shoji.co.jp",
+      "cad": "https://www.tsukiboshi-shoji.co.jp/document/cad/",
+      "label": "CADデータ",
+      "confirmHits": 109,
+      "entries": [
+        {
+          "category": "屋根",
+          "name": "月星商事"
+        },
+        {
+          "category": "屋根",
+          "name": "月星商事"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.unison-net.com",
+      "cad": "https://www.unison-net.com/download/gardenexterior_cad/",
+      "label": "参考施工図 （CADデータ）",
+      "confirmHits": 7,
+      "entries": [
+        {
+          "category": "電気設備",
+          "name": "ユニソン"
+        },
+        {
+          "category": "外構",
+          "name": "ユニソン"
+        },
+        {
+          "category": "外壁",
+          "name": "ユニソン"
+        },
+        {
+          "category": "外部床",
+          "name": "ユニソン"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.vinyframe.co.jp",
+      "cad": "https://www.vinyframe.co.jp/dl_cad/",
+      "label": "CADデータダウンロード",
+      "confirmHits": 9,
+      "entries": [
+        {
+          "category": "外部その他",
+          "name": "ビニフレーム工業"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.woodone.co.jp",
+      "cad": "https://www.woodone.co.jp/static/business/downloads",
+      "label": "CADダウンロード",
+      "confirmHits": 4,
+      "entries": [
+        {
+          "category": "内装その他",
+          "name": "ウッドワン"
+        },
+        {
+          "category": "内部床",
+          "name": "ウッドワン"
+        },
+        {
+          "category": "内部床",
+          "name": "ウッドワン"
+        },
+        {
+          "category": "内装壁材",
+          "name": "ウッドワン"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.ykkap.co.jp",
+      "cad": "https://cad.ykkap.co.jp/",
+      "label": "(URL推測)",
+      "confirmHits": 23,
+      "entries": [
+        {
+          "category": "内装その他",
+          "name": "YKK AP"
+        },
+        {
+          "category": "エクステリア",
+          "name": "YKK AP"
+        },
+        {
+          "category": "エクステリア",
+          "name": "YKK AP"
+        },
+        {
+          "category": "エクステリア",
+          "name": "YKK AP"
+        },
+        {
+          "category": "エクステリア",
+          "name": "YKK AP"
+        },
+        {
+          "category": "外壁",
+          "name": "YKK AP"
+        },
+        {
+          "category": "外壁",
+          "name": "YKK AP"
+        },
+        {
+          "category": "外壁",
+          "name": "YKK AP"
+        },
+        {
+          "category": "外壁",
+          "name": "YKK AP"
+        },
+        {
+          "category": "外壁",
+          "name": "YKK AP"
+        },
+        {
+          "category": "外壁",
+          "name": "YKK AP"
+        },
+        {
+          "category": "外壁",
+          "name": "YKK AP"
+        },
+        {
+          "category": "外壁",
+          "name": "YKK AP"
+        },
+        {
+          "category": "開口部",
+          "name": "YKK AP"
+        },
+        {
+          "category": "開口部",
+          "name": "YKK AP"
+        },
+        {
+          "category": "開口部",
+          "name": "YKK AP"
+        },
+        {
+          "category": "外部その他",
+          "name": "YKK AP"
+        },
+        {
+          "category": "外部その他",
+          "name": "YKK AP"
+        },
+        {
+          "category": "外部その他",
+          "name": "YKK AP"
+        },
+        {
+          "category": "外部その他",
+          "name": "YKK AP"
+        }
+      ]
+    },
+    {
+      "origin": "https://www2.panasonic.biz",
+      "cad": "https://www2.panasonic.biz/jp/ai/cad/download/",
+      "label": "CADデータ",
+      "confirmHits": 3,
+      "entries": [
+        {
+          "category": "電気設備",
+          "name": "パナソニック"
+        },
+        {
+          "category": "電気設備",
+          "name": "パナソニック"
+        },
+        {
+          "category": "電気設備",
+          "name": "パナソニック"
+        },
+        {
+          "category": "電気設備",
+          "name": "パナソニック"
+        },
+        {
+          "category": "外部その他",
+          "name": "パナソニック"
+        },
+        {
+          "category": "外部その他",
+          "name": "パナソニック"
+        }
+      ]
+    },
+    {
+      "origin": "https://www3.best-x.co.jp",
+      "cad": "https://www3.best-x.co.jp/cad.html",
+      "label": "(URL推測)",
+      "confirmHits": 206,
+      "entries": [
+        {
+          "category": "金物",
+          "name": "ベスト"
+        }
+      ]
+    }
+  ]
+}

@@ -21,7 +21,9 @@
     "deploy:preview": "npm run export && npx firebase-tools hosting:channel:deploy yane-preview --expires 7d",
     "check:links": "node scripts/check-maker-links.mjs",
     "makers:extract": "node scripts/extract-makers.mjs",
-    "makers:verify": "node scripts/verify-makers.mjs"
+    "makers:verify": "node scripts/verify-makers.mjs",
+    "makers:find-cad": "node scripts/find-cad-links.mjs",
+    "makers:apply-cad": "node scripts/apply-cad-links.mjs"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
