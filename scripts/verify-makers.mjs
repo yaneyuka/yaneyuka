@@ -1,70 +1,78 @@
-// src/data/makers.json が元の mak_*.tsx と一致しているかを照合する。
+// src/data/makers.json の健全性を確認する。
 //   npm run makers:verify
 //
-// 確認するのは 2 点:
-//   1. 元ファイルの外部URLが、すべて JSON 側にも存在するか（取りこぼし）
-//   2. 各メーカーが正しい表示ページに割り当てられているか（取り違え）
+// もともとは mak_*.tsx に直書きされていた内容と突き合わせるスクリプトだったが、
+// 2026-08-06 に全 16 ファイルを MakerRows へ移行して元データが JSON 側に一本化された。
+// 移行時の照合（取りこぼし 0 / ページ割り当て 833 件一致）はコミット履歴に残っている。
+// 現在は「JSON として壊れていないか」「表示側が期待する形か」を見る。
 //
-// JSON 側にしか無いURLは、抽出後に補ったもの（CADリンクの追加など）として許容する。
-// 読み取りは scripts/lib/maker-parse.mjs を抽出側と共有している。
+// ⚠️ pages が歯抜けなのは意図的な運用なので、網羅性は検査しない。
+// （メーカーが扱う分類をあえて載せないことで掲載依頼を引き出している）
 
 import fs from 'node:fs';
-import path from 'node:path';
-import { pageRegions, sourceUrls, SLOTS } from './lib/maker-parse.mjs';
 
-const DIR = 'src/components/content/leftcolumn-menu';
-const data = JSON.parse(fs.readFileSync('src/data/makers.json', 'utf8'));
+const FILE = 'src/data/makers.json';
+const SLOTS = ['products', 'catalog', 'office', 'contact', 'sample', 'cad'];
 
-let missingNg = 0;
-let pageChecked = 0;
-let pageNg = 0;
+const data = JSON.parse(fs.readFileSync(FILE, 'utf8'));
+const problems = [];
 
-for (const file of fs.readdirSync(DIR).filter((f) => f.startsWith('mak_') && f.endsWith('.tsx'))) {
-  const category = file.replace(/^mak_\d+_/, '').replace('.tsx', '');
-  const text = fs.readFileSync(path.join(DIR, file), 'utf8');
+let total = 0;
+let shown = 0;
+let linkTotal = 0;
+let linkFilled = 0;
 
-  const source = sourceUrls(text);
-  const extracted = new Set();
-  for (const maker of data[category] || []) {
-    for (const slot of SLOTS) {
-      const u = maker[slot];
-      if (u && u.startsWith('http')) extracted.add(u);
-    }
+for (const [category, list] of Object.entries(data)) {
+  if (!Array.isArray(list)) {
+    problems.push(`${category}: 配列ではありません`);
+    continue;
   }
+  const seen = new Set();
 
-  const missing = [...source].filter((u) => !extracted.has(u));
-  const added = [...extracted].filter((u) => !source.has(u));
-  if (missing.length) missingNg++;
+  for (const [i, m] of list.entries()) {
+    total++;
+    const where = `${category}[${i}] ${m?.name ?? '(名前なし)'}`;
 
-  // ページ割り当て: メーカーのURLが、割り当てられたページの範囲内に実在するか
-  const regions = pageRegions(text);
-  let catPageNg = 0;
-  for (const maker of data[category] || []) {
-    const probe = maker.products || maker.catalog || maker.office || maker.contact;
-    if (!probe || !source.has(probe)) continue; // 抽出後に補ったURLは対象外
-    pageChecked++;
-    const ok = (maker.pages || []).some((p) =>
-      regions.some((r) => r.name === p && text.slice(r.start, r.end).includes(probe))
-    );
-    if (!ok) {
-      catPageNg++;
-      pageNg++;
-      if (pageNg <= 5) {
-        console.log(`      ページ不一致: ${category} / ${maker.name} -> [${(maker.pages || []).join(', ')}]`);
+    if (!m || typeof m.name !== 'string' || !m.name.trim()) problems.push(`${where}: name が空`);
+    if (!Array.isArray(m.pages)) problems.push(`${where}: pages が配列でない`);
+    else {
+      if (m.pages.length) shown++;
+      for (const p of m.pages) {
+        if (typeof p !== 'string' || !p.trim()) problems.push(`${where}: pages に空の値`);
       }
     }
-  }
+    if (typeof m.group !== 'string') problems.push(`${where}: group が文字列でない`);
 
-  console.log(
-    `${missing.length || catPageNg ? 'NG  ' : 'OK  '}${category.padEnd(12)} 元:${String(source.size).padStart(4)}  抽出:${String(extracted.size).padStart(4)}` +
-    (missing.length ? `  取りこぼし:${missing.length}` : '') +
-    (added.length ? `  追加分:${added.length}` : '') +
-    (catPageNg ? `  ページ不一致:${catPageNg}` : '')
-  );
-  for (const u of missing.slice(0, 3)) console.log(`      取りこぼし: ${u}`);
+    let hasLink = false;
+    for (const slot of SLOTS) {
+      const v = m[slot];
+      linkTotal++;
+      if (typeof v !== 'string') { problems.push(`${where}: ${slot} が文字列でない`); continue; }
+      if (!v) continue;
+      linkFilled++;
+      hasLink = true;
+      if (!/^https?:\/\//.test(v)) problems.push(`${where}: ${slot} が URL でない -> ${v}`);
+    }
+    if (!hasLink) problems.push(`${where}: リンクが 1 本もない`);
+
+    // 同じページに同じ社名・同じ商品ページが重複していないか
+    for (const p of m.pages || []) {
+      const key = `${p}|${m.group}|${m.name}|${m.products}`;
+      if (seen.has(key)) problems.push(`${where}: '${p}' に同じ内容が重複`);
+      seen.add(key);
+    }
+  }
 }
 
+console.log(`カテゴリ    : ${Object.keys(data).length}`);
+console.log(`メーカー項目: ${total}（うち表示対象 ${shown}）`);
+console.log(`リンク枠    : ${linkTotal} 中 ${linkFilled} 埋（${Math.round((linkFilled / linkTotal) * 100)}%）`);
 console.log('');
-console.log(missingNg === 0 ? '取りこぼしなし（元データのURLはすべて保持されている）' : `${missingNg} カテゴリで取りこぼしあり`);
-console.log(pageNg === 0 ? `ページ割り当て一致（${pageChecked} 件を照合）` : `ページ割り当てに ${pageNg} 件の不一致（照合 ${pageChecked} 件）`);
-process.exit(missingNg === 0 && pageNg === 0 ? 0 : 1);
+
+if (problems.length) {
+  console.log(`${problems.length} 件の問題:`);
+  problems.slice(0, 30).forEach((p) => console.log('  ' + p));
+  if (problems.length > 30) console.log(`  ...ほか ${problems.length - 30} 件`);
+  process.exit(1);
+}
+console.log('問題なし');
