@@ -44,7 +44,7 @@ export function makerEvents(text) {
   const jsxEntry = /<span className="w-\[\d+px\]">・([^<{][^<]*)<\/span>\s*<span[^>]*>([\s\S]*?)<\/span>/g;
   for (const m of text.matchAll(jsxEntry)) {
     const urls = [...m[2].matchAll(/renderLink\('([^']*)'/g)].map((x) => x[1]);
-    events.push({ at: m.index, name: m[1].trim(), urls });
+    events.push({ at: m.index, end: m.index + m[0].length, name: m[1].trim(), urls });
   }
 
   // 形式B: renderCompanyRow('社名', { products: '...', ... })
@@ -52,7 +52,7 @@ export function makerEvents(text) {
   for (const m of text.matchAll(rowCall)) {
     const byKey = {};
     for (const kv of m[2].matchAll(/(\w+)\s*:\s*'([^']*)'/g)) byKey[kv[1]] = kv[2];
-    events.push({ at: m.index, name: m[1].trim(), urls: SLOTS.map((s) => byKey[s] ?? '') });
+    events.push({ at: m.index, end: m.index + m[0].length, name: m[1].trim(), urls: SLOTS.map((s) => byKey[s] ?? '') });
   }
 
   return events.sort((a, b) => a.at - b.at);
