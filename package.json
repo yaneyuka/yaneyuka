@@ -18,7 +18,8 @@
     "test:rules": "firebase emulators:exec --only firestore,auth \"node scripts/firestore-rules-test.mjs\"",
     "test:storage-rules": "firebase emulators:exec --only storage,auth \"node scripts/storage-rules-test.mjs\"",
     "deploy": "npm run predeploy && npx firebase-tools deploy",
-    "deploy:preview": "npm run export && npx firebase-tools hosting:channel:deploy yane-preview --expires 7d"
+    "deploy:preview": "npm run export && npx firebase-tools hosting:channel:deploy yane-preview --expires 7d",
+    "check:links": "node scripts/check-maker-links.mjs"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",

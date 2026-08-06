@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import MakerLink from '@/components/MakerLink';
 
 interface RoofContentProps {
   subcategory: string;
@@ -8,15 +9,11 @@ interface RoofContentProps {
 
 const RoofContent: React.FC<RoofContentProps> = ({ subcategory }) => {
   const [showBasicKnowledge, setShowBasicKnowledge] = useState(false);
-  // リンクのレンダリングヘルパー関数
-  const renderLink = (url: string, label: string) => {
-    const isValidUrl = url && url !== '#' && url.trim() !== '';
-    if (isValidUrl) {
-      return <a href={url} target="_blank" className="text-blue-800 hover:text-blue-900 underline cursor-pointer">{label}</a>;
-    } else {
-      return <span className="text-gray-600 no-underline cursor-not-allowed">{label}</span>;
-    }
-  };
+  // リンクの実体は src/components/MakerLink.tsx。
+  // 404 になったメーカーページは会社トップへ自動で振り替わる。
+  const renderLink = (url: string | undefined, label: string) => (
+    <MakerLink url={url} label={label} />
+  );
 
   // 画像フォールバック処理
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {

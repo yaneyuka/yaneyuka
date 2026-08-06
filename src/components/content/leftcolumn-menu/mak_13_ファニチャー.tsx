@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import MakerLink from '@/components/MakerLink';
 
 interface FurnitureContentProps {
   subcategory: string;
@@ -12,14 +13,11 @@ const FurnitureContent: React.FC<FurnitureContentProps> = ({ subcategory }) => {
     setImageErrors(prev => ({ ...prev, [imageKey]: true }));
   };
 
-  const isValidUrl = (url: string | undefined) => url && url !== '#' && url.trim() !== '';
-  const renderLink = (url: string | undefined, label: string) => {
-    if (isValidUrl(url)) {
-      return <a href={url} target="_blank" className="text-blue-800 hover:text-blue-900 underline cursor-pointer">{label}</a>;
-    } else {
-      return <span className="text-gray-600 no-underline cursor-not-allowed">{label}</span>;
-    }
-  };
+  // リンクの実体は src/components/MakerLink.tsx。
+  // 404 になったメーカーページは会社トップへ自動で振り替わる。
+  const renderLink = (url: string | undefined, label: string) => (
+    <MakerLink url={url} label={label} />
+  );
 
   const renderRecruitmentCard = () => (
     <div className="border rounded p-3 bg-white text-sm w-[240px] h-[365px] card">

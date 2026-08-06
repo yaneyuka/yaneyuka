@@ -1,0 +1,68 @@
+name: Check Maker Links
+
+on:
+  schedule:
+    # 日本時間 月曜 午前4時 (UTC 日曜 19:00)
+    - cron: '0 19 * * 0'
+  workflow_dispatch:
+
+# 結果 JSON をコミットするので contents: write、
+# スケジュールが 60 日で自動停止しないよう enableWorkflow を呼ぶので actions: write。
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Check maker links
+        run: node scripts/check-maker-links.mjs
+
+      - name: Commit the report if it changed
+        run: |
+          if git diff --quiet -- src/data/broken-maker-links.json; then
+            echo "リンクの状態に変化なし。コミットしません。"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/broken-maker-links.json
+          git commit -m "Update broken maker link report"
+          git push
+
+      - name: Summarise
+        run: |
+          node -e "
+            const r = require('./src/data/broken-maker-links.json');
+            const rows = [
+              '| 状態 | 件数 |', '| --- | ---: |',
+              \`| 正常 | \${r.summary.ok} |\`,
+              \`| 404（会社トップへ振替） | \${r.summary.broken} |\`,
+              \`| 接続不可（要確認） | \${r.summary.unreachable} |\`,
+              \`| その他エラー | \${r.summary.error} |\`,
+            ];
+            const worst = r.unreachable.slice(0, 20).map(u => \`- \${u.url} (\${u.reason})\`);
+            console.log([\`## メーカーリンク検査 (\${r.generatedAt})\`, '', ...rows, '',
+              '### 到達できないURL（会社サイトごと消えている可能性）', ...worst].join('\n'));
+          " >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Keep workflow alive
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // 60日間コミットが無いとスケジュールが自動停止するため、毎回有効化し直す
+            await github.rest.actions.enableWorkflow({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'check-maker-links.yml'
+            })

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import MakerLink from '@/components/MakerLink';
 
 interface InternalWallContentProps {
   subcategory: string;
@@ -19,16 +20,12 @@ const InternalWallContent: React.FC<InternalWallContentProps> = ({ subcategory }
   };
 
   // URLの有効性をチェックする関数
-  const isValidUrl = (url: string) => url && url !== '#' && url.trim() !== '';
 
-  // リンクを条件付きでレンダリングする関数
-  const renderLink = (url: string, label: string) => {
-    if (isValidUrl(url)) {
-      return <a href={url} target="_blank" className="text-blue-800 hover:text-blue-900 underline cursor-pointer">{label}</a>;
-    } else {
-      return <span className="text-gray-600 no-underline cursor-not-allowed">{label}</span>;
-    }
-  };
+  // リンクの実体は src/components/MakerLink.tsx。
+  // 404 になったメーカーページは会社トップへ自動で振り替わる。
+  const renderLink = (url: string | undefined, label: string) => (
+    <MakerLink url={url} label={label} />
+  );
 
   const renderContent = () => {
     switch (subcategory) {
