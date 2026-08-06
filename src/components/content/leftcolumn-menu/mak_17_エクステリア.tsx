@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import MakerLink from '@/components/MakerLink';
+import MakerRows from '@/components/MakerRows';
 
 interface ExteriorContentProps {
   subcategory: string;
@@ -213,24 +214,7 @@ const ExteriorContent: React.FC<ExteriorContentProps> = ({ subcategory, onNaviga
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('パナソニック', {
-          products: 'https://panasonic.jp/door/takuhai/',
-          catalog: 'https://panasonic.jp/door/catalog/',
-          office: 'https://panasonic.jp/showroom/',
-          contact: 'https://panasonic.jp/support/contact/'
-        })}
-        {renderCompanyRow('LIXIL', {
-          products: 'https://www.lixil.co.jp/lineup/postbox/',
-          catalog: 'https://www.biz-lixil.com/catalog/',
-          office: 'https://www.lixil.co.jp/showroom/',
-          contact: 'https://www.lixil.co.jp/support/contact/'
-        })}
-        {renderCompanyRow('ナスタ', {
-          products: 'https://www.nasta.co.jp/products/apartment/',
-          catalog: 'https://www.nasta.co.jp/catalog/',
-          office: 'https://www.nasta.co.jp/company/',
-          contact: 'https://www.nasta.co.jp/contact/'
-        })}
+        {<MakerRows category="エクステリア" page="宅配ボックス" />}
       </div>
     </div>
   );
@@ -358,24 +342,7 @@ const ExteriorContent: React.FC<ExteriorContentProps> = ({ subcategory, onNaviga
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('ナスタ', {
-          products: 'https://www.nasta.co.jp/products/mailbox/',
-          catalog: 'https://www.nasta.co.jp/catalog/',
-          office: 'https://www.nasta.co.jp/company/',
-          contact: 'https://www.nasta.co.jp/contact/'
-        })}
-        {renderCompanyRow('パナソニック', {
-          products: 'https://panasonic.jp/door/postbox/',
-          catalog: 'https://panasonic.jp/door/catalog/',
-          office: 'https://panasonic.jp/showroom/',
-          contact: 'https://panasonic.jp/support/contact/'
-        })}
-        {renderCompanyRow('LIXIL', {
-          products: 'https://www.lixil.co.jp/lineup/postbox/',
-          catalog: 'https://www.biz-lixil.com/catalog/',
-          office: 'https://www.lixil.co.jp/showroom/',
-          contact: 'https://www.lixil.co.jp/support/contact/'
-        })}
+        {<MakerRows category="エクステリア" page="郵便受け" />}
       </div>
     </div>
   );
@@ -558,18 +525,7 @@ const ExteriorContent: React.FC<ExteriorContentProps> = ({ subcategory, onNaviga
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('パナソニック', {
-          products: 'https://panasonic.jp/door/nameplate/',
-          catalog: 'https://panasonic.jp/door/catalog/',
-          office: 'https://panasonic.jp/showroom/',
-          contact: 'https://panasonic.jp/support/contact/'
-        })}
-        {renderCompanyRow('福彫', {
-          products: 'https://www.fukuchou.jp/products/',
-          catalog: 'https://www.fukuchou.jp/catalog/',
-          office: 'https://www.fukuchou.jp/company/',
-          contact: 'https://www.fukuchou.jp/contact/'
-        })}
+        {<MakerRows category="エクステリア" page="表札" />}
       </div>
     </div>
   );
@@ -701,24 +657,7 @@ const ExteriorContent: React.FC<ExteriorContentProps> = ({ subcategory, onNaviga
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('LIXIL', {
-          products: 'https://www.lixil.co.jp/lineup/gate/',
-          catalog: 'https://www.biz-lixil.com/catalog/',
-          office: 'https://www.lixil.co.jp/showroom/',
-          contact: 'https://www.lixil.co.jp/support/contact/'
-        })}
-        {renderCompanyRow('三協アルミ', {
-          products: 'https://alumi.st-grp.co.jp/products/gate/',
-          catalog: 'https://alumi.st-grp.co.jp/catalog/',
-          office: 'https://alumi.st-grp.co.jp/showroom/',
-          contact: 'https://alumi.st-grp.co.jp/contact/'
-        })}
-        {renderCompanyRow('YKK AP', {
-          products: 'https://www.ykkap.co.jp/products/exterior/',
-          catalog: 'https://www.ykkap.co.jp/info/catalog/',
-          office: 'https://www.ykkap.co.jp/company/',
-          contact: 'https://www.ykkap.co.jp/support/contact/'
-        })}
+        {<MakerRows category="エクステリア" page="門扉" />}
       </div>
     </div>
   );
@@ -852,24 +791,7 @@ const ExteriorContent: React.FC<ExteriorContentProps> = ({ subcategory, onNaviga
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('LIXIL', {
-          products: 'https://www.lixil.co.jp/lineup/fence/',
-          catalog: 'https://www.biz-lixil.com/catalog/',
-          office: 'https://www.lixil.co.jp/showroom/',
-          contact: 'https://www.lixil.co.jp/support/contact/'
-        })}
-        {renderCompanyRow('三協アルミ', {
-          products: 'https://alumi.st-grp.co.jp/products/fence/',
-          catalog: 'https://alumi.st-grp.co.jp/catalog/',
-          office: 'https://alumi.st-grp.co.jp/showroom/',
-          contact: 'https://alumi.st-grp.co.jp/contact/'
-        })}
-        {renderCompanyRow('YKK AP', {
-          products: 'https://www.ykkap.co.jp/products/fence/',
-          catalog: 'https://www.ykkap.co.jp/info/catalog/',
-          office: 'https://www.ykkap.co.jp/company/',
-          contact: 'https://www.ykkap.co.jp/support/contact/'
-        })}
+        {<MakerRows category="エクステリア" page="フェンス" />}
       </div>
     </div>
   );
@@ -993,24 +915,7 @@ const ExteriorContent: React.FC<ExteriorContentProps> = ({ subcategory, onNaviga
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('LIXIL', {
-          products: 'https://www.lixil.co.jp/lineup/carport/',
-          catalog: 'https://www.biz-lixil.com/catalog/',
-          office: 'https://www.lixil.co.jp/showroom/',
-          contact: 'https://www.lixil.co.jp/support/contact/'
-        })}
-        {renderCompanyRow('三協アルミ', {
-          products: 'https://alumi.st-grp.co.jp/products/carport/',
-          catalog: 'https://alumi.st-grp.co.jp/catalog/',
-          office: 'https://alumi.st-grp.co.jp/showroom/',
-          contact: 'https://alumi.st-grp.co.jp/contact/'
-        })}
-        {renderCompanyRow('YKK AP', {
-          products: 'https://www.ykkap.co.jp/products/carport/',
-          catalog: 'https://www.ykkap.co.jp/info/catalog/',
-          office: 'https://www.ykkap.co.jp/company/',
-          contact: 'https://www.ykkap.co.jp/support/contact/'
-        })}
+        {<MakerRows category="エクステリア" page="カーポート" />}
       </div>
     </div>
   );
@@ -1141,24 +1046,7 @@ const ExteriorContent: React.FC<ExteriorContentProps> = ({ subcategory, onNaviga
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('LIXIL', {
-          products: 'https://www.lixil.co.jp/lineup/garden/deck/',
-          catalog: 'https://www.biz-lixil.com/catalog/',
-          office: 'https://www.lixil.co.jp/showroom/',
-          contact: 'https://www.lixil.co.jp/support/contact/'
-        })}
-        {renderCompanyRow('三協アルミ', {
-          products: 'https://alumi.st-grp.co.jp/products/terrace/',
-          catalog: 'https://alumi.st-grp.co.jp/catalog/',
-          office: 'https://alumi.st-grp.co.jp/showroom/',
-          contact: 'https://alumi.st-grp.co.jp/contact/'
-        })}
-        {renderCompanyRow('YKK AP', {
-          products: 'https://www.ykkap.co.jp/products/garden/',
-          catalog: 'https://www.ykkap.co.jp/info/catalog/',
-          office: 'https://www.ykkap.co.jp/company/',
-          contact: 'https://www.ykkap.co.jp/support/contact/'
-        })}
+        {<MakerRows category="エクステリア" page="ウッドデッキ" />}
       </div>
     </div>
   );

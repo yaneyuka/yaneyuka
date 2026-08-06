@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import MakerLink from '@/components/MakerLink';
+import MakerRows from '@/components/MakerRows';
 
 interface InternalOtherContentProps {
   subcategory: string;
@@ -193,63 +194,7 @@ const InternalOtherContent: React.FC<InternalOtherContentProps> = ({ subcategory
       </div>
 
       <div className="mt-4 text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・木村技研</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://aqua-k.jp/goods/goods_top.html', '商品ページ')}｜
-          {renderLink('https://docs.google.com/forms/d/e/1FAIpQLSd_uFs8iAaT6ktSR4Go6ypOHs_pbvc-bRlzWS5DVNpj3CZy1w/viewform', 'カタログ')}｜
-          {renderLink('https://aqua-k.jp/company/info02.html', '営業所')}｜
-          {renderLink('https://docs.google.com/forms/d/e/1FAIpQLSdzcvpSYnCxarjvDP7dlpexrdfbs6clJqLm7DLbafRaTXa-Qg/viewform?pli=1', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・コマニー</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.comany.co.jp/products/toilet/', '商品ページ')}｜
-          {renderLink('https://www.comany.co.jp/catalog/', 'カタログ')}｜
-          {renderLink('https://www.comany.co.jp/company/base/', '営業所')}｜
-          {renderLink('https://www.comany.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・アイカ工業</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.aica.co.jp/products/veneer/toilet/', '商品ページ')}｜
-          {renderLink('https://www.aica.co.jp/products/dl/', 'カタログ')}｜
-          {renderLink('https://www.aica.co.jp/company/base/', '営業所')}｜
-          {renderLink('https://www.aica.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・オカムラ</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.okamura.co.jp/product/toilet/', '商品ページ')}｜
-          {renderLink('#', 'カタログ')}｜
-          {renderLink('https://www.okamura.co.jp/company/base/', '営業所')}｜
-          {renderLink('https://www.okamura.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・ニッコー</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.nikko-company.co.jp/products/', '商品ページ')}｜
-          {renderLink('#', 'カタログ')}｜
-          {renderLink('https://www.nikko-company.co.jp/company/', '営業所')}｜
-          {renderLink('https://www.nikko-company.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
+        <MakerRows category="内装その他" page="トイレブース" />
       </div>
     </div>
   );
@@ -357,63 +302,7 @@ const InternalOtherContent: React.FC<InternalOtherContentProps> = ({ subcategory
       </div>
 
       <div className="mt-4 text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・LIXIL</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.lixil.co.jp/lineup/window/', '商品ページ')}｜
-          {renderLink('https://www.lixil.co.jp/catalog/', 'カタログ')}｜
-          {renderLink('https://www.lixil.co.jp/showroom/', '営業所')}｜
-          {renderLink('https://www.lixil.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・YKK AP</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.ykkap.co.jp/consumer/products/window/', '商品ページ')}｜
-          {renderLink('https://www.ykkap.co.jp/catalog/', 'カタログ')}｜
-          {renderLink('https://www.ykkap.co.jp/showroom/', '営業所')}｜
-          {renderLink('https://www.ykkap.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・大建工業</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.daiken.ne.jp/product/door/', '商品ページ')}｜
-          {renderLink('https://www.daiken.ne.jp/catalog/', 'カタログ')}｜
-          {renderLink('https://www.daiken.ne.jp/company/office/', '営業所')}｜
-          {renderLink('https://www.daiken.ne.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・三協立山</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://alumi.st-grp.co.jp/products/interior/', '商品ページ')}｜
-          {renderLink('https://alumi.st-grp.co.jp/catalog/', 'カタログ')}｜
-          {renderLink('https://alumi.st-grp.co.jp/company/base/', '営業所')}｜
-          {renderLink('https://alumi.st-grp.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・不二サッシ</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.fujisash.co.jp/hp/products/', '商品ページ')}｜
-          {renderLink('#', 'カタログ')}｜
-          {renderLink('https://www.fujisash.co.jp/hp/company/office/', '営業所')}｜
-          {renderLink('https://www.fujisash.co.jp/hp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
+        <MakerRows category="内装その他" page="内装サッシ" />
       </div>
     </div>
   );
@@ -493,63 +382,7 @@ const InternalOtherContent: React.FC<InternalOtherContentProps> = ({ subcategory
       </div>
 
       <div className="mt-4 text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・日中製作所</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.hinaka.co.jp/new_hp/item/list.php#BIM_%E9%9A%8E%E6%AE%B5%E3%83%8E%E3%83%B3%E3%82%B9%E3%83%AA%E3%83%83%E3%83%97', '商品ページ')}｜
-          {renderLink('https://www.hinaka.co.jp/item_catalog/', 'カタログ')}｜
-          {renderLink('https://www.hinaka.co.jp/company/#list', '営業所')}｜
-          {renderLink('https://www.hinaka.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・アシスト</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.assipie.jp/solution/genre/non-slip/', '商品ページ')}｜
-          {renderLink('https://www.assipie.jp/solution/request/', 'カタログ')}｜
-          {renderLink('https://www.assipie.jp/solution/company/office/', '営業所')}｜
-          {renderLink('https://www.assipie.jp/solution/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-      
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・ヒナカ</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.hinaka.co.jp/new_hp/item/list.php#BIM_%E9%9A%8E%E6%AE%B5%E3%83%8E%E3%83%B3%E3%82%B9%E3%83%AA%E3%83%83%E3%83%97', '商品ページ')}｜
-          {renderLink('https://www.hinaka.co.jp/item_catalog/', 'カタログ')}｜
-          {renderLink('https://www.hinaka.co.jp/company/#list', '営業所')}｜
-          {renderLink('https://www.hinaka.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・シンドウ工業</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.shindo-kogyo.co.jp/product/', '商品ページ')}｜
-          {renderLink('https://www.shindo-kogyo.co.jp/total-catalog/#target/page_no=1', 'カタログ')}｜
-          {renderLink('https://www.shindo-kogyo.co.jp/company/office/', '営業所')}｜
-          {renderLink('https://www.shindo-kogyo.co.jp/quote/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・ナカ工業</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.naka-kogyo.co.jp/products/category-products/non-slip-and-braille-rivet', '商品ページ')}｜
-          {renderLink('https://www.naka-kogyo.co.jp/download/catalog.html', 'カタログ')}｜
-          {renderLink('https://www.naka-kogyo.co.jp/company/office.html', '営業所')}｜
-          {renderLink('https://mailform.naka-kogyo.co.jp/support/script/mailform/inquiry/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
+        <MakerRows category="内装その他" page="ノンスリップ" />
       </div>
     </div>
   );
@@ -655,63 +488,7 @@ const InternalOtherContent: React.FC<InternalOtherContentProps> = ({ subcategory
       </div>
 
       <div className="mt-4 text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・アシスト</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.assist777.co.jp/product/', '商品ページ')}｜
-          {renderLink('https://www.assist777.co.jp/catalog/', 'カタログ')}｜
-          {renderLink('https://www.assist777.co.jp/company/', '営業所')}｜
-          {renderLink('https://www.assist777.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・ナカ工業</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.naka-kogyo.co.jp/product/', '商品ページ')}｜
-          {renderLink('https://www.naka-kogyo.co.jp/catalog/', 'カタログ')}｜
-          {renderLink('https://www.naka-kogyo.co.jp/company/base/', '営業所')}｜
-          {renderLink('https://www.naka-kogyo.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・アルミス</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('#', '商品ページ')}｜
-          {renderLink('#', 'カタログ')}｜
-          {renderLink('#', '営業所')}｜
-          {renderLink('#', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・タキステップ(タキロン)</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.takiron-ci.co.jp/product/product_03/', '商品ページ')}｜
-          {renderLink('#', 'カタログ')}｜
-          {renderLink('https://www.takiron-ci.co.jp/company/office/', '営業所')}｜
-          {renderLink('https://www.takiron-ci.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・菊川工業</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.kikukawa.com/product/', '商品ページ')}｜
-          {renderLink('#', 'カタログ')}｜
-          {renderLink('https://www.kikukawa.com/company/', '営業所')}｜
-          {renderLink('https://www.kikukawa.com/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
+        <MakerRows category="内装その他" page="内装シャッター" />
       </div>
     </div>
   );
@@ -828,147 +605,7 @@ const InternalOtherContent: React.FC<InternalOtherContentProps> = ({ subcategory
       </div>
 
       <div className="mt-4 text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・永大産業</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.eidai.com/product/stairs/', '商品ページ')}｜
-          {renderLink('https://prosite.eidai-sangyo.co.jp/iportal/CatalogSearch.do?method=catalogSearchByCategory&volumeID=GAZOU&categoryID=290110000&sortKey=CatalogMain270000&sortOrder=ASC', 'カタログ')}｜
-          {renderLink('https://www.eidai.com/profile/corporate/network.html', '営業所')}｜
-          {renderLink('https://www.eidai.com/contact/#contact_anchor', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・南海プライウッド</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.nankaiplywood.co.jp/product/lumist/', '商品ページ')}｜
-          {renderLink('https://www.nankaiplywood.co.jp/catalog/#sougou', 'カタログ')}｜
-          {renderLink('https://www.nankaiplywood.co.jp/company/info/overview.html', '営業所')}｜
-          {renderLink('https://www.nankaiplywood.co.jp/support/contact.html', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-      
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・マツ六</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.mazroc.co.jp/products_1/corridor', '商品ページ')}｜
-          {renderLink('https://www.mazroc.co.jp/catalog/', 'カタログ')}｜
-          {renderLink('https://www.mazroc.co.jp/company/eigyossho.html', '営業所')}｜
-          {renderLink('https://www.mazroc.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・セブン工業</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.seven-gr.co.jp/interior/list.php?id=2', '商品ページ')}｜
-          {renderLink('https://www.catalabo.org/iportal/CatalogViewInterfaceStartUpAction.do?method=startUp&mode=PAGE&volumeID=CATALABO&catalogId=73090960000&pageGroupId=&designID=link&catalogCategoryId=&designConfirmFlg=', 'カタログ')}｜
-          {renderLink('https://www.seven-gr.co.jp/corporate/location.php', '営業所')}｜
-          {renderLink('https://www.seven-gr.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・ウッドワン</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.woodone.co.jp/product/item/housing_cat/kaidan-tesuri/', '商品ページ')}｜
-          {renderLink('https://www.woodone.co.jp/static/business/shoplistcat/floormaterial', 'カタログ')}｜
-          {renderLink('https://www.woodone.co.jp/showroom/', '営業所')}｜
-          {renderLink('https://www.woodone.co.jp/support/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・ノダ</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.noda-co.jp/products/stairs/', '商品ページ')}｜
-          {renderLink('https://www.noda-co.jp/catalog/', 'カタログ')}｜
-          {renderLink('https://www.noda-co.jp/corporate/info/office.html', '営業所')}｜
-          {renderLink('https://www.noda-co.jp/contacts/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・シンドウ工業</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.shindo-kogyo.co.jp/product/', '商品ページ')}｜
-          {renderLink('https://www.shindo-kogyo.co.jp/total-catalog/#target/page_no=1', 'カタログ')}｜
-          {renderLink('https://www.shindo-kogyo.co.jp/company/office/', '営業所')}｜
-          {renderLink('https://www.shindo-kogyo.co.jp/quote/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・ナカ工業</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.naka-kogyo.co.jp/products/category-products/handrail', '商品ページ')}｜
-          {renderLink('https://www.naka-kogyo.co.jp/download/catalog.html', 'カタログ')}｜
-          {renderLink('https://www.naka-kogyo.co.jp/company/office.html', '営業所')}｜
-          {renderLink('https://mailform.naka-kogyo.co.jp/support/script/mailform/inquiry/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・久力製作所</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.kuriki-ss.co.jp/search/ctg09000.html', '商品ページ')}｜
-          {renderLink('https://www.kuriki-ss.co.jp/datasheet/index.html', 'カタログ')}｜
-          {renderLink('https://www.kuriki-ss.co.jp/company/index.html', '営業所')}｜
-          {renderLink('https://www.kuriki-ss.co.jp/form/index.html', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・カワジュン</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.kawajun.jp/hw/product_cat/grabbar', '商品ページ')}｜
-          {renderLink('https://hw.kawajun.jp/catalog/', 'カタログ')}｜
-          {renderLink('https://hw.kawajun.jp/showroom/', '営業所')}｜
-          {renderLink('https://hw.kawajun.jp/faq/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・上手工作所</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.jo-zu-works.com/view/category/ct13', '商品ページ')}｜
-          {renderLink('#', 'カタログ')}｜
-          {renderLink('https://www.jo-zu-works.com/view/page/company', '営業所')}｜
-          {renderLink('https://www.jo-zu-works.com/ssl/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・朝日ウッドテック</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.woodtec.co.jp/products/lineup/stairs/', '商品ページ')}｜
-          {renderLink('https://www.woodtec.co.jp/products/digital_catalog/', 'カタログ')}｜
-          {renderLink('https://www.woodtec.co.jp/company/office/', '営業所')}｜
-          {renderLink('https://www.woodtec.co.jp/customer/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
+        <MakerRows category="内装その他" page="内装手摺" />
       </div>
     </div>
   );
@@ -1086,87 +723,7 @@ const InternalOtherContent: React.FC<InternalOtherContentProps> = ({ subcategory
       </div>
 
       <div className="mt-4 text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・ダイケン</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.daiken.ne.jp/products/interior.html#products07', '商品ページ')}｜
-          {renderLink('https://pro.daiken.ne.jp/iportal/CatalogSearch.do?method=catalogSearchByDefaultSettingCategories&volumeID=DAI00011&designID=DAID01', 'カタログ')}｜
-          {renderLink('https://www.daiken.ne.jp/profile/officelist.html', '営業所')}｜
-          {renderLink('https://www.daiken.ne.jp/question', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・ダイクレ</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.daikure.co.jp/grating/', '商品ページ')}｜
-          {renderLink('https://www.daikure.co.jp/grating/catalog/', 'カタログ')}｜
-          {renderLink('https://www.daikure.co.jp/about/office-information/', '営業所')}｜
-          {renderLink('https://www.daikure.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-      
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・マキテック</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.makitech.co.jp/construction/grating.html', '商品ページ')}｜
-          {renderLink('https://www.makitech.co.jp/support/catalog.html', 'カタログ')}｜
-          {renderLink('https://www.makitech.co.jp/company/kyoten.html#s1', '営業所')}｜
-          {renderLink('https://www.makitech.co.jp/support/form01.html', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・カワグレ</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://kawagure.co.jp/products/', '商品ページ')}｜
-          {renderLink('#', 'カタログ')}｜
-          {renderLink('https://kawagure.co.jp/company/', '営業所')}｜
-          {renderLink('https://kawagure.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・中部ｺｰﾎﾟﾚｰｼｮﾝ</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.chubu-net.co.jp/kenzai/Product/category/7', '商品ページ')}｜
-          {renderLink('https://www.catalabo.org/iportal/CatalogViewInterfaceStartUpAction.do?method=startUp&mode=PAGE&volumeID=CATALABO&catalogId=81187640000&pageGroupId=101&designID=link&catalogCategoryId=&designConfirmFlg=&pagePosition=R', 'カタログ')}｜
-          {renderLink('https://www.chubu-net.co.jp/base.html', '営業所')}｜
-          {renderLink('https://www.chubu-net.co.jp/kenzai/Form/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・宝機材</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.takara-kizai.com/', '商品ページ')}｜
-          {renderLink('https://www.takara-kizai.com/download/catalog/', 'カタログ')}｜
-          {renderLink('https://www.takara-kizai.com/company/outline/', '営業所')}｜
-          {renderLink('https://www.takara-kizai.com/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・すがたかたち</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.sugatakatachi.com/handrail.html', '商品ページ')}｜
-          {renderLink('https://www.sugatakatachi.com/index.html#catalog', 'カタログ')}｜
-          {renderLink('https://www.sugatakatachi.com/form-and-shape.html', '営業所')}｜
-          {renderLink('https://www.sugatakatachi.com/order-flow.html', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
+        <MakerRows category="内装その他" page="グレーチング" />
       </div>
     </div>
   );
@@ -1271,135 +828,7 @@ const InternalOtherContent: React.FC<InternalOtherContentProps> = ({ subcategory
       </div>
 
       <div className="mt-4 text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・フクビ化学工業</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.fukuvi.co.jp/product/10', '商品ページ')}｜
-          {renderLink('https://www.fukuvi.co.jp/data/cat/426', 'カタログ')}｜
-          {renderLink('https://www.fukuvi.co.jp/company/office', '営業所')}｜
-          {renderLink('https://www.fukuvi.co.jp/contact', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・ダイケン</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.daiken.ne.jp/products/interior.html#products01', '商品ページ')}｜
-          {renderLink('https://pro.daiken.ne.jp/iportal/CatalogSearch.do?method=catalogSearchByDefaultSettingCategories&volumeID=DAI00011&designID=DAID01', 'カタログ')}｜
-          {renderLink('https://www.daiken.ne.jp/profile/officelist.html', '営業所')}｜
-          {renderLink('https://www.daiken.ne.jp/question', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-      
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・理研軽金属工業</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.rikenkeikinzoku.co.jp/building/interior-material/', '商品ページ')}｜
-          {renderLink('https://www.rikenkeikinzoku.co.jp/catalog/index.html', 'カタログ')}｜
-          {renderLink('https://www.rikenkeikinzoku.co.jp/company/info/', '営業所')}｜
-          {renderLink('https://www.rikenkeikinzoku.co.jp/company/inquiry/index.html', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・ナカ工業</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.naka-kogyo.co.jp/products/category-products/inspection-port-and-storage', '商品ページ')}｜
-          {renderLink('https://www.naka-kogyo.co.jp/download/catalog.html', 'カタログ')}｜
-          {renderLink('https://www.naka-kogyo.co.jp/company/office.html', '営業所')}｜
-          {renderLink('https://mailform.naka-kogyo.co.jp/support/script/mailform/inquiry/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・城東テクノ</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.joto.com/product/naisou/', '商品ページ')}｜
-          {renderLink('https://www.joto.com/support/catalog/', 'カタログ')}｜
-          {renderLink('https://www.joto.com/company/office_locations/', '営業所')}｜
-          {renderLink('https://www.joto.com/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・サヌキ</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.sanuki-spg.com/products/', '商品ページ')}｜
-          {renderLink('https://www.sanuki-spg.com/catalog/', 'カタログ')}｜
-          {renderLink('https://www.sanuki-spg.com/corporate/', '営業所')}｜
-          {renderLink('https://www.sanuki-spg.com/inquiry/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・日大工業</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('http://nichidai.net/product-cat/building/', '商品ページ')}｜
-          {renderLink('#', 'カタログ')}｜
-          {renderLink('http://nichidai.net/nichidaikougyou_gaiyou/', '営業所')}｜
-          {renderLink('http://nichidai.net/toiawase/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・バクマ工業</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.bakuma.co.jp/ShohinCatalog/shohin-catalog.php?knskkbn=2', '商品ページ')}｜
-          {renderLink('https://www.bakuma.co.jp/catalog/catalog.php', 'カタログ')}｜
-          {renderLink('https://www.bakuma.co.jp/company/eigyo.php?nm=eigyo', '営業所')}｜
-          {renderLink('https://www.bakuma.co.jp/contact/contact.php?nm=contact', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・スリータック</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://threetack.com/product/inspection-door', '商品ページ')}｜
-          {renderLink('#', 'カタログ')}｜
-          {renderLink('https://threetack.com/outline', '営業所')}｜
-          {renderLink('https://www.threetack.co.jp/contact-us', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・クマモト</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('http://k-kumamoto.ticcata.jp/products/category/list/code/38980000/', '商品ページ')}｜
-          {renderLink('http://k-kumamoto.ticcata.jp/iportal/CatalogViewInterfaceStartUpAction.do?method=startUp&mode=PAGE&volumeID=KMT00001&catalogId=339980000&designID=KMTD02&catalogCategoryId=&designConfirmFlg=&keyword=', 'カタログ')}｜
-          {renderLink('http://www.k-kumamoto.com/corporate/office.html', '営業所')}｜
-          {renderLink('http://www.k-kumamoto.com/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・オクジュー</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('http://okuju.co.jp/business-cat/ceiling-access-hole_alts-hatch/', '商品ページ')}｜
-          {renderLink('#', 'カタログ')}｜
-          {renderLink('http://okuju.co.jp/company/', '営業所')}｜
-          {renderLink('http://okuju.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
+        <MakerRows category="内装その他" page="点検口" />
       </div>
     </div>
   );
@@ -1508,63 +937,7 @@ const InternalOtherContent: React.FC<InternalOtherContentProps> = ({ subcategory
       </div>
 
       <div className="mt-4 text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・錦城護謨</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.kinjogomu.jp/welfare/index.html', '商品ページ')}｜
-          {renderLink('#', 'カタログ')}｜
-          {renderLink('https://www.kinjogomu.jp/base.html', '営業所')}｜
-          {renderLink('https://www.kinjogomu.jp/welfare/inq.html', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・大光ルート産業</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.t-route.com/business/', '商品ページ')}｜
-          {renderLink('#', 'カタログ')}｜
-          {renderLink('https://www.t-route.com/company/access/', '営業所')}｜
-          {renderLink('https://www.t-route.com/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-      
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・ナカ工業</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.naka-kogyo.co.jp/products/category-products/non-slip-and-braille-rivet', '商品ページ')}｜
-          {renderLink('https://www.naka-kogyo.co.jp/download/catalog.html', 'カタログ')}｜
-          {renderLink('https://www.naka-kogyo.co.jp/company/office.html', '営業所')}｜
-          {renderLink('https://www.naka-kogyo.co.jp/support/qr_ad/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・奥岡製作所</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.okuoka.co.jp/product/', '商品ページ')}｜
-          {renderLink('https://www.okuoka.co.jp/catalog/', 'カタログ')}｜
-          {renderLink('https://www.okuoka.co.jp/company/', '営業所')}｜
-          {renderLink('https://www.okuoka.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・ダイクレ</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.daikure.co.jp/products/', '商品ページ')}｜
-          {renderLink('#', 'カタログ')}｜
-          {renderLink('https://www.daikure.co.jp/network/', '営業所')}｜
-          {renderLink('https://www.daikure.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
+        <MakerRows category="内装その他" page="点字" />
       </div>
     </div>
   );
@@ -1688,27 +1061,7 @@ const InternalOtherContent: React.FC<InternalOtherContentProps> = ({ subcategory
       </div>
 
       <div className="mt-4 text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・丹青社</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.tanseisha.co.jp/works/', '商品ページ')}｜
-          {renderLink('#', 'カタログ')}｜
-          {renderLink('https://www.tanseisha.co.jp/company/base/', '営業所')}｜
-          {renderLink('https://www.tanseisha.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・乃村工藝社</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.nomurakougei.co.jp/works/', '商品ページ')}｜
-          {renderLink('#', 'カタログ')}｜
-          {renderLink('https://www.nomurakougei.co.jp/company/', '営業所')}｜
-          {renderLink('https://www.nomurakougei.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
+        <MakerRows category="内装その他" page="ディスプレイ" />
       </div>
     </div>
   );
@@ -1825,27 +1178,7 @@ const InternalOtherContent: React.FC<InternalOtherContentProps> = ({ subcategory
       </div>
 
       <div className="mt-4 text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・ダイケン</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.daiken.ne.jp/product/', '商品ページ')}｜
-          {renderLink('https://www.daiken.ne.jp/catalog/', 'カタログ')}｜
-          {renderLink('https://www.daiken.ne.jp/company/office/', '営業所')}｜
-          {renderLink('https://www.daiken.ne.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・フクビ化学</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.fukuvi.co.jp/product/', '商品ページ')}｜
-          {renderLink('https://www.fukuvi.co.jp/catalog/', 'カタログ')}｜
-          {renderLink('https://www.fukuvi.co.jp/company/base/', '営業所')}｜
-          {renderLink('https://www.fukuvi.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
+        <MakerRows category="内装その他" page="内装その他製品" />
       </div>
     </div>
   );
@@ -1945,39 +1278,7 @@ const InternalOtherContent: React.FC<InternalOtherContentProps> = ({ subcategory
       </div>
 
       <div className="mt-4 text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・エスケー化研</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.sk-kaken.co.jp/products/', '商品ページ')}｜
-          {renderLink('#', 'カタログ')}｜
-          {renderLink('https://www.sk-kaken.co.jp/company/base/', '営業所')}｜
-          {renderLink('https://www.sk-kaken.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・コンドーテック</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.kondotec.co.jp/products/', '商品ページ')}｜
-          {renderLink('#', 'カタログ')}｜
-          {renderLink('https://www.kondotec.co.jp/company/', '営業所')}｜
-          {renderLink('https://www.kondotec.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・日本ハートビル工業</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('#', '商品ページ')}｜
-          {renderLink('#', 'カタログ')}｜
-          {renderLink('#', '営業所')}｜
-          {renderLink('#', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
+        <MakerRows category="内装その他" page="内装緑化" />
       </div>
     </div>
   );
@@ -2058,39 +1359,7 @@ const InternalOtherContent: React.FC<InternalOtherContentProps> = ({ subcategory
       </div>
 
       <div className="mt-4 text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・コマニー</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.comany.co.jp/products/partition/', '商品ページ')}｜
-          {renderLink('https://www.comany.co.jp/catalog/', 'カタログ')}｜
-          {renderLink('https://www.comany.co.jp/company/base/', '営業所')}｜
-          {renderLink('https://www.comany.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・イトーキ</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.itoki.jp/products/partition/', '商品ページ')}｜
-          {renderLink('#', 'カタログ')}｜
-          {renderLink('https://www.itoki.jp/company/base/', '営業所')}｜
-          {renderLink('https://www.itoki.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・オカムラ</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.okamura.co.jp/product/partition/', '商品ページ')}｜
-          {renderLink('#', 'カタログ')}｜
-          {renderLink('https://www.okamura.co.jp/company/base/', '営業所')}｜
-          {renderLink('https://www.okamura.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
+        <MakerRows category="内装その他" page="隔壁" />
       </div>
     </div>
   );
@@ -2209,39 +1478,7 @@ const InternalOtherContent: React.FC<InternalOtherContentProps> = ({ subcategory
       </div>
 
       <div className="mt-4 text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・フクビ化学工業</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.fukuvi.co.jp/product/', '商品ページ')}｜
-          {renderLink('https://www.fukuvi.co.jp/catalog/', 'カタログ')}｜
-          {renderLink('https://www.fukuvi.co.jp/company/base/', '営業所')}｜
-          {renderLink('https://www.fukuvi.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・大建工業</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.daiken.ne.jp/product/', '商品ページ')}｜
-          {renderLink('https://www.daiken.ne.jp/catalog/', 'カタログ')}｜
-          {renderLink('https://www.daiken.ne.jp/company/office/', '営業所')}｜
-          {renderLink('https://www.daiken.ne.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
-      </div>
-
-      <div className="text-[13px] flex items-start gap-2">
-        <span className="w-[180px]">・ナカ工業</span>
-        <span className="flex gap-1 flex-wrap">
-          {renderLink('https://www.naka-kogyo.co.jp/product/', '商品ページ')}｜
-          {renderLink('https://www.naka-kogyo.co.jp/catalog/', 'カタログ')}｜
-          {renderLink('https://www.naka-kogyo.co.jp/company/base/', '営業所')}｜
-          {renderLink('https://www.naka-kogyo.co.jp/contact/', 'お問い合わせ')}｜
-          {renderLink('#', 'サンプル')}｜
-          {renderLink('#', 'CADDOWNLOAD')}
-        </span>
+        <MakerRows category="内装その他" page="保護材" />
       </div>
     </div>
   );

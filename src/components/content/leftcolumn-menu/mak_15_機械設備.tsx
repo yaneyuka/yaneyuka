@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import MakerLink from '@/components/MakerLink';
+import MakerRows from '@/components/MakerRows';
 
 interface MechanicalSystemsContentProps {
   subcategory: string;
@@ -195,24 +196,7 @@ const MechanicalSystemsContent: React.FC<MechanicalSystemsContentProps> = ({ sub
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('TOTO', {
-          products: 'https://jp.toto.com/products/faucet/',
-          catalog: 'https://jp.toto.com/support/catalog/',
-          office: 'https://jp.toto.com/contacts/showroom/',
-          contact: 'https://jp.toto.com/contacts/'
-        })}
-        {renderCompanyRow('LIXIL', {
-          products: 'https://www.lixil.co.jp/lineup/faucet/',
-          catalog: 'https://www.biz-lixil.com/catalog/',
-          office: 'https://www.lixil.co.jp/showroom/',
-          contact: 'https://www.lixil.co.jp/support/contact/'
-        })}
-        {renderCompanyRow('KVK', {
-          products: 'https://www.kvk.co.jp/products/',
-          catalog: 'https://www.kvk.co.jp/catalog/',
-          office: 'https://www.kvk.co.jp/corporate/office/',
-          contact: 'https://www.kvk.co.jp/support/contact/'
-        })}
+        {<MakerRows category="機械設備" page="水栓" />}
       </div>
     </div>
   );
@@ -345,24 +329,7 @@ const MechanicalSystemsContent: React.FC<MechanicalSystemsContentProps> = ({ sub
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('TOTO', {
-          products: 'https://jp.toto.com/products/',
-          catalog: 'https://jp.toto.com/support/catalog/',
-          office: 'https://jp.toto.com/contacts/showroom/',
-          contact: 'https://jp.toto.com/contacts/'
-        })}
-        {renderCompanyRow('LIXIL', {
-          products: 'https://www.lixil.co.jp/lineup/toilet/',
-          catalog: 'https://www.biz-lixil.com/catalog/',
-          office: 'https://www.lixil.co.jp/showroom/',
-          contact: 'https://www.lixil.co.jp/support/contact/'
-        })}
-        {renderCompanyRow('パナソニック', {
-          products: 'https://panasonic.jp/sumai/toilet/',
-          catalog: 'https://panasonic.jp/sumai/catalog/',
-          office: 'https://panasonic.jp/sumai/showroom/',
-          contact: 'https://panasonic.jp/support/contact/'
-        })}
+        {<MakerRows category="機械設備" page="衛生機器" />}
       </div>
     </div>
   );
@@ -562,18 +529,7 @@ const MechanicalSystemsContent: React.FC<MechanicalSystemsContentProps> = ({ sub
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('LIXIL', {
-          products: 'https://www.lixil.co.jp/lineup/',
-          catalog: 'https://www.biz-lixil.com/catalog/',
-          office: 'https://www.lixil.co.jp/showroom/',
-          contact: 'https://www.lixil.co.jp/support/contact/'
-        })}
-        {renderCompanyRow('パナソニック', {
-          products: 'https://panasonic.jp/sumai/',
-          catalog: 'https://panasonic.jp/sumai/catalog/',
-          office: 'https://panasonic.jp/sumai/showroom/',
-          contact: 'https://panasonic.jp/support/contact/'
-        })}
+        {<MakerRows category="機械設備" page="住宅設備" />}
       </div>
     </div>
   );
@@ -602,24 +558,7 @@ const MechanicalSystemsContent: React.FC<MechanicalSystemsContentProps> = ({ sub
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('LIXIL', {
-          products: 'https://www.lixil.co.jp/lineup/kitchen/',
-          catalog: 'https://www.biz-lixil.com/catalog/',
-          office: 'https://www.lixil.co.jp/showroom/',
-          contact: 'https://www.lixil.co.jp/support/contact/'
-        })}
-        {renderCompanyRow('パナソニック', {
-          products: 'https://panasonic.jp/sumai/kitchen/',
-          catalog: 'https://panasonic.jp/sumai/catalog/',
-          office: 'https://panasonic.jp/sumai/showroom/',
-          contact: 'https://panasonic.jp/support/contact/'
-        })}
-        {renderCompanyRow('クリナップ', {
-          products: 'https://cleanup.jp/kitchen/',
-          catalog: 'https://cleanup.jp/catalog/',
-          office: 'https://cleanup.jp/showroom/',
-          contact: 'https://cleanup.jp/support/contact/'
-        })}
+        {<MakerRows category="機械設備" page="キッチン" />}
       </div>
     </div>
   );
@@ -762,24 +701,7 @@ const MechanicalSystemsContent: React.FC<MechanicalSystemsContentProps> = ({ sub
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('ダイキン工業', {
-          products: 'https://www.daikin.co.jp/products/',
-          catalog: 'https://www.daikin.co.jp/catalog/',
-          office: 'https://www.daikin.co.jp/contact/office/',
-          contact: 'https://www.daikin.co.jp/contact/'
-        })}
-        {renderCompanyRow('三菱電機', {
-          products: 'https://www.mitsubishielectric.co.jp/home/kirigamine/',
-          catalog: 'https://www.mitsubishielectric.co.jp/catalog/',
-          office: 'https://www.mitsubishielectric.co.jp/contact/',
-          contact: 'https://www.mitsubishielectric.co.jp/contact/'
-        })}
-        {renderCompanyRow('パナソニック', {
-          products: 'https://panasonic.jp/aircon/',
-          catalog: 'https://panasonic.jp/aircon/catalog/',
-          office: 'https://panasonic.jp/showroom/',
-          contact: 'https://panasonic.jp/support/contact/'
-        })}
+        {<MakerRows category="機械設備" page="空調機" />}
       </div>
     </div>
   );

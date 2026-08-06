@@ -12,13 +12,26 @@ export const SLOTS = ['products', 'catalog', 'office', 'contact', 'sample', 'cad
  *   間接型: case 'ウレタン防水': return renderUrethaneWaterproof();
  *           …で、その関数はファイル前方に定義されている
  */
-export function pageRegions(text) {
-  const funcs = [...text.matchAll(/^\s*const\s+(render[A-Za-z0-9_]*)\s*=\s*\(\)\s*=>/gm)]
+/**
+ * 描画関数の定義位置。次の定義までを本体とみなす。
+ * 引数を取る関数（renderGenericCategory = (title: string) => ...）も対象。
+ * これを取りこぼすと、その関数のメーカー行が直前の関数の範囲に含まれてしまい、
+ * 置換時に関数の境界ごと消える。
+ */
+export function renderFunctions(text) {
+  // 関数名に日本語が混ざることがある（renderGreen化 など）。
+  // ASCII だけで拾うと名前を途中で切り、関数の境界を見誤って定義ごと消してしまう。
+  const funcs = [...text.matchAll(/^\s*const\s+(render[\p{L}\p{N}_$]*)\s*=\s*\([^)]*\)\s*(?::[^=]*)?=>/gmu)]
     .map((m) => ({ name: m[1], at: m.index }));
   funcs.forEach((f, i) => { f.end = i + 1 < funcs.length ? funcs[i + 1].at : text.length; });
+  return funcs;
+}
+
+export function pageRegions(text) {
+  const funcs = renderFunctions(text);
   const funcByName = new Map(funcs.map((f) => [f.name, f]));
 
-  const cases = [...text.matchAll(/case\s+'([^']+)'\s*:\s*(?:\n\s*)?(?:return\s+([A-Za-z0-9_]+)\(\)\s*;)?/g)]
+  const cases = [...text.matchAll(/case\s+'([^']+)'\s*:\s*(?:\n\s*)?(?:return\s+(render[\p{L}\p{N}_$]*)\(\)\s*;)?/gu)]
     .map((m) => ({ name: m[1].trim(), fn: m[2] || null, at: m.index, end: m.index + m[0].length }));
 
   const regions = [];

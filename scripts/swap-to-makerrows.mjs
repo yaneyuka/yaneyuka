@@ -8,7 +8,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { pageRegions, makerEvents, groupHeadings } from './lib/maker-parse.mjs';
+import { pageRegions, makerEvents, groupHeadings, renderFunctions } from './lib/maker-parse.mjs';
 
 const DIR = 'src/components/content/leftcolumn-menu';
 const file = process.argv[2];
@@ -26,6 +26,9 @@ const text = fs.readFileSync(target, 'utf8');
 const regions = pageRegions(text);
 const headings = groupHeadings(text);
 const events = makerEvents(text);
+// 描画関数の境界。ここをまたいで行をまとめると、関数の閉じ括弧ごと消える
+const funcs = renderFunctions(text);
+const funcAt = (pos) => (funcs.find((f) => pos >= f.at && pos < f.end) || {}).name || null;
 
 // 連続するメーカー行を「ページ+見出し」でまとめる
 const blocks = [];
@@ -42,8 +45,9 @@ for (const e of events) {
     current = null;
     continue;
   }
-  if (!current || current.page !== page || current.group !== group) {
-    current = { page, group, start: e.at, end: e.end, count: 0, names: [] };
+  const fn = funcAt(e.at);
+  if (!current || current.page !== page || current.group !== group || current.fn !== fn) {
+    current = { page, group, fn, start: e.at, end: e.end, count: 0, names: [] };
     blocks.push(current);
   }
   current.end = e.end;
@@ -81,6 +85,19 @@ if (!out.includes("from '@/components/MakerRows'")) {
   lines.forEach((l, i) => { if (/^import .* from /.test(l)) last = i; });
   lines.splice(last + 1, 0, "import MakerRows from '@/components/MakerRows';");
   out = lines.join('\n');
+}
+
+// 置換で構造を壊していないかの目安。括弧の数が変わっていたら何かを消しすぎている。
+// （引数付きの描画関数を認識できず、関数の閉じ括弧ごと削除した事故があったため）
+const countOutsideStrings = (s, ch) => (s.match(new RegExp(`\\${ch}`, 'g')) || []).length;
+for (const ch of ['(', ')', '{', '}']) {
+  const before = countOutsideStrings(text, ch);
+  const after = countOutsideStrings(out, ch);
+  const removedByBlocks = blocks.reduce((n, b) => n + countOutsideStrings(text.slice(b.start, b.end), ch), 0);
+  const expected = before - removedByBlocks;
+  if (after !== expected) {
+    console.error(`  ⚠ '${ch}' の数が想定と違います（想定 ${expected} / 実際 ${after}）。置換範囲が広すぎる可能性があります。`);
+  }
 }
 
 console.log(`\n${blocks.length} ブロック / ${events.length} 社を置換`);

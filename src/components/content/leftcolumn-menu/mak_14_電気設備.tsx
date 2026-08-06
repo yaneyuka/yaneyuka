@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import MakerLink from '@/components/MakerLink';
+import MakerRows from '@/components/MakerRows';
 
 interface ElectricalSystemsContentProps {
   subcategory: string;
@@ -227,102 +228,7 @@ const ElectricalSystemsContent: React.FC<ElectricalSystemsContentProps> = ({ sub
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('パナソニック', {
-          products: 'https://panasonic.jp/light/products.html',
-          catalog: 'https://esctlg.panasonic.biz/iportal/CatalogSearch.do?method=catalogSearchByAnyCategories&volumeID=PEWJ0001&categoryID=352920000&designID=',
-          office: '#',
-          contact: 'https://www2.panasonic.biz/jp/support/?_gl=1*smahuz*_gcl_au*MTc1NDU0NDE0NS4xNzQzMzg1MDkx#tabPurp'
-        })}
-        {renderCompanyRow('オーデリック', {
-          products: 'https://www.odelic.co.jp/products/',
-          catalog: 'https://www.odelic.co.jp/webcatalog/',
-          office: 'https://www.odelic.co.jp/showroom/reserve.html#acs',
-          contact: 'https://www.odelic.co.jp/search/DispContact.do'
-        })}
-        {renderCompanyRow('コイズミ照明', {
-          products: 'https://www.koizumi-lt.co.jp/l-design/',
-          catalog: 'https://webcatalog.koizumi-lt.co.jp/iportal/CatalogViewInterfaceStartUpAction.do?method=startUp&mode=PAGE&volumeID=DIGICATA&catalogId=8642230000&pageGroupId=1&catalogCategoryId=',
-          office: 'https://www.koizumi-lt.co.jp/company/office.html',
-          contact: 'https://www.koizumi-lt.co.jp/support/'
-        })}
-        {renderCompanyRow('大光電機', {
-          products: 'https://www2.lighting-daiko.co.jp/led_products/',
-          catalog: 'https://src.lighting-daiko.co.jp/iportal/CatalogSearch.do?method=catalogSearchByDefaultSettingCategories&volumeID=DIK00003&designID=DKDDPC01',
-          office: 'https://www2.lighting-daiko.co.jp/showroom/',
-          contact: 'https://www2.lighting-daiko.co.jp/support/repair/'
-        })}
-        {renderCompanyRow('ヤマギワ', {
-          products: 'https://www.yamagiwa.co.jp/products/#categories-search',
-          catalog: 'https://www.yamagiwa.co.jp/products/#catalog-download',
-          office: 'https://www.yamagiwa.co.jp/access/#company_address',
-          contact: 'https://www.yamagiwa.co.jp/contact/'
-        })}
-        {renderCompanyRow('DNライティング', {
-          products: 'https://www.dnlighting.co.jp/product/indoor_lighting.html',
-          catalog: 'https://www.dnlighting.co.jp/catalog.html',
-          office: 'https://www.dnlighting.co.jp/company/access.html',
-          contact: 'https://www.dnlighting.co.jp/contact.html'
-        })}
-        {renderCompanyRow('遠藤照明', {
-          products: 'https://www.endo-lighting.co.jp/products/facility/',
-          catalog: 'https://www.endo-lighting.co.jp/products/catalog/#catalog',
-          office: 'https://www.endo-lighting.co.jp/showroom/',
-          contact: 'https://www.endo-lighting.co.jp/support/'
-        })}
-        {renderCompanyRow('岩崎電気', {
-          products: 'https://www.iwasaki.co.jp/lighting/',
-          catalog: 'https://www.iwasaki.co.jp/contact/request/',
-          office: 'https://www.iwasaki.co.jp/corporate/showroom/',
-          contact: 'https://www.iwasaki.co.jp/contact/inquiry/'
-        })}
-        {renderCompanyRow('ｷｬﾝｴﾝﾀｰﾌﾟﾗｲｾﾞｽﾞ', {
-          products: 'https://www.can-net.co.jp/product/lights',
-          catalog: 'https://www.can-net.co.jp/sample-order',
-          office: 'https://www.can-net.co.jp/company',
-          contact: 'https://www.can-net.co.jp/contact'
-        })}
-        {renderCompanyRow('山田照明', {
-          products: 'https://www.yamada-shomei.co.jp/products/',
-          catalog: 'https://www.yamada-shomei.co.jp/catalog/',
-          office: 'https://www.yamada-shomei.co.jp/company/office/',
-          contact: 'https://www.yamada-shomei.co.jp/inquiry/'
-        })}
-        {renderCompanyRow('ルミナベッラ', {
-          products: 'https://www.luminabella.jp/product/',
-          catalog: 'https://www.luminabella.jp/catalogue/',
-          office: 'https://www.luminabella.jp/showroom/',
-          contact: 'https://www.luminabella.jp/contact/'
-        })}
-        {renderCompanyRow('ディクラッセ', {
-          products: 'https://www.di-classe-onlineshop.com/view/category/all_items',
-          catalog: '#',
-          office: 'https://www.lux.di-classe.com/',
-          contact: 'https://www.di-classe.com/contact.html'
-        })}
-        {renderCompanyRow('シバサキ', {
-          products: 'https://led.shibasaki-inc.jp/product/interior/',
-          catalog: 'https://led.shibasaki-inc.jp/catalog_dl/',
-          office: 'https://led.shibasaki-inc.jp/access/',
-          contact: 'https://led.shibasaki-inc.jp/contact/'
-        })}
-        {renderCompanyRow('上手工作所', {
-          products: 'https://www.jo-zu-works.com/view/category/ct4',
-          catalog: '#',
-          office: 'https://www.jo-zu-works.com/view/page/company',
-          contact: 'https://www.jo-zu-works.com/ssl/contact/'
-        })}
-        {renderCompanyRow('睦屋', {
-          products: 'https://www.mutsumi-ya.com/brand/cat5.html',
-          catalog: '#',
-          office: 'https://www.mutsumi-ya.com/showroom/',
-          contact: 'https://www.mutsumi-ya.com/contact/'
-        })}
-        {renderCompanyRow('ie-mon', {
-          products: 'https://www.ie-mon-asia.net/online-shop_category/shop-light/',
-          catalog: 'https://www.ie-mon-asia.net/catalog/',
-          office: 'https://www.ie-mon-asia.net/company/',
-          contact: 'https://www.ie-mon-asia.net/request/'
-        })}
+        {<MakerRows category="電気設備" page="照明" />}
       </div>
     </div>
   );
@@ -479,96 +385,7 @@ const ElectricalSystemsContent: React.FC<ElectricalSystemsContentProps> = ({ sub
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('DNライティング', {
-          products: 'https://www.dnlighting.co.jp/product/outdoor_lighting.html',
-          catalog: 'https://www.dnlighting.co.jp/catalog.html',
-          office: 'https://www.dnlighting.co.jp/company/access.html',
-          contact: 'https://www.dnlighting.co.jp/contact.html'
-        })}
-        {renderCompanyRow('遠藤照明', {
-          products: 'https://www.endo-lighting.co.jp/products/facility/outdoor/',
-          catalog: 'https://www.endo-lighting.co.jp/products/catalog/#catalog',
-          office: 'https://www.endo-lighting.co.jp/showroom/',
-          contact: 'https://www.endo-lighting.co.jp/support/'
-        })}
-        {renderCompanyRow('岩崎電気', {
-          products: 'https://www.iwasaki.co.jp/lighting/',
-          catalog: 'https://www.iwasaki.co.jp/contact/request/',
-          office: 'https://www.iwasaki.co.jp/corporate/showroom/',
-          contact: 'https://www.iwasaki.co.jp/contact/inquiry/'
-        })}
-        {renderCompanyRow('タカショー', {
-          products: 'https://takasho-digitec.jp/lighting/product/',
-          catalog: 'https://takasho-digitec.jp/ctlg/',
-          office: 'https://takasho-digitec.jp/about/info/',
-          contact: 'https://takasho-digitec.jp/gems/contact/'
-        })}
-        {renderCompanyRow('山田照明', {
-          products: 'https://www.yamada-shomei.co.jp/products/',
-          catalog: 'https://www.yamada-shomei.co.jp/catalog/',
-          office: 'https://www.yamada-shomei.co.jp/company/office/',
-          contact: 'https://www.yamada-shomei.co.jp/inquiry/'
-        })}
-        {renderCompanyRow('LIXIL', {
-          products: 'https://www.lixil.co.jp/lineup/gate_fence/exterior_light/',
-          catalog: 'https://webcatalog.lixil.co.jp/iportal/CatalogViewInterfaceStartUpAction.do?method=startUp&mode=PAGE&catalogId=17010670000&pageGroupId=361&volumeID=LXL13001&designID=newinter&pagePosition=L',
-          office: 'https://www.lixil.co.jp/showroom/',
-          contact: 'https://www.lixil.co.jp/support/?_gl=1*vbpak9*_gcl_au*NjI4NTkzNjY2LjE3NDMzOTY5MzI.*_ga*MTYwNjUxMDY5NC4xNzQzMzk2OTMx*_ga_L1RLBQ788C*MTc0MzM5NjkzMS4xLjEuMTc0MzM5NzA5OC40My4wLjA.*_ga_81CGHJ6TE8*MTc0MzM5Njg5My4zLjEuMTc0MzM5NzA5OC4yLjAuMA..'
-        })}
-        {renderCompanyRow('パナソニック', {
-          products: 'https://www2.panasonic.biz/jp/lighting/home/exterior/',
-          catalog: 'https://esctlg.panasonic.biz/iportal/CatalogSearch.do?method=catalogSearchByAnyCategories&volumeID=PEWJ0001&categoryID=352950000&designID=',
-          office: '#',
-          contact: 'https://www2.panasonic.biz/jp/support/?_gl=1*smahuz*_gcl_au*MTc1NDU0NDE0NS4xNzQzMzg1MDkx#tabPurp'
-        })}
-        {renderCompanyRow('大光電機', {
-          products: 'https://www2.lighting-daiko.co.jp/led_products/',
-          catalog: 'https://src.lighting-daiko.co.jp/iportal/CatalogSearch.do?method=catalogSearchByDefaultSettingCategories&volumeID=DIK00003&designID=DKDDPC01',
-          office: 'https://www2.lighting-daiko.co.jp/showroom/',
-          contact: 'https://www2.lighting-daiko.co.jp/support/repair/'
-        })}
-        {renderCompanyRow('シバサキ', {
-          products: 'https://led.shibasaki-inc.jp/product/exterior/',
-          catalog: 'https://led.shibasaki-inc.jp/catalog_dl/',
-          office: 'https://led.shibasaki-inc.jp/access/',
-          contact: 'https://led.shibasaki-inc.jp/contact/'
-        })}
-        {renderCompanyRow('上手工作所', {
-          products: 'https://www.jo-zu-works.com/view/category/ct25',
-          catalog: '#',
-          office: 'https://www.jo-zu-works.com/view/page/company',
-          contact: 'https://www.jo-zu-works.com/ssl/contact/'
-        })}
-        {renderCompanyRow('ﾄｰｼﾝｺｰﾎﾟﾚｰｼｮﾝ', {
-          products: 'https://www.toshin-grc.co.jp/business/exterior/lineup/light/',
-          catalog: 'https://www.toshin-grc.co.jp/catalog/web/',
-          office: 'https://www.toshin-grc.co.jp/profile/branch/',
-          contact: 'https://www.toshin-grc.co.jp/contact/'
-        })}
-        {renderCompanyRow('ﾏﾁﾀﾞｺｰﾎﾟﾚｰｼｮﾝ', {
-          products: 'http://www.machidacorp.co.jp/product_i/c07/',
-          catalog: 'http://www.machidacorp.co.jp/catalogue_s/',
-          office: 'http://www.machidacorp.co.jp/profile/branch/',
-          contact: 'https://www.machidacorp.co.jp/contact/total_support/'
-        })}
-        {renderCompanyRow('ユニソン', {
-          products: 'https://www.unison-net.com/gardenexterior/product/?s=&cate=128',
-          catalog: 'https://www.unison-net.com/webcatalog/',
-          office: 'https://www.unison-net.com/company/location/',
-          contact: 'https://www.unison-net.com/contact_top/'
-        })}
-        {renderCompanyRow('御田製作所', {
-          products: 'https://ondairon.com/product/?se=category&mv=light',
-          catalog: 'https://ondairon.com/stagedemo/wp-content/themes/original/pdf/results2019.pdf',
-          office: 'https://ondairon.com/showroom/#AccessMap',
-          contact: 'https://ondairon.com/contact/#id03'
-        })}
-        {renderCompanyRow('ie-mon', {
-          products: 'https://www.ie-mon-asia.net/online-shop_category/outdoor-lighting/',
-          catalog: 'https://www.ie-mon-asia.net/catalog/',
-          office: 'https://www.ie-mon-asia.net/company/',
-          contact: 'https://www.ie-mon-asia.net/request/'
-        })}
+        {<MakerRows category="電気設備" page="外構照明" />}
       </div>
     </div>
   );
@@ -718,36 +535,7 @@ const ElectricalSystemsContent: React.FC<ElectricalSystemsContentProps> = ({ sub
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('ｺﾞｰﾘｷｱｲﾗﾝﾄﾞ', {
-          products: 'https://www.brass.co.jp/item_list/04601/',
-          catalog: 'https://www.gorikiisland.jp/download/',
-          office: 'https://www.brass.co.jp/sub/company/',
-          contact: 'https://www.brass.co.jp/inq/'
-        })}
-        {renderCompanyRow('パナソニック', {
-          products: 'https://www2.panasonic.biz/jp/densetsu/',
-          catalog: 'https://esctlg.panasonic.biz/iportal/CatalogSearch.do?method=catalogSearchByAnyCategories&volumeID=PEWJ0001&categoryID=352970000&designID=&_ga=2.127524749.1053640670.1746776720-2106627852.1743048702',
-          office: '#',
-          contact: 'https://www2.panasonic.biz/jp/support/call/'
-        })}
-        {renderCompanyRow('スガツネ工業', {
-          products: 'https://search.sugatsune.co.jp/product/arch/c/c2016/',
-          catalog: 'https://digital-book.sugatsune.com/iportal/CatalogSearch.do?method=catalogSearchByDefaultSettingCategories&volumeID=SGT00001&designID=ARCH',
-          office: 'https://www.sugatsune.co.jp/corporate/office/',
-          contact: 'https://search.sugatsune.co.jp/product/contact/contact.aspx'
-        })}
-        {renderCompanyRow('東芝ライテック', {
-          products: 'https://www.tlt.co.jp/tlt/products/',
-          catalog: '#',
-          office: 'https://www.tlt.co.jp/tlt/company/base/',
-          contact: 'https://www.tlt.co.jp/tlt/contact/'
-        })}
-        {renderCompanyRow('岩崎電気', {
-          products: 'https://www.iwasaki.co.jp/lighting/products/',
-          catalog: '#',
-          office: 'https://www.iwasaki.co.jp/company/base/',
-          contact: 'https://www.iwasaki.co.jp/contact/'
-        })}
+        {<MakerRows category="電気設備" page="スイッチコンセント" />}
       </div>
     </div>
   );
@@ -882,48 +670,7 @@ const ElectricalSystemsContent: React.FC<ElectricalSystemsContentProps> = ({ sub
         {renderRecruitmentCard()}
       </div>
 
-      {renderCompanyRow('パナソニック', {
-        products: 'https://www2.panasonic.biz/jp/lighting/',
-        catalog: 'https://www2.panasonic.biz/jp/catalog/',
-        office: 'https://www2.panasonic.biz/jp/company/',
-        contact: 'https://www2.panasonic.biz/jp/contact/'
-      })}
-      {renderCompanyRow('コイズミ照明', {
-        products: 'https://www.koizumi-lt.co.jp/product/',
-        catalog: 'https://www.koizumi-lt.co.jp/catalog/',
-        office: 'https://www.koizumi-lt.co.jp/company/',
-        contact: 'https://www.koizumi-lt.co.jp/contact/'
-      })}
-      {renderCompanyRow('大光電機', {
-        products: 'https://www.lighting-daiko.co.jp/product/',
-        catalog: 'https://www.lighting-daiko.co.jp/catalog/',
-        office: 'https://www.lighting-daiko.co.jp/company/base/',
-        contact: 'https://www.lighting-daiko.co.jp/contact/'
-      })}
-      {renderCompanyRow('オーデリック', {
-        products: 'https://www.odelic.co.jp/products/',
-        catalog: 'https://www.odelic.co.jp/catalog/',
-        office: 'https://www.odelic.co.jp/company/',
-        contact: 'https://www.odelic.co.jp/contact/'
-      })}
-      {renderCompanyRow('遠藤照明', {
-        products: 'https://www.endo-lighting.co.jp/products/',
-        catalog: '#',
-        office: 'https://www.endo-lighting.co.jp/company/base/',
-        contact: 'https://www.endo-lighting.co.jp/contact/'
-      })}
-      {renderCompanyRow('東芝ライテック', {
-        products: 'https://www.tlt.co.jp/tlt/products/',
-        catalog: '#',
-        office: 'https://www.tlt.co.jp/tlt/company/base/',
-        contact: 'https://www.tlt.co.jp/tlt/contact/'
-      })}
-      {renderCompanyRow('岩崎電気', {
-        products: 'https://www.iwasaki.co.jp/lighting/products/',
-        catalog: '#',
-        office: 'https://www.iwasaki.co.jp/company/base/',
-        contact: 'https://www.iwasaki.co.jp/contact/'
-      })}
+      {<MakerRows category="電気設備" page="発電機" />}
     </div>
   );
 

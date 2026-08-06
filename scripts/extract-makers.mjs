@@ -34,14 +34,27 @@ function extract(text) {
   });
 }
 
+// 既存の JSON。MakerRows へ移行済みのカテゴリはこちらが正なので上書きしない。
+const existing = fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, 'utf8')) : {};
+
 const data = {};
 let total = 0;
 for (const file of fs.readdirSync(DIR).filter((f) => f.startsWith('mak_') && f.endsWith('.tsx'))) {
   const category = file.replace(/^mak_\d+_/, '').replace('.tsx', '');
   const makers = extract(fs.readFileSync(path.join(DIR, file), 'utf8'));
+
+  if (makers.length === 0 && existing[category]?.length) {
+    // 移行済み: 元ファイルに手書き行はもう無い
+    data[category] = existing[category];
+    total += existing[category].length;
+    console.log(`${category.padEnd(12)} ${String(existing[category].length).padStart(4)} 社  (移行済みのため据え置き)`);
+    continue;
+  }
+
   data[category] = makers;
   total += makers.length;
-  console.log(`${category.padEnd(12)} ${String(makers.length).padStart(4)} 社`);
+  const orphan = makers.filter((m) => !m.pages.length).length;
+  console.log(`${category.padEnd(12)} ${String(makers.length).padStart(4)} 社${orphan ? `  ※どのページからも参照されない ${orphan} 社を含む` : ''}`);
 }
 
 fs.mkdirSync(path.dirname(OUT), { recursive: true });

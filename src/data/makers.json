@@ -770,7 +770,7 @@
     {
       "name": "エスケー化研",
       "pages": [
-        "内装その他製品"
+        "内装緑化"
       ],
       "group": "",
       "products": "https://www.sk-kaken.co.jp/products/",
@@ -783,7 +783,7 @@
     {
       "name": "コンドーテック",
       "pages": [
-        "内装その他製品"
+        "内装緑化"
       ],
       "group": "",
       "products": "https://www.kondotec.co.jp/products/",
@@ -796,7 +796,7 @@
     {
       "name": "日本ハートビル工業",
       "pages": [
-        "内装その他製品"
+        "内装緑化"
       ],
       "group": "",
       "products": "",
@@ -886,9 +886,7 @@
     },
     {
       "name": "ダイケン",
-      "pages": [
-        "保護材"
-      ],
+      "pages": [],
       "group": "",
       "products": "https://www.daiken.ne.jp/product/",
       "catalog": "https://www.daiken.ne.jp/catalog/",
@@ -899,9 +897,7 @@
     },
     {
       "name": "フクビ化学",
-      "pages": [
-        "保護材"
-      ],
+      "pages": [],
       "group": "",
       "products": "https://www.fukuvi.co.jp/product/",
       "catalog": "https://www.fukuvi.co.jp/catalog/",
@@ -1395,9 +1391,7 @@
     },
     {
       "name": "シーカ・ジャパン",
-      "pages": [
-        "防水その他"
-      ],
+      "pages": [],
       "group": "",
       "products": "https://jpn.sika.com/ja/construction/roofing.html",
       "catalog": "",
@@ -1408,9 +1402,7 @@
     },
     {
       "name": "日新工業",
-      "pages": [
-        "防水その他"
-      ],
+      "pages": [],
       "group": "",
       "products": "https://www.nisshinkogyo.co.jp/products/",
       "catalog": "",
@@ -1421,9 +1413,7 @@
     },
     {
       "name": "日本特殊塗料",
-      "pages": [
-        "防水その他"
-      ],
+      "pages": [],
       "group": "",
       "products": "https://www.nittoku.co.jp/products/",
       "catalog": "",
@@ -1434,9 +1424,7 @@
     },
     {
       "name": "ニッタ化工品",
-      "pages": [
-        "防水その他"
-      ],
+      "pages": [],
       "group": "",
       "products": "https://www.nitta.co.jp/product/",
       "catalog": "",
@@ -1969,9 +1957,7 @@
     },
     {
       "name": "スガツネ工業",
-      "pages": [
-        "家具金物"
-      ],
+      "pages": [],
       "group": "",
       "products": "https://www.sugatsune.co.jp/products/",
       "catalog": "https://www.sugatsune.co.jp/catalog/",
@@ -1982,9 +1968,7 @@
     },
     {
       "name": "シブタニ",
-      "pages": [
-        "家具金物"
-      ],
+      "pages": [],
       "group": "",
       "products": "https://www.shibutani.co.jp/products/",
       "catalog": "",
@@ -1995,9 +1979,7 @@
     },
     {
       "name": "ベスト",
-      "pages": [
-        "家具金物"
-      ],
+      "pages": [],
       "group": "",
       "products": "https://www.bestlock.co.jp/products/",
       "catalog": "https://www.bestlock.co.jp/catalog/",
@@ -2008,9 +1990,7 @@
     },
     {
       "name": "ロイヤル",
-      "pages": [
-        "家具金物"
-      ],
+      "pages": [],
       "group": "",
       "products": "https://www.royal-co.net/products/",
       "catalog": "https://www.royal-co.net/catalog/",
@@ -2021,9 +2001,7 @@
     },
     {
       "name": "カワジュン",
-      "pages": [
-        "家具金物"
-      ],
+      "pages": [],
       "group": "",
       "products": "https://www.kawajun.jp/products/",
       "catalog": "",
@@ -2660,10 +2638,8 @@
     },
     {
       "name": "サンゲツ",
-      "pages": [
-        "ファニチャーその他"
-      ],
-      "group": "",
+      "pages": [],
+      "group": "家具（屋外）",
       "products": "https://www.sangetsu.co.jp/product/",
       "catalog": "https://www.sangetsu.co.jp/catalog/",
       "office": "https://www.sangetsu.co.jp/company/base/",
@@ -2673,10 +2649,8 @@
     },
     {
       "name": "リリカラ",
-      "pages": [
-        "ファニチャーその他"
-      ],
-      "group": "",
+      "pages": [],
+      "group": "家具（屋外）",
       "products": "https://www.lilycolor.co.jp/interior/",
       "catalog": "https://www.lilycolor.co.jp/catalog/",
       "office": "https://www.lilycolor.co.jp/company/base/",
@@ -2686,10 +2660,8 @@
     },
     {
       "name": "川島織物セルコン",
-      "pages": [
-        "ファニチャーその他"
-      ],
-      "group": "",
+      "pages": [],
+      "group": "家具（屋外）",
       "products": "https://www.kawashimaselkon.co.jp/curtain/",
       "catalog": "",
       "office": "https://www.kawashimaselkon.co.jp/company/base/",
@@ -2699,10 +2671,8 @@
     },
     {
       "name": "タチカワブラインド",
-      "pages": [
-        "ファニチャーその他"
-      ],
-      "group": "",
+      "pages": [],
+      "group": "家具（屋外）",
       "products": "https://www.blind.co.jp/products/",
       "catalog": "https://www.blind.co.jp/catalog/",
       "office": "https://www.blind.co.jp/company/base/",
@@ -2712,10 +2682,8 @@
     },
     {
       "name": "ニチベイ",
-      "pages": [
-        "ファニチャーその他"
-      ],
-      "group": "",
+      "pages": [],
+      "group": "家具（屋外）",
       "products": "https://www.nichi-bei.co.jp/products/",
       "catalog": "https://www.nichi-bei.co.jp/catalog/",
       "office": "https://www.nichi-bei.co.jp/company/base/",
@@ -3286,9 +3254,7 @@
     },
     {
       "name": "パナソニック",
-      "pages": [
-        "発電機"
-      ],
+      "pages": [],
       "group": "",
       "products": "https://www2.panasonic.biz/jp/lighting/",
       "catalog": "https://www2.panasonic.biz/jp/catalog/",
@@ -3299,9 +3265,7 @@
     },
     {
       "name": "コイズミ照明",
-      "pages": [
-        "発電機"
-      ],
+      "pages": [],
       "group": "",
       "products": "https://www.koizumi-lt.co.jp/product/",
       "catalog": "https://www.koizumi-lt.co.jp/catalog/",
@@ -3312,9 +3276,7 @@
     },
     {
       "name": "大光電機",
-      "pages": [
-        "発電機"
-      ],
+      "pages": [],
       "group": "",
       "products": "https://www.lighting-daiko.co.jp/product/",
       "catalog": "https://www.lighting-daiko.co.jp/catalog/",
@@ -3325,9 +3287,7 @@
     },
     {
       "name": "オーデリック",
-      "pages": [
-        "発電機"
-      ],
+      "pages": [],
       "group": "",
       "products": "https://www.odelic.co.jp/products/",
       "catalog": "https://www.odelic.co.jp/catalog/",
@@ -3338,9 +3298,7 @@
     },
     {
       "name": "遠藤照明",
-      "pages": [
-        "発電機"
-      ],
+      "pages": [],
       "group": "",
       "products": "https://www.endo-lighting.co.jp/products/",
       "catalog": "",
@@ -3351,9 +3309,7 @@
     },
     {
       "name": "東芝ライテック",
-      "pages": [
-        "発電機"
-      ],
+      "pages": [],
       "group": "",
       "products": "https://www.tlt.co.jp/tlt/products/",
       "catalog": "",
@@ -3364,9 +3320,7 @@
     },
     {
       "name": "岩崎電気",
-      "pages": [
-        "発電機"
-      ],
+      "pages": [],
       "group": "",
       "products": "https://www.iwasaki.co.jp/lighting/products/",
       "catalog": "",
@@ -3992,9 +3946,7 @@
     },
     {
       "name": "奥岡製作所",
-      "pages": [
-        "外構その他"
-      ],
+      "pages": [],
       "group": "",
       "products": "https://www.okuoka.co.jp/product/",
       "catalog": "https://www.okuoka.co.jp/catalog/",
@@ -4005,9 +3957,7 @@
     },
     {
       "name": "ダイクレ",
-      "pages": [
-        "外構その他"
-      ],
+      "pages": [],
       "group": "",
       "products": "https://www.daikure.co.jp/products/",
       "catalog": "",
@@ -4018,9 +3968,7 @@
     },
     {
       "name": "中部コーポレーション",
-      "pages": [
-        "外構その他"
-      ],
+      "pages": [],
       "group": "",
       "products": "https://www.chubu-corp.co.jp/products/",
       "catalog": "",

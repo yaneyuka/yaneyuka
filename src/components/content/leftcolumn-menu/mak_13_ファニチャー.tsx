@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import MakerLink from '@/components/MakerLink';
+import MakerRows from '@/components/MakerRows';
 
 interface FurnitureContentProps {
   subcategory: string;
@@ -191,76 +192,12 @@ const FurnitureContent: React.FC<FurnitureContentProps> = ({ subcategory }) => {
         <div className="flex-1 h-px bg-gray-300 ml-2"></div>
       </div>
       <div className="mt-2">
-        {renderCompanyRow('カリモク家具', {
-          products: 'https://products.karimoku.co.jp/?_gl=1*rzlvzc*_gcl_au*NTg1MzI3NTAyLjE3NDY1OTYxMTc.*_ga*MjkzMjE4OTQ4LjE3NDY1OTYxMTc.*_ga_ZHPP6VSVW8*czE3NDY1OTYxMTckbzEkZzAkdDE3NDY1OTYxMTckajYwJGwwJGgw',
-          catalog: 'https://www.karimoku.co.jp/documentrequest/',
-          office: 'https://www.karimoku.co.jp/corporateinfo/',
-          contact: 'https://www.karimoku.co.jp/contactus.html'
-        })}
-        {renderCompanyRow('オカムラ', {
-          products: 'https://www.okamura.co.jp/product//office/',
-          catalog: 'https://www.okamura.co.jp/catalog/office/',
-          office: 'https://www.okamura.co.jp/corporate/network/index.html',
-          contact: 'https://www.okamura.co.jp/inquiry/'
-        })}
-        {renderCompanyRow('イトーキ', {
-          products: 'https://www.itoki.jp/product/',
-          catalog: 'https://www.itoki.jp/product/catalog/',
-          office: 'https://www.itoki.jp/showroom/',
-          contact: 'https://www.itoki.jp/cs/'
-        })}
-        {renderCompanyRow('天童木工', {
-          products: 'https://www.tendo-mokko.co.jp/',
-          catalog: 'https://www.tendo-mokko.co.jp/catalog/',
-          office: 'https://www.tendo-mokko.co.jp/office/',
-          contact: 'https://www.tendo-mokko.co.jp/contact/inquiry/'
-        })}
-        {renderCompanyRow('飛騨産業', {
-          products: 'https://hidasangyo.com/products/',
-          catalog: 'https://hidasangyo.com/support/webcatalog/',
-          office: 'https://hidasangyo.com/company/outline/',
-          contact: 'https://hidasangyo.com/contact/?cat=contract'
-        })}
-        {renderCompanyRow('柏木工', {
-          products: 'https://www.kashiwa.gr.jp/furniture/',
-          catalog: 'https://www.kashiwa.gr.jp/catalog/',
-          office: 'https://www.kashiwa.gr.jp/showroom/',
-          contact: 'https://www.kashiwa.gr.jp/corporation-contact/'
-        })}
-        {renderCompanyRow('マルニ木工', {
-          products: 'https://www.maruni.com/jp/products',
-          catalog: 'https://www.maruni.com/jp/catalogue',
-          office: 'https://www.maruni.com/jp/products/storelist_menu',
-          contact: 'https://www.maruni.com/jp/contact'
-        })}
-        {renderCompanyRow('上手工作所', {
-          products: 'https://www.jo-zu-works.com/view/category/ct3',
-          catalog: '#',
-          office: 'https://www.jo-zu-works.com/view/page/company',
-          contact: 'https://www.jo-zu-works.com/ssl/contact/'
-        })}
+        {<MakerRows category="ファニチャー" page="家具" group="家具（屋内）" />}
         <div className="flex items-center mt-4 mb-1">
           <span className="inline-flex items-center px-3 py-1 text-[13px] font-semibold text-gray-700 bg-gray-100 border border-gray-300 rounded-full">家具（屋外）</span>
           <div className="flex-1 h-px bg-gray-300 ml-2"></div>
         </div>
-        {renderCompanyRow('松尾貿易商会', {
-          products: 'https://www.matsuo-e-pot.com/',
-          catalog: 'https://www.matsuo-e-pot.com/information/web_catalog',
-          office: 'https://www.matsuo-e-pot.com/corporate/profile?a2#profile',
-          contact: 'https://www.matsuo-e-pot.com/corporate/contact'
-        })}
-        {renderCompanyRow('マチダコーポレーション', {
-          products: 'http://www.machidacorp.co.jp/product_i/c09/',
-          catalog: 'http://www.machidacorp.co.jp/catalogue_s/',
-          office: 'http://www.machidacorp.co.jp/profile/branch/',
-          contact: 'https://www.machidacorp.co.jp/contact/total_support/'
-        })}
-        {renderCompanyRow('ニチエス', {
-          products: 'https://www.nichiesu.com/brand/',
-          catalog: 'https://www.nichiesu.com/catalog/',
-          office: 'https://www.nichiesu.com/company/',
-          contact: 'https://www.nichiesu.com/contact/'
-        })}
+        {<MakerRows category="ファニチャー" page="家具" group="家具（屋外）" />}
       </div>
     </div>
   );
@@ -372,30 +309,7 @@ const FurnitureContent: React.FC<FurnitureContentProps> = ({ subcategory }) => {
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('サンゲツ', {
-          products: 'https://www.sangetsu.co.jp/product/?wall_type_wall#search02',
-          catalog: 'https://www.sangetsu.co.jp/digital_book/curtain.html',
-          office: 'https://www.sangetsu.co.jp/showroom/',
-          contact: 'https://qa.sangetsu.co.jp/public/?_gl=1*1064n3w*_ga*MTkzMTUxODg4Ny4xNzMwMTAyOTY3*_ga_84EXXWDYNY*MTc0Mjk3NTAwOC4xNS4xLjE3NDI5NzUxMTMuNDQuMC4w&_ga=2.177791526.262530188.1742899184-1931518887.1730102967'
-        })}
-        {renderCompanyRow('東リ', {
-          products: 'https://www.toli.co.jp/product/search/curtain_result?list=1',
-          catalog: 'https://www.toli.co.jp/digital_catalog/digital_index.html',
-          office: 'https://www.toli.co.jp/showroom/',
-          contact: 'https://www.toli.co.jp/member/faq'
-        })}
-        {renderCompanyRow('リリカラ', {
-          products: 'https://www.lilycolor.co.jp/interior/search/?cat=wall',
-          catalog: 'https://www.lilycolor.co.jp/interior/catalog/curtain.html',
-          office: 'https://www.lilycolor.co.jp/company/about/office.html',
-          contact: 'https://www.lilycolor.co.jp/company/ir/faq/'
-        })}
-        {renderCompanyRow('シンコール', {
-          products: 'https://www.sincol.co.jp/products/curtain.html',
-          catalog: 'https://www.sincol.co.jp/digicata/index.html',
-          office: 'https://www.sincol.co.jp/showroom.html',
-          contact: 'https://www.sincol.co.jp/contact.html'
-        })}
+        {<MakerRows category="ファニチャー" page="カーテン" />}
       </div>
     </div>
   );
@@ -509,24 +423,7 @@ const FurnitureContent: React.FC<FurnitureContentProps> = ({ subcategory }) => {
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('アスワン', {
-          products: 'https://www.aswan.co.jp/productinformation/seriesintroduction/brandseries/',
-          catalog: '#',
-          office: 'https://www.aswan.co.jp/companyinformation/listofoffices.html',
-          contact: '#'
-        })}
-        {renderCompanyRow('ニチベイ', {
-          products: 'https://www.nichi-bei.co.jp/jsp/category/',
-          catalog: 'https://www.nichi-bei.co.jp/jsp/dbook/',
-          office: 'https://www.nichi-bei.co.jp/jsp/showroom/',
-          contact: 'https://www.nichi-bei.co.jp/jsp/support/'
-        })}
-        {renderCompanyRow('立川ﾌﾞﾗｲﾝﾄﾞ工業', {
-          products: 'https://www.blind.co.jp/products/',
-          catalog: 'https://www.blind.co.jp/products/digital/',
-          office: 'https://www.blind.co.jp/company/office/',
-          contact: 'https://www.blind.co.jp/support/contact/'
-        })}
+        {<MakerRows category="ファニチャー" page="ブラインド" />}
       </div>
     </div>
   );
@@ -644,18 +541,7 @@ const FurnitureContent: React.FC<FurnitureContentProps> = ({ subcategory }) => {
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('サンゲツ', {
-          products: 'https://www.sangetsu.co.jp/product/?wall_type_wall#search02',
-          catalog: 'https://www.sangetsu.co.jp/digital_book/chair.html',
-          office: 'https://www.sangetsu.co.jp/showroom/',
-          contact: 'https://qa.sangetsu.co.jp/public/?_gl=1*1064n3w*_ga*MTkzMTUxODg4Ny4xNzMwMTAyOTY3*_ga_84EXXWDYNY*MTc0Mjk3NTAwOC4xNS4xLjE3NDI5NzUxMTMuNDQuMC4w&_ga=2.177791526.262530188.1742899184-1931518887.1730102967'
-        })}
-        {renderCompanyRow('シンコール', {
-          products: 'https://www.sincol.co.jp/products/fabric.html',
-          catalog: 'https://www.sincol.co.jp/digicata/index.html',
-          office: 'https://www.sincol.co.jp/showroom.html',
-          contact: 'https://www.sincol.co.jp/contact.html'
-        })}
+        {<MakerRows category="ファニチャー" page="生地" />}
       </div>
     </div>
   );
@@ -776,36 +662,7 @@ const FurnitureContent: React.FC<FurnitureContentProps> = ({ subcategory }) => {
         {renderRecruitmentCard()}
       </div>
 
-      {renderCompanyRow('サンゲツ', {
-        products: 'https://www.sangetsu.co.jp/product/',
-        catalog: 'https://www.sangetsu.co.jp/catalog/',
-        office: 'https://www.sangetsu.co.jp/company/base/',
-        contact: 'https://www.sangetsu.co.jp/contact/'
-      })}
-      {renderCompanyRow('リリカラ', {
-        products: 'https://www.lilycolor.co.jp/interior/',
-        catalog: 'https://www.lilycolor.co.jp/catalog/',
-        office: 'https://www.lilycolor.co.jp/company/base/',
-        contact: 'https://www.lilycolor.co.jp/contact/'
-      })}
-      {renderCompanyRow('川島織物セルコン', {
-        products: 'https://www.kawashimaselkon.co.jp/curtain/',
-        catalog: '#',
-        office: 'https://www.kawashimaselkon.co.jp/company/base/',
-        contact: 'https://www.kawashimaselkon.co.jp/contact/'
-      })}
-      {renderCompanyRow('タチカワブラインド', {
-        products: 'https://www.blind.co.jp/products/',
-        catalog: 'https://www.blind.co.jp/catalog/',
-        office: 'https://www.blind.co.jp/company/base/',
-        contact: 'https://www.blind.co.jp/contact/'
-      })}
-      {renderCompanyRow('ニチベイ', {
-        products: 'https://www.nichi-bei.co.jp/products/',
-        catalog: 'https://www.nichi-bei.co.jp/catalog/',
-        office: 'https://www.nichi-bei.co.jp/company/base/',
-        contact: 'https://www.nichi-bei.co.jp/contact/'
-      })}
+      {<MakerRows category="ファニチャー" page="ファニチャーその他" />}
     </div>
   );
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import MakerLink from '@/components/MakerLink';
+import MakerRows from '@/components/MakerRows';
 
 interface ExteriorInfrastructureContentProps {
   subcategory: string;
@@ -172,36 +173,7 @@ const ExteriorInfrastructureContent: React.FC<ExteriorInfrastructureContentProps
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('オーイケ', {
-          products: 'https://www.ooike.net/lineup/use/06exterior/',
-          catalog: 'https://www.ooike.net/lineup/wp-content/uploads/2024/08/%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%86%E3%83%AA%E3%82%A2A4.pdf',
-          office: '#',
-          contact: 'https://www.ooike.net/lineup/contact/'
-        })}
-        {renderCompanyRow('野邑工業', {
-          products: 'https://aanomura.com/prod/enseki_hoshado.html',
-          catalog: 'https://aanomura.com/pdf/general_catalog.pdf',
-          office: 'https://aanomura.com/profile/outline.html',
-          contact: 'https://aanomura.com/contact/index.php'
-        })}
-        {renderCompanyRow('日本ｴｺﾏﾃﾘｱﾙ', {
-          products: 'https://ecomate.am/home/?page_id=531',
-          catalog: '#',
-          office: 'https://ecomate.am/?page_id=14',
-          contact: 'https://ecomate.am/?page_id=16'
-        })}
-        {renderCompanyRow('太平洋プレコン工業', {
-          products: 'https://www.pacific-precon.co.jp/products/',
-          catalog: '#',
-          office: 'https://www.pacific-precon.co.jp/company/office/',
-          contact: 'https://www.pacific-precon.co.jp/contact/'
-        })}
-        {renderCompanyRow('正和産業', {
-          products: 'https://www.seiwasangyo.co.jp/products/',
-          catalog: '#',
-          office: 'https://www.seiwasangyo.co.jp/company/',
-          contact: 'https://www.seiwasangyo.co.jp/contact/'
-        })}
+        {<MakerRows category="外構" page="縁石" />}
       </div>
     </div>
   );
@@ -342,146 +314,7 @@ const ExteriorInfrastructureContent: React.FC<ExteriorInfrastructureContentProps
       </div>
       <div className="mt-4">
         {renderSectionHeader('ブロック')}
-        {renderCompanyRow('ﾏﾁﾀﾞｺｰﾎﾟﾚｰｼｮﾝ', {
-          products: 'http://www.machidacorp.co.jp/product_i/c03/',
-          catalog: 'http://www.machidacorp.co.jp/catalogue_s/',
-          office: 'http://www.machidacorp.co.jp/profile/branch/',
-          contact: 'https://www.machidacorp.co.jp/contact/total_support/'
-        })}
-        {renderCompanyRow('野邑工業', {
-          products: 'https://aanomura.com/prod/ilb.html',
-          catalog: 'https://aanomura.com/pdf/general_catalog.pdf',
-          office: 'https://aanomura.com/profile/outline.html',
-          contact: 'https://aanomura.com/contact/index.php'
-        })}
-        {renderCompanyRow('日本ｴｺﾏﾃﾘｱﾙ', {
-          products: 'https://ecomate.am/?page_id=8',
-          catalog: '#',
-          office: 'https://ecomate.am/?page_id=14',
-          contact: 'https://ecomate.am/?page_id=16'
-        })}
-        {renderCompanyRow('エスビック', {
-          products: 'https://www.s-bic.co.jp/product/',
-          catalog: 'https://www.catalabo.org/catalog/search/keyword?kw=%E3%82%A8%E3%82%B9%E3%83%93%E3%83%83%E3%82%AF',
-          office: 'https://www.s-bic.co.jp/office-factory/',
-          contact: 'https://www.s-bic.co.jp/contact/'
-        })}
-        {renderCompanyRow('久保田ｾﾒﾝﾄ工業', {
-          products: 'https://www.kubota-c.com/exterior/',
-          catalog: 'https://www.kubota-c.com/webcatalog/',
-          office: 'https://www.kubota-c.com/map/',
-          contact: 'https://www.kubota-c.com/contact/'
-        })}
-        {renderCompanyRow('太陽ｴｺﾌﾟﾚｺﾝ工業', {
-          products: 'https://www.taiyo-ecobloxx.com/catalogue/',
-          catalog: 'https://www.taiyo-ecobloxx.com/catalogue/',
-          office: 'https://www.taiyo-ecobloxx.com/company/outline.html',
-          contact: 'https://www.taiyo-ecobloxx.com/inquiry/'
-        })}
-        {renderCompanyRow('ニットー', {
-          products: 'https://nitto-web.jp/products/',
-          catalog: 'https://nitto-web.jp/catalog/',
-          office: 'https://nitto-web.jp/company/',
-          contact: 'https://nitto-web.jp/contact/'
-        })}
-        {renderCompanyRow('日本興業', {
-          products: 'https://www.nihon-kogyo.co.jp/product/environment/pavement/index.html',
-          catalog: 'https://www.nihon-kogyo.co.jp/catalog/lc.html',
-          office: 'https://www.nihon-kogyo.co.jp/company/sales.html#salesinfo',
-          contact: 'https://www.nihon-kogyo.co.jp/contact/'
-        })}
-        {renderCompanyRow('日本コンクリート', {
-          products: 'https://www.nippon-c.co.jp/products/',
-          catalog: 'https://www.nippon-c.co.jp/webcatalog/',
-          office: 'https://www.nippon-c.co.jp/company/section/',
-          contact: 'https://www.nippon-c.co.jp/inquiry/'
-        })}
-        {renderCompanyRow('イワタ', {
-          products: 'https://www.iwata-kk.co.jp/products/',
-          catalog: 'https://www.iwata-kk.co.jp/catalog_202503/?detailFlg=0&pNo=1',
-          office: 'https://www.iwata-kk.co.jp/company/',
-          contact: 'https://www.iwata-kk.co.jp/contact/'
-        })}
-        {renderCompanyRow('太平洋ﾌﾟﾚｺﾝ工業', {
-          products: 'https://www.t-pc.co.jp/product/',
-          catalog: 'https://my.ebook5.net/precon/',
-          office: 'https://www.t-pc.co.jp/company/',
-          contact: 'https://www.t-pc.co.jp/contact/'
-        })}
-        {renderCompanyRow('ソーセキ', {
-          products: 'https://soseki.co.jp/info/block.html',
-          catalog: '#',
-          office: 'https://soseki.co.jp/info/company(honsha).html',
-          contact: '#'
-        })}
-        {renderCompanyRow('ﾄｸﾔﾏｱｰﾄﾌﾞﾛｯｸLABO', {
-          products: 'https://tokulabo.co.jp/interlockingblock/',
-          catalog: 'https://tokulabo.co.jp/interlockingblock/catalog/',
-          office: 'https://tokulabo.co.jp/aboutus/#acc',
-          contact: 'https://tokulabo.co.jp/contact/'
-        })}
-        {renderCompanyRow('小松マテーレ', {
-          products: 'https://www.komatsumatere.co.jp/greenbiz/category/ground/',
-          catalog: '#',
-          office: 'https://www.komatsumatere.co.jp/greenbiz/',
-          contact: 'https://www.komatsumatere.co.jp/greenbiz/contact/'
-        })}
-        {renderCompanyRow('サンヨー宇部', {
-          products: 'https://www.sanyo-ube.co.jp/products/ilb.html',
-          catalog: 'https://www.sanyo-ube.co.jp/cataloglist.html',
-          office: 'https://www.sanyo-ube.co.jp/company.html',
-          contact: 'https://www.sanyo-ube.co.jp/contact.html'
-        })}
-        {renderCompanyRow('美建工業', {
-          products: 'https://www.bikenkougyou.co.jp/category_products/p_cat8/',
-          catalog: 'https://www.bikenkougyou.co.jp/contact/',
-          office: 'https://www.bikenkougyou.co.jp/company/network/',
-          contact: 'https://www.bikenkougyou.co.jp/contact/'
-        })}
-        {renderCompanyRow('翔飛工業', {
-          products: 'https://ecokawara.com/#product',
-          catalog: 'https://ecokawara.com/2305_EcoKawara.pdf',
-          office: '#',
-          contact: 'https://ecokawara.com/contact/'
-        })}
-        {renderCompanyRow('ユニソン', {
-          products: 'https://www.unison-net.com/gardenexterior/product/?s=&cate=133',
-          catalog: 'https://www.unison-net.com/webcatalog/',
-          office: 'https://www.unison-net.com/company/location/',
-          contact: 'https://www.unison-net.com/contact_top/'
-        })}
-
-        {renderSectionHeader('透水性舗装材')}
-        {renderCompanyRow('三和グランド', {
-          products: 'https://sanwagrd.co.jp/productname',
-          catalog: '#',
-          office: 'https://sanwagrd.co.jp/about-us',
-          contact: 'https://sanwagrd.co.jp/contact'
-        })}
-        {renderCompanyRow('ヤブ原産業', {
-          products: 'https://www.yabuhara-ind.co.jp/araidashi/irodori/information/',
-          catalog: 'https://www.yabuhara-ind.co.jp/downloads-7/',
-          office: 'https://www.yabuhara-ind.co.jp/profile/access/',
-          contact: 'https://www.yabuhara-ind.co.jp/contact/'
-        })}
-        {renderCompanyRow('翔飛工業', {
-          products: 'https://ecokawara.com/#product',
-          catalog: 'https://ecokawara.com/2305_EcoKawara.pdf',
-          office: 'https://ecokawara.com/contact/',
-          contact: '#'
-        })}
-        {renderCompanyRow('ガイアート', {
-          products: 'https://www.gaeart.com/technical/16.html',
-          catalog: '#',
-          office: 'https://www.gaeart.com/company/network/index.html',
-          contact: 'https://www.gaeart.com/contact/index.html'
-        })}
-        {renderCompanyRow('日本道路', {
-          products: 'https://www.nipponroad.co.jp/technique/',
-          catalog: '#',
-          office: 'https://www.nipponroad.co.jp/company/network/',
-          contact: 'https://www.nipponroad.co.jp/contact/'
-        })}
+        {<MakerRows category="外構" page="外構舗装" />}
       </div>
     </div>
   );
@@ -597,24 +430,7 @@ const ExteriorInfrastructureContent: React.FC<ExteriorInfrastructureContentProps
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('長島鋳物', {
-          products: 'https://www.nagashima-imono.co.jp/product/',
-          catalog: '#',
-          office: 'https://www.nagashima-imono.co.jp/company/',
-          contact: 'https://www.nagashima-imono.co.jp/contact/'
-        })}
-        {renderCompanyRow('日之出水道機器', {
-          products: 'https://www.hinodesuido.co.jp/products/',
-          catalog: '#',
-          office: 'https://www.hinodesuido.co.jp/company/base/',
-          contact: 'https://www.hinodesuido.co.jp/contact/'
-        })}
-        {renderCompanyRow('ダイドレ', {
-          products: 'https://www.daidore.co.jp/products/',
-          catalog: '#',
-          office: 'https://www.daidore.co.jp/company/office/',
-          contact: 'https://www.daidore.co.jp/contact/'
-        })}
+        {<MakerRows category="外構" page="桝蓋" />}
       </div>
     </div>
   );
@@ -787,18 +603,7 @@ const ExteriorInfrastructureContent: React.FC<ExteriorInfrastructureContentProps
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('全和', {
-          products: 'https://www.zenwa.co.jp/products/',
-          catalog: '#',
-          office: '#',
-          contact: 'https://www.zenwa.co.jp/contact/'
-        })}
-        {renderCompanyRow('日本製鉄', {
-          products: 'https://www.nipponsteel.com/product/',
-          catalog: '#',
-          office: 'https://www.nipponsteel.com/company/domestic/',
-          contact: 'https://www.nipponsteel.com/contact/'
-        })}
+        {<MakerRows category="外構" page="外構その他" />}
       </div>
     </div>
   );
@@ -920,36 +725,7 @@ const ExteriorInfrastructureContent: React.FC<ExteriorInfrastructureContentProps
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('興建産業', {
-          products: 'https://www.kokensangyo.co.jp/product/masu/',
-          catalog: 'https://www.kokensangyo.co.jp/catalogue_cad/catalogue/',
-          office: 'https://www.kokensangyo.co.jp/company/place/',
-          contact: 'https://www.kokensangyo.co.jp/contact/'
-        })}
-        {renderCompanyRow('日本コンクリート', {
-          products: 'https://www.nippon-c.co.jp/products/masu/masu/',
-          catalog: 'https://www.nippon-c.co.jp/webcatalog/',
-          office: 'https://www.nippon-c.co.jp/company/section/',
-          contact: 'https://www.nippon-c.co.jp/inquiry/'
-        })}
-        {renderCompanyRow('前澤化成工業', {
-          products: 'https://www.maezawa-k.co.jp/products/',
-          catalog: '#',
-          office: 'https://www.maezawa-k.co.jp/company/office/',
-          contact: 'https://www.maezawa-k.co.jp/contact/'
-        })}
-        {renderCompanyRow('タキロンシーアイ', {
-          products: 'https://www.takiron-ci.co.jp/product/',
-          catalog: '#',
-          office: 'https://www.takiron-ci.co.jp/company/office/',
-          contact: 'https://www.takiron-ci.co.jp/contact/'
-        })}
-        {renderCompanyRow('アロン化成', {
-          products: 'https://www.aronkasei.co.jp/kanzai/products/',
-          catalog: '#',
-          office: 'https://www.aronkasei.co.jp/company/base/',
-          contact: 'https://www.aronkasei.co.jp/contact/'
-        })}
+        {<MakerRows category="外構" page="雨水桝" />}
       </div>
     </div>
   );
@@ -1062,48 +838,7 @@ const ExteriorInfrastructureContent: React.FC<ExteriorInfrastructureContentProps
         {renderRecruitmentCard()}
       </div>
       <div className="mt-4">
-        {renderCompanyRow('ダイクレ', {
-          products: 'https://www.daikure.co.jp/grating/',
-          catalog: 'https://www.daikure.co.jp/grating/catalog/',
-          office: 'https://www.daikure.co.jp/about/office-information/',
-          contact: 'https://www.daikure.co.jp/contact/'
-        })}
-        {renderCompanyRow('カネソウ', {
-          products: 'https://www.kaneso.co.jp/seihin/product_08-4_sus_grating.htm',
-          catalog: 'https://www.kaneso.co.jp/webbook/index.htm',
-          office: 'https://www.kaneso.co.jp/company/index.htm',
-          contact: '#'
-        })}
-        {renderCompanyRow('福西鋳物', {
-          products: 'https://www.fukunishiimono.co.jp/product/?m=ProductList&id=5',
-          catalog: 'https://www.fukunishiimono.co.jp/catalog/?m=Book',
-          office: 'https://www.fukunishiimono.co.jp/about/?m=Gaiyo',
-          contact: 'https://www.fukunishiimono.co.jp/contact/index.php?m=UsrContact'
-        })}
-        {renderCompanyRow('中部ｺｰﾎﾟﾚｰｼｮﾝ', {
-          products: 'https://www.chubu-net.co.jp/kenzai/Product/category/7/',
-          catalog: 'https://www.chubu-net.co.jp/kenzai/catalog/',
-          office: 'https://www.chubu-net.co.jp/company/base/',
-          contact: 'https://www.chubu-net.co.jp/kenzai/contact/'
-        })}
-        {renderCompanyRow('シマブン', {
-          products: 'https://shimabun.jp/grating/',
-          catalog: 'https://shimabun.jp/webcatalog/',
-          office: 'https://shimabun.jp/pages/4/',
-          contact: 'https://shimabun.jp/contact/'
-        })}
-        {renderCompanyRow('北勢工業', {
-          products: 'https://www.hokusei-kogyo.co.jp/l_type/grating/',
-          catalog: 'https://www.hokusei-kogyo.co.jp/catalog/',
-          office: 'https://www.hokusei-kogyo.co.jp/office/',
-          contact: 'https://www.hokusei-kogyo.co.jp/contact/'
-        })}
-        {renderCompanyRow('アコステック', {
-          products: 'https://www.acosstec.co.jp/products/grating.html',
-          catalog: '#',
-          office: 'https://www.acosstec.co.jp/company/index.html#outline',
-          contact: 'https://www.acosstec.co.jp/contact/inquiry.html'
-        })}
+        {<MakerRows category="外構" page="外構グレーチング" />}
       </div>
     </div>
   );
