@@ -6,6 +6,13 @@ on:
     - cron: '0 18 * * 1-5'
   workflow_dispatch: # 手動実行も可能にする
 
+# 最後の「Keep workflow alive」で enableWorkflow を呼ぶため actions: write が要る。
+# これが無いと "Resource not accessible by integration" で毎回失敗し、
+# 自動無効化を防ぐはずの仕組みが機能しないまま 60 日で止まる（2026-08 に発生）。
+permissions:
+  contents: read
+  actions: write
+
 jobs:
   scrape:
     runs-on: ubuntu-latest
@@ -47,10 +54,13 @@ jobs:
       
       - name: Test network connectivity
         run: |
+          # 接続先は scripts/scrape_kkj.py の BASE_URL に合わせる。
+          # 以前は www.pps.go.jp を見ていたが解決できず、毎回 "DNS lookup failed" が
+          # ログに出ていた（実際のスクレイプ対象ではないので実害はなかった）。
           echo "Testing DNS resolution..."
-          nslookup www.pps.go.jp || echo "DNS lookup failed"
+          nslookup www.kkj.go.jp || echo "DNS lookup failed"
           echo "Testing HTTP connection..."
-          curl -I https://www.pps.go.jp/ || echo "HTTP connection failed"
+          curl -I https://www.kkj.go.jp/ || echo "HTTP connection failed"
       
       - name: Run scraping script
         env:
