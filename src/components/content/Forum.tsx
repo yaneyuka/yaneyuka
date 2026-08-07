@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useMemo, useState } from 'react'
-import { addForumPost, deleteForumBookmark, listForumBookmarks, listForumPosts, setForumBookmark, addForumReply, listForumReplies, deleteForumPostDoc, deleteForumReply } from '@/lib/firebaseUserData'
+import { addForumPost, deleteForumBookmark, listForumBookmarks, listForumPosts, setForumBookmark, addForumReply, listForumReplies, deleteForumPostDoc, deleteForumReply, reportForumPost } from '@/lib/firebaseUserData'
 import { useAuth } from '@/lib/AuthContext'
 import { db } from '@/lib/firebaseClient'
 import { collection, onSnapshot } from 'firebase/firestore'
@@ -115,6 +115,96 @@ function CategoryButtons({
   )
 }
 
+const REPORT_REASONS = [
+  '宣伝・スパム',
+  '誹謗中傷・不快な表現',
+  '個人情報が含まれる',
+  '掲示板の趣旨に合わない',
+  'その他',
+]
+
+/**
+ * 投稿・返信の通報ボタン。
+ * 通報は管理者しか読めない（firestore.rules の forumReports）。
+ * 送信済みかどうかは端末側に覚えさせる。通報一覧を引けるようにすると、
+ * 誰が通報したかを他の利用者に知られてしまうため。
+ */
+function ReportButton({
+  uid,
+  postId,
+  replyId,
+  small,
+}: {
+  uid: string
+  postId: string
+  replyId?: string
+  small?: boolean
+}) {
+  const key = `forumReported:${postId}:${replyId || ''}`
+  const [open, setOpen] = useState(false)
+  const [sent, setSent] = useState(false)
+  const [busy, setBusy] = useState(false)
+
+  useEffect(() => {
+    try { if (localStorage.getItem(key)) setSent(true) } catch {}
+  }, [key])
+
+  const submit = async (reason: string) => {
+    setBusy(true)
+    try {
+      await reportForumPost({ reporterUid: uid, postId, replyId, reason })
+      try { localStorage.setItem(key, '1') } catch {}
+      setSent(true)
+      setOpen(false)
+    } catch (e) {
+      console.error('通報の送信に失敗', e)
+      alert('通報を送信できませんでした。時間をおいてお試しください。')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  const size = small ? 'text-[11px]' : 'text-[12px]'
+  if (sent) {
+    return <span className={`shrink-0 ${size} px-2 py-1 text-gray-400`}>通報済</span>
+  }
+
+  return (
+    <span className="relative shrink-0">
+      <button
+        type="button"
+        onClick={() => setOpen(v => !v)}
+        className={`${size} px-2 py-1 rounded border bg-white border-gray-300 text-gray-600 hover:bg-gray-50`}
+      >
+        通報
+      </button>
+      {open && (
+        <div className="absolute right-0 z-20 mt-1 w-56 rounded border border-gray-300 bg-white p-2 shadow-lg">
+          <div className="mb-1 text-[11px] text-gray-500">理由を選んでください</div>
+          {REPORT_REASONS.map(r => (
+            <button
+              key={r}
+              type="button"
+              disabled={busy}
+              onClick={() => submit(r)}
+              className="block w-full rounded px-2 py-1 text-left text-[12px] text-gray-700 hover:bg-gray-100 disabled:opacity-50"
+            >
+              {r}
+            </button>
+          ))}
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            className="mt-1 block w-full rounded px-2 py-1 text-center text-[11px] text-gray-500 hover:bg-gray-100"
+          >
+            キャンセル
+          </button>
+        </div>
+      )}
+    </span>
+  )
+}
+
 function PostCard({
   p,
   uid,
@@ -154,6 +244,10 @@ function PostCard({
           >
             {p.bookmarked ? '★ 保存済' : '☆ ブクマ'}
           </button>
+          {/* 自分の投稿は通報できない（誤操作防止） */}
+          {uid && p.uid !== uid && (
+            <ReportButton uid={uid} postId={p.id} />
+          )}
           {uid && (p.uid === uid || isAdmin) && (
             <button
               type="button"
@@ -175,15 +269,20 @@ function PostCard({
                 <div className="text-[11px] text-gray-500">{r.author}・{new Date(r.createdAt).toLocaleString('ja-JP')}</div>
                 <div className="whitespace-pre-line">{r.content}</div>
               </div>
-              {uid && (r.uid === uid || isAdmin) && (
-                <button
-                  type="button"
-                  onClick={() => handleDeleteReply(p.id, r.id)}
-                  className="shrink-0 text-[11px] px-2 py-1 rounded border bg-red-50 border-red-200 text-red-600 hover:bg-red-100"
-                >
-                  削除
-                </button>
-              )}
+              <div className="flex shrink-0 gap-1">
+                {uid && r.uid !== uid && (
+                  <ReportButton uid={uid} postId={p.id} replyId={r.id} small />
+                )}
+                {uid && (r.uid === uid || isAdmin) && (
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteReply(p.id, r.id)}
+                    className="shrink-0 text-[11px] px-2 py-1 rounded border bg-red-50 border-red-200 text-red-600 hover:bg-red-100"
+                  >
+                    削除
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         ))}

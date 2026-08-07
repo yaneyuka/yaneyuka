@@ -37,6 +37,25 @@ service cloud.firestore {
       }
     }
 
+    // 掲示板の通報。
+    // 不適切な投稿を利用者が報告するための箱。管理者だけが中身を見て対応する。
+    // 通報者は自分が出した通報も読み返せない（誰が通報したかを他人に見せないため、
+    // 一覧を引ける相手を管理者に限定している）。
+    match /forumReports/{reportId} {
+      allow read, update, delete: if isAdmin();
+      allow create: if request.auth != null
+        && request.resource.data.reporterUid == request.auth.uid
+        && request.resource.data.keys().hasOnly([
+          'reporterUid', 'postId', 'replyId', 'reason', 'createdAt', 'status'
+        ])
+        && request.resource.data.postId is string
+        && request.resource.data.postId.size() > 0
+        && request.resource.data.reason is string
+        && request.resource.data.reason.size() > 0
+        && request.resource.data.reason.size() <= 200
+        && request.resource.data.status == 'open';
+    }
+
     // 各ユーザー配下のブックマーク（本人のみ）
     match /users/{uid}/forumBookmarks/{docId} {
       allow read, write: if request.auth != null && request.auth.uid == uid;

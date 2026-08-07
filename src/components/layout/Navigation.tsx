@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import { useForumUnread, markForumSeen } from '@/lib/useForumUnread';
 
 interface NavigationProps {
   onMenuClick?: (menuItem: string) => void;
@@ -19,6 +20,7 @@ const Navigation: React.FC<NavigationProps> = ({ onMenuClick, activeItem }) => {
   const [scale, setScale] = useState(1);
   const [useHorizontalScroll, setUseHorizontalScroll] = useState(false);
   const [loadingMenuItem, setLoadingMenuItem] = useState<string | null>(null);
+  const forumUnread = useForumUnread();
   const expectedRouteRef = useRef<string | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -109,6 +111,11 @@ const Navigation: React.FC<NavigationProps> = ({ onMenuClick, activeItem }) => {
     }
   }, [pathname, loadingMenuItem]);
 
+  // 掲示板を開いたら既読にする。バッジは次の新規投稿から再び出る。
+  useEffect(() => {
+    if (pathname?.startsWith('/forum')) markForumSeen();
+  }, [pathname]);
+
   useEffect(() => {
     const onResize = () => {
       const w = window.innerWidth || BASE_WIDTH;
@@ -183,6 +190,14 @@ const Navigation: React.FC<NavigationProps> = ({ onMenuClick, activeItem }) => {
                 disabled={loadingMenuItem === item.id}
               >
                 {item.label}
+                {item.id === 'forum' && forumUnread > 0 && (
+                  <span
+                    className="ml-1 inline-flex min-w-[16px] items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold leading-4 text-white"
+                    title={`未読の投稿が${forumUnread}件あります`}
+                  >
+                    {forumUnread > 99 ? '99+' : forumUnread}
+                  </span>
+                )}
                 {loadingMenuItem === item.id && <LoadingSpinner />}
               </button>
             ))}

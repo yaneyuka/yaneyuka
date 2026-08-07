@@ -74,6 +74,34 @@ console.log(`\n最終確認: A の投稿本文 = "${content}"`);
 const intact = content === 'edited by owner';
 console.log(intact ? '  → 改竄されていない' : '  → ★改竄された★');
 
+// ===== 掲示板の通報 (forumReports/*) =====
+console.log('\n--- 掲示板の通報 ---');
+await as('mallory@example.com');
+const myUid = auth.currentUser.uid;
+
+await check('通報を作成（正規の利用）', 'allow', () =>
+  setDoc(doc(db, 'forumReports', 'rep1'), {
+    reporterUid: myUid, postId: POST, replyId: '', reason: '宣伝目的の投稿', createdAt: new Date(), status: 'open',
+  }));
+await check('他人になりすまして通報', 'deny', () =>
+  setDoc(doc(db, 'forumReports', 'rep2'), {
+    reporterUid: 'someone-else', postId: POST, replyId: '', reason: 'x', createdAt: new Date(), status: 'open',
+  }));
+await check('status を勝手に対応済みにする', 'deny', () =>
+  setDoc(doc(db, 'forumReports', 'rep3'), {
+    reporterUid: myUid, postId: POST, replyId: '', reason: 'x', createdAt: new Date(), status: 'closed',
+  }));
+await check('自分が出した通報を読む  ★管理者以外は読めない', 'deny', () =>
+  getDoc(doc(db, 'forumReports', 'rep1')));
+await check('通報を消して揉み消す', 'deny', () =>
+  deleteDoc(doc(db, 'forumReports', 'rep1')));
+
+await signOut(auth);
+await check('未ログイン: 通報の作成', 'deny', () =>
+  setDoc(doc(db, 'forumReports', 'rep4'), {
+    reporterUid: 'anon', postId: POST, replyId: '', reason: 'x', createdAt: new Date(), status: 'open',
+  }));
+
 // ===== 使用量メトリクス (usage/*) =====
 console.log('\n--- 使用量メトリクス ---');
 const uidC = await as('carol@example.com');

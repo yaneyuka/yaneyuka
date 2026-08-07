@@ -117,6 +117,28 @@ export async function listForumReplies(postId: string): Promise<ForumReplyDoc[]>
   return snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }))
 }
 
+/**
+ * 掲示板の通報。
+ * 中身を読めるのは管理者だけ（firestore.rules）。通報者本人も一覧できない。
+ * 誰が通報したかが他の利用者に伝わると、通報自体が使われなくなるため。
+ */
+export async function reportForumPost(params: {
+  reporterUid: string
+  postId: string
+  replyId?: string
+  reason: string
+}) {
+  const colRef = collection(db, 'forumReports')
+  await addDoc(colRef, {
+    reporterUid: params.reporterUid,
+    postId: params.postId,
+    replyId: params.replyId || '',
+    reason: params.reason.slice(0, 200),
+    createdAt: Date.now(),
+    status: 'open',
+  })
+}
+
 export async function deleteForumReply(postId: string, replyId: string) {
   const replyRef = doc(db, 'forumPosts', postId, 'replies', replyId)
   await deleteDoc(replyRef)
