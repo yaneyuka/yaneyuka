@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import crypto from 'crypto'
 import { getAdminDb } from '@/lib/firebaseAdmin'
+import makerFeeds from '@/data/maker-feeds.json'
 
 // 新商品情報API: 建築・建材・住設のプレスリリースをRSSから集約し、
 // キーワードでカテゴリ分類して返却する。
@@ -71,6 +72,23 @@ const domainKeywordRegex = new RegExp(
   'i'
 )
 // 除外キーワード（明確に建材でないもの）
+// メーカー自身の配信には、製品と関係ない告知も普通に流れてくる。
+// 建材キーワードでの足切りを免除する代わりに、これらは明示的に落とす。
+const makerNoiseKeywords = [
+  '決算', '業績', '配当', '株主', 'IR情報', '有価証券', '株式',
+  '人事', '役員', '組織変更', '採用', '新卒', '中途', 'インターン',
+  '休業', '夏季休暇', '年末年始', '営業時間', '価格改定', '値上げ',
+  'サイトリニューアル', 'メンテナンスのお知らせ', 'システム障害',
+  '注意喚起', '偽サイト', 'なりすまし', '不審',
+  // 実際に混ざっていたもの。製品の告知ではない
+  '施工事例', '納入事例', '導入事例', '事例紹介',
+  'メールニュース', 'メルマガ', 'Mail News', 'ニュースレター',
+  'コラム', 'ブログ', '出展', '展示会', 'セミナー', 'コンテスト', '結果発表',
+  '遅延', '発刊', '在庫', '欠品', '配送', '納期',
+  '受賞', '認定取得', '創立', '周年', 'ご挨拶',
+  'メディア掲載', '取材', '新聞掲載', '雑誌掲載',
+]
+
 const negativeKeywords = [
   '芸能', 'アイドル', 'タレント', '俳優', '女優', '歌手', 'アニメ', 'ゲーム', 'マンガ',
   'グルメ', 'レシピ', 'スイーツ', 'コスメ', '美容', 'ダイエット', '恋愛', '占い',
@@ -91,13 +109,32 @@ const negativeKeywords = [
 // RSS/Atomソース（公式RSSのみを使用、規約遵守）
 // 直接RSSのみに統一。og:image取得が確実に動作し、画像品質が保たれる。
 // Google News検索RSSは記事URLがGoogle News自体を指すため、og:imageが取れず廃止。
-const sources: { url: string; source: string }[] = [
+// 業界紙・総合リリース配信。建材と無関係な記事が大量に混ざるので、
+// 建材キーワードでの絞り込みが必須（trusted: false）。
+const sources: { url: string; source: string; trusted?: boolean }[] = [
   { url: 'https://www.s-housing.jp/feed', source: '新建ハウジング' },
   { url: 'https://www.housenews.jp/feed/', source: '住宅産業新聞' },
   { url: 'https://www.decn.co.jp/?feed=rss2', source: '建設工業新聞' },
   { url: 'https://www.kensetsunews.com/rss', source: '建設通信新聞' },
   { url: 'https://prtimes.jp/index.rdf', source: 'PR TIMES' },
 ]
+
+// 掲載中の建材メーカー自身のニュース配信（scripts/find-maker-feeds.mjs が収集）。
+// 発信元が建材メーカーなので、記事が建材の話であることは前提にしてよい（trusted: true）。
+//
+// これを足す前は、総合フィード 254 件のうち建材キーワードに一致したのが 2 件しかなく、
+// 新製品ページに 1 件しか出ていなかった。PR TIMES はカテゴリ別配信が無いため、
+// 絞り込みを工夫しても解決しない。発信元を建材側に寄せるのが筋。
+const FEED_FRESH_DAYS = 90
+const makerSources: { url: string; source: string; trusted: boolean }[] = (makerFeeds.feeds || [])
+  .filter((f) => {
+    if (!f.newest) return false
+    const days = (Date.now() - Date.parse(f.newest)) / 86_400_000
+    return Number.isFinite(days) && days <= FEED_FRESH_DAYS
+  })
+  .map((f) => ({ url: f.feed, source: f.name, trusted: true }))
+
+const allSources = [...sources, ...makerSources]
 
 function decodeHtmlEntities(s: string): string {
   if (!s) return ''
@@ -240,7 +277,39 @@ async function fetchOgImage(url: string): Promise<string | null> {
   }
 }
 
-function parseRss(xml: string, source: string, minScore: number): NewProductItem[] {
+/**
+ * 記事を採用するかの判定。
+ * trusted（＝建材メーカー自身の配信）なら建材キーワードは求めず、
+ * 代わりに決算・採用といった製品と無関係な告知を落とす。
+ */
+function passesRelevance(
+  title: string,
+  descriptionRaw: string,
+  decodedText: string,
+  text: string,
+  minScore: number,
+  trusted: boolean
+): boolean {
+  if (negativeKeywords.some(k => text.includes(k))) return false
+  if (trusted) {
+    if (makerNoiseKeywords.some(k => text.includes(k))) return false
+    // 「新製品の告知」であることを確認する。
+    // 発信元が建材メーカーでも、施工事例・メルマガ・イベント告知が普通に流れてくるため、
+    // ここを外すと新製品ページが会社の更新情報の寄せ集めになる。
+    // タイトルだけに限ると取りこぼすので（本文で「発売」と書く会社が多い）、
+    // 本文も見たうえで、タイトルに製品名らしい語があることを求める。
+    const hasAnnouncement = strongKeywords.some(k => title.includes(k) || descriptionRaw.includes(k))
+    if (!hasAnnouncement) return false
+    // 建材メーカーでも建材以外を出すことがある（例: 積水化学の医療用検査キット）。
+    // 建材の語がどこにも無いものは落とす。
+    return domainKeywordRegex.test(decodedText)
+  }
+  if (scoreText(title, descriptionRaw) < minScore) return false
+  // ドメインキーワード必須（建材系に関係ない記事を弾く）
+  return domainKeywordRegex.test(decodedText)
+}
+
+function parseRss(xml: string, source: string, minScore: number, trusted = false): NewProductItem[] {
   const out: NewProductItem[] = []
   const itemRegex = /<item[\s\S]*?<\/item>/g
   const titleRegex = /<title>([\s\S]*?)<\/title>/
@@ -259,15 +328,12 @@ function parseRss(xml: string, source: string, minScore: number): NewProductItem
     const descriptionRaw = (raw.match(descRegex)?.[1] || '').replace(/<!\[CDATA\[|\]\]>/g, '').trim()
     if (!title || !link) continue
     const text = `${title} ${descriptionRaw}`
-    const s = scoreText(title, descriptionRaw || '')
-    if (s < minScore) continue
-    if (negativeKeywords.some(k => text.includes(k))) continue
-    // ドメインキーワード必須（建材系に関係ない記事を弾く）
     const decodedText = decodeHtmlEntities(text)
-    if (!domainKeywordRegex.test(decodedText)) continue
+    if (!passesRelevance(title, descriptionRaw || '', decodedText, text, minScore, trusted)) continue
     const description = cleanHtmlToText(descriptionRaw)
     const category = classifyCategory(`${title} ${description}`)
-    if (category === 'other') continue // 分類できないノイズは除外
+    // 発信元が建材メーカーなら、分類できなくても落とさない
+    if (category === 'other' && !trusted) continue
     const imageFromRss = extractImageFromRss(raw)
     out.push({
       id: link,
@@ -283,7 +349,7 @@ function parseRss(xml: string, source: string, minScore: number): NewProductItem
   return out
 }
 
-function parseAtom(xml: string, source: string, minScore: number): NewProductItem[] {
+function parseAtom(xml: string, source: string, minScore: number, trusted = false): NewProductItem[] {
   const out: NewProductItem[] = []
   const entryRegex = /<entry[\s\S]*?<\/entry>/g
   const titleRegex = /<title[^>]*>([\s\S]*?)<\/title>/
@@ -300,14 +366,11 @@ function parseAtom(xml: string, source: string, minScore: number): NewProductIte
     const descRaw = (raw.match(summaryRegex)?.[1] || raw.match(contentRegex)?.[1] || '').replace(/<!\[CDATA\[|\]\]>/g, '').trim()
     if (!title || !link) continue
     const text = `${title} ${descRaw}`
-    const s = scoreText(title, descRaw || '')
-    if (s < minScore) continue
-    if (negativeKeywords.some(k => text.includes(k))) continue
     const decodedText = decodeHtmlEntities(text)
-    if (!domainKeywordRegex.test(decodedText)) continue
+    if (!passesRelevance(title, descRaw || '', decodedText, text, minScore, trusted)) continue
     const description = cleanHtmlToText(descRaw)
     const category = classifyCategory(`${title} ${description}`)
-    if (category === 'other') continue
+    if (category === 'other' && !trusted) continue
     const imageFromRss = extractImageFromRss(raw)
     out.push({
       id: link,
@@ -353,16 +416,26 @@ export async function GET() {
       }
     }
 
-    const xmlList = await Promise.allSettled(sources.map(s => fetchXML(s.url)))
+    // メーカー分を含めると 100 本前後になるので、一度に全部叩かず小分けにする。
+    // 取りこぼしても Firestore に蓄積した分が残るため、全件成功する必要はない。
+    const FETCH_BATCH = 20
+    const xmlList: PromiseSettledResult<string | null>[] = []
+    for (let i = 0; i < allSources.length; i += FETCH_BATCH) {
+      const batch = allSources.slice(i, i + FETCH_BATCH)
+      xmlList.push(...(await Promise.allSettled(batch.map(s => fetchXML(s.url)))))
+    }
+
     const results: NewProductItem[] = []
     // 閾値1で一括取得（直接RSSのみなので低閾値でもノイズ少ない）。
     // カテゴリ分類で 'other' を排除するため、実質的な品質は保たれる。
     xmlList.forEach((r, idx) => {
       if (r.status === 'fulfilled' && r.value) {
         const xml = r.value
-        const s = sources[idx]
+        const s = allSources[idx]
         const isAtom = /<entry[\s\S]*?<\/entry>/.test(xml)
-        const parsed = isAtom ? parseAtom(xml, s.source, 1) : parseRss(xml, s.source, 1)
+        const parsed = isAtom
+          ? parseAtom(xml, s.source, 1, s.trusted)
+          : parseRss(xml, s.source, 1, s.trusted)
         results.push(...parsed)
       }
     })

@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect, useRef, useCallback } from 'react'
 import { sanitizeHtml } from '@/lib/sanitize'
+import SampleNotice from '@/components/SampleNotice';
 
 export type PickupCategory = 'all' | 'arch' | 'interior'
 
@@ -165,6 +166,8 @@ const Pickup: React.FC = () => {
         {btn('arch','最新建築')}
         {btn('interior','最新内装')}
       </div>
+      <SampleNotice target="プロジェクト" />
+
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
         {items.map((it, index) => (
           <div 

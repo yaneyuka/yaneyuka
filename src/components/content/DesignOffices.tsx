@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import SampleNotice from '@/components/SampleNotice';
 
 interface OfficeItem {
   id: string;
@@ -279,6 +280,7 @@ const DesignOffices: React.FC<DesignOfficesProps> = ({ onNavigateToRegistration 
         id="design-office-content-area"
         className={`transition-opacity duration-250 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}
       >
+        <SampleNotice target="設計事務所" onRequest={onNavigateToRegistration} />
         {getCurrentItems().length === 0 ? (
           <p className="text-gray-700 text-xs">該当する設計事務所がありません。</p>
         ) : (

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import SampleNotice from '@/components/SampleNotice';
 
 interface CompetitionItem {
   id: string;
@@ -153,6 +154,7 @@ const Competitions: React.FC<CompetitionsProps> = ({ onNavigateToRegistration })
       </div>
 
       <div className={`mt-4 transition-opacity duration-250 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+        <SampleNotice target="コンペ" onRequest={onNavigateToRegistration} />
         <div className="grid gap-3 grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {getCurrentItems().map((item, index) => (
             <div

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import SampleNotice from '@/components/SampleNotice';
 
 interface JobItem {
   id: string;
@@ -330,6 +331,8 @@ const JobInfo: React.FC<JobInfoProps> = ({ onNavigateToRegistration }) => {
     }
 
     return (
+      <>
+      <SampleNotice target="求人" onRequest={onNavigateToRegistration} />
       <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {items.map((item, index) => (
           <div 
@@ -385,6 +388,7 @@ const JobInfo: React.FC<JobInfoProps> = ({ onNavigateToRegistration }) => {
           </div>
         ))}
       </div>
+      </>
     );
   };
 

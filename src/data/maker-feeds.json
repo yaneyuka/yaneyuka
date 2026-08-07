@@ -1,0 +1,2333 @@
+{
+  "generatedAt": "2026-08-06",
+  "scanned": 411,
+  "found": 153,
+  "feeds": [
+    {
+      "origin": "http://kimura-kawara.co.jp",
+      "name": "木村窯業所",
+      "categories": [
+        "屋根"
+      ],
+      "feed": "http://kimura-kawara.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "石州・還元瓦（和瓦Ｊ型）及び　リセラ・ユー（平瓦Ｆ型）の生産を終了いたしました。",
+        "瓦王（和瓦Ｊ型）・リセラ・ユー（和瓦Ｓ型）のカラーラインアップを変更いたしました。"
+      ],
+      "newest": "2022-04-08"
+    },
+    {
+      "origin": "http://nichidai.net",
+      "name": "日大工業",
+      "categories": [
+        "内装その他"
+      ],
+      "feed": "http://nichidai.net/feed/",
+      "via": "link",
+      "items": 10,
+      "sample": [
+        "日大工業株式会社",
+        "【新商品】ありそうで無かった！底から支えるパレット養生板『底助』"
+      ],
+      "newest": "2026-03-08"
+    },
+    {
+      "origin": "http://okuju.co.jp",
+      "name": "オクジュー",
+      "categories": [
+        "内装その他"
+      ],
+      "feed": "http://okuju.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "夏期休暇として2026年8月12日～14日まで休業とさせて頂きます。",
+        "本日、東京本社は社内行事のため午後休業とさせて頂きます。 ※東京本社以外の拠点は通常通り営業しております。"
+      ],
+      "newest": "2026-07-28"
+    },
+    {
+      "origin": "http://www.machidacorp.co.jp",
+      "name": "マチダコーポレーション",
+      "categories": [
+        "ファニチャー",
+        "電気設備",
+        "外構",
+        "外壁",
+        "外部床"
+      ],
+      "feed": "http://www.machidacorp.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "夏季休業のお知らせ",
+        "太田工場お引取り条件変更および在庫アイテム追加のご案内"
+      ],
+      "newest": "2026-07-06"
+    },
+    {
+      "origin": "http://www.tatamo.jp",
+      "name": "グッドグラス",
+      "categories": [
+        "内部床"
+      ],
+      "feed": "http://www.tatamo.jp/atom.xml",
+      "via": "path",
+      "items": 32,
+      "sample": [
+        "Vol.07TATAMO!×松本莉緒さん 対談コラム03",
+        "Vol.06TATAMO!×松本莉緒さん 対談コラム02"
+      ],
+      "newest": "2023-09-17"
+    },
+    {
+      "origin": "https://08tent.co.jp",
+      "name": "丸八テント商会",
+      "categories": [
+        "外部その他"
+      ],
+      "feed": "https://08tent.co.jp/feed/",
+      "via": "link",
+      "items": 20,
+      "sample": [
+        "丸八テント商会",
+        "名古屋市経済局主催「NAGOYA Business Junction vol.1」にて弊社取締役が登壇"
+      ],
+      "newest": "2026-07-27"
+    },
+    {
+      "origin": "https://apro1965.jp",
+      "name": "ジュケン",
+      "categories": [
+        "金物"
+      ],
+      "feed": "https://apro1965.jp/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "廃盤製品に関するお知らせ",
+        "廃盤製品に関するお知らせ"
+      ],
+      "newest": "2026-02-05"
+    },
+    {
+      "origin": "https://arthawkstone.com",
+      "name": "アートホクストン",
+      "categories": [
+        "外部その他"
+      ],
+      "feed": "https://arthawkstone.com/feed",
+      "via": "path",
+      "items": 1,
+      "sample": [
+        "Hello world!"
+      ],
+      "newest": "2022-06-01"
+    },
+    {
+      "origin": "https://bunka-s-pro.jp",
+      "name": "文化シャッター",
+      "categories": [
+        "開口部"
+      ],
+      "feed": "https://bunka-s-pro.jp/feed",
+      "via": "path",
+      "items": 1,
+      "sample": [
+        "快適空間設計工房｜文化シヤッター",
+        "Hello world!"
+      ],
+      "newest": "2017-06-13"
+    },
+    {
+      "origin": "https://daitai.co.jp",
+      "name": "大泰化工",
+      "categories": [
+        "防水"
+      ],
+      "feed": "https://daitai.co.jp/feed",
+      "via": "path",
+      "items": 1,
+      "sample": [
+        "Hello world!"
+      ],
+      "newest": "2016-08-18"
+    },
+    {
+      "origin": "https://daiwakenzai.co.jp",
+      "name": "ダイワ建材",
+      "categories": [
+        "内装壁材"
+      ],
+      "feed": "https://daiwakenzai.co.jp/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "第4回大阪府公募公債（グリーンボンド）への投資をいたしました。",
+        "「カウンターのウェブショップ３」にて、新商品２点を本日より発売開始しました"
+      ],
+      "newest": "2026-02-17"
+    },
+    {
+      "origin": "https://danto.jp",
+      "name": "淡陶社",
+      "categories": [
+        "外壁",
+        "外部床",
+        "内部床",
+        "内装壁材"
+      ],
+      "feed": "https://danto.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "淡陶社",
+        "滑る？滑らない？ タイルと“滑り”のメカニズムを知る"
+      ],
+      "newest": "2025-06-16"
+    },
+    {
+      "origin": "https://dupont-mcc.co.jp",
+      "name": "デュポン・MCC",
+      "categories": [
+        "内装壁材"
+      ],
+      "feed": "https://dupont-mcc.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "「コーリアン®ニュース（No.122）」公開のご案内",
+        "2026年版マスターカタログとサンプルボックスのお知らせ"
+      ],
+      "newest": "2026-07-01"
+    },
+    {
+      "origin": "https://ecokawara.com",
+      "name": "翔飛工業",
+      "categories": [
+        "外構"
+      ],
+      "feed": "https://ecokawara.com/feed",
+      "via": "path",
+      "items": 1,
+      "sample": [
+        "夏季休業について"
+      ],
+      "newest": "2026-07-28"
+    },
+    {
+      "origin": "https://fonen.co.jp",
+      "name": "エフワンエヌ",
+      "categories": [
+        "防水"
+      ],
+      "feed": "https://fonen.co.jp/feed",
+      "via": "path",
+      "items": 38,
+      "sample": [
+        "エフワングループ｜防水・改修・コンクリート意匠・海外事業",
+        "夏季休業のお知らせ"
+      ],
+      "newest": "2026-08-05"
+    },
+    {
+      "origin": "https://hakusui-k.co.jp",
+      "name": "白水興産",
+      "categories": [
+        "外部その他"
+      ],
+      "feed": "https://hakusui-k.co.jp/feed",
+      "via": "path",
+      "items": 1,
+      "sample": [
+        "Hello world!"
+      ],
+      "newest": "2020-06-04"
+    },
+    {
+      "origin": "https://hidasangyo.com",
+      "name": "飛騨産業",
+      "categories": [
+        "ファニチャー"
+      ],
+      "feed": "https://hidasangyo.com/feed",
+      "via": "path",
+      "items": 3,
+      "sample": [
+        "define author test",
+        "Hello world! Updated!"
+      ],
+      "newest": "2020-06-03"
+    },
+    {
+      "origin": "https://higano.co.jp",
+      "name": "ヒガノ",
+      "categories": [
+        "外部その他"
+      ],
+      "feed": "https://higano.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "夏季休業について【休業期間：2026年8月7日(金)～ 8月16日(日)】",
+        "【事例紹介公開のお知らせ】関東マツダ前橋店"
+      ],
+      "newest": "2026-07-26"
+    },
+    {
+      "origin": "https://ikehiko.net",
+      "name": "イケヒコ・ｺｰﾎﾟﾚｰｼｮﾝ",
+      "categories": [
+        "内部床"
+      ],
+      "feed": "https://ikehiko.net/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "株式会社イケヒコ・コーポレーション",
+        "2026年夏季休業のお知らせ"
+      ],
+      "newest": "2026-08-03"
+    },
+    {
+      "origin": "https://ikuta.co.jp",
+      "name": "イクタ",
+      "categories": [
+        "内部床",
+        "内装壁材"
+      ],
+      "feed": "https://ikuta.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "フローリング・床材の株式会社ikuta[イクタ]",
+        "ikuta DESIGN talk Vol.1＃ 1｜ YouTube ikuta channel"
+      ],
+      "newest": "2026-08-05"
+    },
+    {
+      "origin": "https://jp.sharp",
+      "name": "シャープ",
+      "categories": [
+        "外部その他"
+      ],
+      "feed": "https://jp.sharp/feed.xml",
+      "via": "link",
+      "items": 6,
+      "sample": [
+        "RE-WF307 | オーブン・電子レンジ",
+        "RE-WF277 | オーブン・電子レンジ"
+      ],
+      "newest": "2026-08-06"
+    },
+    {
+      "origin": "https://kawagure.co.jp",
+      "name": "カワグレ",
+      "categories": [
+        "内装その他"
+      ],
+      "feed": "https://kawagure.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "防球ガードのご紹介",
+        "フードエキスポHOKURIKU2026出展のお知らせ"
+      ],
+      "newest": "2026-07-03"
+    },
+    {
+      "origin": "https://led.shibasaki-inc.jp",
+      "name": "シバサキ",
+      "categories": [
+        "電気設備"
+      ],
+      "feed": "https://led.shibasaki-inc.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "画像センシング展2026へ出展いたします",
+        "多様な働き方認定企業　プライム"
+      ],
+      "newest": "2026-05-12"
+    },
+    {
+      "origin": "https://maedakosensanshi.jp",
+      "name": "前田工繊産資",
+      "categories": [
+        "防水"
+      ],
+      "feed": "https://maedakosensanshi.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "役員の人事異動のお知らせ",
+        "本社移転のご案内"
+      ],
+      "newest": "2026-06-30"
+    },
+    {
+      "origin": "https://moritaalumi.co.jp",
+      "name": "森田アルミ工業",
+      "categories": [
+        "開口部"
+      ],
+      "feed": "https://moritaalumi.co.jp/atom.xml",
+      "via": "path",
+      "items": 15,
+      "sample": [
+        "弊社Twitter企画がTVで紹介されました。",
+        "「SUGIFES 2015 建築金物見本市2015」に出展"
+      ],
+      "newest": null
+    },
+    {
+      "origin": "https://nagomi-artsteel.com",
+      "name": "フロント",
+      "categories": [
+        "内装壁材"
+      ],
+      "feed": "https://nagomi-artsteel.com/feed/",
+      "via": "link",
+      "items": 10,
+      "sample": [
+        "株式会社フロント｜NAGOMI ARTSTEEL",
+        "六本木ショールーム「FRONTLINE」閉店のお知らせ"
+      ],
+      "newest": "2026-03-07"
+    },
+    {
+      "origin": "https://nihon-shutter.co.jp",
+      "name": "日本シャッター製作所",
+      "categories": [
+        "開口部"
+      ],
+      "feed": "https://nihon-shutter.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "夏季休業のお知らせ",
+        "ゴールデンウイーク休業のお知らせ"
+      ],
+      "newest": "2026-07-21"
+    },
+    {
+      "origin": "https://nipponnomado.jp",
+      "name": "日本の窓",
+      "categories": [
+        "開口部"
+      ],
+      "feed": "https://nipponnomado.jp/feed/",
+      "via": "link",
+      "items": 10,
+      "sample": [
+        "夏季休業のお知らせ",
+        "MOCTIONショールームへ出展いたします"
+      ],
+      "newest": "2026-08-05"
+    },
+    {
+      "origin": "https://nippow.com",
+      "name": "日豊化学産業",
+      "categories": [
+        "防水"
+      ],
+      "feed": "https://nippow.com/info/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "FBKセミナー2026開催のお知らせ",
+        "令和8年度「防水施工技能士（ＦＲＰ防水工事作業）」検定試験について"
+      ],
+      "newest": "2026-06-14"
+    },
+    {
+      "origin": "https://nitto-web.jp",
+      "name": "ニットー",
+      "categories": [
+        "外構"
+      ],
+      "feed": "https://nitto-web.jp/feed",
+      "via": "path",
+      "items": 1,
+      "sample": [
+        "株式会社ニットー",
+        "Hello world!"
+      ],
+      "newest": "2024-08-25"
+    },
+    {
+      "origin": "https://ondairon.com",
+      "name": "御田製作所",
+      "categories": [
+        "電気設備"
+      ],
+      "feed": "https://ondairon.com/feed",
+      "via": "path",
+      "items": 1,
+      "sample": [
+        "ロートアイアン｜デザインと品質の御田製作所",
+        "Hello world!"
+      ],
+      "newest": "2020-03-13"
+    },
+    {
+      "origin": "https://parador.jp",
+      "name": "イシカワ",
+      "categories": [
+        "内部床"
+      ],
+      "feed": "https://parador.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "『Material Caravan Nagoya』出展のおしらせ",
+        "リフォーム産業フェア2024出展のおしらせ"
+      ],
+      "newest": "2026-03-12"
+    },
+    {
+      "origin": "https://sadoshima.com",
+      "name": "佐渡島",
+      "categories": [
+        "屋根"
+      ],
+      "feed": "https://sadoshima.com/rss.xml",
+      "via": "path",
+      "items": 34,
+      "sample": [
+        "三社共同出資による新会社設立のお知らせ",
+        "秋採用も積極的に実施しております"
+      ],
+      "newest": null
+    },
+    {
+      "origin": "https://sanwagrd.co.jp",
+      "name": "三和グランド",
+      "categories": [
+        "外構"
+      ],
+      "feed": "https://sanwagrd.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "夏季休業のお知らせ",
+        "事例紹介「南文化公園(東京都)」に透水性舗装・保水性舗装材カラーサンドをご採用頂きました"
+      ],
+      "newest": "2026-08-06"
+    },
+    {
+      "origin": "https://sarashina.co.jp",
+      "name": "サラシナ",
+      "categories": [
+        "外部その他"
+      ],
+      "feed": "https://sarashina.co.jp/feed/",
+      "via": "link",
+      "items": 12,
+      "sample": [
+        "テントとオーニングのサラシナ",
+        "屋上プール・園庭を快適に！開閉式日よけテント設置について"
+      ],
+      "newest": "2026-05-01"
+    },
+    {
+      "origin": "https://sne.co.jp",
+      "name": "日軽エンジニアリング",
+      "categories": [
+        "外部その他"
+      ],
+      "feed": "https://sne.co.jp/feed/",
+      "via": "link",
+      "items": 2,
+      "sample": [
+        "日軽エンジニアリング株式会社",
+        "外部通報窓口について"
+      ],
+      "newest": "2025-09-09"
+    },
+    {
+      "origin": "https://staron.jp",
+      "name": "ﾛｯﾃｹﾐｶﾙｼﾞｬﾊﾟﾝ",
+      "categories": [
+        "内装壁材"
+      ],
+      "feed": "https://staron.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "【公式】ロッテケミカルジャパン株式会社",
+        "2026年版カタログ配布とサンプルボックス販売開始のお知らせ"
+      ],
+      "newest": "2026-02-16"
+    },
+    {
+      "origin": "https://suzuki-sh.co.jp",
+      "name": "鈴木シャッター",
+      "categories": [
+        "開口部"
+      ],
+      "feed": "https://suzuki-sh.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "株式会社鈴木シャッター",
+        "リクルートページを全面リニューアルしました。"
+      ],
+      "newest": "2026-05-18"
+    },
+    {
+      "origin": "https://takasho-digitec.jp",
+      "name": "タカショー",
+      "categories": [
+        "電気設備"
+      ],
+      "feed": "https://takasho-digitec.jp/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "「ソウル国際庭園博覧会2026」出展庭園にて、タカショーデジテックの屋外照明が多数採用",
+        "「地方銀行公務部長会」にて、当社代表の古澤が「地方創生」をテーマに講演"
+      ],
+      "newest": "2026-07-28"
+    },
+    {
+      "origin": "https://threetack.com",
+      "name": "スリータック",
+      "categories": [
+        "内装その他"
+      ],
+      "feed": "https://threetack.com/feed",
+      "via": "path",
+      "items": 4,
+      "sample": [
+        "天井点検口のカラーバリエーションを追加しました。",
+        "製品カタログ改版のお知らせ"
+      ],
+      "newest": "2025-07-14"
+    },
+    {
+      "origin": "https://tiles.hiratatile.co.jp",
+      "name": "平田タイル",
+      "categories": [
+        "外部床"
+      ],
+      "feed": "https://tiles.hiratatile.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "第61回平田感謝祭オレンジフェア2026 カーボンオフセット実施のご報告",
+        "ショールーム夏季休業のお知らせ"
+      ],
+      "newest": "2026-07-09"
+    },
+    {
+      "origin": "https://tokulabo.co.jp",
+      "name": "ﾄｸﾔﾏｱｰﾄﾌﾞﾛｯｸLABO",
+      "categories": [
+        "外構"
+      ],
+      "feed": "https://tokulabo.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "夏季休業日のお知らせ",
+        "年末年始休業日のお知らせ"
+      ],
+      "newest": "2026-08-03"
+    },
+    {
+      "origin": "https://tuzuki.co.jp",
+      "name": "ツヅキ",
+      "categories": [
+        "金物",
+        "外部その他"
+      ],
+      "feed": "https://tuzuki.co.jp/feed/",
+      "via": "link",
+      "items": 1,
+      "sample": [
+        "株式会社ツヅキ",
+        "Hello world!"
+      ],
+      "newest": "2019-12-10"
+    },
+    {
+      "origin": "https://uenojyuken.co.jp",
+      "name": "上野住宅建材",
+      "categories": [
+        "開口部"
+      ],
+      "feed": "https://uenojyuken.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "【メンテナンス】アンダーセン・グライディングパティオドア【網戸】",
+        "夏季休業のお知らせ"
+      ],
+      "newest": "2026-07-29"
+    },
+    {
+      "origin": "https://unitek.jp",
+      "name": "ユニテック",
+      "categories": [
+        "開口部"
+      ],
+      "feed": "https://unitek.jp/feed/",
+      "via": "link",
+      "items": 10,
+      "sample": [
+        "株式会社ユニテック",
+        "中空ポリカ40mm厚の代替品をお探しの皆さまへ"
+      ],
+      "newest": "2026-05-14"
+    },
+    {
+      "origin": "https://whohw.jp",
+      "name": "野原グループ",
+      "categories": [
+        "内装壁材"
+      ],
+      "feed": "https://whohw.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "OFFICE（Shibuya,Tokyo）26/08/03",
+        "OFFICE（Minato,Tokyo）2025/12/26"
+      ],
+      "newest": "2026-08-06"
+    },
+    {
+      "origin": "https://www.a-yamade.co.jp",
+      "name": "アーキヤマデ",
+      "categories": [
+        "防水",
+        "外部その他"
+      ],
+      "feed": "https://www.a-yamade.co.jp/rss2.xml",
+      "via": "link",
+      "items": 10,
+      "sample": [
+        "2026年夏季休業のご案内",
+        "弊社製品の受注再開に関するお知らせ"
+      ],
+      "newest": "2026-08-01"
+    },
+    {
+      "origin": "https://www.acosstec.co.jp",
+      "name": "アコステック",
+      "categories": [
+        "外構"
+      ],
+      "feed": "https://www.acosstec.co.jp/news/feed/",
+      "via": "path",
+      "items": 5,
+      "sample": [
+        "ACOドレイン施工事例-コンラッド大阪",
+        "ACOドレイン施工事例-シェラトン鹿児島"
+      ],
+      "newest": "2025-03-27"
+    },
+    {
+      "origin": "https://www.assipie.jp",
+      "name": "アシスト",
+      "categories": [
+        "内装その他"
+      ],
+      "feed": "https://www.assipie.jp/feed/",
+      "via": "link",
+      "items": 10,
+      "sample": [
+        "階段滑り止め・床材押え金物の製造販売｜株式会社アシスト",
+        "【発注ミス・手戻り防止】階段滑り止めの正しい採寸（拾い出し）とクリアランス設計"
+      ],
+      "newest": "2026-07-23"
+    },
+    {
+      "origin": "https://www.aswan.co.jp",
+      "name": "アスワン",
+      "categories": [
+        "ファニチャー",
+        "内部床"
+      ],
+      "feed": "https://www.aswan.co.jp/rss.xml",
+      "via": "link",
+      "items": 10,
+      "sample": [
+        "ファブリーズマット",
+        "ファブリーズラグ"
+      ],
+      "newest": "2026-04-24"
+    },
+    {
+      "origin": "https://www.atomlt.com",
+      "name": "ｱﾄﾑﾘﾋﾞﾝﾃｯｸ",
+      "categories": [
+        "金物"
+      ],
+      "feed": "https://www.atomlt.com/feed/",
+      "via": "link",
+      "items": 15,
+      "sample": [
+        "「2026年6月期 決算短信（非連結）」を掲載いたしました。",
+        "亜吐夢金物館 エレベーター点検(終日)のお知らせ（8/10）"
+      ],
+      "newest": "2026-08-05"
+    },
+    {
+      "origin": "https://www.bikenkougyou.co.jp",
+      "name": "美建工業",
+      "categories": [
+        "外構"
+      ],
+      "feed": "https://www.bikenkougyou.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "2026年 山陽版・山陰版カタログVol.13完成のお知らせ",
+        "2026年　入社式"
+      ],
+      "newest": "2026-05-28"
+    },
+    {
+      "origin": "https://www.brigh-ton.co.jp",
+      "name": "ブライトン",
+      "categories": [
+        "外壁",
+        "内装壁材"
+      ],
+      "feed": "https://www.brigh-ton.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "メディア掲載のお知らせ",
+        "今年も折り返しの時期を迎えました。"
+      ],
+      "newest": "2026-08-06"
+    },
+    {
+      "origin": "https://www.can-net.co.jp",
+      "name": "ｷｬﾝｴﾝﾀｰﾌﾟﾗｲｾﾞｽﾞ",
+      "categories": [
+        "電気設備",
+        "内装壁材"
+      ],
+      "feed": "https://www.can-net.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "キャン&#039;エンタープライゼズ株式会社",
+        "CAN&#039;BRICK &amp; CAN&#039;STONEをカッコよく見せる施工のコツ・ポイント"
+      ],
+      "newest": "2026-05-19"
+    },
+    {
+      "origin": "https://www.caname-roof.jp",
+      "name": "カナメ",
+      "categories": [
+        "屋根"
+      ],
+      "feed": "https://www.caname-roof.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "株式会社カナメ",
+        "日本物流新聞に｢工場倉庫の酷暑対策｣について掲載されました。"
+      ],
+      "newest": "2026-07-27"
+    },
+    {
+      "origin": "https://www.clion.co.jp",
+      "name": "クリオン",
+      "categories": [
+        "外壁"
+      ],
+      "feed": "https://www.clion.co.jp/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "クリオンプロダクトキャンペーン2026がスタートいたしました。",
+        "役員人事のお知らせ"
+      ],
+      "newest": "2026-07-21"
+    },
+    {
+      "origin": "https://www.daidore.co.jp",
+      "name": "ダイドレ",
+      "categories": [
+        "外構"
+      ],
+      "feed": "https://www.daidore.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "価格改定のご案内",
+        "夏季休業日のご案内"
+      ],
+      "newest": "2026-07-22"
+    },
+    {
+      "origin": "https://www.daiken.jp",
+      "name": "ダイケン",
+      "categories": [
+        "外壁",
+        "内部床",
+        "内装壁材",
+        "内装天井材"
+      ],
+      "feed": "https://www.daiken.jp/news/rss.xml",
+      "via": "path",
+      "items": 5,
+      "sample": [
+        "TBS日曜劇場「VIVANT」のセットにDAIKEN製品が採用",
+        "「公共・商業建築分野の音環境改善」に関するCPD認定オンラインセミナー開催のお知らせ"
+      ],
+      "newest": "2026-08-06"
+    },
+    {
+      "origin": "https://www.daiken.ne.jp",
+      "name": "大建工業",
+      "categories": [
+        "内装その他",
+        "外部その他"
+      ],
+      "feed": "https://www.daiken.ne.jp/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "【重要】みつもりダイちゃん庇ページ　再公開のお知らせ",
+        "【重要】当社情報を無断掲載しているウェブサイトにご注意ください"
+      ],
+      "newest": "2026-08-04"
+    },
+    {
+      "origin": "https://www.daikure.co.jp",
+      "name": "ダイクレ",
+      "categories": [
+        "内装その他",
+        "外構"
+      ],
+      "feed": "https://www.daikure.co.jp/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "お知らせ - ダイクレ　グレーチング　建材",
+        "価格改定のお知らせ"
+      ],
+      "newest": "2026-07-22"
+    },
+    {
+      "origin": "https://www.daito-kogyo.co.jp",
+      "name": "ダイト工業",
+      "categories": [
+        "内装壁材"
+      ],
+      "feed": "https://www.daito-kogyo.co.jp/feed",
+      "via": "path",
+      "items": 6,
+      "sample": [
+        "お盆休業のお知らせ",
+        "年末年始の休業日について"
+      ],
+      "newest": "2026-07-31"
+    },
+    {
+      "origin": "https://www.device-inc.com",
+      "name": "デバイス",
+      "categories": [
+        "外部その他"
+      ],
+      "feed": "https://www.device-inc.com/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "夏季休業のお知らせ",
+        "展示会ご来場の御礼"
+      ],
+      "newest": "2026-07-15"
+    },
+    {
+      "origin": "https://www.diaron.co.jp",
+      "name": "ダイヤロン",
+      "categories": [
+        "内部床"
+      ],
+      "feed": "https://www.diaron.co.jp/feed/",
+      "via": "link",
+      "items": 10,
+      "sample": [
+        "ダイヤロン株式会社",
+        "令和6年能登半島地震で被災された皆さまに"
+      ],
+      "newest": "2024-01-05"
+    },
+    {
+      "origin": "https://www.dihp.co.jp",
+      "name": "大一帆布",
+      "categories": [
+        "外部その他"
+      ],
+      "feed": "https://www.dihp.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "大一帆布株式会社",
+        "製品情報を7点追加しました。"
+      ],
+      "newest": "2026-08-03"
+    },
+    {
+      "origin": "https://www.dinaone.co.jp",
+      "name": "ダイナワン",
+      "categories": [
+        "外壁",
+        "内装壁材"
+      ],
+      "feed": "https://www.dinaone.co.jp/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "スペシャルコンテンツ「適切な目地材をパッと素早く効率的に見つける方法」を更新しました",
+        "【重要】DINAONE SPACE -tsudohi-（東京展示ルーム）改装工事に伴う一時休館のお知らせ（8/8～9/6）"
+      ],
+      "newest": "2026-07-23"
+    },
+    {
+      "origin": "https://www.douichi.co.jp",
+      "name": "銅市金属工業",
+      "categories": [
+        "屋根"
+      ],
+      "feed": "https://www.douichi.co.jp/rss.xml",
+      "via": "path",
+      "items": 50,
+      "sample": [
+        "新年のご挨拶",
+        "【社葬のご案内】弊社 前代表取締役 増子健一 儀 社葬式のお知らせ"
+      ],
+      "newest": null
+    },
+    {
+      "origin": "https://www.endo-lighting.co.jp",
+      "name": "遠藤照明",
+      "categories": [
+        "電気設備"
+      ],
+      "feed": "https://www.endo-lighting.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "Synca Bright",
+        "Quickシリーズ"
+      ],
+      "newest": "2026-07-27"
+    },
+    {
+      "origin": "https://www.excelshanon.co.jp",
+      "name": "エクセルシャノン",
+      "categories": [
+        "開口部"
+      ],
+      "feed": "https://www.excelshanon.co.jp/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "商品価格改定のお知らせ",
+        "「CVDクリアガラス」販売終了のお知らせ"
+      ],
+      "newest": "2026-07-21"
+    },
+    {
+      "origin": "https://www.fjp-ahp.jp",
+      "name": "フジカケ",
+      "categories": [
+        "外部その他"
+      ],
+      "feed": "https://www.fjp-ahp.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "株式会社フジカケ | アルミハニカムパネルを独自製法で",
+        "ネットワークメンテナンス実施について"
+      ],
+      "newest": "2025-12-10"
+    },
+    {
+      "origin": "https://www.fujislate.com",
+      "name": "富士スレート",
+      "categories": [
+        "屋根"
+      ],
+      "feed": "https://www.fujislate.com/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "富士スレート株式会社",
+        "太陽光発電の初期投資支援スキームの申請期限が発表になっています。"
+      ],
+      "newest": "2025-04-22"
+    },
+    {
+      "origin": "https://www.hinaka.co.jp",
+      "name": "日中製作所",
+      "categories": [
+        "内装その他",
+        "金物"
+      ],
+      "feed": "https://www.hinaka.co.jp/feed/atom/",
+      "via": "link",
+      "items": 10,
+      "sample": [],
+      "newest": "2026-07-07"
+    },
+    {
+      "origin": "https://www.hokusei-kogyo.co.jp",
+      "name": "北勢工業",
+      "categories": [
+        "外構"
+      ],
+      "feed": "https://www.hokusei-kogyo.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "8・9月　WEB会社説明会を開催します。【新卒採用】",
+        "9/3　マイナビ就職EXPOオータムミーティング(東京)に出展します。【新卒採用】"
+      ],
+      "newest": "2026-08-05"
+    },
+    {
+      "origin": "https://www.howdy-inc.com",
+      "name": "ハウディー",
+      "categories": [
+        "金物",
+        "開口部",
+        "内部床"
+      ],
+      "feed": "https://www.howdy-inc.com/feed",
+      "via": "path",
+      "items": 1,
+      "sample": [
+        "HOWDY",
+        "Online Shop『ハウディーPlus』でのドアご注文方法"
+      ],
+      "newest": "2019-12-18"
+    },
+    {
+      "origin": "https://www.hrc.co.jp",
+      "name": "早川ゴム",
+      "categories": [
+        "防水"
+      ],
+      "feed": "https://www.hrc.co.jp/feed/",
+      "via": "link",
+      "items": 10,
+      "sample": [
+        "コンクリート補修材料「H3Rボンド」が 公益社団法人日本材料学会 中国支部の技術賞を受賞",
+        "役員の異動に関するお知らせ"
+      ],
+      "newest": "2026-06-04"
+    },
+    {
+      "origin": "https://www.ic-ryowa.com",
+      "name": "ｱｲｺｯﾄﾘｮｰﾜ",
+      "categories": [
+        "外壁",
+        "外部床"
+      ],
+      "feed": "https://www.ic-ryowa.com/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "夏季休業のお知らせ",
+        "【重要】価格改定のお知らせ"
+      ],
+      "newest": "2026-08-03"
+    },
+    {
+      "origin": "https://www.ie-mon-asia.net",
+      "name": "ie-mon",
+      "categories": [
+        "電気設備",
+        "内部床",
+        "内装壁材"
+      ],
+      "feed": "https://www.ie-mon-asia.net/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "株式会社イエモン｜ちょっと大人の住環境を提案する建材商社｜ie-mon,inc.",
+        "価格改定のお知らせ"
+      ],
+      "newest": "2026-07-21"
+    },
+    {
+      "origin": "https://www.inoue-s.co.jp",
+      "name": "井上商事",
+      "categories": [
+        "金物",
+        "外部その他"
+      ],
+      "feed": "https://www.inoue-s.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "井上商事",
+        "令和8年熊本地震の影響による配送遅延について"
+      ],
+      "newest": "2026-07-30"
+    },
+    {
+      "origin": "https://www.iwasaki.co.jp",
+      "name": "岩崎電気",
+      "categories": [
+        "電気設備"
+      ],
+      "feed": "https://www.iwasaki.co.jp/news/rss.xml",
+      "via": "path",
+      "items": 20,
+      "sample": [
+        "高天井用LED照明器具「レディオック ハイベイ ガンマ」シリーズをフルモデルチェンジ",
+        "夏季休暇のご案内"
+      ],
+      "newest": "2026-08-06"
+    },
+    {
+      "origin": "https://www.iwata-kk.co.jp",
+      "name": "イワタ",
+      "categories": [
+        "外構"
+      ],
+      "feed": "https://www.iwata-kk.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "&#x1f9f9;　道路サポーター活動　&#x1f9f9;",
+        "『清水港・みなと色彩計画推進事業』における活動が評価されました。"
+      ],
+      "newest": "2026-04-09"
+    },
+    {
+      "origin": "https://www.jfe-kenzai.co.jp",
+      "name": "JFE建材",
+      "categories": [
+        "外壁"
+      ],
+      "feed": "https://www.jfe-kenzai.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "QL check オンライン",
+        "QLデッキ認定書・標準図・構造計算ソフト"
+      ],
+      "newest": "2024-03-29"
+    },
+    {
+      "origin": "https://www.kakou-nisso.co.jp",
+      "name": "日創プロニティ",
+      "categories": [
+        "内装壁材"
+      ],
+      "feed": "https://www.kakou-nisso.co.jp/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "お知らせ | 福岡の金属加工 ｜ 日創プロニティ株式会社",
+        "持株会社体制移行に伴うホームページリニューアルのお知らせ"
+      ],
+      "newest": "2025-06-02"
+    },
+    {
+      "origin": "https://www.kamishima.co.jp",
+      "name": "神島化学工業",
+      "categories": [
+        "外壁"
+      ],
+      "feed": "https://kamishima.co.jp/feed/",
+      "via": "link",
+      "items": 8,
+      "sample": [
+        "【カーナビはもう要らない！？】これが最新ナビになる!Otto cast Otto Screen AI　これは買いです!!",
+        "【バンテック製ZIL NOBLE2025年モデル】ZILシリーズの頂点！2人旅ならこれで決まり！"
+      ],
+      "newest": "2026-03-24"
+    },
+    {
+      "origin": "https://www.kanpe.co.jp",
+      "name": "カンペハピオ",
+      "categories": [
+        "外壁"
+      ],
+      "feed": "https://www.kanpe.co.jp/feed",
+      "via": "path",
+      "items": 1,
+      "sample": [
+        "「水性シリコン遮熱建物用」新発売のお知らせ"
+      ],
+      "newest": "2025-03-05"
+    },
+    {
+      "origin": "https://www.kansai.co.jp",
+      "name": "関西ペイント",
+      "categories": [
+        "外壁"
+      ],
+      "feed": "https://www.kansai.co.jp/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "令和8年 熊本地震のお見舞い",
+        "【補足資料】トルコにおける持分法適用関連会社の株式追加取得（連結子会社化）に関するお知らせ"
+      ],
+      "newest": "2026-07-29"
+    },
+    {
+      "origin": "https://www.kashiwa.gr.jp",
+      "name": "柏木工",
+      "categories": [
+        "ファニチャー"
+      ],
+      "feed": "https://www.kashiwa.gr.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "夏季休業日のお知らせ",
+        "本社工場 休業日のお知らせ"
+      ],
+      "newest": "2026-07-30"
+    },
+    {
+      "origin": "https://www.kawakamibankin.co.jp",
+      "name": "川上板金工業所",
+      "categories": [
+        "屋根"
+      ],
+      "feed": "https://www.kawakamibankin.co.jp/feed/",
+      "via": "link",
+      "items": 10,
+      "sample": [
+        "香川オリーブガイナーズの選手が来社されました",
+        "令和8年度 安全衛生に関する各種表彰を受賞しました"
+      ],
+      "newest": "2026-08-04"
+    },
+    {
+      "origin": "https://www.kawashimaselkon.co.jp",
+      "name": "川島織物セルコン",
+      "categories": [
+        "ファニチャー",
+        "内部床"
+      ],
+      "feed": "https://www.kawashimaselkon.co.jp/feed",
+      "via": "path",
+      "items": 1,
+      "sample": [
+        "川島織物セルコンのオンライン工場見学　DESIGN WEEK KYOTO 2023"
+      ],
+      "newest": "2023-01-16"
+    },
+    {
+      "origin": "https://www.kikukawa.com",
+      "name": "菊川工業",
+      "categories": [
+        "内装その他",
+        "内装壁材"
+      ],
+      "feed": "https://www.kikukawa.com/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "施工事例：清和銀座ビル",
+        "KIKUKAWA Mail News Vol.134 2026.8.4"
+      ],
+      "newest": "2026-08-05"
+    },
+    {
+      "origin": "https://www.kokensangyo.co.jp",
+      "name": "興建産業",
+      "categories": [
+        "外構"
+      ],
+      "feed": "https://www.kokensangyo.co.jp/feed/",
+      "via": "link",
+      "items": 10,
+      "sample": [
+        "興建産業株式会社",
+        "夏季休業のお知らせ"
+      ],
+      "newest": "2026-07-13"
+    },
+    {
+      "origin": "https://www.komatsumatere.co.jp",
+      "name": "小松マテーレ",
+      "categories": [
+        "外構"
+      ],
+      "feed": "https://www.komatsumatere.co.jp/feed",
+      "via": "path",
+      "items": 1,
+      "sample": [
+        "Hello world!"
+      ],
+      "newest": "2026-04-06"
+    },
+    {
+      "origin": "https://www.koyoweb.com",
+      "name": "光洋産業",
+      "categories": [
+        "内部床"
+      ],
+      "feed": "https://www.koyoweb.com/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "光洋産業株式会社",
+        "ReFace Sheet欠品・品薄製品のお知らせ"
+      ],
+      "newest": "2026-06-05"
+    },
+    {
+      "origin": "https://www.kubota-c.com",
+      "name": "久保田ｾﾒﾝﾄ工業",
+      "categories": [
+        "外構"
+      ],
+      "feed": "https://www.kubota-c.com/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "久保田セメント工業株式会社",
+        "夏季休業日のご案内"
+      ],
+      "newest": "2026-07-21"
+    },
+    {
+      "origin": "https://www.kume-ind.co.jp",
+      "name": "久米工業",
+      "categories": [
+        "外部その他"
+      ],
+      "feed": "https://www.kume-ind.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "アルミ家具を始めました",
+        "取締役社長就任のお知らせ"
+      ],
+      "newest": "2026-01-27"
+    },
+    {
+      "origin": "https://www.lonseal.co.jp",
+      "name": "ロンシール工業",
+      "categories": [
+        "防水",
+        "外部床",
+        "内部床"
+      ],
+      "feed": "https://www.lonseal.co.jp/news/feed/",
+      "via": "path",
+      "items": 100,
+      "sample": [
+        "産経新聞　神奈川版「イノベーションプルーフRR」広告掲載のお知らせ",
+        "スポニチ　九州全域・山口県版「イノベーションプルーフRR」広告掲載のお知らせ"
+      ],
+      "newest": "2026-07-30"
+    },
+    {
+      "origin": "https://www.maezawa-k.co.jp",
+      "name": "前澤化成工業",
+      "categories": [
+        "外構"
+      ],
+      "feed": "https://www.maezawa-k.co.jp/atom.xml",
+      "via": "path",
+      "items": 15,
+      "sample": [
+        "3号スリムUFMBT300・250×200 - product",
+        "2号スリムUFMBT300・250×200 - product"
+      ],
+      "newest": "2024-08-05"
+    },
+    {
+      "origin": "https://www.matsuo-e-pot.com",
+      "name": "松尾貿易商会",
+      "categories": [
+        "ファニチャー"
+      ],
+      "feed": "https://www.matsuo-e-pot.com/feed",
+      "via": "path",
+      "items": 1,
+      "sample": [
+        "Hello world!"
+      ],
+      "newest": "2016-11-05"
+    },
+    {
+      "origin": "https://www.mazroc.co.jp",
+      "name": "マツ六",
+      "categories": [
+        "内装その他",
+        "内部床"
+      ],
+      "feed": "https://www.mazroc.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "社報 WITH YOU more / 情報誌 マツロクプラス 8月号",
+        "熊本地震による配達の影響について"
+      ],
+      "newest": "2026-08-03"
+    },
+    {
+      "origin": "https://www.morison.co.jp",
+      "name": "森村金属",
+      "categories": [
+        "内装天井材"
+      ],
+      "feed": "https://www.morison.co.jp/feed",
+      "via": "path",
+      "items": 7,
+      "sample": [
+        "森村金属株式会社",
+        "お買い物マラソン期間中　ポイント20倍キャンペーン"
+      ],
+      "newest": "2026-08-03"
+    },
+    {
+      "origin": "https://www.murakami-t.co.jp",
+      "name": "村上産業",
+      "categories": [
+        "内部床"
+      ],
+      "feed": "https://www.murakami-t.co.jp/feed",
+      "via": "path",
+      "items": 1,
+      "sample": [
+        "熊本県SDGs登録事業者に認定されました。"
+      ],
+      "newest": "2021-09-14"
+    },
+    {
+      "origin": "https://www.nagashima-imono.co.jp",
+      "name": "長島鋳物",
+      "categories": [
+        "外構"
+      ],
+      "feed": "https://www.nagashima-imono.co.jp/feed/",
+      "via": "link",
+      "items": 10,
+      "sample": [
+        "長島鋳物株式会社 Nagashima Foundry",
+        "「下水道展’26東京」に出展いたします"
+      ],
+      "newest": "2026-07-30"
+    },
+    {
+      "origin": "https://www.naka-kogyo.co.jp",
+      "name": "ナカ工業",
+      "categories": [
+        "内装その他",
+        "金物"
+      ],
+      "feed": "https://www.naka-kogyo.co.jp/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "令和8年熊本地震の影響による配送停止および配送遅延のご案内",
+        "夏季休業のご案内2026年8月8日（土）～2026年8月16日（日）まで休業とさせていただきます。"
+      ],
+      "newest": "2026-07-29"
+    },
+    {
+      "origin": "https://www.nf-m.co.jp",
+      "name": "ﾆﾁﾓｸﾌｧﾝｼｰﾏﾃﾘｱﾙ",
+      "categories": [
+        "内装天井材"
+      ],
+      "feed": "https://www.nf-m.co.jp/feed/",
+      "via": "link",
+      "items": 10,
+      "sample": [
+        "ニチモクファンシーマテリアル | 日本製紙木材グループ | 滋賀",
+        "Online Store 価格改定のお知らせ"
+      ],
+      "newest": "2026-07-22"
+    },
+    {
+      "origin": "https://www.nichiesu.com",
+      "name": "ニチエス",
+      "categories": [
+        "ファニチャー"
+      ],
+      "feed": "https://www.nichiesu.com/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "mood_indoor_20_GLOSTER_CARVER",
+        "mood_indoor_19_GANDIA BLASCO_ARAM"
+      ],
+      "newest": "2026-07-17"
+    },
+    {
+      "origin": "https://www.nikko-company.co.jp",
+      "name": "ニッコー",
+      "categories": [
+        "内装その他"
+      ],
+      "feed": "https://www.nikko-company.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "ショールーム夏季休館のお知らせ",
+        "「table source」システムメンテナンスに伴う一時停止のお知らせ"
+      ],
+      "newest": "2026-07-27"
+    },
+    {
+      "origin": "https://www.nip-co.co.jp",
+      "name": "ニップコーポレーション",
+      "categories": [
+        "内装壁材"
+      ],
+      "feed": "https://www.nip-co.co.jp/feed/",
+      "via": "link",
+      "items": 10,
+      "sample": [
+        "株式会社ニップコーポレーション",
+        "Y114-BK20B (ループ/黒)NIP面ファスナー 粘着付き ロールタイプ"
+      ],
+      "newest": "2026-07-10"
+    },
+    {
+      "origin": "https://www.nittoku.co.jp",
+      "name": "日本特殊塗料",
+      "categories": [
+        "防水"
+      ],
+      "feed": "https://www.nittoku.co.jp/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "ニュース &#8211; FA・コイル巻線機のトップメーカー NITTOKU 株式会社",
+        "夏季休業期間（8/12 ～ 8/16）営業に関するお知らせ"
+      ],
+      "newest": "2026-07-28"
+    },
+    {
+      "origin": "https://www.noyasu.co.jp",
+      "name": "野安",
+      "categories": [
+        "屋根"
+      ],
+      "feed": "https://www.noyasu.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "野安株式会社 NOYASU Co.,Ltd.",
+        "日本経済新聞掲載・NHKお金発見!突撃!カネオくん放送のお知らせ!!"
+      ],
+      "newest": "2026-07-09"
+    },
+    {
+      "origin": "https://www.nsk24.com",
+      "name": "ｴﾇ・ｴｽ・ｹｰ ﾆｼﾀﾞ工業",
+      "categories": [
+        "内装壁材"
+      ],
+      "feed": "https://www.nsk24.com/feed",
+      "via": "link",
+      "items": 10,
+      "sample": [
+        "エヌ・エス・ケー ニシダ工業株式会社",
+        "「建築・建材展大阪2026」（第2回）に出展します。"
+      ],
+      "newest": "2026-05-27"
+    },
+    {
+      "origin": "https://www.okajimawood.co.jp",
+      "name": "恩加島木材工業",
+      "categories": [
+        "内装壁材"
+      ],
+      "feed": "https://www.okajimawood.co.jp/feed/",
+      "via": "link",
+      "items": 12,
+      "sample": [
+        "恩加島木材工業株式会社",
+        "2026年夏季休業のお知らせ"
+      ],
+      "newest": "2026-08-05"
+    },
+    {
+      "origin": "https://www.omata-s.co.jp",
+      "name": "小俣シャッター工業",
+      "categories": [
+        "開口部"
+      ],
+      "feed": "https://www.omata-s.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "海上自衛隊より感謝状を授与",
+        "エアロマート名古屋2025に出展"
+      ],
+      "newest": "2026-04-07"
+    },
+    {
+      "origin": "https://www.ooike.net",
+      "name": "オーイケ",
+      "categories": [
+        "外構"
+      ],
+      "feed": "https://www.ooike.net/feed/",
+      "via": "link",
+      "items": 10,
+      "sample": [
+        "株式会社オーイケ",
+        "［2026年7月31日］技能実習計画の認定取り消しに関するお知らせ"
+      ],
+      "newest": "2026-07-31"
+    },
+    {
+      "origin": "https://www.owenscorning.jp",
+      "name": "ｵｰｳｪﾝｽｺｰﾆﾝｸﾞｼﾞｬﾊﾟﾝ",
+      "categories": [
+        "屋根"
+      ],
+      "feed": "https://owenscorning.jp/feed/",
+      "via": "link",
+      "items": 1,
+      "sample": [
+        "オーウェンスコーニング・アジアパシフィック 公式サイト",
+        "事業体制の変更に伴うサイトリニューアルおよびお問い合わせ窓口のご案内"
+      ],
+      "newest": "2026-01-06"
+    },
+    {
+      "origin": "https://www.palacap.co.jp",
+      "name": "パラキャップ社",
+      "categories": [
+        "金物"
+      ],
+      "feed": "https://www.palacap.co.jp/feed",
+      "via": "path",
+      "items": 1,
+      "sample": [
+        "専門メーカーが配慮する　　　　　　　　　　　　　　　　エキスパンションジョイントの　　　　基礎知識 01"
+      ],
+      "newest": "2021-02-26"
+    },
+    {
+      "origin": "https://www.pla-part.com",
+      "name": "石黒製作所",
+      "categories": [
+        "開口部"
+      ],
+      "feed": "https://www.pla-part.com/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "プラシャッター 一部製品 廃番のお知らせ",
+        "夏季休業のお知らせ"
+      ],
+      "newest": "2026-07-10"
+    },
+    {
+      "origin": "https://www.prairie.co.jp",
+      "name": "プレイリーホームズ",
+      "categories": [
+        "開口部",
+        "内部床",
+        "内装壁材"
+      ],
+      "feed": "https://www.prairie.co.jp/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "「建材総合カタログ with room」がvol.8になりました！",
+        "【新商品】オーク複合パーケットフローリングが新登場です！"
+      ],
+      "newest": "2026-08-03"
+    },
+    {
+      "origin": "https://www.royal-co.net",
+      "name": "ロイヤル",
+      "categories": [
+        "金物"
+      ],
+      "feed": "https://www.royal-co.net/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "打ち込みナット(32N)の形状変更について",
+        "※【緊急】熊本地震による配送遅配について"
+      ],
+      "newest": "2026-08-06"
+    },
+    {
+      "origin": "https://www.s-bic.co.jp",
+      "name": "エスビック",
+      "categories": [
+        "外構",
+        "外部床",
+        "外部その他"
+      ],
+      "feed": "https://www.s-bic.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "フェンス下のブロック塀に安心して使えるタフト動画紹介",
+        "エクステリアのCGデザイン集公開。"
+      ],
+      "newest": "2021-03-21"
+    },
+    {
+      "origin": "https://www.sakata-s.co.jp",
+      "name": "サカタ製作所",
+      "categories": [
+        "屋根"
+      ],
+      "feed": "https://www.sakata-s.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "金属屋根部品・太陽光取付金具ならサカタ製作所",
+        "夏季休業のご案内"
+      ],
+      "newest": "2026-08-04"
+    },
+    {
+      "origin": "https://www.sanwa-ss.co.jp",
+      "name": "三和シヤッター工業",
+      "categories": [
+        "開口部"
+      ],
+      "feed": "https://www.sanwa-ss.co.jp/atom.xml",
+      "via": "path",
+      "items": 15,
+      "sample": [
+        "ビル向けサッシ「明治オーニング」（防火仕様）をリニューアル - インフォメーション",
+        "大型化する台風から家屋を守るには？ - 【TEST】お役立ちコラム"
+      ],
+      "newest": "2021-02-19"
+    },
+    {
+      "origin": "https://www.seiwasangyo.co.jp",
+      "name": "正和産業",
+      "categories": [
+        "外構"
+      ],
+      "feed": "https://seiwasangyo.co.jp/feed",
+      "via": "link",
+      "items": 2,
+      "sample": [
+        "成和産業株式会社",
+        "求人情報"
+      ],
+      "newest": "2024-09-01"
+    },
+    {
+      "origin": "https://www.sekino.co.jp",
+      "name": "セキノ興産",
+      "categories": [
+        "屋根"
+      ],
+      "feed": "https://www.sekino.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "夏季休業のご案内",
+        "「資料請求フォーム」リニューアルのお知らせ"
+      ],
+      "newest": "2026-07-29"
+    },
+    {
+      "origin": "https://www.sekistone.com",
+      "name": "関ケ原石材",
+      "categories": [
+        "内部床"
+      ],
+      "feed": "https://www.sekistone.com/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "【石彫支援プログラム】2025年度コンテスト結果発表!",
+        "夏季休暇（お盆休み）のお知らせ"
+      ],
+      "newest": "2026-08-05"
+    },
+    {
+      "origin": "https://www.sekisui.co.jp",
+      "name": "積水化学工業",
+      "categories": [
+        "外部その他",
+        "内部床"
+      ],
+      "feed": "https://www.sekisui.co.jp/index.rdf",
+      "via": "path",
+      "items": 50,
+      "sample": [
+        "積水化学工業(株)WEBサイトの新着情報",
+        "中国・上海に合わせガラス用中間膜のデザインセンターを開設&amp;lt;br/&amp;gt;  ～中間膜技術と中国市場のデザイントレンドを融合したモビリティ分野での新たな価値創造を推進～"
+      ],
+      "newest": "2026-08-06"
+    },
+    {
+      "origin": "https://www.shindo-kogyo.co.jp",
+      "name": "シンドウ工業",
+      "categories": [
+        "内装その他"
+      ],
+      "feed": "https://www.shindo-kogyo.co.jp/feed",
+      "via": "path",
+      "items": 1,
+      "sample": [
+        "Hello world!"
+      ],
+      "newest": "2016-07-25"
+    },
+    {
+      "origin": "https://www.sk-kaken.co.jp",
+      "name": "エスケー化研",
+      "categories": [
+        "内装その他",
+        "防水"
+      ],
+      "feed": "https://www.sk-kaken.co.jp/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "耐火塗料「SKタイカコートHS」が鋼管柱の2時間耐火認定を取得しました",
+        "耐火シート「SKタイカシート」が新たな2時間耐火鋼管柱認定を取得しました"
+      ],
+      "newest": "2026-08-06"
+    },
+    {
+      "origin": "https://www.sowa-chem.co.jp",
+      "name": "双和化学産業",
+      "categories": [
+        "防水"
+      ],
+      "feed": "https://www.sowa-chem.co.jp/feed/",
+      "via": "link",
+      "items": 10,
+      "sample": [
+        "全国ポリルーフ工業会35周年記念大会を開催 ― 記念動画を公開",
+        "「健康経営優良法人2026」に認定されました"
+      ],
+      "newest": "2026-05-21"
+    },
+    {
+      "origin": "https://www.sunrail.co.jp",
+      "name": "サンレール",
+      "categories": [
+        "外部その他"
+      ],
+      "feed": "https://www.sunrail.co.jp/feed",
+      "via": "link",
+      "items": 10,
+      "sample": [
+        "サンレール",
+        "弊社リクルートサイト再開のお知らせ"
+      ],
+      "newest": "2023-07-25"
+    },
+    {
+      "origin": "https://www.sunsyo.co.jp",
+      "name": "三昌",
+      "categories": [
+        "外部その他"
+      ],
+      "feed": "https://www.sunsyo.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "富山駅南北自由通路",
+        "入善庁舎"
+      ],
+      "newest": "2025-06-23"
+    },
+    {
+      "origin": "https://www.t-route.com",
+      "name": "大光ルート産業",
+      "categories": [
+        "内装その他"
+      ],
+      "feed": "https://www.t-route.com/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "大光ルート産業株式会社",
+        "GREEN×EXPO 2027"
+      ],
+      "newest": "2026-07-01"
+    },
+    {
+      "origin": "https://www.taiyo-ecobloxx.com",
+      "name": "太陽ｴｺﾌﾟﾚｺﾝ工業",
+      "categories": [
+        "外構",
+        "外部床"
+      ],
+      "feed": "https://www.taiyo-ecobloxx.com/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "夏季休業のお知らせ",
+        "第2回　建築建材展 大阪2026　出展"
+      ],
+      "newest": "2026-08-03"
+    },
+    {
+      "origin": "https://www.takara-kizai.com",
+      "name": "宝機材",
+      "categories": [
+        "内装その他"
+      ],
+      "feed": "https://www.takara-kizai.com/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "グレーチングの宝機材",
+        "2026年8月8日～8月16日　夏季休業のお知らせ"
+      ],
+      "newest": "2026-08-01"
+    },
+    {
+      "origin": "https://www.takenaka-ss.co.jp",
+      "name": "竹中製作所",
+      "categories": [
+        "外部その他"
+      ],
+      "feed": "https://takenaka-ss.co.jp/feed/",
+      "via": "link",
+      "items": 10,
+      "sample": [
+        "《　新年度会　バーベキュー　》第４５期",
+        "《　皆既月食　&#x1f315;》"
+      ],
+      "newest": "2026-05-02"
+    },
+    {
+      "origin": "https://www.takiron-ci.co.jp",
+      "name": "タキステップ(タキロン)",
+      "categories": [
+        "内装その他",
+        "外構",
+        "外部床",
+        "外部その他"
+      ],
+      "feed": "https://www.takiron-ci.co.jp/news/rss.xml",
+      "via": "path",
+      "items": 20,
+      "sample": [
+        "中東情勢悪化による製品供給への影響について",
+        "ジッパー製品供給および価格に関するご案内"
+      ],
+      "newest": "2026-03-17"
+    },
+    {
+      "origin": "https://www.tanita-hw.co.jp",
+      "name": "ﾀﾆﾀﾊｳｼﾞﾝｸﾞｳｪｱ",
+      "categories": [
+        "屋根"
+      ],
+      "feed": "https://www.tanita-hw.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "ＧＷ休業及び出荷休業期間についてのお知らせ",
+        "施工事例　住宅（ガルバリウムスパンドレルZiG）1件を追加しました。"
+      ],
+      "newest": "2019-03-31"
+    },
+    {
+      "origin": "https://www.tanseisha.co.jp",
+      "name": "丹青社",
+      "categories": [
+        "内装その他"
+      ],
+      "feed": "https://www.tanseisha.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "Fund Reviewに、「R2」に関する記事が掲載されました",
+        "「令和8年熊本地震」により被災された皆さまに、心よりお見舞い申し上げます"
+      ],
+      "newest": "2026-08-05"
+    },
+    {
+      "origin": "https://www.tendo-mokko.co.jp",
+      "name": "天童木工",
+      "categories": [
+        "ファニチャー"
+      ],
+      "feed": "https://www.tendo-mokko.co.jp/info/feed/",
+      "via": "path",
+      "items": 50,
+      "sample": [
+        "夏期休業のお知らせ",
+        "新しいカタログを発刊いたしました"
+      ],
+      "newest": "2026-07-13"
+    },
+    {
+      "origin": "https://www.tkbs.co.jp",
+      "name": "東京興業貿易商会",
+      "categories": [
+        "内装天井材"
+      ],
+      "feed": "https://www.tkbs.co.jp/news/feed/",
+      "via": "path",
+      "items": 1,
+      "sample": [
+        "カスタマーハラスメントに関する当社の取り組みについて"
+      ],
+      "newest": "2026-07-31"
+    },
+    {
+      "origin": "https://www.toshin-grc.co.jp",
+      "name": "ﾄｰｼﾝｺｰﾎﾟﾚｰｼｮﾝ",
+      "categories": [
+        "電気設備"
+      ],
+      "feed": "https://www.toshin-grc.co.jp/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "お知らせ &#8211; トーシンコーポレーション | プランター・エクステリア・住宅設備建材・LED",
+        "コネクトベンチ価格改定のお知らせ　※９月１日出荷分より"
+      ],
+      "newest": "2026-08-06"
+    },
+    {
+      "origin": "https://www.try110.com",
+      "name": "鶴弥",
+      "categories": [
+        "屋根"
+      ],
+      "feed": "https://www.try110.com/rss2.xml",
+      "via": "link",
+      "items": 10,
+      "sample": [
+        "日本で学び、出会った「瓦」の魅力",
+        "2027年3月期第1四半期決算短信[日本基準]（非連結）掲載（PDF）"
+      ],
+      "newest": "2026-08-03"
+    },
+    {
+      "origin": "https://www.tsukiboshi-shoji.co.jp",
+      "name": "月星商事",
+      "categories": [
+        "屋根"
+      ],
+      "feed": "https://www.tsukiboshi-shoji.co.jp/feed",
+      "via": "path",
+      "items": 1,
+      "sample": [
+        "月星商事株式会社",
+        "本社移転のお知らせ"
+      ],
+      "newest": "2026-08-03"
+    },
+    {
+      "origin": "https://www.unison-net.com",
+      "name": "ユニソン",
+      "categories": [
+        "電気設備",
+        "外構",
+        "外壁",
+        "外部床"
+      ],
+      "feed": "https://www.unison-net.com/feed",
+      "via": "path",
+      "items": 1,
+      "sample": [
+        "Hello world!"
+      ],
+      "newest": "2021-03-03"
+    },
+    {
+      "origin": "https://www.vinyframe.co.jp",
+      "name": "ビニフレーム工業",
+      "categories": [
+        "外部その他"
+      ],
+      "feed": "https://www.vinyframe.co.jp/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "夏季休業のお知らせ",
+        "【展示会情報】「関東グランドフェア2026」ご来場ありがとうございました"
+      ],
+      "newest": "2026-08-03"
+    },
+    {
+      "origin": "https://www.woodtec.co.jp",
+      "name": "朝日ウッドテック",
+      "categories": [
+        "内装その他",
+        "内部床",
+        "内装壁材",
+        "内装天井材"
+      ],
+      "feed": "https://www.woodtec.co.jp/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "ニュース | 朝日ウッドテック",
+        "ショールーム夏期休館のお知らせ"
+      ],
+      "newest": "2026-07-23"
+    },
+    {
+      "origin": "https://www.yabuhara-ind.co.jp",
+      "name": "ヤブ原産業",
+      "categories": [
+        "外構"
+      ],
+      "feed": "https://www.yabuhara-ind.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "The  Araidashi  コラム『平屋の価値を高める外構計画と、美しさを宿すアプローチの法則』を公開しました。",
+        "The  Araidashi   コラム『平屋の価値を高める外構計画と、美しさを宿すアプローチの法則』を掲載しました。"
+      ],
+      "newest": "2026-08-03"
+    },
+    {
+      "origin": "https://www.yamada-shomei.co.jp",
+      "name": "山田照明",
+      "categories": [
+        "電気設備"
+      ],
+      "feed": "https://www.yamada-shomei.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "夏期休業のお知らせ",
+        "令和8年熊本地震により被災された皆様へ"
+      ],
+      "newest": "2026-08-05"
+    },
+    {
+      "origin": "https://www.yamagiwa.co.jp",
+      "name": "ヤマギワ",
+      "categories": [
+        "電気設備"
+      ],
+      "feed": "https://www.yamagiwa.co.jp/feed/",
+      "via": "link",
+      "items": 10,
+      "sample": [
+        "株式会社YAMAGIWA",
+        "ショップ・ショールーム 臨時休業のお知らせ"
+      ],
+      "newest": "2026-06-29"
+    },
+    {
+      "origin": "https://www.yamanaka-jp.com",
+      "name": "山中産業",
+      "categories": [
+        "内部床"
+      ],
+      "feed": "https://www.yamanaka-jp.com/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "【公式】山中産業株式会社",
+        "【メディア情報】ラジオ大阪にて企業紹介いただきます"
+      ],
+      "newest": "2026-07-16"
+    },
+    {
+      "origin": "https://www.yamatoslate.co.jp",
+      "name": "大和スレート",
+      "categories": [
+        "屋根"
+      ],
+      "feed": "https://www.yamatoslate.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "換気棟",
+        "片流れ棟巴（左右）"
+      ],
+      "newest": "2025-07-10"
+    },
+    {
+      "origin": "https://www.yokobiki.com",
+      "name": "横引シャッター",
+      "categories": [
+        "開口部"
+      ],
+      "feed": "https://www.yokobiki.com/feed",
+      "via": "path",
+      "items": 3,
+      "sample": [
+        "シャッターで防犯したいけど、内部が全く見えなくなるのは嫌だった",
+        "防犯と美観を兼ね備えた横引きシャッター"
+      ],
+      "newest": "2018-08-03"
+    },
+    {
+      "origin": "https://www.zenwa.co.jp",
+      "name": "全和",
+      "categories": [
+        "外構"
+      ],
+      "feed": "https://www.zenwa.co.jp/feed",
+      "via": "path",
+      "items": 1,
+      "sample": [
+        "Hello world!"
+      ],
+      "newest": "2026-03-10"
+    },
+    {
+      "origin": "https://www3.best-x.co.jp",
+      "name": "ベスト",
+      "categories": [
+        "金物"
+      ],
+      "feed": "https://www3.best-x.co.jp/news/feed/",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "夏季休業のお知らせ",
+        "中東情勢に伴う製品供給・価格への影響について"
+      ],
+      "newest": "2026-07-29"
+    },
+    {
+      "origin": "https://yabuhara-ind.co.jp",
+      "name": "ヤブ原産業",
+      "categories": [
+        "外壁"
+      ],
+      "feed": "https://yabuhara-ind.co.jp/feed",
+      "via": "path",
+      "items": 10,
+      "sample": [
+        "The  Araidashi  コラム『平屋の価値を高める外構計画と、美しさを宿すアプローチの法則』を公開しました。",
+        "The  Araidashi   コラム『平屋の価値を高める外構計画と、美しさを宿すアプローチの法則』を掲載しました。"
+      ],
+      "newest": "2026-08-03"
+    },
+    {
+      "origin": "https://yuniace.com",
+      "name": "ユニエース",
+      "categories": [
+        "外部その他"
+      ],
+      "feed": "https://yuniace.com/feed/",
+      "via": "link",
+      "items": 1,
+      "sample": [
+        "庇（ひさし）の専門メーカー 株式会社ユニエース",
+        "ホームページをリニューアルしました"
+      ],
+      "newest": "2025-04-02"
+    }
+  ]
+}

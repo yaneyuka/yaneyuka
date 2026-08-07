@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import SampleNotice from '@/components/SampleNotice';
 
 interface ConstructionCompaniesProps {
   onNavigateToRegistration?: () => void;
@@ -109,6 +110,8 @@ const ConstructionCompanies: React.FC<ConstructionCompaniesProps> = ({ onNavigat
         <button className={getButtonClass('interior')} onClick={() => setActiveCategory('interior')}>内装仕上</button>
         <button className={getButtonClass('exterior')} onClick={() => setActiveCategory('exterior')}>外構工事</button>
       </div>
+
+      <SampleNotice target="施工会社" onRequest={onNavigateToRegistration} />
 
       <div className="grid gap-3 grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
         {(data[activeCategory] || []).map((item, index) => (
