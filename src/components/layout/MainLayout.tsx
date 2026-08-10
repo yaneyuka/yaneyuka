@@ -5,6 +5,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Navigation from './Navigation';
 import RelatedPrivacyLinks from '../RelatedPrivacyLinks';
 import { isPrivacyPolicyPath } from '@/lib/legalPages';
+import { CATEGORY_ROUTES, EXTERIOR_FINISH_SUBCATEGORIES, findCategoryBySubcategory } from '@/lib/materialCategories';
 import ReferenceResources from '../content/ReferenceResources';
 import Settings from '../content/Userpage/Settings';
 import Sidebar from './Sidebar';
@@ -736,81 +737,34 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, initialContent = 'top
     };
   }, []);
 
+  // カテゴリ -> その小分類を保持する state の更新関数。
+  // 小分類を選ぶと、選んだカテゴリ以外はすべて空にする。
+  const materialSubcategorySetters: Record<string, (v: string) => void> = {
+    'roof': setRoofSubcategory,
+    'exterior-wall': setExteriorWallSubcategory,
+    'opening': setOpeningSubcategory,
+    'external-floor': setExternalFloorSubcategory,
+    'exterior-other': setExteriorOtherSubcategory,
+    'internal-floor': setInternalFloorSubcategory,
+    'internal-wall': setInternalWallSubcategory,
+    'internal-ceiling': setInternalCeilingSubcategory,
+    'internal-other': setInternalOtherSubcategory,
+    'waterproof': setWaterproofSubcategory,
+    'hardware': setHardwareSubcategory,
+    'furniture': setFurnitureSubcategory,
+    'electrical-systems': setElectricalSystemsSubcategory,
+    'mechanical-systems': setMechanicalSystemsSubcategory,
+    'exterior-infrastructure': setExteriorInfrastructureSubcategory,
+    'exterior': setExteriorSubcategory,
+  };
+
   const handleSubcategoryClick = (subcategory: string) => {
     console.log('Subcategory clicked:', subcategory);
     
-    // カテゴリーページのURLマッピング
-    const categoryRouteMap: Record<string, string> = {
-      'roof': '/roof',
-      'exterior-wall': '/exterior-wall',
-      'opening': '/opening',
-      'external-floor': '/external-floor',
-      'exterior-other': '/exterior-other',
-      'internal-floor': '/internal-floor',
-      'internal-wall': '/internal-wall',
-      'internal-ceiling': '/internal-ceiling',
-      'internal-other': '/internal-other',
-      'waterproof': '/waterproof',
-      'hardware': '/hardware',
-      'furniture': '/furniture',
-      'electrical-systems': '/electrical-systems',
-      'mechanical-systems': '/mechanical-systems',
-      'exterior-infrastructure': '/exterior-infrastructure',
-      'exterior': '/exterior',
-    };
-    
-    // サブカテゴリーからカテゴリーを判定
-    const getCategoryFromSubcategory = (sub: string): string | null => {
-      const roofSubcategories = ['折板', '金属屋根', 'スレート', '瓦', '屋根その他'];
-      if (roofSubcategories.includes(sub)) return 'roof';
-      
-      const exteriorWallSubcategories = ['alc', 'ecp', '金属サイディング', '窯業サイディング', 'metalpanel', 'exterior-wall-other', 'paint', 'plaster', 'tile', 'stone-brick', 'metal-panel', 'wood-board', 'decorative', 'other-finish'];
-      if (exteriorWallSubcategories.includes(sub)) return 'exterior-wall';
-      
-      const openingSubcategories = ['aluminum-sash', 'resin-sash', 'wood-sash', 'light-shutter', 'heavy-shutter'];
-      if (openingSubcategories.includes(sub)) return 'opening';
-      
-      const externalFloorSubcategories = ['external-tile', 'external-stone-brick', 'pvc-sheet', 'external-finish'];
-      if (externalFloorSubcategories.includes(sub)) return 'external-floor';
-      
-      const exteriorOtherSubcategories = ['笠木水切', '庇オーニング', '雨どい', 'ハト小屋', '太陽光パネル', '手摺'];
-      if (exteriorOtherSubcategories.includes(sub)) return 'exterior-other';
-      
-      const internalFloorSubcategories = ['フローリング', 'ビニールタイル', 'ビニールシート', 'カーペット', '内装タイル', '内装床石レンガ', '畳', '巾木床見切', '内装床機能性', '内装床その他'];
-      if (internalFloorSubcategories.includes(sub)) return 'internal-floor';
-      
-      const internalWallSubcategories = ['内装壁壁紙', '内装壁化粧板', '内装壁化粧シート', '内装壁化粧パネル', '内装壁金属板', '内装壁塗り壁', '内装壁タイル', '内装壁石レンガ', '内装壁装飾材', '内装壁機能性', '内装壁壁見切', '内装壁その他'];
-      if (internalWallSubcategories.includes(sub)) return 'internal-wall';
-      
-      const internalCeilingSubcategories = ['内装天井ボード', '内装天井化粧材', '内装天井装飾材', '内装天井機能性', '内装天井その他'];
-      if (internalCeilingSubcategories.includes(sub)) return 'internal-ceiling';
-      
-      const internalOtherSubcategories = ['トイレブース', '内装サッシ', '内装シャッター', 'ノンスリップ', '内装手摺', 'グレーチング', '内装緑化', '点検口', '隔壁', '保護材', '点字', 'ディスプレイ', '内装その他製品'];
-      if (internalOtherSubcategories.includes(sub)) return 'internal-other';
-      
-      const waterproofSubcategories = ['ウレタン防水', 'アスファルト防水', 'シート防水', 'FRP防水', '防水その他'];
-      if (waterproofSubcategories.includes(sub)) return 'waterproof';
-      
-      const hardwareSubcategories = ['ハンドル', '引棒', '建具金物', '棚フック', 'サニタリー', '家具金物', '鍵関係', 'EXP,J', '金物その他'];
-      if (hardwareSubcategories.includes(sub)) return 'hardware';
-      
-      const furnitureSubcategories = ['家具', 'カーテン', 'ブラインド', '生地', 'ファニチャーその他'];
-      if (furnitureSubcategories.includes(sub)) return 'furniture';
-      
-      const electricalSystemsSubcategories = ['照明', '外構照明', 'スイッチコンセント', '発電機', '電気設備その他'];
-      if (electricalSystemsSubcategories.includes(sub)) return 'electrical-systems';
-      
-      const mechanicalSystemsSubcategories = ['水栓', '衛生機器', '住宅設備', 'キッチン', '空調機', '機械設備その他'];
-      if (mechanicalSystemsSubcategories.includes(sub)) return 'mechanical-systems';
-      
-      const exteriorInfrastructureSubcategories = ['縁石', '外構舗装', '雨水桝', '桝蓋', '外構グレーチング', '外構その他'];
-      if (exteriorInfrastructureSubcategories.includes(sub)) return 'exterior-infrastructure';
-      
-      const exteriorSubcategories = ['宅配ボックス', '郵便受け', '表札', '門扉', 'フェンス', 'カーポート', '大型引戸', 'ウッドデッキ', '駐輪場', 'ゴミストッカー', 'エクステリア緑化', 'エクステリアその他'];
-      if (exteriorSubcategories.includes(sub)) return 'exterior';
-      
-      return null;
-    };
+    // 対応表は src/lib/materialCategories.ts に集約。
+    // ここには 16 カテゴリぶんの配列が直書きされていた。
+    const categoryRouteMap = CATEGORY_ROUTES;
+    const getCategoryFromSubcategory = findCategoryBySubcategory;
     
     const category = getCategoryFromSubcategory(subcategory);
     
@@ -894,389 +848,19 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, initialContent = 'top
       return;
     }
 
-    // ファニチャーの小カテゴリーがクリックされた場合
-    const furnitureSubcategories = ['家具', 'カーテン', 'ブラインド', '生地', 'ファニチャーその他'];
-    if (furnitureSubcategories.includes(subcategory)) {
-      console.log('Setting furniture content with subcategory:', subcategory);
-      setActiveContent('furniture');
-      setFurnitureSubcategory(subcategory);
-      setHardwareSubcategory('');
-      setWaterproofSubcategory('');
-      setElectricalSystemsSubcategory('');
-      setMechanicalSystemsSubcategory('');
-      setExteriorInfrastructureSubcategory('');
-      setExteriorSubcategory('');
-      setRoofSubcategory('');
-      setExteriorWallSubcategory('');
-      setOpeningSubcategory('');
-      setExternalFloorSubcategory('');
-      setExteriorOtherSubcategory('');
-      setInternalFloorSubcategory('');
-      setInternalWallSubcategory('');
-      setInternalCeilingSubcategory('');
-      setInternalOtherSubcategory('');
+    // 建材の小分類がクリックされた場合。
+    // 対応表は src/lib/materialCategories.ts。以前はカテゴリごとに 24 行の同じ処理が
+    // 16 組並んでいて、小分類を足すたびに 16 箇所すべてを直す必要があった。
+    const materialCategory = findCategoryBySubcategory(subcategory);
+    if (materialCategory) {
+      setActiveContent(materialCategory);
+      // 選んだカテゴリだけ値を入れ、ほかは空にする（前の選択が残らないように）
+      Object.entries(materialSubcategorySetters).forEach(([category, setValue]) => {
+        setValue(category === materialCategory ? subcategory : '');
+      });
       return;
     }
 
-    // 金物の小カテゴリーがクリックされた場合
-    const hardwareSubcategories = ['ハンドル', '引棒', '建具金物', '棚フック', 'サニタリー', '家具金物', '鍵関係', 'EXP,J', '金物その他'];
-    if (hardwareSubcategories.includes(subcategory)) {
-      console.log('Setting hardware content with subcategory:', subcategory);
-      setActiveContent('hardware');
-      setHardwareSubcategory(subcategory);
-      setFurnitureSubcategory('');
-      setWaterproofSubcategory('');
-      setElectricalSystemsSubcategory('');
-      setMechanicalSystemsSubcategory('');
-      setExteriorInfrastructureSubcategory('');
-      setExteriorSubcategory('');
-      setRoofSubcategory('');
-      setExteriorWallSubcategory('');
-      setOpeningSubcategory('');
-      setExternalFloorSubcategory('');
-      setExteriorOtherSubcategory('');
-      setInternalFloorSubcategory('');
-      setInternalWallSubcategory('');
-      setInternalCeilingSubcategory('');
-      setInternalOtherSubcategory('');
-      return;
-    }
-
-    // 防水の小カテゴリーがクリックされた場合
-    const waterproofSubcategories = ['ウレタン防水', 'アスファルト防水', 'シート防水', 'FRP防水', '防水その他'];
-    if (waterproofSubcategories.includes(subcategory)) {
-      console.log('Setting waterproof content with subcategory:', subcategory);
-      setActiveContent('waterproof');
-      setWaterproofSubcategory(subcategory);
-      setFurnitureSubcategory('');
-      setHardwareSubcategory('');
-      setElectricalSystemsSubcategory('');
-      setMechanicalSystemsSubcategory('');
-      setExteriorInfrastructureSubcategory('');
-      setExteriorSubcategory('');
-      setRoofSubcategory('');
-      setExteriorWallSubcategory('');
-      setOpeningSubcategory('');
-      setExternalFloorSubcategory('');
-      setExteriorOtherSubcategory('');
-      setInternalFloorSubcategory('');
-      setInternalWallSubcategory('');
-      setInternalCeilingSubcategory('');
-      setInternalOtherSubcategory('');
-      return;
-    }
-
-    // 電気設備の小カテゴリーがクリックされた場合
-    const electricalSystemsSubcategories = ['照明', '外構照明', 'スイッチコンセント', '発電機', '電気設備その他'];
-    if (electricalSystemsSubcategories.includes(subcategory)) {
-      console.log('Setting electrical systems content with subcategory:', subcategory);
-      setActiveContent('electrical-systems');
-      setElectricalSystemsSubcategory(subcategory);
-      setWaterproofSubcategory('');
-      setHardwareSubcategory('');
-      setFurnitureSubcategory('');
-      setMechanicalSystemsSubcategory('');
-      setExteriorInfrastructureSubcategory('');
-      setExteriorSubcategory('');
-      setRoofSubcategory('');
-      setExteriorWallSubcategory('');
-      setOpeningSubcategory('');
-      setExternalFloorSubcategory('');
-      setExteriorOtherSubcategory('');
-      setInternalFloorSubcategory('');
-      setInternalWallSubcategory('');
-      setInternalCeilingSubcategory('');
-      setInternalOtherSubcategory('');
-      return;
-    }
-
-    // 機械設備の小カテゴリーがクリックされた場合
-    const mechanicalSystemsSubcategories = ['水栓', '衛生機器', '住宅設備', 'キッチン', '空調機', '機械設備その他'];
-    if (mechanicalSystemsSubcategories.includes(subcategory)) {
-      console.log('Setting mechanical systems content with subcategory:', subcategory);
-      setActiveContent('mechanical-systems');
-      setMechanicalSystemsSubcategory(subcategory);
-      setElectricalSystemsSubcategory('');
-      setWaterproofSubcategory('');
-      setHardwareSubcategory('');
-      setFurnitureSubcategory('');
-      setExteriorInfrastructureSubcategory('');
-      setExteriorSubcategory('');
-      setRoofSubcategory('');
-      setExteriorWallSubcategory('');
-      setOpeningSubcategory('');
-      setExternalFloorSubcategory('');
-      setExteriorOtherSubcategory('');
-      setInternalFloorSubcategory('');
-      setInternalWallSubcategory('');
-      setInternalCeilingSubcategory('');
-      setInternalOtherSubcategory('');
-      return;
-    }
-
-    // 外構の小カテゴリーがクリックされた場合
-    const exteriorInfrastructureSubcategories = ['縁石', '外構舗装', '雨水桝', '桝蓋', '外構グレーチング', '外構その他'];
-    if (exteriorInfrastructureSubcategories.includes(subcategory)) {
-      console.log('Setting exterior infrastructure content with subcategory:', subcategory);
-      setActiveContent('exterior-infrastructure');
-      setExteriorInfrastructureSubcategory(subcategory);
-      setMechanicalSystemsSubcategory('');
-      setElectricalSystemsSubcategory('');
-      setWaterproofSubcategory('');
-      setHardwareSubcategory('');
-      setFurnitureSubcategory('');
-      setExteriorSubcategory('');
-      setRoofSubcategory('');
-      setExteriorWallSubcategory('');
-      setOpeningSubcategory('');
-      setExternalFloorSubcategory('');
-      setExteriorOtherSubcategory('');
-      setInternalFloorSubcategory('');
-      setInternalWallSubcategory('');
-      setInternalCeilingSubcategory('');
-      setInternalOtherSubcategory('');
-      return;
-    }
-
-    // エクステリアの小カテゴリーがクリックされた場合
-    const exteriorSubcategories = ['宅配ボックス', '郵便受け', '表札', '門扉', 'フェンス', 'カーポート', '大型引戸', 'ウッドデッキ', '駐輪場', 'ゴミストッカー', 'エクステリア緑化', 'エクステリアその他'];
-    if (exteriorSubcategories.includes(subcategory)) {
-      console.log('Setting exterior content with subcategory:', subcategory);
-      setActiveContent('exterior');
-      setExteriorSubcategory(subcategory);
-      setExteriorInfrastructureSubcategory('');
-      setMechanicalSystemsSubcategory('');
-      setElectricalSystemsSubcategory('');
-      setWaterproofSubcategory('');
-      setHardwareSubcategory('');
-      setFurnitureSubcategory('');
-      setRoofSubcategory('');
-      setExteriorWallSubcategory('');
-      setOpeningSubcategory('');
-      setExternalFloorSubcategory('');
-      setExteriorOtherSubcategory('');
-      setInternalFloorSubcategory('');
-      setInternalWallSubcategory('');
-      setInternalCeilingSubcategory('');
-      setInternalOtherSubcategory('');
-      return;
-    }
-    
-    // 屋根の小カテゴリーがクリックされた場合
-    const roofSubcategories = ['折板', '金属屋根', 'スレート', '瓦', '屋根その他'];
-    if (roofSubcategories.includes(subcategory)) {
-      console.log('Setting roof content with subcategory:', subcategory);
-      setActiveContent('roof');
-      setRoofSubcategory(subcategory);
-      setExteriorWallSubcategory('');
-      setOpeningSubcategory('');
-      setExternalFloorSubcategory('');
-      setExteriorOtherSubcategory('');
-      setInternalFloorSubcategory('');
-      setInternalWallSubcategory('');
-      setInternalCeilingSubcategory('');
-      setInternalOtherSubcategory('');
-      setWaterproofSubcategory('');
-      setHardwareSubcategory('');
-      setFurnitureSubcategory('');
-      setElectricalSystemsSubcategory('');
-      setMechanicalSystemsSubcategory('');
-      setExteriorInfrastructureSubcategory('');
-      setExteriorSubcategory('');
-      return;
-    }
-
-    // 外壁の小カテゴリーがクリックされた場合
-    const exteriorWallSubcategories = ['alc', 'ecp', '金属サイディング', '窯業サイディング', 'metalpanel', 'exterior-wall-other', 'paint', 'plaster', 'tile', 'stone-brick', 'metal-panel', 'wood-board', 'decorative', 'other-finish'];
-    if (exteriorWallSubcategories.includes(subcategory)) {
-      console.log('Setting exterior wall content with subcategory:', subcategory);
-      setActiveContent('exterior-wall');
-      setExteriorWallSubcategory(subcategory);
-      setRoofSubcategory('');
-      setOpeningSubcategory('');
-      setExternalFloorSubcategory('');
-      setExteriorOtherSubcategory('');
-      setInternalFloorSubcategory('');
-      setInternalWallSubcategory('');
-      setInternalCeilingSubcategory('');
-      setInternalOtherSubcategory('');
-      setWaterproofSubcategory('');
-      setHardwareSubcategory('');
-      setFurnitureSubcategory('');
-      setElectricalSystemsSubcategory('');
-      setMechanicalSystemsSubcategory('');
-      setExteriorInfrastructureSubcategory('');
-      setExteriorSubcategory('');
-      return;
-    }
-
-    // 開口部の小カテゴリーがクリックされた場合
-    const openingSubcategories = ['aluminum-sash', 'resin-sash', 'wood-sash', 'light-shutter', 'heavy-shutter'];
-    if (openingSubcategories.includes(subcategory)) {
-      console.log('Setting opening content with subcategory:', subcategory);
-      setActiveContent('opening');
-      setOpeningSubcategory(subcategory);
-      setRoofSubcategory('');
-      setExteriorWallSubcategory('');
-      setExternalFloorSubcategory('');
-      setExteriorOtherSubcategory('');
-      setInternalFloorSubcategory('');
-      setInternalWallSubcategory('');
-      setInternalCeilingSubcategory('');
-      setInternalOtherSubcategory('');
-      setWaterproofSubcategory('');
-      setHardwareSubcategory('');
-      setFurnitureSubcategory('');
-      setElectricalSystemsSubcategory('');
-      setMechanicalSystemsSubcategory('');
-      setExteriorInfrastructureSubcategory('');
-      setExteriorSubcategory('');
-      return;
-    }
-
-    // 外部床の小カテゴリーがクリックされた場合
-    const externalFloorSubcategories = ['external-tile', 'external-stone-brick', 'pvc-sheet', 'external-finish'];
-    if (externalFloorSubcategories.includes(subcategory)) {
-      console.log('Setting external floor content with subcategory:', subcategory);
-      setActiveContent('external-floor');
-      setExternalFloorSubcategory(subcategory);
-      setRoofSubcategory('');
-      setExteriorWallSubcategory('');
-      setOpeningSubcategory('');
-      setExteriorOtherSubcategory('');
-      setInternalFloorSubcategory('');
-      setInternalWallSubcategory('');
-      setInternalCeilingSubcategory('');
-      setInternalOtherSubcategory('');
-      setWaterproofSubcategory('');
-      setHardwareSubcategory('');
-      setFurnitureSubcategory('');
-      setElectricalSystemsSubcategory('');
-      setMechanicalSystemsSubcategory('');
-      setExteriorInfrastructureSubcategory('');
-      setExteriorSubcategory('');
-      return;
-    }
-
-    // 外部その他の小カテゴリーがクリックされた場合
-    const exteriorOtherSubcategories = ['笠木水切', '庇オーニング', '雨どい', 'ハト小屋', '太陽光パネル', '手摺'];
-    if (exteriorOtherSubcategories.includes(subcategory)) {
-      console.log('Setting exterior other content with subcategory:', subcategory);
-      setActiveContent('exterior-other');
-      setExteriorOtherSubcategory(subcategory);
-      setRoofSubcategory('');
-      setExteriorWallSubcategory('');
-      setOpeningSubcategory('');
-      setExternalFloorSubcategory('');
-      setInternalFloorSubcategory('');
-      setInternalWallSubcategory('');
-      setInternalCeilingSubcategory('');
-      setInternalOtherSubcategory('');
-      setWaterproofSubcategory('');
-      setHardwareSubcategory('');
-      setFurnitureSubcategory('');
-      setElectricalSystemsSubcategory('');
-      setMechanicalSystemsSubcategory('');
-      setExteriorInfrastructureSubcategory('');
-      setExteriorSubcategory('');
-      return;
-    }
-
-    // 内部床材の小カテゴリーがクリックされた場合
-    const internalFloorSubcategories = ['フローリング', 'ビニールタイル', 'ビニールシート', 'カーペット', '内装タイル', '内装床石レンガ', '畳', '巾木床見切', '内装床機能性', '内装床その他'];
-    if (internalFloorSubcategories.includes(subcategory)) {
-      console.log('Setting internal floor content with subcategory:', subcategory);
-      setActiveContent('internal-floor');
-      setInternalFloorSubcategory(subcategory);
-      setRoofSubcategory('');
-      setExteriorWallSubcategory('');
-      setOpeningSubcategory('');
-      setExternalFloorSubcategory('');
-      setExteriorOtherSubcategory('');
-      setInternalWallSubcategory('');
-      setInternalCeilingSubcategory('');
-      setInternalOtherSubcategory('');
-      setWaterproofSubcategory('');
-      setHardwareSubcategory('');
-      setFurnitureSubcategory('');
-      setElectricalSystemsSubcategory('');
-      setMechanicalSystemsSubcategory('');
-      setExteriorInfrastructureSubcategory('');
-      setExteriorSubcategory('');
-      return;
-    }
-
-    // 内装壁材の小カテゴリーがクリックされた場合
-    const internalWallSubcategories = ['内装壁壁紙', '内装壁化粧板', '内装壁化粧シート', '内装壁化粧パネル', '内装壁金属板', '内装壁塗り壁', '内装壁タイル', '内装壁石レンガ', '内装壁装飾材', '内装壁機能性', '内装壁壁見切', '内装壁その他'];
-    if (internalWallSubcategories.includes(subcategory)) {
-      console.log('Setting internal wall content with subcategory:', subcategory);
-      setActiveContent('internal-wall');
-      setInternalWallSubcategory(subcategory);
-      setRoofSubcategory('');
-      setExteriorWallSubcategory('');
-      setOpeningSubcategory('');
-      setExternalFloorSubcategory('');
-      setExteriorOtherSubcategory('');
-      setInternalFloorSubcategory('');
-      setInternalCeilingSubcategory('');
-      setInternalOtherSubcategory('');
-      setWaterproofSubcategory('');
-      setHardwareSubcategory('');
-      setFurnitureSubcategory('');
-      setElectricalSystemsSubcategory('');
-      setMechanicalSystemsSubcategory('');
-      setExteriorInfrastructureSubcategory('');
-      setExteriorSubcategory('');
-      return;
-    }
-
-    // 内装天井材の小カテゴリーがクリックされた場合
-    const internalCeilingSubcategories = ['内装天井ボード', '内装天井化粧材', '内装天井装飾材', '内装天井機能性', '内装天井その他'];
-    if (internalCeilingSubcategories.includes(subcategory)) {
-      console.log('Setting internal ceiling content with subcategory:', subcategory);
-      setActiveContent('internal-ceiling');
-      setInternalCeilingSubcategory(subcategory);
-      setRoofSubcategory('');
-      setExteriorWallSubcategory('');
-      setOpeningSubcategory('');
-      setExternalFloorSubcategory('');
-      setExteriorOtherSubcategory('');
-      setInternalFloorSubcategory('');
-      setInternalWallSubcategory('');
-      setInternalOtherSubcategory('');
-      setWaterproofSubcategory('');
-      setHardwareSubcategory('');
-      setFurnitureSubcategory('');
-      setElectricalSystemsSubcategory('');
-      setMechanicalSystemsSubcategory('');
-      setExteriorInfrastructureSubcategory('');
-      setExteriorSubcategory('');
-      return;
-    }
-
-    // 内装その他の小カテゴリーがクリックされた場合
-    const internalOtherSubcategories = ['トイレブース', '内装サッシ', '内装シャッター', 'ノンスリップ', '内装手摺', 'グレーチング', '内装緑化', '点検口', '隔壁', '保護材', '点字', 'ディスプレイ', '内装その他製品'];
-    if (internalOtherSubcategories.includes(subcategory)) {
-      console.log('Setting internal other content with subcategory:', subcategory);
-      setActiveContent('internal-other');
-      setInternalOtherSubcategory(subcategory);
-      setRoofSubcategory('');
-      setExteriorWallSubcategory('');
-      setOpeningSubcategory('');
-      setExternalFloorSubcategory('');
-      setExteriorOtherSubcategory('');
-      setInternalFloorSubcategory('');
-      setInternalWallSubcategory('');
-      setInternalCeilingSubcategory('');
-      setWaterproofSubcategory('');
-      setHardwareSubcategory('');
-      setFurnitureSubcategory('');
-      setElectricalSystemsSubcategory('');
-      setMechanicalSystemsSubcategory('');
-      setExteriorInfrastructureSubcategory('');
-      setExteriorSubcategory('');
-      return;
-    }
 
     // 既存のロジックはそのまま保持...
     console.log('No matching subcategory found for:', subcategory);
@@ -1395,8 +979,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, initialContent = 'top
     const amazonSearch = (q: string) => `https://www.amazon.co.jp/s?k=${encodeURIComponent(q)}&tag=${encodeURIComponent(amazonTag)}`
     // 外壁関連で外壁仕上げのサブカテゴリの場合
     if (page === 'exterior-wall') {
-      const exteriorFinishSubcategories = ['paint', 'plaster', 'tile', 'stone-brick', 'metal-panel', 'wood-board', 'decorative', 'other-finish'];
-      if (exteriorFinishSubcategories.includes(exteriorWallSubcategory)) {
+      if (EXTERIOR_FINISH_SUBCATEGORIES.includes(exteriorWallSubcategory)) {
         return [
           { src: '/image/gaiheki-shiage_cm_sample.png', alt: '外壁仕上げ掲載希望広告', link: 'registration' }
         ];
