@@ -1,0 +1,1085 @@
+{
+  "generatedAt": "2026-08-10",
+  "total": 134,
+  "counts": {
+    "dns": 103,
+    "tls": 16,
+    "timeout": 3,
+    "other": 8,
+    "recovered": 4
+  },
+  "rows": [
+    {
+      "url": "https://biz.lixil.com/inquiry/products/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://biz.lixil.com",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://iportal.lixil.co.jp/JSCATALOGVOL1/iportal/CatalogSearch.do?method=catalogSearchByDefaultSettingCategories&volumeID=JSCATALOGVOL1",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://iportal.lixil.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://st.sankyo-tateyama.co.jp/inquiry/business/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://st.sankyo-tateyama.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://st.sankyo-tateyama.co.jp/products/business/exterior/accessories/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://st.sankyo-tateyama.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://st.sankyo-tateyama.co.jp/products/business/exterior/wall/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://st.sankyo-tateyama.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://st.sankyo-tateyama.co.jp/service/catalog/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://st.sankyo-tateyama.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.amadoi.or.jp/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.amadoi.or.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.amadoi.or.jp/catalog/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.amadoi.or.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.amadoi.or.jp/contact/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.amadoi.or.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.amadoi.or.jp/members/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.amadoi.or.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.assist777.co.jp/catalog/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.assist777.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.assist777.co.jp/company/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.assist777.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.assist777.co.jp/contact/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.assist777.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.assist777.co.jp/product/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.assist777.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ateliertekhnika.com/catalog/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.ateliertekhnika.com",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ateliertekhnika.com/company/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.ateliertekhnika.com",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ateliertekhnika.com/contact/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.ateliertekhnika.com",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ateliertekhnika.com/products/pigeon-house/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.ateliertekhnika.com",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ats-v.co.jp/catalog/view.html",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.ats-v.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ats-v.co.jp/contact/index.html",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.ats-v.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ats-v.co.jp/product/category/103.html",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.ats-v.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ats-v.co.jp/sales/index.html",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.ats-v.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.chubu-corp.co.jp/company/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.chubu-corp.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.chubu-corp.co.jp/contact/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.chubu-corp.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.chubu-corp.co.jp/products/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.chubu-corp.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.cyclochem.co.jp/catalog/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.cyclochem.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.cyclochem.co.jp/company/office/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.cyclochem.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.cyclochem.co.jp/contact/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.cyclochem.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.cyclochem.co.jp/product/amadoi/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.cyclochem.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.fukuchou.jp/catalog/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.fukuchou.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.fukuchou.jp/company/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.fukuchou.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.fukuchou.jp/contact/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.fukuchou.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.fukuchou.jp/products/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.fukuchou.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.hautec.co.jp/catalog/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.hautec.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.hautec.co.jp/contact/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.hautec.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.hautec.co.jp/products/interior/baseboard/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.hautec.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.hautec.co.jp/showroom/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.hautec.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ig-kogyou.co.jp/company/locations/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.ig-kogyou.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ig-kogyou.co.jp/contact/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.ig-kogyou.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ig-kogyou.co.jp/info_material/document/cat_list/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.ig-kogyou.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ig-kogyou.co.jp/products/galvarium/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.ig-kogyou.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.japan-kenzai.co.jp/catalog/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.japan-kenzai.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.japan-kenzai.co.jp/company/office/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.japan-kenzai.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.japan-kenzai.co.jp/contact/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.japan-kenzai.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.japan-kenzai.co.jp/product/floor/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.japan-kenzai.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kawaguchi-giken.co.jp/catalog/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.kawaguchi-giken.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kawaguchi-giken.co.jp/company/office/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.kawaguchi-giken.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kawaguchi-giken.co.jp/contact/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.kawaguchi-giken.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kawaguchi-giken.co.jp/products/handrail/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.kawaguchi-giken.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kenchiku-shizai.co.jp/catalog/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.kenchiku-shizai.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kenchiku-shizai.co.jp/company/office/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.kenchiku-shizai.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kenchiku-shizai.co.jp/contact/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.kenchiku-shizai.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kenchiku-shizai.co.jp/pigeon/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.kenchiku-shizai.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kyowa-kb.co.jp/branch/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.kyowa-kb.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kyowa-kb.co.jp/form/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.kyowa-kb.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kyowa-kb.co.jp/products/seppan/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.kyowa-kb.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kyowa-kb.co.jp/search/?query_word=&query_cat%5B%5D=seppan#search_result",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.kyowa-kb.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.maruichi-kokan.co.jp/amadoi/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.maruichi-kokan.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.maruichi-kokan.co.jp/catalog/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.maruichi-kokan.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.maruichi-kokan.co.jp/company/office/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.maruichi-kokan.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.maruichi-kokan.co.jp/contact/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.maruichi-kokan.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.nihon-protect.co.jp/catalog/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.nihon-protect.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.nihon-protect.co.jp/company/office/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.nihon-protect.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.nihon-protect.co.jp/contact/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.nihon-protect.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.nihon-protect.co.jp/service/floor-coating/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.nihon-protect.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.okuoka.co.jp/catalog/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.okuoka.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.okuoka.co.jp/company/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.okuoka.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.okuoka.co.jp/contact/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.okuoka.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.okuoka.co.jp/product/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.okuoka.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.pacific-precon.co.jp/company/office/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.pacific-precon.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.pacific-precon.co.jp/contact/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.pacific-precon.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.pacific-precon.co.jp/products/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.pacific-precon.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.plusone-gutter.co.jp/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.plusone-gutter.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.plusone-gutter.co.jp/catalog/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.plusone-gutter.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.plusone-gutter.co.jp/company/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.plusone-gutter.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.plusone-gutter.co.jp/contact/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.plusone-gutter.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.rfriken.co.jp/company/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.rfriken.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.rfriken.co.jp/contact/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.rfriken.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.rfriken.co.jp/products/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.rfriken.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.shin-nikkei.co.jp/company/office/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.shin-nikkei.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.shin-nikkei.co.jp/contact/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.shin-nikkei.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.shin-nikkei.co.jp/products/amadoi/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.shin-nikkei.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.shin-nikkei.co.jp/products/handrail/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.shin-nikkei.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.shin-nikkei.co.jp/support/catalog/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.shin-nikkei.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.system-art.co.jp/catalog/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.system-art.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.system-art.co.jp/company/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.system-art.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.system-art.co.jp/contact/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.system-art.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.system-art.co.jp/products/trim/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.system-art.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.takemura-k.co.jp/company/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.takemura-k.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.takemura-k.co.jp/contact/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.takemura-k.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.takemura-k.co.jp/products/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.takemura-k.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.takemura-kinzoku.co.jp/catalog/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.takemura-kinzoku.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.takemura-kinzoku.co.jp/company/access/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.takemura-kinzoku.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.takemura-kinzoku.co.jp/contact/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.takemura-kinzoku.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.takemura-kinzoku.co.jp/products/wall/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.takemura-kinzoku.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.toshiba-energy.com/company/office.htm",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.toshiba-energy.com",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.toshiba-energy.com/renewable-energy/solar-pv/catalog.htm",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.toshiba-energy.com",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.toshiba-energy.com/renewable-energy/solar-pv/contact.htm",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.toshiba-energy.com",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.toshiba-energy.com/renewable-energy/solar-pv/lineup.htm",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.toshiba-energy.com",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.urethane-kogyo.co.jp/catalog/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.urethane-kogyo.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.urethane-kogyo.co.jp/company/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.urethane-kogyo.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.urethane-kogyo.co.jp/contact/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.urethane-kogyo.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.urethane-kogyo.co.jp/products/floor-coating/",
+      "kind": "dns",
+      "detail": "ENOTFOUND",
+      "origin": "https://www.urethane-kogyo.co.jp",
+      "originAlive": false,
+      "originStatus": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.marutoku.co.jp/catalog/",
+      "kind": "tls",
+      "detail": "ERR_SSL_TLSV1_ALERT_INTERNAL_ERROR",
+      "origin": "https://www.marutoku.co.jp",
+      "originAlive": false,
+      "originStatus": "ERR_SSL_TLSV1_ALERT_INTERNAL_ERROR"
+    },
+    {
+      "url": "https://www.marutoku.co.jp/company/",
+      "kind": "tls",
+      "detail": "ERR_SSL_TLSV1_ALERT_INTERNAL_ERROR",
+      "origin": "https://www.marutoku.co.jp",
+      "originAlive": false,
+      "originStatus": "ERR_SSL_TLSV1_ALERT_INTERNAL_ERROR"
+    },
+    {
+      "url": "https://www.marutoku.co.jp/contact/",
+      "kind": "tls",
+      "detail": "ERR_SSL_TLSV1_ALERT_INTERNAL_ERROR",
+      "origin": "https://www.marutoku.co.jp",
+      "originAlive": false,
+      "originStatus": "ERR_SSL_TLSV1_ALERT_INTERNAL_ERROR"
+    },
+    {
+      "url": "https://www.marutoku.co.jp/pigeon-house/",
+      "kind": "tls",
+      "detail": "ERR_SSL_TLSV1_ALERT_INTERNAL_ERROR",
+      "origin": "https://www.marutoku.co.jp",
+      "originAlive": false,
+      "originStatus": "ERR_SSL_TLSV1_ALERT_INTERNAL_ERROR"
+    },
+    {
+      "url": "https://www.nisc-s.co.jp/catalog/",
+      "kind": "tls",
+      "detail": "ERR_SSL_PACKET_LENGTH_TOO_LONG",
+      "origin": "https://www.nisc-s.co.jp",
+      "originAlive": false,
+      "originStatus": "ERR_SSL_PACKET_LENGTH_TOO_LONG"
+    },
+    {
+      "url": "https://www.nisc-s.co.jp/company/base/",
+      "kind": "tls",
+      "detail": "ERR_SSL_PACKET_LENGTH_TOO_LONG",
+      "origin": "https://www.nisc-s.co.jp",
+      "originAlive": false,
+      "originStatus": "ERR_SSL_PACKET_LENGTH_TOO_LONG"
+    },
+    {
+      "url": "https://www.nisc-s.co.jp/contact/",
+      "kind": "tls",
+      "detail": "ERR_SSL_PACKET_LENGTH_TOO_LONG",
+      "origin": "https://www.nisc-s.co.jp",
+      "originAlive": false,
+      "originStatus": "ERR_SSL_PACKET_LENGTH_TOO_LONG"
+    },
+    {
+      "url": "https://www.nisc-s.co.jp/products/",
+      "kind": "tls",
+      "detail": "ERR_SSL_PACKET_LENGTH_TOO_LONG",
+      "origin": "https://www.nisc-s.co.jp",
+      "originAlive": false,
+      "originStatus": "ERR_SSL_PACKET_LENGTH_TOO_LONG"
+    },
+    {
+      "url": "https://www.sanko-k.co.jp/company/office/",
+      "kind": "tls",
+      "detail": "ERR_TLS_CERT_ALTNAME_INVALID",
+      "origin": "https://www.sanko-k.co.jp",
+      "originAlive": false,
+      "originStatus": "ERR_TLS_CERT_ALTNAME_INVALID"
+    },
+    {
+      "url": "https://www.sanko-k.co.jp/contact/",
+      "kind": "tls",
+      "detail": "ERR_TLS_CERT_ALTNAME_INVALID",
+      "origin": "https://www.sanko-k.co.jp",
+      "originAlive": false,
+      "originStatus": "ERR_TLS_CERT_ALTNAME_INVALID"
+    },
+    {
+      "url": "https://www.sanko-k.co.jp/products/aluminum/",
+      "kind": "tls",
+      "detail": "ERR_TLS_CERT_ALTNAME_INVALID",
+      "origin": "https://www.sanko-k.co.jp",
+      "originAlive": false,
+      "originStatus": "ERR_TLS_CERT_ALTNAME_INVALID"
+    },
+    {
+      "url": "https://www.sanko-k.co.jp/support/catalog/",
+      "kind": "tls",
+      "detail": "ERR_TLS_CERT_ALTNAME_INVALID",
+      "origin": "https://www.sanko-k.co.jp",
+      "originAlive": false,
+      "originStatus": "ERR_TLS_CERT_ALTNAME_INVALID"
+    },
+    {
+      "url": "https://www.tamari.co.jp/catalog/",
+      "kind": "tls",
+      "detail": "ERR_TLS_CERT_ALTNAME_INVALID",
+      "origin": "https://www.tamari.co.jp",
+      "originAlive": false,
+      "originStatus": "ERR_TLS_CERT_ALTNAME_INVALID"
+    },
+    {
+      "url": "https://www.tamari.co.jp/company/",
+      "kind": "tls",
+      "detail": "ERR_TLS_CERT_ALTNAME_INVALID",
+      "origin": "https://www.tamari.co.jp",
+      "originAlive": false,
+      "originStatus": "ERR_TLS_CERT_ALTNAME_INVALID"
+    },
+    {
+      "url": "https://www.tamari.co.jp/contact/",
+      "kind": "tls",
+      "detail": "ERR_TLS_CERT_ALTNAME_INVALID",
+      "origin": "https://www.tamari.co.jp",
+      "originAlive": false,
+      "originStatus": "ERR_TLS_CERT_ALTNAME_INVALID"
+    },
+    {
+      "url": "https://www.tamari.co.jp/products/floor-trim/",
+      "kind": "tls",
+      "detail": "ERR_TLS_CERT_ALTNAME_INVALID",
+      "origin": "https://www.tamari.co.jp",
+      "originAlive": false,
+      "originStatus": "ERR_TLS_CERT_ALTNAME_INVALID"
+    },
+    {
+      "url": "https://www.3mcompany.jp/3M/ja_JP/architectural-design-jp/",
+      "kind": "timeout",
+      "detail": "AbortError",
+      "origin": "https://www.3mcompany.jp",
+      "originAlive": false,
+      "originStatus": "AbortError"
+    },
+    {
+      "url": "https://www.3mcompany.jp/3M/ja_JP/architectural-design-jp/support/contact-us/",
+      "kind": "timeout",
+      "detail": "AbortError",
+      "origin": "https://www.3mcompany.jp",
+      "originAlive": false,
+      "originStatus": "AbortError"
+    },
+    {
+      "url": "https://www.3mcompany.jp/3M/ja_JP/company-jp/about-3m/resources/",
+      "kind": "timeout",
+      "detail": "AbortError",
+      "origin": "https://www.3mcompany.jp",
+      "originAlive": false,
+      "originStatus": "AbortError"
+    },
+    {
+      "url": "https://www.laminam.jp/company/",
+      "kind": "other",
+      "detail": "UNABLE_TO_VERIFY_LEAF_SIGNATURE",
+      "origin": "https://www.laminam.jp",
+      "originAlive": false,
+      "originStatus": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.laminam.jp/contact/",
+      "kind": "other",
+      "detail": "UNABLE_TO_VERIFY_LEAF_SIGNATURE",
+      "origin": "https://www.laminam.jp",
+      "originAlive": false,
+      "originStatus": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.laminam.jp/download/",
+      "kind": "other",
+      "detail": "UNABLE_TO_VERIFY_LEAF_SIGNATURE",
+      "origin": "https://www.laminam.jp",
+      "originAlive": false,
+      "originStatus": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.laminam.jp/product/",
+      "kind": "other",
+      "detail": "UNABLE_TO_VERIFY_LEAF_SIGNATURE",
+      "origin": "https://www.laminam.jp",
+      "originAlive": false,
+      "originStatus": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.y-y-k.co.jp/about/branch/",
+      "kind": "other",
+      "detail": "UNABLE_TO_VERIFY_LEAF_SIGNATURE",
+      "origin": "https://www.y-y-k.co.jp",
+      "originAlive": false,
+      "originStatus": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.y-y-k.co.jp/products_use/",
+      "kind": "other",
+      "detail": "UNABLE_TO_VERIFY_LEAF_SIGNATURE",
+      "origin": "https://www.y-y-k.co.jp",
+      "originAlive": false,
+      "originStatus": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.y-y-k.co.jp/support/db_catalog/",
+      "kind": "other",
+      "detail": "UNABLE_TO_VERIFY_LEAF_SIGNATURE",
+      "origin": "https://www.y-y-k.co.jp",
+      "originAlive": false,
+      "originStatus": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.y-y-k.co.jp/support/inquiry_step1/",
+      "kind": "other",
+      "detail": "UNABLE_TO_VERIFY_LEAF_SIGNATURE",
+      "origin": "https://www.y-y-k.co.jp",
+      "originAlive": false,
+      "originStatus": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.ic-ryowa.com/catalog/",
+      "kind": "recovered",
+      "detail": "HTTP 503",
+      "origin": "https://www.ic-ryowa.com",
+      "originAlive": true,
+      "originStatus": 503
+    },
+    {
+      "url": "https://www.sunsyo.co.jp/contact/",
+      "kind": "recovered",
+      "detail": "HTTP 200",
+      "origin": "https://www.sunsyo.co.jp",
+      "originAlive": true,
+      "originStatus": 200
+    },
+    {
+      "url": "https://www.sunsyo.co.jp/product/sun-edge/",
+      "kind": "recovered",
+      "detail": "HTTP 200",
+      "origin": "https://www.sunsyo.co.jp",
+      "originAlive": true,
+      "originStatus": 200
+    },
+    {
+      "url": "https://www.sunsyo.co.jp/profile/",
+      "kind": "recovered",
+      "detail": "HTTP 200",
+      "origin": "https://www.sunsyo.co.jp",
+      "originAlive": true,
+      "originStatus": 200
+    }
+  ]
+}

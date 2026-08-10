@@ -203,8 +203,8 @@
       "group": "",
       "products": "https://www.assist777.co.jp/product/",
       "catalog": "https://www.assist777.co.jp/catalog/",
-      "office": "https://www.assist777.co.jp/company/",
-      "contact": "https://www.assist777.co.jp/contact/",
+      "office": "https://www.assipie.jp/company/",
+      "contact": "https://www.assipie.jp/contact/",
       "sample": "",
       "cad": ""
     },
@@ -5394,9 +5394,9 @@
       ],
       "group": "ガルバリウム鋼板",
       "products": "https://www.lixil.co.jp/lineup/construction/exterior_wall/metal_siding/dannetsu_metal/",
-      "catalog": "https://iportal.lixil.co.jp/JSCATALOGVOL1/iportal/CatalogSearch.do?method=catalogSearchByDefaultSettingCategories&volumeID=JSCATALOGVOL1",
+      "catalog": "https://www.biz-lixil.com/JSCATALOGVOL1/iportal/CatalogSearch.do?method=catalogSearchByDefaultSettingCategories&volumeID=JSCATALOGVOL1",
       "office": "https://www.lixil.co.jp/corporate/network/",
-      "contact": "https://biz.lixil.com/inquiry/products/",
+      "contact": "https://www.lixil.co.jp/inquiry/products/",
       "sample": "",
       "cad": ""
     },
@@ -5484,7 +5484,7 @@
         "metal-panel"
       ],
       "group": "ガルバリウム鋼板",
-      "products": "https://st.sankyo-tateyama.co.jp/products/business/exterior/wall/",
+      "products": "https://alumi.st-grp.co.jp/products/business/exterior/wall/",
       "catalog": "https://st.sankyo-tateyama.co.jp/service/catalog/",
       "office": "https://www.st-grp.co.jp/company/group/",
       "contact": "https://st.sankyo-tateyama.co.jp/inquiry/business/",
@@ -5615,9 +5615,9 @@
       ],
       "group": "",
       "products": "https://www.lixil.co.jp/lineup/construction/exterior_wall/accessories/",
-      "catalog": "https://iportal.lixil.co.jp/JSCATALOGVOL1/iportal/CatalogSearch.do?method=catalogSearchByDefaultSettingCategories&volumeID=JSCATALOGVOL1",
+      "catalog": "https://www.biz-lixil.com/JSCATALOGVOL1/iportal/CatalogSearch.do?method=catalogSearchByDefaultSettingCategories&volumeID=JSCATALOGVOL1",
       "office": "https://www.lixil.co.jp/corporate/network/",
-      "contact": "https://biz.lixil.com/inquiry/products/",
+      "contact": "https://www.lixil.co.jp/inquiry/products/",
       "sample": "",
       "cad": ""
     },
@@ -5640,7 +5640,7 @@
         "decorative"
       ],
       "group": "",
-      "products": "https://st.sankyo-tateyama.co.jp/products/business/exterior/accessories/",
+      "products": "https://alumi.st-grp.co.jp/products/business/exterior/accessories/",
       "catalog": "https://st.sankyo-tateyama.co.jp/service/catalog/",
       "office": "https://www.st-grp.co.jp/company/group/",
       "contact": "https://st.sankyo-tateyama.co.jp/inquiry/business/",
@@ -8104,9 +8104,9 @@
       ],
       "group": "",
       "products": "https://www.kawaguchi-giken.co.jp/products/handrail/",
-      "catalog": "https://www.kawaguchi-giken.co.jp/catalog/",
+      "catalog": "https://www.kawaguchigiken.co.jp/catalog/",
       "office": "https://www.kawaguchi-giken.co.jp/company/office/",
-      "contact": "https://www.kawaguchi-giken.co.jp/contact/",
+      "contact": "https://www.kawaguchigiken.co.jp/contact/",
       "sample": "",
       "cad": ""
     },
@@ -10397,9 +10397,9 @@
         "ボード"
       ],
       "group": "化粧石膏ボード",
-      "products": "https://www.rfriken.co.jp/products/",
+      "products": "https://www.rikenkeikinzoku.co.jp/products/",
       "catalog": "",
-      "office": "https://www.rfriken.co.jp/company/",
+      "office": "https://www.rikenkeikinzoku.co.jp/company/",
       "contact": "https://www.rfriken.co.jp/contact/",
       "sample": "",
       "cad": ""
@@ -10527,9 +10527,9 @@
         "化粧材"
       ],
       "group": "スパンドレル",
-      "products": "https://www.rfriken.co.jp/products/",
+      "products": "https://www.rikenkeikinzoku.co.jp/products/",
       "catalog": "",
-      "office": "https://www.rfriken.co.jp/company/",
+      "office": "https://www.rikenkeikinzoku.co.jp/company/",
       "contact": "https://www.rfriken.co.jp/contact/",
       "sample": "",
       "cad": ""
@@ -10826,9 +10826,9 @@
         "その他"
       ],
       "group": "",
-      "products": "https://www.rfriken.co.jp/products/",
+      "products": "https://www.rikenkeikinzoku.co.jp/products/",
       "catalog": "",
-      "office": "https://www.rfriken.co.jp/company/",
+      "office": "https://www.rikenkeikinzoku.co.jp/company/",
       "contact": "https://www.rfriken.co.jp/contact/",
       "sample": "",
       "cad": ""
