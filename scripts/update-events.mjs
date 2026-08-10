@@ -37,6 +37,18 @@ const toIso = (y, m, d) => `${y}-${String(m).padStart(2, '0')}-${String(d).padSt
  * 「2027年3月2日(火)～5日(金)」「2027年5月26日(水)～28日(金)」といった表記から会期を取る。
  * 開始日しか書かれていない場合は終了日を開始日と同じにする。
  */
+/**
+ * ページに埋め込まれた機械可読な会期を読む。
+ * "startDate":"2026-08-26 10:00","endDate":"2026-08-28 17:00" の形で入っている。
+ * 本文から日付を拾うと姉妹展の会期を掴んでしまうので、これがあれば最優先で使う。
+ */
+function extractStructuredPeriod(html) {
+  const s = html.match(/"startDate"\s*:\s*"(\d{4}-\d{2}-\d{2})/);
+  const e = html.match(/"endDate"\s*:\s*"(\d{4}-\d{2}-\d{2})/);
+  if (!s) return null;
+  return { start: s[1], end: e ? e[1] : s[1], structured: true };
+}
+
 function extractPeriod(html) {
   const text = html.replace(/<[^>]*>/g, ' ').replace(/&nbsp;|&#x?[0-9a-f]+;/gi, ' ').replace(/\s+/g, ' ');
   const candidates = [];
@@ -49,6 +61,14 @@ function extractPeriod(html) {
   for (const m of text.matchAll(/(20\d{2})年\s*(\d{1,2})月\s*(\d{1,2})日[^0-9]{0,8}[〜~～-]\s*(\d{1,2})月\s*(\d{1,2})日/g)) {
     candidates.push({ start: toIso(+m[1], +m[2], +m[3]), end: toIso(+m[1], +m[4], +m[5]) });
   }
+  // 「2027年6月23日(水)・24日(木)・25日(金)・26日(土)」のように中黒で日を並べる書式。
+  // 〜で結ばないので範囲の正規表現に掛からず、単日として拾われて会期が縮んでいた。
+  for (const m of text.matchAll(/(20\d{2})年\s*(\d{1,2})月\s*(\d{1,2})日(?:\s*\([^)]*\))?((?:\s*[・､、]\s*\d{1,2}日(?:\s*\([^)]*\))?)+)/g)) {
+    const days = [...m[4].matchAll(/(\d{1,2})日/g)].map((x) => +x[1]);
+    const last = days[days.length - 1];
+    candidates.push({ start: toIso(+m[1], +m[2], +m[3]), end: toIso(+m[1], +m[2], last) });
+  }
+
   // 単日
   for (const m of text.matchAll(/(20\d{2})年\s*(\d{1,2})月\s*(\d{1,2})日/g)) {
     candidates.push({ start: toIso(+m[1], +m[2], +m[3]), end: toIso(+m[1], +m[2], +m[3]) });
@@ -59,7 +79,11 @@ function extractPeriod(html) {
   // 今日以降で最も早いもの＝次回開催とみなす。
   // ページ内には過去回の実績も載っているため、単純な最初の一致では拾えない。
   const today = new Date().toISOString().slice(0, 10);
-  const future = candidates.filter((c) => c.end >= today).sort((a, b) => a.start.localeCompare(b.start));
+  // 同じ開始日でも、書式によって「4日間」と「単日」の両方が候補に挙がる。
+  // 会期を縮めてしまわないよう、開始日が同じなら終了日が遅い方を採る。
+  const future = candidates
+    .filter((c) => c.end >= today)
+    .sort((a, b) => a.start.localeCompare(b.start) || b.end.localeCompare(a.end));
   return future[0] || null;
 }
 
@@ -84,7 +108,7 @@ async function run() {
     }
     ev.isLinkActive = true;
 
-    const period = extractPeriod(html);
+    const period = extractStructuredPeriod(html) || extractPeriod(html);
     if (!period) {
       if (ev.endDate && ev.endDate < today) {
         expired++;
@@ -101,7 +125,9 @@ async function run() {
     const movesForward = period.start > ev.startDate;
     const sameLength = days(period.start, period.end) === days(ev.startDate, ev.endDate);
 
-    if (!movesForward || !sameLength) {
+    // ページ自身が機械可読な形で会期を宣言している場合は、その主催者の申告を信じる。
+    // 本文から拾った日付にだけ、姉妹展を掴んでいないかの検査をかける。
+    if (!period.structured && (!movesForward || !sameLength)) {
       review.push({
         title: ev.title,
         current: `${ev.startDate}〜${ev.endDate}`,
@@ -116,6 +142,13 @@ async function run() {
       console.log(`      ${ev.startDate}〜${ev.endDate}  ->  ${period.start}〜${period.end}`);
       ev.startDate = period.start;
       ev.endDate = period.end;
+      // 会期が翌年に進んだのにタイトルが前年のままだと「建築・建材展 2026」が
+      // 2027 年開催と表示されて紛らわしいので、年号も追随させる。
+      const oldYear = ev.dateText?.match(/(20\d{2})年/)?.[1];
+      const newYear = period.start.slice(0, 4);
+      if (oldYear && oldYear !== newYear && ev.title.includes(oldYear)) {
+        ev.title = ev.title.replaceAll(oldYear, newYear);
+      }
       // 表示用の文字列も作り直す（元の書式に合わせる）
       const [sy, sm, sd] = period.start.split('-').map(Number);
       const [, em, ed] = period.end.split('-').map(Number);
@@ -125,6 +158,15 @@ async function run() {
       updated++;
     }
   }
+
+  // 同じ展示会を年度別に 2 件登録していると、会期が追いつくと同じ内容が並ぶ。
+  // （建築・建材展 2026 と 2027 の両方が 2027-03-02 になった）
+  const dupes = new Map();
+  for (const e of events) {
+    const k = `${e.link}|${e.startDate}|${e.endDate}`;
+    dupes.set(k, (dupes.get(k) || 0) + 1);
+  }
+  const duplicated = [...dupes.entries()].filter(([, n]) => n > 1);
 
   const stillExpired = events.filter((e) => e.endDate && e.endDate < today);
   data.updatedAt = today;
@@ -136,6 +178,10 @@ async function run() {
     console.log(`    ${r.title}`);
     console.log(`      現在 ${r.current} / 検出 ${r.found}  — ${r.reason}`);
   });
+  if (duplicated.length) {
+    console.log(`重複         : ${duplicated.length} 組（同じ会場・会期の登録が二重になっている）`);
+    duplicated.forEach(([k]) => console.log(`    ${k}`));
+  }
   console.log(`到達できない : ${unreachable} 件`);
   console.log(`終了済のまま : ${stillExpired.length} 件（表示側で非表示になる）`);
   stillExpired.forEach((e) => console.log(`    ${e.endDate}  ${e.title}`));

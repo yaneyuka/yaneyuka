@@ -1,9 +1,9 @@
 {
-  "updatedAt": "2026-08-09",
+  "updatedAt": "2026-08-10",
   "events": [
     {
       "id": "nikkei-architecture-materials-2026",
-      "title": "建築・建材展 2026（NIKKEI MESSE）",
+      "title": "建築・建材展 2027（NIKKEI MESSE）",
       "description": "建材・工法の総合展（NIKKEI MESSE 構成展）。",
       "dateText": "2027年3月2日～5日",
       "startDate": "2027-03-02",
@@ -15,7 +15,7 @@
     },
     {
       "id": "japan-shop-2026",
-      "title": "JAPAN SHOP 2026（NIKKEI MESSE）",
+      "title": "JAPAN SHOP 2027（NIKKEI MESSE）",
       "description": "商空間の資材・照明・什器等。建材・内装と親和。",
       "dateText": "2027年3月2日～5日",
       "startDate": "2027-03-02",
@@ -27,7 +27,7 @@
     },
     {
       "id": "lighting-fair-2026",
-      "title": "ライティング・フェア 2026（NIKKEI MESSE）",
+      "title": "ライティング・フェア 2027（NIKKEI MESSE）",
       "description": "照明の総合展（建築照明領域）。",
       "dateText": "2027年3月2日～5日",
       "startDate": "2027-03-02",
@@ -51,7 +51,7 @@
     },
     {
       "id": "public-week-2026",
-      "title": "自治体・公共Week 2026（インフラメンテナンス展 など構成）",
+      "title": "自治体・公共Week 2027（インフラメンテナンス展 など構成）",
       "description": "公共施設・都市整備・インフラ維持の総合展群。",
       "dateText": "2027年5月26日～28日",
       "startDate": "2027-05-26",
@@ -63,11 +63,11 @@
     },
     {
       "id": "cspi-expo-2026",
-      "title": "第8回 建設・測量生産性向上展 (CSPI-EXPO 2026)",
+      "title": "第8回 建設・測量生産性向上展 (CSPI-EXPO 2027)",
       "description": "建機・重機・アタッチメント・建設DXなど、建設・測量業界の最先端技術が集結する国内最大級の展示会。",
-      "dateText": "2026年6月17日(水)～20日(土)",
-      "startDate": "2026-06-17",
-      "endDate": "2026-06-20",
+      "dateText": "2027年6月23日～26日",
+      "startDate": "2027-06-23",
+      "endDate": "2027-06-26",
       "venue": "幕張メッセ",
       "region": "chiba",
       "link": "https://cspi-expo.com/",
@@ -99,7 +99,7 @@
     },
     {
       "id": "maintenance-resilience-tokyo-2026",
-      "title": "メンテナンス・レジリエンス TOKYO 2026",
+      "title": "メンテナンス・レジリエンス TOKYO 2027",
       "description": "インフラ・プラント保全の大型複合展。",
       "dateText": "2027年7月14日～16日",
       "startDate": "2027-07-14",
@@ -167,18 +167,6 @@
       "venue": "東京ビッグサイト",
       "region": "tokyo",
       "link": "https://www.japan-build.jp/tokyo/ja-jp.html",
-      "isLinkActive": true
-    },
-    {
-      "id": "nikkei-architecture-materials-2027",
-      "title": "建築・建材展 2027（NIKKEI MESSE）",
-      "description": "建材・工法の総合展（NIKKEI MESSE 構成展）。",
-      "dateText": "2027年3月2日(火)～5日(金)",
-      "startDate": "2027-03-02",
-      "endDate": "2027-03-05",
-      "venue": "東京ビッグサイト 東展示棟",
-      "region": "tokyo",
-      "link": "https://messe.nikkei.co.jp/ac/",
       "isLinkActive": true
     }
   ]
