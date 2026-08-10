@@ -799,10 +799,10 @@
         "内装緑化"
       ],
       "group": "",
-      "products": "",
-      "catalog": "",
-      "office": "",
-      "contact": "",
+      "products": "http://www.jhb.co.jp/seihin/index.php",
+      "catalog": "http://www.jhb.co.jp/catalog/index.php",
+      "office": "http://www.jhb.co.jp/company/index.php",
+      "contact": "http://www.jhb.co.jp/contact/index.php",
       "sample": "",
       "cad": ""
     },
@@ -3837,19 +3837,6 @@
       "catalog": "https://www.yabuhara-ind.co.jp/downloads-7/",
       "office": "https://www.yabuhara-ind.co.jp/profile/access/",
       "contact": "https://www.yabuhara-ind.co.jp/contact/",
-      "sample": "",
-      "cad": ""
-    },
-    {
-      "name": "翔飛工業",
-      "pages": [
-        "外構舗装"
-      ],
-      "group": "",
-      "products": "https://ecokawara.com/#product",
-      "catalog": "https://ecokawara.com/2305_EcoKawara.pdf",
-      "office": "https://ecokawara.com/contact/",
-      "contact": "",
       "sample": "",
       "cad": ""
     },
@@ -10800,9 +10787,9 @@
         "その他"
       ],
       "group": "",
-      "products": "",
+      "products": "https://www.rwa.gr.jp/",
       "catalog": "",
-      "office": "",
+      "office": "https://www.rwa.gr.jp/",
       "contact": "",
       "sample": "",
       "cad": ""
