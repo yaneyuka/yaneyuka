@@ -1,4 +1,5 @@
 // mak_*.tsx の手書きメーカー行を <MakerRows /> に置き換える移行スクリプト。
+// ⚠️ 2026-08-06 に全 16 ファイルの移行が完了済み。実行対象はもう残っていない。
 //   node scripts/swap-to-makerrows.mjs <ファイル名> [--dry-run]
 //   例: node scripts/swap-to-makerrows.mjs mak_1_屋根.tsx --dry-run
 //

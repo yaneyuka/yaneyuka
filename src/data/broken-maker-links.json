@@ -1,13 +1,143 @@
 {
-  "generatedAt": "2026-08-09",
-  "checked": 93,
+  "generatedAt": "2026-08-10",
+  "checked": 2056,
   "summary": {
-    "ok": 41,
-    "broken": 41,
-    "unreachable": 11,
-    "error": 0
+    "ok": 1576,
+    "broken": 335,
+    "unreachable": 134,
+    "error": 11
   },
   "broken": [
+    {
+      "url": "http://www.marushika.com/about/index.html#branch",
+      "status": 404,
+      "fallback": "http://www.marushika.com"
+    },
+    {
+      "url": "http://www.marushika.com/digitalcatalog/?pNo=1",
+      "status": 404,
+      "fallback": "http://www.marushika.com"
+    },
+    {
+      "url": "http://www.marushika.com/material/besame.html",
+      "status": 404,
+      "fallback": "http://www.marushika.com"
+    },
+    {
+      "url": "http://www.marushika.com/material/detail.html?item_rno=65&main_no=1&sub_no=8&list2=1&list1=1",
+      "status": 404,
+      "fallback": "http://www.marushika.com"
+    },
+    {
+      "url": "http://www.marushika.com/material/roof.html",
+      "status": 404,
+      "fallback": "http://www.marushika.com"
+    },
+    {
+      "url": "http://www.marushika.com/material/roof.html?sub_no=34&list2=0&list1=1",
+      "status": 404,
+      "fallback": "http://www.marushika.com"
+    },
+    {
+      "url": "http://www.marushika.com/material/tile.html",
+      "status": 404,
+      "fallback": "http://www.marushika.com"
+    },
+    {
+      "url": "http://www.orimeta.co.jp/company.html",
+      "status": 404,
+      "fallback": "http://www.orimeta.co.jp"
+    },
+    {
+      "url": "http://www.orimeta.co.jp/contact.html",
+      "status": 404,
+      "fallback": "http://www.orimeta.co.jp"
+    },
+    {
+      "url": "http://www.orimeta.co.jp/product.html",
+      "status": 404,
+      "fallback": "http://www.orimeta.co.jp"
+    },
+    {
+      "url": "https://alumi.st-grp.co.jp/company/base/",
+      "status": 404,
+      "fallback": "https://alumi.st-grp.co.jp"
+    },
+    {
+      "url": "https://alumi.st-grp.co.jp/contact/",
+      "status": 404,
+      "fallback": "https://alumi.st-grp.co.jp"
+    },
+    {
+      "url": "https://alumi.st-grp.co.jp/showroom/",
+      "status": 404,
+      "fallback": "https://alumi.st-grp.co.jp"
+    },
+    {
+      "url": "https://alumi.st-grp.co.jp/support/catalog/",
+      "status": 404,
+      "fallback": "https://alumi.st-grp.co.jp"
+    },
+    {
+      "url": "https://alumi.st-grp.co.jp/support/contact/",
+      "status": 404,
+      "fallback": "https://alumi.st-grp.co.jp"
+    },
+    {
+      "url": "https://alumi.st-grp.co.jp/support/showroom/",
+      "status": 404,
+      "fallback": "https://alumi.st-grp.co.jp"
+    },
+    {
+      "url": "https://cleanup.jp/catalog/",
+      "status": 404,
+      "fallback": "https://cleanup.jp"
+    },
+    {
+      "url": "https://ikehiko.net/company/aboutus/",
+      "status": 404,
+      "fallback": "https://ikehiko.net"
+    },
+    {
+      "url": "https://ikehiko.net/product_category/products/",
+      "status": 404,
+      "fallback": "https://ikehiko.net"
+    },
+    {
+      "url": "https://jp.sharp/corporate/info/offices/",
+      "status": 404,
+      "fallback": "https://jp.sharp"
+    },
+    {
+      "url": "https://jp.sharp/sunvista/catalog/",
+      "status": 404,
+      "fallback": "https://jp.sharp"
+    },
+    {
+      "url": "https://jp.sharp/sunvista/contact/",
+      "status": 404,
+      "fallback": "https://jp.sharp"
+    },
+    {
+      "url": "https://jp.sharp/sunvista/lineup/",
+      "status": 404,
+      "fallback": "https://jp.sharp"
+    },
+    {
+      "url": "https://jp.toto.com/contacts/",
+      "status": 404,
+      "fallback": "https://jp.toto.com"
+    },
+    {
+      "url": "https://jp.toto.com/contacts/showroom/",
+      "status": 404,
+      "fallback": "https://jp.toto.com"
+    },
+    {
+      "url": "https://jp.toto.com/support/catalog/",
+      "status": 404,
+      "fallback": "https://jp.toto.com"
+    },
     {
       "url": "https://jpn.sika.com/ja/about-us/sika-japan/offices.html",
       "status": 404,
@@ -22,6 +152,211 @@
       "url": "https://jpn.sika.com/ja/contact.html",
       "status": 404,
       "fallback": "https://jpn.sika.com"
+    },
+    {
+      "url": "https://my.ebook5.net/apro1965/general/",
+      "status": 404,
+      "fallback": "https://my.ebook5.net"
+    },
+    {
+      "url": "https://nagomi-artsteel.com/art-panel/cazl-artpanel/",
+      "status": 404,
+      "fallback": "https://nagomi-artsteel.com"
+    },
+    {
+      "url": "https://nagomi-artsteel.com/contact-nagomi/",
+      "status": 404,
+      "fallback": "https://nagomi-artsteel.com"
+    },
+    {
+      "url": "https://nagomi-artsteel.com/frontline-roppongi/",
+      "status": 404,
+      "fallback": "https://nagomi-artsteel.com"
+    },
+    {
+      "url": "https://panasonic.jp/aircon/catalog/",
+      "status": 404,
+      "fallback": "https://panasonic.jp"
+    },
+    {
+      "url": "https://panasonic.jp/door/catalog/",
+      "status": 404,
+      "fallback": "https://panasonic.jp"
+    },
+    {
+      "url": "https://panasonic.jp/door/nameplate/",
+      "status": 404,
+      "fallback": "https://panasonic.jp"
+    },
+    {
+      "url": "https://panasonic.jp/door/postbox/",
+      "status": 404,
+      "fallback": "https://panasonic.jp"
+    },
+    {
+      "url": "https://panasonic.jp/door/takuhai/",
+      "status": 404,
+      "fallback": "https://panasonic.jp"
+    },
+    {
+      "url": "https://panasonic.jp/showroom/",
+      "status": 404,
+      "fallback": "https://panasonic.jp"
+    },
+    {
+      "url": "https://panasonic.jp/sumai/",
+      "status": 404,
+      "fallback": "https://panasonic.jp"
+    },
+    {
+      "url": "https://panasonic.jp/sumai/catalog/",
+      "status": 404,
+      "fallback": "https://panasonic.jp"
+    },
+    {
+      "url": "https://panasonic.jp/sumai/floor_heating/",
+      "status": 404,
+      "fallback": "https://panasonic.jp"
+    },
+    {
+      "url": "https://panasonic.jp/sumai/kitchen/",
+      "status": 404,
+      "fallback": "https://panasonic.jp"
+    },
+    {
+      "url": "https://panasonic.jp/sumai/showroom/",
+      "status": 404,
+      "fallback": "https://panasonic.jp"
+    },
+    {
+      "url": "https://panasonic.jp/sumai/toilet/",
+      "status": 404,
+      "fallback": "https://panasonic.jp"
+    },
+    {
+      "url": "https://rinnai.jp/company/office/",
+      "status": 404,
+      "fallback": "https://rinnai.jp"
+    },
+    {
+      "url": "https://rinnai.jp/products/floor_heating/",
+      "status": 404,
+      "fallback": "https://rinnai.jp"
+    },
+    {
+      "url": "https://rinnai.jp/support/catalog/",
+      "status": 404,
+      "fallback": "https://rinnai.jp"
+    },
+    {
+      "url": "https://rinnai.jp/support/contact/",
+      "status": 404,
+      "fallback": "https://rinnai.jp"
+    },
+    {
+      "url": "https://sne.co.jp/cataloglist.html",
+      "status": 404,
+      "fallback": "https://sne.co.jp"
+    },
+    {
+      "url": "https://sne.co.jp/company/map.html",
+      "status": 404,
+      "fallback": "https://sne.co.jp"
+    },
+    {
+      "url": "https://sne.co.jp/products/sst37.html",
+      "status": 404,
+      "fallback": "https://sne.co.jp"
+    },
+    {
+      "url": "https://www.a-yamade.co.jp/data/catalog/catalog_stand/",
+      "status": 404,
+      "fallback": "https://www.a-yamade.co.jp"
+    },
+    {
+      "url": "https://www.advan.co.jp/contact/",
+      "status": 404,
+      "fallback": "https://www.advan.co.jp"
+    },
+    {
+      "url": "https://www.advan.co.jp/product/",
+      "status": 404,
+      "fallback": "https://www.advan.co.jp"
+    },
+    {
+      "url": "https://www.aica.co.jp/company/base/",
+      "status": 404,
+      "fallback": "https://www.aica.co.jp"
+    },
+    {
+      "url": "https://www.aica.co.jp/company/office/",
+      "status": 404,
+      "fallback": "https://www.aica.co.jp"
+    },
+    {
+      "url": "https://www.aica.co.jp/products/chemical/adhesive/floor/",
+      "status": 404,
+      "fallback": "https://www.aica.co.jp"
+    },
+    {
+      "url": "https://www.aica.co.jp/products/dl/",
+      "status": 404,
+      "fallback": "https://www.aica.co.jp"
+    },
+    {
+      "url": "https://www.aica.co.jp/products/veneer/toilet/",
+      "status": 404,
+      "fallback": "https://www.aica.co.jp"
+    },
+    {
+      "url": "https://www.aica.co.jp/support/catalog/",
+      "status": 404,
+      "fallback": "https://www.aica.co.jp"
+    },
+    {
+      "url": "https://www.almic.co.jp/catalog/",
+      "status": 404,
+      "fallback": "https://www.almic.co.jp"
+    },
+    {
+      "url": "https://www.almic.co.jp/company/office/",
+      "status": 404,
+      "fallback": "https://www.almic.co.jp"
+    },
+    {
+      "url": "https://www.almic.co.jp/contact/",
+      "status": 404,
+      "fallback": "https://www.almic.co.jp"
+    },
+    {
+      "url": "https://www.almic.co.jp/products/decorative/",
+      "status": 404,
+      "fallback": "https://www.almic.co.jp"
+    },
+    {
+      "url": "https://www.almic.co.jp/products/exterior/",
+      "status": 404,
+      "fallback": "https://www.almic.co.jp"
+    },
+    {
+      "url": "https://www.aronkasei.co.jp/company/base/",
+      "status": 404,
+      "fallback": "https://www.aronkasei.co.jp"
+    },
+    {
+      "url": "https://www.aronkasei.co.jp/kanzai/products/",
+      "status": 404,
+      "fallback": "https://www.aronkasei.co.jp"
+    },
+    {
+      "url": "https://www.asahitostem.co.jp/company/base/",
+      "status": 404,
+      "fallback": "https://www.asahitostem.co.jp"
+    },
+    {
+      "url": "https://www.asahitostem.co.jp/products/",
+      "status": 404,
+      "fallback": "https://www.asahitostem.co.jp"
     },
     {
       "url": "https://www.bestlock.co.jp/catalog/",
@@ -54,14 +389,179 @@
       "fallback": "https://www.blind.co.jp"
     },
     {
+      "url": "https://www.can-net.co.jp/sample-order",
+      "status": 404,
+      "fallback": "https://www.can-net.co.jp"
+    },
+    {
+      "url": "https://www.caname-roof.jp/contact/pdf/pmf_products.pdf?v=4162eb7c1b8414cc1afd3dffeb742441",
+      "status": 404,
+      "fallback": "https://www.caname-roof.jp"
+    },
+    {
+      "url": "https://www.cemedine.co.jp/company/office/",
+      "status": 404,
+      "fallback": "https://www.cemedine.co.jp"
+    },
+    {
+      "url": "https://www.cemedine.co.jp/contact/",
+      "status": 404,
+      "fallback": "https://www.cemedine.co.jp"
+    },
+    {
+      "url": "https://www.cemedine.co.jp/product/category/floor-adhesive/",
+      "status": 404,
+      "fallback": "https://www.cemedine.co.jp"
+    },
+    {
+      "url": "https://www.cemedine.co.jp/support/catalog/",
+      "status": 404,
+      "fallback": "https://www.cemedine.co.jp"
+    },
+    {
+      "url": "https://www.ceracore.net/ssl/contact/",
+      "status": 404,
+      "fallback": "https://www.ceracore.net"
+    },
+    {
+      "url": "https://www.chubu-net.co.jp/kenzai/Form/contact/",
+      "status": 404,
+      "fallback": "https://www.chubu-net.co.jp"
+    },
+    {
+      "url": "https://www.comany.co.jp/company/base/",
+      "status": 404,
+      "fallback": "https://www.comany.co.jp"
+    },
+    {
+      "url": "https://www.comany.co.jp/products/partition/",
+      "status": 404,
+      "fallback": "https://www.comany.co.jp"
+    },
+    {
+      "url": "https://www.comany.co.jp/products/toilet/",
+      "status": 404,
+      "fallback": "https://www.comany.co.jp"
+    },
+    {
+      "url": "https://www.daidore.co.jp/company/office/",
+      "status": 404,
+      "fallback": "https://www.daidore.co.jp"
+    },
+    {
+      "url": "https://www.daidore.co.jp/products/",
+      "status": 404,
+      "fallback": "https://www.daidore.co.jp"
+    },
+    {
+      "url": "https://www.daiken.jp/buildingmaterials/interior/baseboard/",
+      "status": 404,
+      "fallback": "https://www.daiken.jp"
+    },
+    {
+      "url": "https://www.daiken.jp/buildingmaterials/underlay/",
+      "status": 404,
+      "fallback": "https://www.daiken.jp"
+    },
+    {
+      "url": "https://www.daiken.jp/company/network/",
+      "status": 404,
+      "fallback": "https://www.daiken.jp"
+    },
+    {
+      "url": "https://www.daiken.jp/products/kenzai/exterior/parts/",
+      "status": 404,
+      "fallback": "https://www.daiken.jp"
+    },
+    {
+      "url": "https://www.daiken.jp/support/catalog/",
+      "status": 404,
+      "fallback": "https://www.daiken.jp"
+    },
+    {
+      "url": "https://www.daiken.jp/support/contact/",
+      "status": 404,
+      "fallback": "https://www.daiken.jp"
+    },
+    {
       "url": "https://www.daiken.ne.jp/company/office/",
       "status": 404,
       "fallback": "https://www.daiken.ne.jp"
     },
     {
+      "url": "https://www.daiken.ne.jp/product/door/",
+      "status": 404,
+      "fallback": "https://www.daiken.ne.jp"
+    },
+    {
+      "url": "https://www.daikin.co.jp/catalog/",
+      "status": 404,
+      "fallback": "https://www.daikin.co.jp"
+    },
+    {
+      "url": "https://www.daikin.co.jp/contact/office/",
+      "status": 404,
+      "fallback": "https://www.daikin.co.jp"
+    },
+    {
+      "url": "https://www.daikin.co.jp/products/",
+      "status": 404,
+      "fallback": "https://www.daikin.co.jp"
+    },
+    {
       "url": "https://www.daikure.co.jp/network/",
       "status": 404,
       "fallback": "https://www.daikure.co.jp"
+    },
+    {
+      "url": "https://www.danto.co.jp/company/base/",
+      "status": 404,
+      "fallback": "https://www.danto.co.jp"
+    },
+    {
+      "url": "https://www.eidai.com/product/flooring/baseboard/",
+      "status": 404,
+      "fallback": "https://www.eidai.com"
+    },
+    {
+      "url": "https://www.fancl.co.jp/catalog/",
+      "status": 404,
+      "fallback": "https://www.fancl.co.jp"
+    },
+    {
+      "url": "https://www.fancl.co.jp/company/office/",
+      "status": 404,
+      "fallback": "https://www.fancl.co.jp"
+    },
+    {
+      "url": "https://www.fancl.co.jp/contact/",
+      "status": 404,
+      "fallback": "https://www.fancl.co.jp"
+    },
+    {
+      "url": "https://www.fancl.co.jp/exterior/amadoi/",
+      "status": 404,
+      "fallback": "https://www.fancl.co.jp"
+    },
+    {
+      "url": "https://www.fujisash.co.jp/hp/company/office/",
+      "status": 404,
+      "fallback": "https://www.fujisash.co.jp"
+    },
+    {
+      "url": "https://www.fujisash.co.jp/hp/products/",
+      "status": 404,
+      "fallback": "https://www.fujisash.co.jp"
+    },
+    {
+      "url": "https://www.fujita.co.jp/catalog/",
+      "status": 404,
+      "fallback": "https://www.fujita.co.jp"
+    },
+    {
+      "url": "https://www.fujita.co.jp/products/pigeon-house/",
+      "status": 404,
+      "fallback": "https://www.fujita.co.jp"
     },
     {
       "url": "https://www.fukuvi.co.jp/catalog/",
@@ -74,9 +574,194 @@
       "fallback": "https://www.fukuvi.co.jp"
     },
     {
+      "url": "https://www.fukuvi.co.jp/company/branch/",
+      "status": 404,
+      "fallback": "https://www.fukuvi.co.jp"
+    },
+    {
+      "url": "https://www.fukuvi.co.jp/product/category/floor-trim/",
+      "status": 404,
+      "fallback": "https://www.fukuvi.co.jp"
+    },
+    {
+      "url": "https://www.fukuvi.co.jp/product/category/sound-insulation/",
+      "status": 404,
+      "fallback": "https://www.fukuvi.co.jp"
+    },
+    {
+      "url": "https://www.fukuvi.co.jp/products/exterior_parts/",
+      "status": 404,
+      "fallback": "https://www.fukuvi.co.jp"
+    },
+    {
+      "url": "https://www.fukuvi.co.jp/products/wall_materials/",
+      "status": 404,
+      "fallback": "https://www.fukuvi.co.jp"
+    },
+    {
+      "url": "https://www.fukuvi.co.jp/support/catalog/",
+      "status": 404,
+      "fallback": "https://www.fukuvi.co.jp"
+    },
+    {
+      "url": "https://www.fukuvi.co.jp/support/contact/",
+      "status": 404,
+      "fallback": "https://www.fukuvi.co.jp"
+    },
+    {
+      "url": "https://www.gsi.co.jp/inquiry/",
+      "status": 404,
+      "fallback": "https://www.gsi.co.jp"
+    },
+    {
+      "url": "https://www.gsi.co.jp/products/galvalume.html",
+      "status": 404,
+      "fallback": "https://www.gsi.co.jp"
+    },
+    {
+      "url": "https://www.gsi.co.jp/service/catalog.html",
+      "status": 404,
+      "fallback": "https://www.gsi.co.jp"
+    },
+    {
+      "url": "https://www.hinodesuido.co.jp/company/base/",
+      "status": 404,
+      "fallback": "https://www.hinodesuido.co.jp"
+    },
+    {
+      "url": "https://www.hinodesuido.co.jp/contact/",
+      "status": 404,
+      "fallback": "https://www.hinodesuido.co.jp"
+    },
+    {
+      "url": "https://www.hinodesuido.co.jp/products/",
+      "status": 404,
+      "fallback": "https://www.hinodesuido.co.jp"
+    },
+    {
+      "url": "https://www.itoki.jp/company/base/",
+      "status": 404,
+      "fallback": "https://www.itoki.jp"
+    },
+    {
+      "url": "https://www.itoki.jp/contact/",
+      "status": 404,
+      "fallback": "https://www.itoki.jp"
+    },
+    {
+      "url": "https://www.itoki.jp/products/partition/",
+      "status": 404,
+      "fallback": "https://www.itoki.jp"
+    },
+    {
       "url": "https://www.iwasaki.co.jp/company/base/",
       "status": 404,
       "fallback": "https://www.iwasaki.co.jp"
+    },
+    {
+      "url": "https://www.jfe-kenzai.co.jp/company/group.html",
+      "status": 404,
+      "fallback": "https://www.jfe-kenzai.co.jp"
+    },
+    {
+      "url": "https://www.jfe-kenzai.co.jp/download/catalog_list/",
+      "status": 404,
+      "fallback": "https://www.jfe-kenzai.co.jp"
+    },
+    {
+      "url": "https://www.jfe-kenzai.co.jp/products/galvalume/galvalume_external_wall/",
+      "status": 404,
+      "fallback": "https://www.jfe-kenzai.co.jp"
+    },
+    {
+      "url": "https://www.jfe-kouhan.co.jp/company/office/",
+      "status": 404,
+      "fallback": "https://www.jfe-kouhan.co.jp"
+    },
+    {
+      "url": "https://www.jfe-kouhan.co.jp/contact/",
+      "status": 404,
+      "fallback": "https://www.jfe-kouhan.co.jp"
+    },
+    {
+      "url": "https://www.jo-zu-works.com/ssl/contact/",
+      "status": 404,
+      "fallback": "https://www.jo-zu-works.com"
+    },
+    {
+      "url": "https://www.joto.com/company/office/",
+      "status": 404,
+      "fallback": "https://www.joto.com"
+    },
+    {
+      "url": "https://www.joto.com/product/floor-insulation/",
+      "status": 404,
+      "fallback": "https://www.joto.com"
+    },
+    {
+      "url": "https://www.joto.com/product/floor-trim/",
+      "status": 404,
+      "fallback": "https://www.joto.com"
+    },
+    {
+      "url": "https://www.k-tex.co.jp/company/access/",
+      "status": 404,
+      "fallback": "https://www.k-tex.co.jp"
+    },
+    {
+      "url": "https://www.k-tex.co.jp/download/",
+      "status": 404,
+      "fallback": "https://www.k-tex.co.jp"
+    },
+    {
+      "url": "https://www.k-tex.co.jp/products/aluminum/",
+      "status": 404,
+      "fallback": "https://www.k-tex.co.jp"
+    },
+    {
+      "url": "https://www.kamishima.co.jp/catalog/",
+      "status": 404,
+      "fallback": "https://www.kamishima.co.jp"
+    },
+    {
+      "url": "https://www.kamishima.co.jp/company/office/",
+      "status": 404,
+      "fallback": "https://www.kamishima.co.jp"
+    },
+    {
+      "url": "https://www.kamishima.co.jp/products/decorative/",
+      "status": 404,
+      "fallback": "https://www.kamishima.co.jp"
+    },
+    {
+      "url": "https://www.kanpe.co.jp/company/outline.php",
+      "status": 404,
+      "fallback": "https://www.kanpe.co.jp"
+    },
+    {
+      "url": "https://www.kanpe.co.jp/downloads/",
+      "status": 404,
+      "fallback": "https://www.kanpe.co.jp"
+    },
+    {
+      "url": "https://www.kanpe.co.jp/products/search_product.php?c=12",
+      "status": 404,
+      "fallback": "https://www.kanpe.co.jp"
+    },
+    {
+      "url": "https://www.kanpe.co.jp/support/inquiry.php",
+      "status": 404,
+      "fallback": "https://www.kanpe.co.jp"
+    },
+    {
+      "url": "https://www.kansai.co.jp/company/base/",
+      "status": 404,
+      "fallback": "https://www.kansai.co.jp"
+    },
+    {
+      "url": "https://www.kansai.co.jp/contact/",
+      "status": 404,
+      "fallback": "https://www.kansai.co.jp"
     },
     {
       "url": "https://www.kawashimaselkon.co.jp/company/base/",
@@ -94,6 +779,81 @@
       "fallback": "https://www.kawashimaselkon.co.jp"
     },
     {
+      "url": "https://www.kirii.co.jp/catalog/",
+      "status": 404,
+      "fallback": "https://www.kirii.co.jp"
+    },
+    {
+      "url": "https://www.kirii.co.jp/company/base/",
+      "status": 404,
+      "fallback": "https://www.kirii.co.jp"
+    },
+    {
+      "url": "https://www.kmew.co.jp/company/office/",
+      "status": 404,
+      "fallback": "https://www.kmew.co.jp"
+    },
+    {
+      "url": "https://www.kmew.co.jp/contact/",
+      "status": 404,
+      "fallback": "https://www.kmew.co.jp"
+    },
+    {
+      "url": "https://www.kmew.co.jp/products/handrail/",
+      "status": 404,
+      "fallback": "https://www.kmew.co.jp"
+    },
+    {
+      "url": "https://www.kmew.co.jp/support/catalog/",
+      "status": 404,
+      "fallback": "https://www.kmew.co.jp"
+    },
+    {
+      "url": "https://www.kokensangyo.co.jp/product/masu/",
+      "status": 404,
+      "fallback": "https://www.kokensangyo.co.jp"
+    },
+    {
+      "url": "https://www.komatsumatere.co.jp/greenbiz/",
+      "status": 404,
+      "fallback": "https://www.komatsumatere.co.jp"
+    },
+    {
+      "url": "https://www.komatsumatere.co.jp/greenbiz/category/ground/",
+      "status": 404,
+      "fallback": "https://www.komatsumatere.co.jp"
+    },
+    {
+      "url": "https://www.kondotec.co.jp/company/",
+      "status": 404,
+      "fallback": "https://www.kondotec.co.jp"
+    },
+    {
+      "url": "https://www.kvk.co.jp/catalog/",
+      "status": 404,
+      "fallback": "https://www.kvk.co.jp"
+    },
+    {
+      "url": "https://www.kvk.co.jp/corporate/office/",
+      "status": 404,
+      "fallback": "https://www.kvk.co.jp"
+    },
+    {
+      "url": "https://www.kyocera.co.jp/company/office/",
+      "status": 404,
+      "fallback": "https://www.kyocera.co.jp"
+    },
+    {
+      "url": "https://www.kyocera.co.jp/solar/contact/",
+      "status": 404,
+      "fallback": "https://www.kyocera.co.jp"
+    },
+    {
+      "url": "https://www.kyocera.co.jp/solar/lineup/",
+      "status": 404,
+      "fallback": "https://www.kyocera.co.jp"
+    },
+    {
       "url": "https://www.lilycolor.co.jp/catalog/",
       "status": 404,
       "fallback": "https://www.lilycolor.co.jp"
@@ -107,6 +867,236 @@
       "url": "https://www.lilycolor.co.jp/contact/",
       "status": 404,
       "fallback": "https://www.lilycolor.co.jp"
+    },
+    {
+      "url": "https://www.lixil.co.jp/contact/",
+      "status": 404,
+      "fallback": "https://www.lixil.co.jp"
+    },
+    {
+      "url": "https://www.lixil.co.jp/corporate/network/",
+      "status": 404,
+      "fallback": "https://www.lixil.co.jp"
+    },
+    {
+      "url": "https://www.lixil.co.jp/lineup/carport/",
+      "status": 404,
+      "fallback": "https://www.lixil.co.jp"
+    },
+    {
+      "url": "https://www.lixil.co.jp/lineup/construction/exterior_wall/accessories/",
+      "status": 404,
+      "fallback": "https://www.lixil.co.jp"
+    },
+    {
+      "url": "https://www.lixil.co.jp/lineup/construction/exterior_wall/metal_siding/dannetsu_metal/",
+      "status": 404,
+      "fallback": "https://www.lixil.co.jp"
+    },
+    {
+      "url": "https://www.lixil.co.jp/lineup/garden/deck/",
+      "status": 404,
+      "fallback": "https://www.lixil.co.jp"
+    },
+    {
+      "url": "https://www.lixil.co.jp/lineup/postbox/",
+      "status": 404,
+      "fallback": "https://www.lixil.co.jp"
+    },
+    {
+      "url": "https://www.maezawa-k.co.jp/company/office/",
+      "status": 404,
+      "fallback": "https://www.maezawa-k.co.jp"
+    },
+    {
+      "url": "https://www.maezawa-k.co.jp/products/",
+      "status": 404,
+      "fallback": "https://www.maezawa-k.co.jp"
+    },
+    {
+      "url": "https://www.mazroc.co.jp/company/showroom/",
+      "status": 404,
+      "fallback": "https://www.mazroc.co.jp"
+    },
+    {
+      "url": "https://www.mazroc.co.jp/products/interior/baseboard/",
+      "status": 404,
+      "fallback": "https://www.mazroc.co.jp"
+    },
+    {
+      "url": "https://www.mazroc.co.jp/support/catalog/",
+      "status": 404,
+      "fallback": "https://www.mazroc.co.jp"
+    },
+    {
+      "url": "https://www.mitsubishielectric.co.jp/catalog/",
+      "status": 404,
+      "fallback": "https://www.mitsubishielectric.co.jp"
+    },
+    {
+      "url": "https://www.mitsubishielectric.co.jp/company/office/",
+      "status": 404,
+      "fallback": "https://www.mitsubishielectric.co.jp"
+    },
+    {
+      "url": "https://www.mitsubishielectric.co.jp/contact/",
+      "status": 404,
+      "fallback": "https://www.mitsubishielectric.co.jp"
+    },
+    {
+      "url": "https://www.mitsubishielectric.co.jp/service/taiyo/catalog/",
+      "status": 404,
+      "fallback": "https://www.mitsubishielectric.co.jp"
+    },
+    {
+      "url": "https://www.mitsubishielectric.co.jp/service/taiyo/contact/",
+      "status": 404,
+      "fallback": "https://www.mitsubishielectric.co.jp"
+    },
+    {
+      "url": "https://www.mitsubishielectric.co.jp/service/taiyo/lineup/",
+      "status": 404,
+      "fallback": "https://www.mitsubishielectric.co.jp"
+    },
+    {
+      "url": "https://www.modric.co.jp/main/product/p-00.html",
+      "status": 404,
+      "fallback": "https://www.modric.co.jp"
+    },
+    {
+      "url": "https://www.morison.co.jp/business/company/office/",
+      "status": 404,
+      "fallback": "https://www.morison.co.jp"
+    },
+    {
+      "url": "https://www.morison.co.jp/business/products/",
+      "status": 404,
+      "fallback": "https://www.morison.co.jp"
+    },
+    {
+      "url": "https://www.nagashima-imono.co.jp/company/",
+      "status": 404,
+      "fallback": "https://www.nagashima-imono.co.jp"
+    },
+    {
+      "url": "https://www.nagoya-mosaic.co.jp/catalog/",
+      "status": 404,
+      "fallback": "https://www.nagoya-mosaic.co.jp"
+    },
+    {
+      "url": "https://www.nagoya-mosaic.co.jp/catalogue/2024.html",
+      "status": 404,
+      "fallback": "https://www.nagoya-mosaic.co.jp"
+    },
+    {
+      "url": "https://www.nagoya-mosaic.co.jp/catalogue/2025.html",
+      "status": 404,
+      "fallback": "https://www.nagoya-mosaic.co.jp"
+    },
+    {
+      "url": "https://www.nagoya-mosaic.co.jp/company/office/",
+      "status": 404,
+      "fallback": "https://www.nagoya-mosaic.co.jp"
+    },
+    {
+      "url": "https://www.nagoya-mosaic.co.jp/contact/",
+      "status": 404,
+      "fallback": "https://www.nagoya-mosaic.co.jp"
+    },
+    {
+      "url": "https://www.nagoya-mosaic.co.jp/product/",
+      "status": 404,
+      "fallback": "https://www.nagoya-mosaic.co.jp"
+    },
+    {
+      "url": "https://www.nagoya-mosaic.com/products/series/s1074",
+      "status": 404,
+      "fallback": "https://www.nagoya-mosaic.com"
+    },
+    {
+      "url": "https://www.naka-kogyo.co.jp/catalog/",
+      "status": 404,
+      "fallback": "https://www.naka-kogyo.co.jp"
+    },
+    {
+      "url": "https://www.naka-kogyo.co.jp/company/base/",
+      "status": 404,
+      "fallback": "https://www.naka-kogyo.co.jp"
+    },
+    {
+      "url": "https://www.naka-kogyo.co.jp/contact/",
+      "status": 404,
+      "fallback": "https://www.naka-kogyo.co.jp"
+    },
+    {
+      "url": "https://www.naka-kogyo.co.jp/product/",
+      "status": 404,
+      "fallback": "https://www.naka-kogyo.co.jp"
+    },
+    {
+      "url": "https://www.naniwa-kinzoku.co.jp/contact.html",
+      "status": 404,
+      "fallback": "https://www.naniwa-kinzoku.co.jp"
+    },
+    {
+      "url": "https://www.naniwa-kinzoku.co.jp/cp.html",
+      "status": 404,
+      "fallback": "https://www.naniwa-kinzoku.co.jp"
+    },
+    {
+      "url": "https://www.naniwa-kinzoku.co.jp/pro1.html",
+      "status": 404,
+      "fallback": "https://www.naniwa-kinzoku.co.jp"
+    },
+    {
+      "url": "https://www.naniwa-kinzoku.co.jp/pro2.html",
+      "status": 404,
+      "fallback": "https://www.naniwa-kinzoku.co.jp"
+    },
+    {
+      "url": "https://www.nankaiplywood.co.jp/company/office/",
+      "status": 404,
+      "fallback": "https://www.nankaiplywood.co.jp"
+    },
+    {
+      "url": "https://www.nankaiplywood.co.jp/company/showroom/",
+      "status": 404,
+      "fallback": "https://www.nankaiplywood.co.jp"
+    },
+    {
+      "url": "https://www.nankaiplywood.co.jp/contact/",
+      "status": 404,
+      "fallback": "https://www.nankaiplywood.co.jp"
+    },
+    {
+      "url": "https://www.nankaiplywood.co.jp/products/flooring/baseboard/",
+      "status": 404,
+      "fallback": "https://www.nankaiplywood.co.jp"
+    },
+    {
+      "url": "https://www.nankaiplywood.co.jp/support/catalog/",
+      "status": 404,
+      "fallback": "https://www.nankaiplywood.co.jp"
+    },
+    {
+      "url": "https://www.nankaiplywood.co.jp/support/contact/",
+      "status": 404,
+      "fallback": "https://www.nankaiplywood.co.jp"
+    },
+    {
+      "url": "https://www.nasta.co.jp/contact/",
+      "status": 404,
+      "fallback": "https://www.nasta.co.jp"
+    },
+    {
+      "url": "https://www.nasta.co.jp/products/apartment/",
+      "status": 404,
+      "fallback": "https://www.nasta.co.jp"
+    },
+    {
+      "url": "https://www.nasta.co.jp/products/mailbox/",
+      "status": 404,
+      "fallback": "https://www.nasta.co.jp"
     },
     {
       "url": "https://www.nichi-bei.co.jp/catalog/",
@@ -127,6 +1117,61 @@
       "url": "https://www.nichi-bei.co.jp/products/",
       "status": 404,
       "fallback": "https://www.nichi-bei.co.jp"
+    },
+    {
+      "url": "https://www.nichiha.co.jp/company/branch/",
+      "status": 404,
+      "fallback": "https://www.nichiha.co.jp"
+    },
+    {
+      "url": "https://www.nichiha.co.jp/component/parts/hafu-makuita/",
+      "status": 404,
+      "fallback": "https://www.nichiha.co.jp"
+    },
+    {
+      "url": "https://www.nichiha.co.jp/contact/",
+      "status": 404,
+      "fallback": "https://www.nichiha.co.jp"
+    },
+    {
+      "url": "https://www.nichiha.co.jp/document/detail/metal.html",
+      "status": 404,
+      "fallback": "https://www.nichiha.co.jp"
+    },
+    {
+      "url": "https://www.nichiha.co.jp/document/detail/parts.html",
+      "status": 404,
+      "fallback": "https://www.nichiha.co.jp"
+    },
+    {
+      "url": "https://www.nichiha.co.jp/wall/metal/lineup/",
+      "status": 404,
+      "fallback": "https://www.nichiha.co.jp"
+    },
+    {
+      "url": "https://www.nikko-company.co.jp/products/",
+      "status": 404,
+      "fallback": "https://www.nikko-company.co.jp"
+    },
+    {
+      "url": "https://www.nipponpaint.co.jp/company/network/",
+      "status": 404,
+      "fallback": "https://www.nipponpaint.co.jp"
+    },
+    {
+      "url": "https://www.nipponroad.co.jp/company/network/",
+      "status": 404,
+      "fallback": "https://www.nipponroad.co.jp"
+    },
+    {
+      "url": "https://www.nipponroad.co.jp/contact/",
+      "status": 404,
+      "fallback": "https://www.nipponroad.co.jp"
+    },
+    {
+      "url": "https://www.nipponsteel.com/company/domestic/",
+      "status": 404,
+      "fallback": "https://www.nipponsteel.com"
     },
     {
       "url": "https://www.nisshinkogyo.co.jp/contact/",
@@ -154,6 +1199,26 @@
       "fallback": "https://www.nittoku.co.jp"
     },
     {
+      "url": "https://www.noda-co.jp/products/baseboard/",
+      "status": 404,
+      "fallback": "https://www.noda-co.jp"
+    },
+    {
+      "url": "https://www.nomurakougei.co.jp/company/",
+      "status": 404,
+      "fallback": "https://www.nomurakougei.co.jp"
+    },
+    {
+      "url": "https://www.nomurakougei.co.jp/contact/",
+      "status": 404,
+      "fallback": "https://www.nomurakougei.co.jp"
+    },
+    {
+      "url": "https://www.nomurakougei.co.jp/works/",
+      "status": 404,
+      "fallback": "https://www.nomurakougei.co.jp"
+    },
+    {
       "url": "https://www.odelic.co.jp/catalog/",
       "status": 404,
       "fallback": "https://www.odelic.co.jp"
@@ -162,6 +1227,46 @@
       "url": "https://www.odelic.co.jp/contact/",
       "status": 404,
       "fallback": "https://www.odelic.co.jp"
+    },
+    {
+      "url": "https://www.okamura.co.jp/company/base/",
+      "status": 404,
+      "fallback": "https://www.okamura.co.jp"
+    },
+    {
+      "url": "https://www.okamura.co.jp/contact/",
+      "status": 404,
+      "fallback": "https://www.okamura.co.jp"
+    },
+    {
+      "url": "https://www.okamura.co.jp/product/partition/",
+      "status": 404,
+      "fallback": "https://www.okamura.co.jp"
+    },
+    {
+      "url": "https://www.okamura.co.jp/product/toilet/",
+      "status": 404,
+      "fallback": "https://www.okamura.co.jp"
+    },
+    {
+      "url": "https://www.owenscorning.jp/company/profile.html",
+      "status": 404,
+      "fallback": "https://www.owenscorning.jp"
+    },
+    {
+      "url": "https://www.owenscorning.jp/contact/index.html",
+      "status": 404,
+      "fallback": "https://www.owenscorning.jp"
+    },
+    {
+      "url": "https://www.owenscorning.jp/product/roofing/index.html",
+      "status": 404,
+      "fallback": "https://www.owenscorning.jp"
+    },
+    {
+      "url": "https://www.prairie.co.jp/archives/product_cat/cat17",
+      "status": 404,
+      "fallback": "https://www.prairie.co.jp"
     },
     {
       "url": "https://www.royal-co.net/catalog/",
@@ -184,6 +1289,126 @@
       "fallback": "https://www.sangetsu.co.jp"
     },
     {
+      "url": "https://www.seiwasangyo.co.jp/products/",
+      "status": 404,
+      "fallback": "https://www.seiwasangyo.co.jp"
+    },
+    {
+      "url": "https://www.sekistone.com/products/cad/",
+      "status": 404,
+      "fallback": "https://www.sekistone.com"
+    },
+    {
+      "url": "https://www.sekisui.co.jp/catalog/",
+      "status": 404,
+      "fallback": "https://www.sekisui.co.jp"
+    },
+    {
+      "url": "https://www.sekisui.co.jp/company/office/",
+      "status": 404,
+      "fallback": "https://www.sekisui.co.jp"
+    },
+    {
+      "url": "https://www.sekisui.co.jp/company/offices/",
+      "status": 404,
+      "fallback": "https://www.sekisui.co.jp"
+    },
+    {
+      "url": "https://www.sekisui.co.jp/products/exterior/gutters/",
+      "status": 404,
+      "fallback": "https://www.sekisui.co.jp"
+    },
+    {
+      "url": "https://www.sekisui.co.jp/products/exterior/gutters/catalog/",
+      "status": 404,
+      "fallback": "https://www.sekisui.co.jp"
+    },
+    {
+      "url": "https://www.sekisui.co.jp/products/housing/sound-insulation/",
+      "status": 404,
+      "fallback": "https://www.sekisui.co.jp"
+    },
+    {
+      "url": "https://www.sign-japan.com/html/list.html",
+      "status": 404,
+      "fallback": "https://www.sign-japan.com"
+    },
+    {
+      "url": "https://www.sign-japan.com/html/product.html",
+      "status": 404,
+      "fallback": "https://www.sign-japan.com"
+    },
+    {
+      "url": "https://www.sincol.co.jp/contact.html",
+      "status": 404,
+      "fallback": "https://www.sincol.co.jp"
+    },
+    {
+      "url": "https://www.sincol.co.jp/digicata/index.html",
+      "status": 404,
+      "fallback": "https://www.sincol.co.jp"
+    },
+    {
+      "url": "https://www.sincol.co.jp/products/carpet.html",
+      "status": 404,
+      "fallback": "https://www.sincol.co.jp"
+    },
+    {
+      "url": "https://www.sincol.co.jp/products/curtain.html",
+      "status": 404,
+      "fallback": "https://www.sincol.co.jp"
+    },
+    {
+      "url": "https://www.sincol.co.jp/products/fabric.html",
+      "status": 404,
+      "fallback": "https://www.sincol.co.jp"
+    },
+    {
+      "url": "https://www.sincol.co.jp/products/wallcvr.html",
+      "status": 404,
+      "fallback": "https://www.sincol.co.jp"
+    },
+    {
+      "url": "https://www.sincol.co.jp/showroom.html",
+      "status": 404,
+      "fallback": "https://www.sincol.co.jp"
+    },
+    {
+      "url": "https://www.sk-kaken.co.jp/company/base/",
+      "status": 404,
+      "fallback": "https://www.sk-kaken.co.jp"
+    },
+    {
+      "url": "https://www.solar-frontier.com/jpn/company/office/",
+      "status": 404,
+      "fallback": "https://www.solar-frontier.com"
+    },
+    {
+      "url": "https://www.solar-frontier.com/jpn/residential/catalog/",
+      "status": 404,
+      "fallback": "https://www.solar-frontier.com"
+    },
+    {
+      "url": "https://www.solar-frontier.com/jpn/residential/contact/",
+      "status": 404,
+      "fallback": "https://www.solar-frontier.com"
+    },
+    {
+      "url": "https://www.solar-frontier.com/jpn/residential/lineup/",
+      "status": 404,
+      "fallback": "https://www.solar-frontier.com"
+    },
+    {
+      "url": "https://www.sowa-chem.co.jp/contact/index.html",
+      "status": 404,
+      "fallback": "https://www.sowa-chem.co.jp"
+    },
+    {
+      "url": "https://www.st-grp.co.jp/company/group/",
+      "status": 404,
+      "fallback": "https://www.st-grp.co.jp"
+    },
+    {
       "url": "https://www.sugatsune.co.jp/catalog/",
       "status": 404,
       "fallback": "https://www.sugatsune.co.jp"
@@ -204,17 +1429,362 @@
       "fallback": "https://www.sugatsune.co.jp"
     },
     {
+      "url": "https://www.taiheisangyo.jp/company/",
+      "status": 404,
+      "fallback": "https://www.taiheisangyo.jp"
+    },
+    {
+      "url": "https://www.takenaka-ss.co.jp/catalog/",
+      "status": 404,
+      "fallback": "https://www.takenaka-ss.co.jp"
+    },
+    {
+      "url": "https://www.takenaka-ss.co.jp/company/office/",
+      "status": 404,
+      "fallback": "https://www.takenaka-ss.co.jp"
+    },
+    {
+      "url": "https://www.takenaka-ss.co.jp/product/amadoi/",
+      "status": 404,
+      "fallback": "https://www.takenaka-ss.co.jp"
+    },
+    {
+      "url": "https://www.takiron-ci.co.jp/company/network/",
+      "status": 404,
+      "fallback": "https://www.takiron-ci.co.jp"
+    },
+    {
+      "url": "https://www.takiron-ci.co.jp/company/office/",
+      "status": 404,
+      "fallback": "https://www.takiron-ci.co.jp"
+    },
+    {
+      "url": "https://www.takiron-ci.co.jp/product/suidou/amadoi/",
+      "status": 404,
+      "fallback": "https://www.takiron-ci.co.jp"
+    },
+    {
+      "url": "https://www.takiron-ci.co.jp/product/suidou/amadoi/catalog/",
+      "status": 404,
+      "fallback": "https://www.takiron-ci.co.jp"
+    },
+    {
+      "url": "https://www.tanakametal.co.jp/catalog/handrail/",
+      "status": 404,
+      "fallback": "https://www.tanakametal.co.jp"
+    },
+    {
+      "url": "https://www.tanakametal.co.jp/products/handrail/",
+      "status": 404,
+      "fallback": "https://www.tanakametal.co.jp"
+    },
+    {
+      "url": "https://www.tanseisha.co.jp/company/base/",
+      "status": 404,
+      "fallback": "https://www.tanseisha.co.jp"
+    },
+    {
       "url": "https://www.tlt.co.jp/tlt/company/base/",
       "status": 404,
       "fallback": "https://www.tlt.co.jp"
     },
     {
+      "url": "https://www.toli.co.jp/digital_catalog/adhesive_index.html",
+      "status": 404,
+      "fallback": "https://www.toli.co.jp"
+    },
+    {
+      "url": "https://www.toli.co.jp/product/adhesive/",
+      "status": 404,
+      "fallback": "https://www.toli.co.jp"
+    },
+    {
+      "url": "https://www.toshin-grc.co.jp/business/exterior/lineup/light/",
+      "status": 404,
+      "fallback": "https://www.toshin-grc.co.jp"
+    },
+    {
+      "url": "https://www.toshin-grc.co.jp/catalog/web/",
+      "status": 404,
+      "fallback": "https://www.toshin-grc.co.jp"
+    },
+    {
+      "url": "https://www.toshin-grc.co.jp/profile/branch/",
+      "status": 404,
+      "fallback": "https://www.toshin-grc.co.jp"
+    },
+    {
+      "url": "https://www.toto.co.jp/catalog/",
+      "status": 404,
+      "fallback": "https://www.toto.co.jp"
+    },
+    {
+      "url": "https://www.toto.co.jp/contact/",
+      "status": 404,
+      "fallback": "https://www.toto.co.jp"
+    },
+    {
+      "url": "https://www.toto.co.jp/products/",
+      "status": 404,
+      "fallback": "https://www.toto.co.jp"
+    },
+    {
+      "url": "https://www.toto.co.jp/showroom/",
+      "status": 404,
+      "fallback": "https://www.toto.co.jp"
+    },
+    {
+      "url": "https://www.woodone.co.jp/contact/",
+      "status": 404,
+      "fallback": "https://www.woodone.co.jp"
+    },
+    {
+      "url": "https://www.woodone.co.jp/product/item/housing_cat/baseboard/",
+      "status": 404,
+      "fallback": "https://www.woodone.co.jp"
+    },
+    {
+      "url": "https://www.woodtec.co.jp/products/public/baseboard/",
+      "status": 404,
+      "fallback": "https://www.woodtec.co.jp"
+    },
+    {
+      "url": "https://www.ykkap.co.jp/about/network/",
+      "status": 404,
+      "fallback": "https://www.ykkap.co.jp"
+    },
+    {
+      "url": "https://www.ykkap.co.jp/catalog/",
+      "status": 404,
+      "fallback": "https://www.ykkap.co.jp"
+    },
+    {
+      "url": "https://www.ykkap.co.jp/consumer/products/wall/",
+      "status": 404,
+      "fallback": "https://www.ykkap.co.jp"
+    },
+    {
+      "url": "https://www.ykkap.co.jp/consumer/products/window/",
+      "status": 404,
+      "fallback": "https://www.ykkap.co.jp"
+    },
+    {
+      "url": "https://www.ykkap.co.jp/contact/",
+      "status": 404,
+      "fallback": "https://www.ykkap.co.jp"
+    },
+    {
+      "url": "https://www.ykkap.co.jp/info/catalog/",
+      "status": 404,
+      "fallback": "https://www.ykkap.co.jp"
+    },
+    {
+      "url": "https://www.ykkap.co.jp/products/carport/",
+      "status": 404,
+      "fallback": "https://www.ykkap.co.jp"
+    },
+    {
+      "url": "https://www.ykkap.co.jp/products/ex/accessories/",
+      "status": 404,
+      "fallback": "https://www.ykkap.co.jp"
+    },
+    {
+      "url": "https://www.ykkap.co.jp/products/ex/galvarium/kantan-sidei-s/",
+      "status": 404,
+      "fallback": "https://www.ykkap.co.jp"
+    },
+    {
+      "url": "https://www.ykkap.co.jp/products/exterior/",
+      "status": 404,
+      "fallback": "https://www.ykkap.co.jp"
+    },
+    {
+      "url": "https://www.ykkap.co.jp/products/fence/",
+      "status": 404,
+      "fallback": "https://www.ykkap.co.jp"
+    },
+    {
+      "url": "https://www.ykkap.co.jp/products/garden/",
+      "status": 404,
+      "fallback": "https://www.ykkap.co.jp"
+    },
+    {
+      "url": "https://www.ykkap.co.jp/showroom/",
+      "status": 404,
+      "fallback": "https://www.ykkap.co.jp"
+    },
+    {
+      "url": "https://www.ykkap.co.jp/support/catalog/exterior/",
+      "status": 404,
+      "fallback": "https://www.ykkap.co.jp"
+    },
+    {
+      "url": "https://www.ykkap.co.jp/support/contact/",
+      "status": 404,
+      "fallback": "https://www.ykkap.co.jp"
+    },
+    {
+      "url": "https://www.yodoko.co.jp/company/network/",
+      "status": 404,
+      "fallback": "https://www.yodoko.co.jp"
+    },
+    {
+      "url": "https://www.yodoko.co.jp/info/catalog/",
+      "status": 404,
+      "fallback": "https://www.yodoko.co.jp"
+    },
+    {
+      "url": "https://www.yodoko.co.jp/products/exterior_wall/",
+      "status": 404,
+      "fallback": "https://www.yodoko.co.jp"
+    },
+    {
       "url": "https://www2.panasonic.biz/jp/contact/",
+      "status": 404,
+      "fallback": "https://www2.panasonic.biz"
+    },
+    {
+      "url": "https://www2.panasonic.biz/jp/solar/catalog/",
+      "status": 404,
+      "fallback": "https://www2.panasonic.biz"
+    },
+    {
+      "url": "https://www2.panasonic.biz/jp/solar/contact/",
+      "status": 404,
+      "fallback": "https://www2.panasonic.biz"
+    },
+    {
+      "url": "https://www2.panasonic.biz/jp/solar/lineup/",
+      "status": 404,
+      "fallback": "https://www2.panasonic.biz"
+    },
+    {
+      "url": "https://www2.panasonic.biz/jp/solar/showroom/",
+      "status": 404,
+      "fallback": "https://www2.panasonic.biz"
+    },
+    {
+      "url": "https://www2.panasonic.biz/sumai/exterior/gutters/",
+      "status": 404,
+      "fallback": "https://www2.panasonic.biz"
+    },
+    {
+      "url": "https://www2.panasonic.biz/sumai/exterior/gutters/catalog.html",
+      "status": 404,
+      "fallback": "https://www2.panasonic.biz"
+    },
+    {
+      "url": "https://www2.panasonic.biz/sumai/exterior/gutters/contact.html",
+      "status": 404,
+      "fallback": "https://www2.panasonic.biz"
+    },
+    {
+      "url": "https://www2.panasonic.biz/sumai/exterior/gutters/showroom.html",
       "status": 404,
       "fallback": "https://www2.panasonic.biz"
     }
   ],
   "unreachable": [
+    {
+      "url": "https://biz.lixil.com/inquiry/products/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://iportal.lixil.co.jp/JSCATALOGVOL1/iportal/CatalogSearch.do?method=catalogSearchByDefaultSettingCategories&volumeID=JSCATALOGVOL1",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://st.sankyo-tateyama.co.jp/inquiry/business/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://st.sankyo-tateyama.co.jp/products/business/exterior/accessories/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://st.sankyo-tateyama.co.jp/products/business/exterior/wall/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://st.sankyo-tateyama.co.jp/service/catalog/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.3mcompany.jp/3M/ja_JP/architectural-design-jp/",
+      "reason": "AbortError"
+    },
+    {
+      "url": "https://www.3mcompany.jp/3M/ja_JP/architectural-design-jp/support/contact-us/",
+      "reason": "AbortError"
+    },
+    {
+      "url": "https://www.3mcompany.jp/3M/ja_JP/company-jp/about-3m/resources/",
+      "reason": "AbortError"
+    },
+    {
+      "url": "https://www.amadoi.or.jp/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.amadoi.or.jp/catalog/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.amadoi.or.jp/contact/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.amadoi.or.jp/members/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.assist777.co.jp/catalog/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.assist777.co.jp/company/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.assist777.co.jp/contact/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.assist777.co.jp/product/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ateliertekhnika.com/catalog/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ateliertekhnika.com/company/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ateliertekhnika.com/contact/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ateliertekhnika.com/products/pigeon-house/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ats-v.co.jp/catalog/view.html",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ats-v.co.jp/contact/index.html",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ats-v.co.jp/product/category/103.html",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ats-v.co.jp/sales/index.html",
+      "reason": "ENOTFOUND"
+    },
     {
       "url": "https://www.chubu-corp.co.jp/company/",
       "reason": "ENOTFOUND"
@@ -228,20 +1798,216 @@
       "reason": "ENOTFOUND"
     },
     {
-      "url": "https://www.koizumi-lt.co.jp/catalog/",
-      "reason": "UND_ERR_CONNECT_TIMEOUT"
+      "url": "https://www.cyclochem.co.jp/catalog/",
+      "reason": "ENOTFOUND"
     },
     {
-      "url": "https://www.koizumi-lt.co.jp/company/",
-      "reason": "UND_ERR_CONNECT_TIMEOUT"
+      "url": "https://www.cyclochem.co.jp/company/office/",
+      "reason": "ENOTFOUND"
     },
     {
-      "url": "https://www.koizumi-lt.co.jp/contact/",
-      "reason": "UND_ERR_CONNECT_TIMEOUT"
+      "url": "https://www.cyclochem.co.jp/contact/",
+      "reason": "ENOTFOUND"
     },
     {
-      "url": "https://www.koizumi-lt.co.jp/product/",
-      "reason": "UND_ERR_CONNECT_TIMEOUT"
+      "url": "https://www.cyclochem.co.jp/product/amadoi/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.fukuchou.jp/catalog/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.fukuchou.jp/company/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.fukuchou.jp/contact/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.fukuchou.jp/products/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.hautec.co.jp/catalog/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.hautec.co.jp/contact/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.hautec.co.jp/products/interior/baseboard/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.hautec.co.jp/showroom/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ic-ryowa.com/catalog/",
+      "reason": "AbortError"
+    },
+    {
+      "url": "https://www.ig-kogyou.co.jp/company/locations/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ig-kogyou.co.jp/contact/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ig-kogyou.co.jp/info_material/document/cat_list/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.ig-kogyou.co.jp/products/galvarium/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.japan-kenzai.co.jp/catalog/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.japan-kenzai.co.jp/company/office/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.japan-kenzai.co.jp/contact/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.japan-kenzai.co.jp/product/floor/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kawaguchi-giken.co.jp/catalog/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kawaguchi-giken.co.jp/company/office/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kawaguchi-giken.co.jp/contact/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kawaguchi-giken.co.jp/products/handrail/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kenchiku-shizai.co.jp/catalog/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kenchiku-shizai.co.jp/company/office/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kenchiku-shizai.co.jp/contact/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kenchiku-shizai.co.jp/pigeon/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kyowa-kb.co.jp/branch/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kyowa-kb.co.jp/form/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kyowa-kb.co.jp/products/seppan/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kyowa-kb.co.jp/search/?query_word=&query_cat%5B%5D=seppan#search_result",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.laminam.jp/company/",
+      "reason": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.laminam.jp/contact/",
+      "reason": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.laminam.jp/download/",
+      "reason": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.laminam.jp/product/",
+      "reason": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.maruichi-kokan.co.jp/amadoi/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.maruichi-kokan.co.jp/catalog/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.maruichi-kokan.co.jp/company/office/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.maruichi-kokan.co.jp/contact/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.marutoku.co.jp/catalog/",
+      "reason": "ERR_SSL_TLSV1_ALERT_INTERNAL_ERROR"
+    },
+    {
+      "url": "https://www.marutoku.co.jp/company/",
+      "reason": "ERR_SSL_TLSV1_ALERT_INTERNAL_ERROR"
+    },
+    {
+      "url": "https://www.marutoku.co.jp/contact/",
+      "reason": "ERR_SSL_TLSV1_ALERT_INTERNAL_ERROR"
+    },
+    {
+      "url": "https://www.marutoku.co.jp/pigeon-house/",
+      "reason": "ERR_SSL_TLSV1_ALERT_INTERNAL_ERROR"
+    },
+    {
+      "url": "https://www.nihon-protect.co.jp/catalog/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.nihon-protect.co.jp/company/office/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.nihon-protect.co.jp/contact/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.nihon-protect.co.jp/service/floor-coating/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.nisc-s.co.jp/catalog/",
+      "reason": "ERR_SSL_PACKET_LENGTH_TOO_LONG"
+    },
+    {
+      "url": "https://www.nisc-s.co.jp/company/base/",
+      "reason": "ERR_SSL_PACKET_LENGTH_TOO_LONG"
+    },
+    {
+      "url": "https://www.nisc-s.co.jp/contact/",
+      "reason": "ERR_SSL_PACKET_LENGTH_TOO_LONG"
+    },
+    {
+      "url": "https://www.nisc-s.co.jp/products/",
+      "reason": "ERR_SSL_PACKET_LENGTH_TOO_LONG"
     },
     {
       "url": "https://www.okuoka.co.jp/catalog/",
@@ -258,7 +2024,248 @@
     {
       "url": "https://www.okuoka.co.jp/product/",
       "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.pacific-precon.co.jp/company/office/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.pacific-precon.co.jp/contact/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.pacific-precon.co.jp/products/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.plusone-gutter.co.jp/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.plusone-gutter.co.jp/catalog/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.plusone-gutter.co.jp/company/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.plusone-gutter.co.jp/contact/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.rfriken.co.jp/company/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.rfriken.co.jp/contact/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.rfriken.co.jp/products/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.sanko-k.co.jp/company/office/",
+      "reason": "ERR_TLS_CERT_ALTNAME_INVALID"
+    },
+    {
+      "url": "https://www.sanko-k.co.jp/contact/",
+      "reason": "ERR_TLS_CERT_ALTNAME_INVALID"
+    },
+    {
+      "url": "https://www.sanko-k.co.jp/products/aluminum/",
+      "reason": "ERR_TLS_CERT_ALTNAME_INVALID"
+    },
+    {
+      "url": "https://www.sanko-k.co.jp/support/catalog/",
+      "reason": "ERR_TLS_CERT_ALTNAME_INVALID"
+    },
+    {
+      "url": "https://www.shin-nikkei.co.jp/company/office/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.shin-nikkei.co.jp/contact/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.shin-nikkei.co.jp/products/amadoi/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.shin-nikkei.co.jp/products/handrail/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.shin-nikkei.co.jp/support/catalog/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.sunsyo.co.jp/contact/",
+      "reason": "ECONNRESET"
+    },
+    {
+      "url": "https://www.sunsyo.co.jp/product/sun-edge/",
+      "reason": "ECONNRESET"
+    },
+    {
+      "url": "https://www.sunsyo.co.jp/profile/",
+      "reason": "ECONNRESET"
+    },
+    {
+      "url": "https://www.system-art.co.jp/catalog/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.system-art.co.jp/company/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.system-art.co.jp/contact/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.system-art.co.jp/products/trim/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.takemura-k.co.jp/company/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.takemura-k.co.jp/contact/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.takemura-k.co.jp/products/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.takemura-kinzoku.co.jp/catalog/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.takemura-kinzoku.co.jp/company/access/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.takemura-kinzoku.co.jp/contact/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.takemura-kinzoku.co.jp/products/wall/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.tamari.co.jp/catalog/",
+      "reason": "ERR_TLS_CERT_ALTNAME_INVALID"
+    },
+    {
+      "url": "https://www.tamari.co.jp/company/",
+      "reason": "ERR_TLS_CERT_ALTNAME_INVALID"
+    },
+    {
+      "url": "https://www.tamari.co.jp/contact/",
+      "reason": "ERR_TLS_CERT_ALTNAME_INVALID"
+    },
+    {
+      "url": "https://www.tamari.co.jp/products/floor-trim/",
+      "reason": "ERR_TLS_CERT_ALTNAME_INVALID"
+    },
+    {
+      "url": "https://www.toshiba-energy.com/company/office.htm",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.toshiba-energy.com/renewable-energy/solar-pv/catalog.htm",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.toshiba-energy.com/renewable-energy/solar-pv/contact.htm",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.toshiba-energy.com/renewable-energy/solar-pv/lineup.htm",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.urethane-kogyo.co.jp/catalog/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.urethane-kogyo.co.jp/company/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.urethane-kogyo.co.jp/contact/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.urethane-kogyo.co.jp/products/floor-coating/",
+      "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.y-y-k.co.jp/about/branch/",
+      "reason": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.y-y-k.co.jp/products_use/",
+      "reason": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.y-y-k.co.jp/support/db_catalog/",
+      "reason": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.y-y-k.co.jp/support/inquiry_step1/",
+      "reason": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
     }
   ],
-  "error": []
+  "error": [
+    {
+      "url": "https://appsp.st-grp.co.jp/",
+      "status": 503
+    },
+    {
+      "url": "https://cleanup.jp/support/contact/",
+      "status": 500
+    },
+    {
+      "url": "https://www.ic-ryowa.com/office/",
+      "status": 503
+    },
+    {
+      "url": "https://www.ic-ryowa.com/products/",
+      "status": 503
+    },
+    {
+      "url": "https://www.karimoku.co.jp/contactus.html",
+      "status": 503
+    },
+    {
+      "url": "https://www.karimoku.co.jp/corporateinfo/",
+      "status": 503
+    },
+    {
+      "url": "https://www.karimoku.co.jp/documentrequest/",
+      "status": 503
+    },
+    {
+      "url": "https://www.ohmura-trading.co.jp/products/list?category_id=1",
+      "status": 500
+    },
+    {
+      "url": "https://www.ohmura-trading.co.jp/products/list?category_id=2",
+      "status": 500
+    },
+    {
+      "url": "https://www.yodoko.co.jp/app/Catalog/builder/",
+      "status": 400
+    },
+    {
+      "url": "https://www.yodoko.co.jp/app/Enquete/contacts/",
+      "status": 400
+    }
+  ]
 }

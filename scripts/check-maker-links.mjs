@@ -12,7 +12,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const MENU_DIR = 'src/components/content/leftcolumn-menu';
+const MAKERS_FILE = 'src/data/makers.json';
 const OUT_FILE = 'src/data/broken-maker-links.json';
 // 同時接続を上げすぎると自分側が詰まり、生きているサイトまで
 // UND_ERR_CONNECT_TIMEOUT になる（15並列で 158 件の誤検出が出た）。
@@ -22,13 +22,23 @@ const TIMEOUT_MS = 15000;
 const RETRY_TIMEOUT_MS = 30000;
 const UA = 'Mozilla/5.0 (compatible; yaneyuka-linkcheck/1.0; +https://yaneyuka.com/)';
 
+const SLOTS = ['products', 'catalog', 'office', 'contact', 'sample', 'cad'];
+
+/**
+ * 検査対象は src/data/makers.json。
+ * 以前は mak_*.tsx を直接読んでいたが、メーカー情報を JSON へ移したあとも
+ * そのままだったため、3,328 本あるうち 93 本しか検査していなかった。
+ * 表示に使うデータと同じ場所を見ること。
+ */
 function collectUrls() {
+  const makers = JSON.parse(fs.readFileSync(MAKERS_FILE, 'utf8'));
   const urls = new Set();
-  for (const file of fs.readdirSync(MENU_DIR)) {
-    if (!file.startsWith('mak_') || !file.endsWith('.tsx')) continue;
-    const text = fs.readFileSync(path.join(MENU_DIR, file), 'utf8');
-    for (const m of text.matchAll(/https?:\/\/[^'"`)\s]+/g)) {
-      urls.add(m[0].replace(/[),.]+$/, ''));
+  for (const list of Object.values(makers)) {
+    for (const maker of list) {
+      for (const slot of SLOTS) {
+        const u = maker[slot];
+        if (typeof u === 'string' && /^https?:\/\//.test(u)) urls.add(u.trim());
+      }
     }
   }
   return [...urls].sort();
