@@ -1,48 +1,13 @@
 {
-  "generatedAt": "2026-08-10",
-  "checked": 2056,
+  "generatedAt": "2026-08-16",
+  "checked": 2061,
   "summary": {
-    "ok": 1576,
-    "broken": 335,
-    "unreachable": 134,
-    "error": 11
+    "ok": 1317,
+    "broken": 297,
+    "unreachable": 438,
+    "error": 9
   },
   "broken": [
-    {
-      "url": "http://www.marushika.com/about/index.html#branch",
-      "status": 404,
-      "fallback": "http://www.marushika.com"
-    },
-    {
-      "url": "http://www.marushika.com/digitalcatalog/?pNo=1",
-      "status": 404,
-      "fallback": "http://www.marushika.com"
-    },
-    {
-      "url": "http://www.marushika.com/material/besame.html",
-      "status": 404,
-      "fallback": "http://www.marushika.com"
-    },
-    {
-      "url": "http://www.marushika.com/material/detail.html?item_rno=65&main_no=1&sub_no=8&list2=1&list1=1",
-      "status": 404,
-      "fallback": "http://www.marushika.com"
-    },
-    {
-      "url": "http://www.marushika.com/material/roof.html",
-      "status": 404,
-      "fallback": "http://www.marushika.com"
-    },
-    {
-      "url": "http://www.marushika.com/material/roof.html?sub_no=34&list2=0&list1=1",
-      "status": 404,
-      "fallback": "http://www.marushika.com"
-    },
-    {
-      "url": "http://www.marushika.com/material/tile.html",
-      "status": 404,
-      "fallback": "http://www.marushika.com"
-    },
     {
       "url": "http://www.orimeta.co.jp/company.html",
       "status": 404,
@@ -92,21 +57,6 @@
       "url": "https://cleanup.jp/catalog/",
       "status": 404,
       "fallback": "https://cleanup.jp"
-    },
-    {
-      "url": "https://ikehiko.net/company/aboutus/",
-      "status": 404,
-      "fallback": "https://ikehiko.net"
-    },
-    {
-      "url": "https://ikehiko.net/product_category/products/",
-      "status": 404,
-      "fallback": "https://ikehiko.net"
-    },
-    {
-      "url": "https://jp.sharp/corporate/info/offices/",
-      "status": 404,
-      "fallback": "https://jp.sharp"
     },
     {
       "url": "https://jp.sharp/sunvista/catalog/",
@@ -389,11 +339,6 @@
       "fallback": "https://www.blind.co.jp"
     },
     {
-      "url": "https://www.can-net.co.jp/sample-order",
-      "status": 404,
-      "fallback": "https://www.can-net.co.jp"
-    },
-    {
       "url": "https://www.caname-roof.jp/contact/pdf/pmf_products.pdf?v=4162eb7c1b8414cc1afd3dffeb742441",
       "status": 404,
       "fallback": "https://www.caname-roof.jp"
@@ -422,11 +367,6 @@
       "url": "https://www.ceracore.net/ssl/contact/",
       "status": 404,
       "fallback": "https://www.ceracore.net"
-    },
-    {
-      "url": "https://www.chubu-net.co.jp/kenzai/Form/contact/",
-      "status": 404,
-      "fallback": "https://www.chubu-net.co.jp"
     },
     {
       "url": "https://www.comany.co.jp/company/base/",
@@ -624,21 +564,6 @@
       "fallback": "https://www.gsi.co.jp"
     },
     {
-      "url": "https://www.hinodesuido.co.jp/company/base/",
-      "status": 404,
-      "fallback": "https://www.hinodesuido.co.jp"
-    },
-    {
-      "url": "https://www.hinodesuido.co.jp/contact/",
-      "status": 404,
-      "fallback": "https://www.hinodesuido.co.jp"
-    },
-    {
-      "url": "https://www.hinodesuido.co.jp/products/",
-      "status": 404,
-      "fallback": "https://www.hinodesuido.co.jp"
-    },
-    {
       "url": "https://www.itoki.jp/company/base/",
       "status": 404,
       "fallback": "https://www.itoki.jp"
@@ -704,21 +629,6 @@
       "fallback": "https://www.joto.com"
     },
     {
-      "url": "https://www.k-tex.co.jp/company/access/",
-      "status": 404,
-      "fallback": "https://www.k-tex.co.jp"
-    },
-    {
-      "url": "https://www.k-tex.co.jp/download/",
-      "status": 404,
-      "fallback": "https://www.k-tex.co.jp"
-    },
-    {
-      "url": "https://www.k-tex.co.jp/products/aluminum/",
-      "status": 404,
-      "fallback": "https://www.k-tex.co.jp"
-    },
-    {
       "url": "https://www.kamishima.co.jp/catalog/",
       "status": 404,
       "fallback": "https://www.kamishima.co.jp"
@@ -732,26 +642,6 @@
       "url": "https://www.kamishima.co.jp/products/decorative/",
       "status": 404,
       "fallback": "https://www.kamishima.co.jp"
-    },
-    {
-      "url": "https://www.kanpe.co.jp/company/outline.php",
-      "status": 404,
-      "fallback": "https://www.kanpe.co.jp"
-    },
-    {
-      "url": "https://www.kanpe.co.jp/downloads/",
-      "status": 404,
-      "fallback": "https://www.kanpe.co.jp"
-    },
-    {
-      "url": "https://www.kanpe.co.jp/products/search_product.php?c=12",
-      "status": 404,
-      "fallback": "https://www.kanpe.co.jp"
-    },
-    {
-      "url": "https://www.kanpe.co.jp/support/inquiry.php",
-      "status": 404,
-      "fallback": "https://www.kanpe.co.jp"
     },
     {
       "url": "https://www.kansai.co.jp/company/base/",
@@ -829,16 +719,6 @@
       "fallback": "https://www.kondotec.co.jp"
     },
     {
-      "url": "https://www.kvk.co.jp/catalog/",
-      "status": 404,
-      "fallback": "https://www.kvk.co.jp"
-    },
-    {
-      "url": "https://www.kvk.co.jp/corporate/office/",
-      "status": 404,
-      "fallback": "https://www.kvk.co.jp"
-    },
-    {
       "url": "https://www.kyocera.co.jp/company/office/",
       "status": 404,
       "fallback": "https://www.kyocera.co.jp"
@@ -912,21 +792,6 @@
       "url": "https://www.maezawa-k.co.jp/products/",
       "status": 404,
       "fallback": "https://www.maezawa-k.co.jp"
-    },
-    {
-      "url": "https://www.mazroc.co.jp/company/showroom/",
-      "status": 404,
-      "fallback": "https://www.mazroc.co.jp"
-    },
-    {
-      "url": "https://www.mazroc.co.jp/products/interior/baseboard/",
-      "status": 404,
-      "fallback": "https://www.mazroc.co.jp"
-    },
-    {
-      "url": "https://www.mazroc.co.jp/support/catalog/",
-      "status": 404,
-      "fallback": "https://www.mazroc.co.jp"
     },
     {
       "url": "https://www.mitsubishielectric.co.jp/catalog/",
@@ -1189,16 +1054,6 @@
       "fallback": "https://www.nitta.co.jp"
     },
     {
-      "url": "https://www.nittoku.co.jp/company/base/",
-      "status": 404,
-      "fallback": "https://www.nittoku.co.jp"
-    },
-    {
-      "url": "https://www.nittoku.co.jp/products/",
-      "status": 404,
-      "fallback": "https://www.nittoku.co.jp"
-    },
-    {
       "url": "https://www.noda-co.jp/products/baseboard/",
       "status": 404,
       "fallback": "https://www.noda-co.jp"
@@ -1264,21 +1119,6 @@
       "fallback": "https://www.owenscorning.jp"
     },
     {
-      "url": "https://www.prairie.co.jp/archives/product_cat/cat17",
-      "status": 404,
-      "fallback": "https://www.prairie.co.jp"
-    },
-    {
-      "url": "https://www.royal-co.net/catalog/",
-      "status": 404,
-      "fallback": "https://www.royal-co.net"
-    },
-    {
-      "url": "https://www.royal-co.net/contact/",
-      "status": 404,
-      "fallback": "https://www.royal-co.net"
-    },
-    {
       "url": "https://www.sangetsu.co.jp/company/base/",
       "status": 404,
       "fallback": "https://www.sangetsu.co.jp"
@@ -1287,11 +1127,6 @@
       "url": "https://www.sangetsu.co.jp/contact/",
       "status": 404,
       "fallback": "https://www.sangetsu.co.jp"
-    },
-    {
-      "url": "https://www.seiwasangyo.co.jp/products/",
-      "status": 404,
-      "fallback": "https://www.seiwasangyo.co.jp"
     },
     {
       "url": "https://www.sekistone.com/products/cad/",
@@ -1407,31 +1242,6 @@
       "url": "https://www.st-grp.co.jp/company/group/",
       "status": 404,
       "fallback": "https://www.st-grp.co.jp"
-    },
-    {
-      "url": "https://www.sugatsune.co.jp/catalog/",
-      "status": 404,
-      "fallback": "https://www.sugatsune.co.jp"
-    },
-    {
-      "url": "https://www.sugatsune.co.jp/company/base/",
-      "status": 404,
-      "fallback": "https://www.sugatsune.co.jp"
-    },
-    {
-      "url": "https://www.sugatsune.co.jp/contact/",
-      "status": 404,
-      "fallback": "https://www.sugatsune.co.jp"
-    },
-    {
-      "url": "https://www.sugatsune.co.jp/products/",
-      "status": 404,
-      "fallback": "https://www.sugatsune.co.jp"
-    },
-    {
-      "url": "https://www.taiheisangyo.jp/company/",
-      "status": 404,
-      "fallback": "https://www.taiheisangyo.jp"
     },
     {
       "url": "https://www.takenaka-ss.co.jp/catalog/",
@@ -1686,28 +1496,312 @@
   ],
   "unreachable": [
     {
-      "url": "https://biz.lixil.com/inquiry/products/",
-      "reason": "ENOTFOUND"
+      "url": "http://www.marushika.com/about/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
     },
     {
-      "url": "https://iportal.lixil.co.jp/JSCATALOGVOL1/iportal/CatalogSearch.do?method=catalogSearchByDefaultSettingCategories&volumeID=JSCATALOGVOL1",
-      "reason": "ENOTFOUND"
+      "url": "http://www.marushika.com/about/index.html#branch",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "http://www.marushika.com/catalog/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "http://www.marushika.com/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "http://www.marushika.com/digitalcatalog/?pNo=1",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "http://www.marushika.com/material/besame.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "http://www.marushika.com/material/detail.html?item_rno=65&main_no=1&sub_no=8&list2=1&list1=1",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "http://www.marushika.com/material/roof.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "http://www.marushika.com/material/roof.html?sub_no=34&list2=0&list1=1",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "http://www.marushika.com/material/tile.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://apro1965.jp/about/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://apro1965.jp/form-contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://apro1965.jp/search-cad/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://apro1965.jp/search-doorhandle/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://arthawkstone.com/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://arthawkstone.com/office/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://arthawkstone.com/products_category/wia_eaves/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://arthawkstone.com/web_catalog/top.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://bunka-s-pro.jp/cad/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://bunka-s-pro.jp/product_category/shutter/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://bunka-s-pro.jp/product_category/shutter/k-shutter/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://bunka-s-pro.jp/product_category/shutter/w-shutter/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://bunka-s-pro.jp/product_category/shutter/z-shutter/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://daiwakenzai.co.jp/company/#base",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://daiwakenzai.co.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://daiwakenzai.co.jp/lineup/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://danto.jp/catalog_request/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://danto.jp/companyinfo/showroom/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://danto.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://danto.jp/products/list?mode=search&productplus_4%5B%5D=7&shape=on",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://danto.jp/products/list?productplus_4=5",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://danto.jp/products/list?productplus_4=6",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://danto.jp/products/list?productplus_4=81",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://episodebrick.com/#sec02",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://episodebrick.com/about.php",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://episodebrick.com/contact.php",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://fonen.co.jp/about/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://fonen.co.jp/business/axsp/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://fonen.co.jp/business/mutep/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://fonen.co.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://hakusui-k.co.jp/cad_data/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://hakusui-k.co.jp/company/about/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://hakusui-k.co.jp/contact-us/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://hakusui-k.co.jp/download/#catalog",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://hakusui-k.co.jp/products/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://ikehiko.net/company/aboutus/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://ikehiko.net/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://ikehiko.net/product_category/products/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://kenzai.shikoku.co.jp/support/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://maedakosensanshi.jp/company/company_office.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://maedakosensanshi.jp/contact.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://maedakosensanshi.jp/system/system_2fr01.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://sadoshima.com/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://sadoshima.com/products/?e-filter-e0d4cad-products_cat=sadoshima-original",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://sadoshima.com/services/#seihin",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://sanwagrd.co.jp/about-us",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://sanwagrd.co.jp/contact",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://sanwagrd.co.jp/productname",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://sarashina.co.jp/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://sarashina.co.jp/company/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://sarashina.co.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
     },
     {
       "url": "https://st.sankyo-tateyama.co.jp/inquiry/business/",
       "reason": "ENOTFOUND"
     },
     {
-      "url": "https://st.sankyo-tateyama.co.jp/products/business/exterior/accessories/",
-      "reason": "ENOTFOUND"
-    },
-    {
-      "url": "https://st.sankyo-tateyama.co.jp/products/business/exterior/wall/",
-      "reason": "ENOTFOUND"
-    },
-    {
       "url": "https://st.sankyo-tateyama.co.jp/service/catalog/",
       "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://staron.jp/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://staron.jp/catalog",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://staron.jp/company",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://staron.jp/contact",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://tiles.hiratatile.co.jp/catalogs",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://tiles.hiratatile.co.jp/series",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://unitek.jp/company/access",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://unitek.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://unitek.jp/product/shutter",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://webcatalog.koizumi-lt.co.jp/iportal/CatalogViewInterfaceStartUpAction.do?method=startUp&mode=PAGE&volumeID=DIGICATA&catalogId=8642230000&pageGroupId=1&catalogCategoryId=",
+      "reason": "EAI_AGAIN"
+    },
+    {
+      "url": "https://whohw.jp/about/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://whohw.jp/company/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://whohw.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://whohw.jp/series/interior_sheet/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
     },
     {
       "url": "https://www.3mcompany.jp/3M/ja_JP/architectural-design-jp/",
@@ -1738,15 +1832,31 @@
       "reason": "ENOTFOUND"
     },
     {
+      "url": "https://www.assipie.jp/company/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.assipie.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.assipie.jp/solution/company/office/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.assipie.jp/solution/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.assipie.jp/solution/genre/non-slip/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.assipie.jp/solution/request/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
       "url": "https://www.assist777.co.jp/catalog/",
-      "reason": "ENOTFOUND"
-    },
-    {
-      "url": "https://www.assist777.co.jp/company/",
-      "reason": "ENOTFOUND"
-    },
-    {
-      "url": "https://www.assist777.co.jp/contact/",
       "reason": "ENOTFOUND"
     },
     {
@@ -1786,6 +1896,78 @@
       "reason": "ENOTFOUND"
     },
     {
+      "url": "https://www.bakuma.co.jp/catalog/catalog.php",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.bakuma.co.jp/company/eigyo.php?nm=eigyo",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.bakuma.co.jp/contact/contact.php?nm=contact",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.bakuma.co.jp/ShohinCatalog/shohin-catalog.php?knskkbn=2",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.bikenkougyou.co.jp/cad/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.bikenkougyou.co.jp/category_products/p_cat8/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.bikenkougyou.co.jp/company/network/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.bikenkougyou.co.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.bunka-s.co.jp/corporate/group/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.bunka-s.co.jp/network/hokkaido/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.can-net.co.jp/company",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.can-net.co.jp/contact",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.can-net.co.jp/product/canbrick",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.can-net.co.jp/product/canstone",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.can-net.co.jp/product/lights",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.can-net.co.jp/product/tiles",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.can-net.co.jp/products/canstyle/block-face",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.can-net.co.jp/sample-order",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
       "url": "https://www.chubu-corp.co.jp/company/",
       "reason": "ENOTFOUND"
     },
@@ -1796,6 +1978,54 @@
     {
       "url": "https://www.chubu-corp.co.jp/products/",
       "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.chubu-net.co.jp/base.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.chubu-net.co.jp/company/base/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.chubu-net.co.jp/kenzai/catalog/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.chubu-net.co.jp/kenzai/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.chubu-net.co.jp/kenzai/Form/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.chubu-net.co.jp/kenzai/Product/category/7",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.chubu-net.co.jp/kenzai/Product/category/7/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.clion.co.jp/alc/",
+      "reason": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.clion.co.jp/catalog-seikyu/",
+      "reason": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.clion.co.jp/company/office/",
+      "reason": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.clion.co.jp/documents/",
+      "reason": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.clion.co.jp/inquiry/",
+      "reason": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
     },
     {
       "url": "https://www.cyclochem.co.jp/catalog/",
@@ -1814,6 +2044,42 @@
       "reason": "ENOTFOUND"
     },
     {
+      "url": "https://www.danto.co.jp/products/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.decoluxe.co.jp/catalog/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.decoluxe.co.jp/company/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.decoluxe.co.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.decoluxe.co.jp/product/product_category/marble/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.decoluxe.co.jp/product/product_category/plates-1/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.diaron.co.jp/ja/company/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.diaron.co.jp/ja/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.diaron.co.jp/ja/products/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
       "url": "https://www.fukuchou.jp/catalog/",
       "reason": "ENOTFOUND"
     },
@@ -1828,6 +2094,10 @@
     {
       "url": "https://www.fukuchou.jp/products/",
       "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.gorikiisland.jp/download/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
     },
     {
       "url": "https://www.hautec.co.jp/catalog/",
@@ -1846,8 +2116,80 @@
       "reason": "ENOTFOUND"
     },
     {
-      "url": "https://www.ic-ryowa.com/catalog/",
-      "reason": "AbortError"
+      "url": "https://www.hinodesuido.co.jp/company/base/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.hinodesuido.co.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.hinodesuido.co.jp/products/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.howdy-inc.com/catalog#shouhin",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.howdy-inc.com/contact",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.howdy-inc.com/lineup/door_hardware",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.howdy-inc.com/lineup/floor/howdy-floor",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.howdy-inc.com/lineup/window",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.howdy-inc.com/room",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.hrc.co.jp/contactus/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.hrc.co.jp/product/waterproof/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.hrc.co.jp/profile/place/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.ie-mon-asia.net/catalog/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.ie-mon-asia.net/company/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.ie-mon-asia.net/flooring/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.ie-mon-asia.net/online-shop_category/kasagi/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.ie-mon-asia.net/online-shop_category/outdoor-lighting/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.ie-mon-asia.net/online-shop_category/shop-light/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.ie-mon-asia.net/request/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
     },
     {
       "url": "https://www.ig-kogyou.co.jp/company/locations/",
@@ -1866,6 +2208,18 @@
       "reason": "ENOTFOUND"
     },
     {
+      "url": "https://www.iwafuku.co.jp/cad-data.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.iwafuku.co.jp/company-profile.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.iwafuku.co.jp/crestuu40.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
       "url": "https://www.japan-kenzai.co.jp/catalog/",
       "reason": "ENOTFOUND"
     },
@@ -1882,15 +2236,55 @@
       "reason": "ENOTFOUND"
     },
     {
-      "url": "https://www.kawaguchi-giken.co.jp/catalog/",
-      "reason": "ENOTFOUND"
+      "url": "https://www.k-tex.co.jp/company/access/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.k-tex.co.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.k-tex.co.jp/download/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.k-tex.co.jp/products/aluminum/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.kakou-nisso.co.jp/company/c_info",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.kakou-nisso.co.jp/product/timber-wall",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.kakou-nisso.co.jp/sp_contact",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.kal-ten.jp/products.php",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.kanpe.co.jp/company/outline.php",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.kanpe.co.jp/downloads/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.kanpe.co.jp/products/search_product.php?c=12",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.kanpe.co.jp/support/inquiry.php",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
     },
     {
       "url": "https://www.kawaguchi-giken.co.jp/company/office/",
-      "reason": "ENOTFOUND"
-    },
-    {
-      "url": "https://www.kawaguchi-giken.co.jp/contact/",
       "reason": "ENOTFOUND"
     },
     {
@@ -1912,6 +2306,62 @@
     {
       "url": "https://www.kenchiku-shizai.co.jp/pigeon/",
       "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.kikukawa.com/about/company/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.kikukawa.com/citytexture-top/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.kikukawa.com/company/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.kikukawa.com/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.kikukawa.com/product/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.kikukawa.com/studio-k/sample-list/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.kubota-c.com/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.kubota-c.com/exterior/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.kubota-c.com/map/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.kubota-c.com/webcatalog/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.kvk.co.jp/catalog/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.kvk.co.jp/corporate/office/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.kvk.co.jp/products/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.kvk.co.jp/support/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
     },
     {
       "url": "https://www.kyowa-kb.co.jp/branch/",
@@ -1946,6 +2396,34 @@
       "reason": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
     },
     {
+      "url": "https://www.lifenet-namba.co.jp/company/about.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.lifenet-namba.co.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.lifenet-namba.co.jp/tatami/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.marazzi.jp/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.marazzi.jp/contacts/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.marazzi.jp/download/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.marazzi.jp/showroom/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
       "url": "https://www.maruichi-kokan.co.jp/amadoi/",
       "reason": "ENOTFOUND"
     },
@@ -1960,6 +2438,22 @@
     {
       "url": "https://www.maruichi-kokan.co.jp/contact/",
       "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.maruni.com/jp/catalogue",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.maruni.com/jp/contact",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.maruni.com/jp/products",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.maruni.com/jp/products/storelist_menu",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
     },
     {
       "url": "https://www.marutoku.co.jp/catalog/",
@@ -1978,6 +2472,126 @@
       "reason": "ERR_SSL_TLSV1_ALERT_INTERNAL_ERROR"
     },
     {
+      "url": "https://www.matsuo-e-pot.com/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.matsuo-e-pot.com/corporate/contact",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.matsuo-e-pot.com/corporate/profile?a2#profile",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.matsuo-e-pot.com/information/web_catalog",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.mazroc.co.jp/catalog/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.mazroc.co.jp/company/eigyossho.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.mazroc.co.jp/company/showroom/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.mazroc.co.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.mazroc.co.jp/products_1/corridor",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.mazroc.co.jp/products/interior/baseboard/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.mazroc.co.jp/support/catalog/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.murakami-t.co.jp/company/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.murakami-t.co.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.murakami-t.co.jp/product/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.mutsumi-ya.com/brand/cat3.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.mutsumi-ya.com/brand/cat4.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.mutsumi-ya.com/brand/cat5.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.mutsumi-ya.com/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.mutsumi-ya.com/showroom/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nagasawa-mfg.co.jp/catalog/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nagasawa-mfg.co.jp/company/info/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nagasawa-mfg.co.jp/inquiry/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nagasawa-mfg.co.jp/products/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.newxt.co.jp/corp/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.newxt.co.jp/download/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.newxt.co.jp/products/wwf.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nichiesu.com/brand/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nichiesu.com/catalog/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nichiesu.com/company/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nichiesu.com/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
       "url": "https://www.nihon-protect.co.jp/catalog/",
       "reason": "ENOTFOUND"
     },
@@ -1994,20 +2608,116 @@
       "reason": "ENOTFOUND"
     },
     {
+      "url": "https://www.niitaka-ss.jp/access/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.niitaka-ss.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.niitaka-ss.jp/expansion-joint/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nikko-ind.co.jp/about/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nikko-ind.co.jp/catalog/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nikko-ind.co.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nikko-ind.co.jp/data/index.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nikko-ind.co.jp/product/interior.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nip-co.co.jp/catalog/crea3/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nip-co.co.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nip-co.co.jp/corporate/network/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
       "url": "https://www.nisc-s.co.jp/catalog/",
-      "reason": "ERR_SSL_PACKET_LENGTH_TOO_LONG"
+      "reason": "ERR_SSL_WRONG_VERSION_NUMBER"
     },
     {
       "url": "https://www.nisc-s.co.jp/company/base/",
-      "reason": "ERR_SSL_PACKET_LENGTH_TOO_LONG"
+      "reason": "ERR_SSL_WRONG_VERSION_NUMBER"
     },
     {
       "url": "https://www.nisc-s.co.jp/contact/",
-      "reason": "ERR_SSL_PACKET_LENGTH_TOO_LONG"
+      "reason": "ERR_SSL_WRONG_VERSION_NUMBER"
     },
     {
       "url": "https://www.nisc-s.co.jp/products/",
-      "reason": "ERR_SSL_PACKET_LENGTH_TOO_LONG"
+      "reason": "ERR_SSL_WRONG_VERSION_NUMBER"
+    },
+    {
+      "url": "https://www.nitta-ci.co.jp/company/network/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nitta-ci.co.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nittoku.co.jp/company/base/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nittoku.co.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nittoku.co.jp/products/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.noyasu.co.jp/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.noyasu.co.jp/aboutus.html#access-title",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.noyasu.co.jp/catalog.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.noyasu.co.jp/contact.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nsk24.com/catalog",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nsk24.com/company/company_overview",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nsk24.com/contact",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.nsk24.com/product",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
     },
     {
       "url": "https://www.okuoka.co.jp/catalog/",
@@ -2024,6 +2734,22 @@
     {
       "url": "https://www.okuoka.co.jp/product/",
       "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.opnus.co.jp/access/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.opnus.co.jp/business/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.opnus.co.jp/catalog/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.opnus.co.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
     },
     {
       "url": "https://www.pacific-precon.co.jp/company/office/",
@@ -2054,16 +2780,56 @@
       "reason": "ENOTFOUND"
     },
     {
-      "url": "https://www.rfriken.co.jp/company/",
-      "reason": "ENOTFOUND"
+      "url": "https://www.prairie.co.jp/archives/product_cat/cat01",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.prairie.co.jp/archives/product_cat/cat05",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.prairie.co.jp/archives/product_cat/cat17",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.prairie.co.jp/catalog",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.prairie.co.jp/contact",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.prairie.co.jp/product/tile.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.prairie.co.jp/product/wooden_sash.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.prairie.co.jp/showroom",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
     },
     {
       "url": "https://www.rfriken.co.jp/contact/",
       "reason": "ENOTFOUND"
     },
     {
-      "url": "https://www.rfriken.co.jp/products/",
-      "reason": "ENOTFOUND"
+      "url": "https://www.royal-co.net/catalog/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.royal-co.net/company/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.royal-co.net/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.royal-co.net/products/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
     },
     {
       "url": "https://www.sanko-k.co.jp/company/office/",
@@ -2080,6 +2846,54 @@
     {
       "url": "https://www.sanko-k.co.jp/support/catalog/",
       "reason": "ERR_TLS_CERT_ALTNAME_INVALID"
+    },
+    {
+      "url": "https://www.sanwa-ss.co.jp/ask/",
+      "reason": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.sanwa-ss.co.jp/company/list/",
+      "reason": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.sanwa-ss.co.jp/professional/cad/login/members?url=https://www.sanwa-ss.co.jp/professional/cad/weight_shutter/fire_shutter/",
+      "reason": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.sanwa-ss.co.jp/professional/products/?product[]=light_garage",
+      "reason": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.sanwa-ss.co.jp/professional/products/?product[]=weight_shutter",
+      "reason": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.seiwasangyo.co.jp/company/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.seiwasangyo.co.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.seiwasangyo.co.jp/products/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.seven-gr.co.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.seven-gr.co.jp/corporate/location.php",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.seven-gr.co.jp/interior/list.php?id=2",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.shikoku.co.jp/company/group/shikoku-kenzai/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
     },
     {
       "url": "https://www.shin-nikkei.co.jp/company/office/",
@@ -2102,16 +2916,84 @@
       "reason": "ENOTFOUND"
     },
     {
+      "url": "https://www.sugatsune.co.jp/catalog/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.sugatsune.co.jp/company/base/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.sugatsune.co.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.sugatsune.co.jp/corporate/office/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.sugatsune.co.jp/products/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.sugatsune.co.jp/showroom/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.sunloid-dn.jp/catalog/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.sunloid-dn.jp/company/office/office.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.sunloid-dn.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.sunloid-dn.jp/index.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.sunloid-dn.jp/kenchiku/cad.php",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.sunrail.co.jp/caddata",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.sunrail.co.jp/catalogs",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.sunrail.co.jp/contact",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.sunrail.co.jp/office",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.sunrail.co.jp/product_category/alumikasagi/kasagi",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.sunrail.co.jp/product_category/handrail/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
       "url": "https://www.sunsyo.co.jp/contact/",
-      "reason": "ECONNRESET"
+      "reason": "ETIMEDOUT"
     },
     {
       "url": "https://www.sunsyo.co.jp/product/sun-edge/",
-      "reason": "ECONNRESET"
+      "reason": "ETIMEDOUT"
     },
     {
       "url": "https://www.sunsyo.co.jp/profile/",
-      "reason": "ECONNRESET"
+      "reason": "ETIMEDOUT"
     },
     {
       "url": "https://www.system-art.co.jp/catalog/",
@@ -2128,6 +3010,34 @@
     {
       "url": "https://www.system-art.co.jp/products/trim/",
       "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.t-pc.co.jp/company/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.t-pc.co.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.t-pc.co.jp/product/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.taiheisangyo.jp/caresse/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.taiheisangyo.jp/company/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.taiheisangyo.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.taiheisangyo.jp/download/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
     },
     {
       "url": "https://www.takemura-k.co.jp/company/",
@@ -2174,6 +3084,18 @@
       "reason": "ERR_TLS_CERT_ALTNAME_INVALID"
     },
     {
+      "url": "https://www.toprise.co.jp/company/01index.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.toprise.co.jp/contact.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.toprise.co.jp/products/01panel.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
       "url": "https://www.toshiba-energy.com/company/office.htm",
       "reason": "ENOTFOUND"
     },
@@ -2188,6 +3110,26 @@
     {
       "url": "https://www.toshiba-energy.com/renewable-energy/solar-pv/lineup.htm",
       "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.tsukiboshi-shoji.co.jp/building_material/roof/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.tsukiboshi-shoji.co.jp/company/office/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.tsukiboshi-shoji.co.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.tsukiboshi-shoji.co.jp/document/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.tsukiboshi-shoji.co.jp/document/cad/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
     },
     {
       "url": "https://www.urethane-kogyo.co.jp/catalog/",
@@ -2220,6 +3162,90 @@
     {
       "url": "https://www.y-y-k.co.jp/support/inquiry_step1/",
       "reason": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://www.yabuhara-ind.co.jp/araidashi/irodori/information/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.yabuhara-ind.co.jp/catalog/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.yabuhara-ind.co.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.yabuhara-ind.co.jp/downloads-7/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.yabuhara-ind.co.jp/profile/access/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.yamada-shomei.co.jp/catalog/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.yamada-shomei.co.jp/company/office/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.yamada-shomei.co.jp/inquiry/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.yamada-shomei.co.jp/products/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.yamagiwa.co.jp/access/#company_address",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.yamagiwa.co.jp/contact/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.yamagiwa.co.jp/products/#catalog-download",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.yamagiwa.co.jp/products/#categories-search",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.yokobiki-sr.co.jp/company.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.yokobiki-sr.co.jp/contact.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.yokobiki-sr.co.jp/product.html",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.yokobiki.com/companyoutline",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.yokobiki.com/contact",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://www.yokobiki.com/products",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://yabuhara-ind.co.jp/araidashi_yabuhara/products/bwa/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://yabuhara-ind.co.jp/araidashi_yabuhara/welcome/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
     }
   ],
   "error": [
@@ -2230,14 +3256,6 @@
     {
       "url": "https://cleanup.jp/support/contact/",
       "status": 500
-    },
-    {
-      "url": "https://www.ic-ryowa.com/office/",
-      "status": 503
-    },
-    {
-      "url": "https://www.ic-ryowa.com/products/",
-      "status": 503
     },
     {
       "url": "https://www.karimoku.co.jp/contactus.html",
