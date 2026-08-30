@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-08-23",
+  "generatedAt": "2026-08-30",
   "checked": 2061,
   "summary": {
-    "ok": 1566,
-    "broken": 332,
-    "unreachable": 153,
-    "error": 10
+    "ok": 1564,
+    "broken": 331,
+    "unreachable": 160,
+    "error": 6
   },
   "broken": [
     {
@@ -492,11 +492,6 @@
       "url": "https://www.daikin.co.jp/products/",
       "status": 404,
       "fallback": "https://www.daikin.co.jp"
-    },
-    {
-      "url": "https://www.daikure.co.jp/network/",
-      "status": 404,
-      "fallback": "https://www.daikure.co.jp"
     },
     {
       "url": "https://www.danto.co.jp/company/base/",
@@ -1671,6 +1666,18 @@
   ],
   "unreachable": [
     {
+      "url": "https://08tent.co.jp/company/#profile",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://08tent.co.jp/contact_us/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://08tent.co.jp/products/hiyoke/awning/",
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
       "url": "https://st.sankyo-tateyama.co.jp/inquiry/business/",
       "reason": "ENOTFOUND"
     },
@@ -1831,6 +1838,18 @@
       "reason": "ENOTFOUND"
     },
     {
+      "url": "https://www.ic-ryowa.com/catalog/",
+      "reason": "UND_ERR_SOCKET"
+    },
+    {
+      "url": "https://www.ic-ryowa.com/office/",
+      "reason": "UND_ERR_SOCKET"
+    },
+    {
+      "url": "https://www.ic-ryowa.com/products/",
+      "reason": "UND_ERR_SOCKET"
+    },
+    {
       "url": "https://www.ig-kogyou.co.jp/company/locations/",
       "reason": "ENOTFOUND"
     },
@@ -1900,7 +1919,7 @@
     },
     {
       "url": "https://www.koizumi-lt.co.jp/catalog/",
-      "reason": "EAI_AGAIN"
+      "reason": "UND_ERR_CONNECT_TIMEOUT"
     },
     {
       "url": "https://www.koizumi-lt.co.jp/company/",
@@ -1908,7 +1927,23 @@
     },
     {
       "url": "https://www.koizumi-lt.co.jp/company/office.html",
-      "reason": "UND_ERR_CONNECT_TIMEOUT"
+      "reason": "EAI_AGAIN"
+    },
+    {
+      "url": "https://www.koizumi-lt.co.jp/contact/",
+      "reason": "EAI_AGAIN"
+    },
+    {
+      "url": "https://www.koizumi-lt.co.jp/l-design/",
+      "reason": "EAI_AGAIN"
+    },
+    {
+      "url": "https://www.koizumi-lt.co.jp/product/",
+      "reason": "EAI_AGAIN"
+    },
+    {
+      "url": "https://www.koizumi-lt.co.jp/support/",
+      "reason": "EAI_AGAIN"
     },
     {
       "url": "https://www.kyowa-kb.co.jp/branch/",
@@ -1975,22 +2010,6 @@
       "reason": "ERR_SSL_TLSV1_ALERT_INTERNAL_ERROR"
     },
     {
-      "url": "https://www.matsuo-e-pot.com/",
-      "reason": "UND_ERR_CONNECT_TIMEOUT"
-    },
-    {
-      "url": "https://www.matsuo-e-pot.com/corporate/contact",
-      "reason": "UND_ERR_CONNECT_TIMEOUT"
-    },
-    {
-      "url": "https://www.matsuo-e-pot.com/corporate/profile?a2#profile",
-      "reason": "UND_ERR_CONNECT_TIMEOUT"
-    },
-    {
-      "url": "https://www.matsuo-e-pot.com/information/web_catalog",
-      "reason": "UND_ERR_CONNECT_TIMEOUT"
-    },
-    {
       "url": "https://www.nihon-protect.co.jp/catalog/",
       "reason": "ENOTFOUND"
     },
@@ -2049,6 +2068,10 @@
     {
       "url": "https://www.pacific-precon.co.jp/products/",
       "reason": "ENOTFOUND"
+    },
+    {
+      "url": "https://www.paroi.jp/html/paroi/catalog.html",
+      "reason": "CERT_HAS_EXPIRED"
     },
     {
       "url": "https://www.plusone-gutter.co.jp/",
@@ -2291,22 +2314,6 @@
     {
       "url": "https://cleanup.jp/support/contact/",
       "status": 500
-    },
-    {
-      "url": "https://suminoe.jp/pages/download-vinyl",
-      "status": 503
-    },
-    {
-      "url": "https://www.karimoku.co.jp/contactus.html",
-      "status": 503
-    },
-    {
-      "url": "https://www.karimoku.co.jp/corporateinfo/",
-      "status": 503
-    },
-    {
-      "url": "https://www.karimoku.co.jp/documentrequest/",
-      "status": 503
     },
     {
       "url": "https://www.ohmura-trading.co.jp/products/list?category_id=1",
