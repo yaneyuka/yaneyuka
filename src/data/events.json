@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-23",
+  "updatedAt": "2026-08-30",
   "events": [
     {
       "id": "nikkei-architecture-materials-2026",
@@ -111,11 +111,11 @@
     },
     {
       "id": "japan-build-osaka-2026",
-      "title": "JAPAN BUILD OSAKA 2026（大阪ショー）",
+      "title": "JAPAN BUILD OSAKA 2027（大阪ショー）",
       "description": "西日本版のJAPAN BUILD。",
-      "dateText": "2026年8月26日(水)～28日(金)",
-      "startDate": "2026-08-26",
-      "endDate": "2026-08-28",
+      "dateText": "2027年8月25日～27日",
+      "startDate": "2027-08-25",
+      "endDate": "2027-08-27",
       "venue": "インテックス大阪",
       "region": "osaka",
       "link": "https://www.japan-build.jp/osaka/ja-jp.html",
