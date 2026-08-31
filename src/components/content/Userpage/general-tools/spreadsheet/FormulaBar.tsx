@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import FormulaSuggestions from './FormulaSuggestions';
 import FormulaSyntaxHint from './FormulaSyntaxHint';
+import FormulaEngine from './FormulaEngine';
 
 interface FormulaBarProps {
   cellAddress: string;
@@ -15,13 +16,10 @@ interface FormulaBarProps {
   onFormulaBarFocus?: () => void;
 }
 
-// サジェストに出す関数名。
-// FormulaEngine に実装があるものだけを並べる。未実装の関数を候補に出すと
-// 選んだ瞬間 #NAME? になるため（以前は SUMIF / VLOOKUP など10個が並んでいた）。
-const knownFunctions = [
-  'SUM', 'AVERAGE', 'MIN', 'MAX', 'COUNT', 'COUNTA',
-  'IF', 'ROUND', 'ABS', 'TODAY', 'NOW',
-];
+// サジェストに出す関数名は FormulaEngine から取る。
+// 手で並べていると実装と食い違い、候補に出した関数が #NAME? になる
+// （実際、以前は SUMIF / VLOOKUP など未実装の10個が並んでいた）。
+const knownFunctions = new FormulaEngine().getFunctionNames();
 
 const FormulaBar: React.FC<FormulaBarProps> = ({
   cellAddress,

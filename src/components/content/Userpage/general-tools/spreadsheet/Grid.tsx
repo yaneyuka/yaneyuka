@@ -15,6 +15,10 @@ interface GridProps {
   cols: number;
   cells: Record<string, string>;
   formats?: Record<string, CellFormat>;
+  /** 結合セル。左上（アンカー）以外は描画しない */
+  merges?: { r: number; c: number; rs: number; cs: number }[];
+  /** 手動書式に条件付き書式を重ねた、最終的な書式を返す */
+  effectiveFormat?: (r: number, c: number, computed: number | string) => CellFormat | undefined;
   colWidths: number[];
   editingCellKey: string | null;
   activeCellKey: string | null;
@@ -51,6 +55,8 @@ const Grid: React.FC<GridProps> = ({
   cols,
   cells,
   formats,
+  merges,
+  effectiveFormat,
   colWidths,
   editingCellKey,
   activeCellKey,
@@ -88,6 +94,21 @@ const Grid: React.FC<GridProps> = ({
   // 以前はセル描画ループの中でクリアしていたためキャッシュが常に空で、
   // 依存の深い数式ほど再帰的に再計算され続けていた。
   evalCacheRef.current = new Map();
+
+  // 結合セルの索引。
+  //   anchors: 左上セル → rowSpan/colSpan（td に span を付ける）
+  //   covered: 左上以外の被結合セル → そもそも td を描かない
+  const mergeAnchors = new Map<string, { rs: number; cs: number }>();
+  const covered = new Set<string>();
+  (merges || []).forEach(m => {
+    mergeAnchors.set(toCellKey(m.r, m.c), { rs: m.rs, cs: m.cs });
+    for (let r = m.r; r < m.r + m.rs; r++) {
+      for (let c = m.c; c < m.c + m.cs; c++) {
+        if (r === m.r && c === m.c) continue;
+        covered.add(toCellKey(r, c));
+      }
+    }
+  });
 
   // 26列を超えても正しい列名を出す（String.fromCharCode(65+c) では Z の次が '[' になる）
   const colName = (index: number): string => {
@@ -146,7 +167,9 @@ const Grid: React.FC<GridProps> = ({
       <table className="min-w-max text-[12px] border-collapse">
         <thead className="bg-gray-100 sticky top-0 z-20">
           <tr>
-            <th className="border px-2 py-1 w-8"></th>
+            {/* 左上の角。行見出し(sticky left)と列見出し(sticky top)の交点なので
+                ここも固定しないと横スクロール時に角だけ流れて見出しが重なる */}
+            <th className="border px-2 py-1 w-8 sticky left-0 z-30 bg-gray-100"></th>
             {colsArray.map(c => {
               // ★選択列のハイライト判定
               let isSelectedCol = activeC === c;
@@ -207,9 +230,12 @@ const Grid: React.FC<GridProps> = ({
                 </td>
               {colsArray.map(c => {
                 const key = toCellKey(r, c);
+                // 結合に飲み込まれたセルは描かない（左上の td が rowSpan/colSpan で覆う）
+                if (covered.has(key)) return null;
                 const raw = cells[key] || '';
                 const computed = evaluateRaw(raw, new Set());
-                const fmt = formats?.[key];
+                const fmt = effectiveFormat ? effectiveFormat(r, c, computed) : formats?.[key];
+                const span = mergeAnchors.get(key);
                 // 選択範囲の見た目
                 let inSel = false;
                 let edgeTop = false;
@@ -259,6 +285,8 @@ const Grid: React.FC<GridProps> = ({
                     raw={raw}
                     computed={computed}
                     format={fmt}
+                    rowSpan={span?.rs}
+                    colSpan={span?.cs}
                     isEditing={editingCellKey === key}
                     isActive={activeCellKey === key}
                     isSelected={activeCellKey === key}

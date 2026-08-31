@@ -23,8 +23,48 @@ import Grid from './spreadsheet/Grid';
 import HistoryManager, { HistorySnapshot } from './spreadsheet/HistoryManager';
 import FormulaEngine from './spreadsheet/FormulaEngine';
 
-type CellFormat = { bold?: boolean; align?: 'left' | 'center' | 'right'; type?: 'text' | 'number' | 'percent' | 'currency'; decimals?: number };
-type SheetData = { id: string; name: string; rows: number; cols: number; cells: Record<string, string>; formats?: Record<string, CellFormat> };
+type CellBorder = { top?: boolean; right?: boolean; bottom?: boolean; left?: boolean };
+type CellFormat = {
+  bold?: boolean;
+  italic?: boolean;
+  align?: 'left' | 'center' | 'right';
+  type?: 'text' | 'number' | 'percent' | 'currency';
+  decimals?: number;
+  border?: CellBorder;
+  bg?: string;
+  color?: string;
+  fontSize?: number;
+  wrap?: boolean;
+};
+/** 結合セル。r,c は左上（アンカー）の位置で、rs/cs は結合する行数・列数 */
+type Merge = { r: number; c: number; rs: number; cs: number };
+
+/** 条件付き書式のルール。範囲・条件・当てはまったときの見た目を持つ */
+type CondOp = 'gt' | 'lt' | 'ge' | 'le' | 'eq' | 'ne' | 'contains' | 'between';
+type CondRule = {
+  id: string;
+  r1: number; c1: number; r2: number; c2: number;
+  op: CondOp;
+  value: string;
+  value2?: string;
+  style: { bg?: string; color?: string; bold?: boolean };
+};
+
+const COND_OP_LABEL: Record<CondOp, string> = {
+  gt: 'より大きい', ge: '以上', lt: 'より小さい', le: '以下',
+  eq: '等しい', ne: '等しくない', between: 'の範囲内', contains: '文字を含む',
+};
+
+type SheetData = {
+  id: string;
+  name: string;
+  rows: number;
+  cols: number;
+  cells: Record<string, string>;
+  formats?: Record<string, CellFormat>;
+  merges?: Merge[];
+  condRules?: CondRule[];
+};
 
 const Spreadsheet: React.FC = () => {
   const { currentUser, isLoggedIn } = useAuth();
@@ -51,6 +91,22 @@ const Spreadsheet: React.FC = () => {
   const isMouseDownRef = useRef<boolean>(false); // マウスボタンが押されているかどうか
   const evalCacheRef = useRef<Map<string, number | string>>(new Map());
   const formulaEngine = useRef(new FormulaEngine());
+  const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [docBytes, setDocBytes] = useState(0);
+  const [findOpen, setFindOpen] = useState(false);
+  const [findText, setFindText] = useState('');
+  const [replaceText, setReplaceText] = useState('');
+  const importInputRef = useRef<HTMLInputElement>(null);
+  /** 直前に Ctrl+C したときの範囲。貼り付け時の参照ずらしに使う */
+  const copySourceRef = useRef<{ r: number; c: number; text: string } | null>(null);
+  const [condOpen, setCondOpen] = useState(false);
+  const [condOp, setCondOp] = useState<CondOp>('gt');
+  const [condValue, setCondValue] = useState('');
+  const [condValue2, setCondValue2] = useState('');
+  const [condBg, setCondBg] = useState('#ffe08a');
+  const [condColor, setCondColor] = useState('#7a3b00');
+  const [condBold, setCondBold] = useState(false);
 
   // 表計算: 参照/数式ユーティリティ
   const toCellKey = (r: number, c: number) => `R${r}C${c}`;
@@ -61,37 +117,87 @@ const Spreadsheet: React.FC = () => {
     return { r: Number(m[1]), c: Number(m[2]) };
   };
   const addressToRC = (addr: string) => formulaEngine.current.addressToRC(addr);
-  const getRaw = (r: number, c: number) => sheet.cells[toCellKey(r, c)] || '';
+  /**
+   * セルの入力内容。sheetName を渡すと別シートから読む。
+   * 別シートの中身は otherSheets（シート一覧の購読結果）に入っている。
+   */
+  const getRaw = (r: number, c: number, sheetName?: string) => {
+    if (!sheetName || sheetName === sheet.name) return sheet.cells[toCellKey(r, c)] || '';
+    const target = otherSheetsRef.current[sheetName];
+    return target ? target[toCellKey(r, c)] || '' : '';
+  };
 
-  const evaluateCell = (r: number, c: number, visited: Set<string> = new Set()): number | string => {
-    const key = toCellKey(r, c);
+  /** そのシート名が存在するか（存在しなければ #REF! を返したい） */
+  const sheetExists = (name: string) => name === sheet.name || name in otherSheetsRef.current;
+
+  /**
+   * セルを評価する。sheetName を渡すと別シートのセルを見る（Sheet1!A1）。
+   *
+   * キャッシュも循環参照の検出もシート名で名前空間を分ける。分けないと
+   * 「シートAのA1」と「シートBのA1」が同じものとみなされ、
+   * 誤った循環参照エラーや取り違えが起きる。
+   */
+  const evaluateCell = (
+    r: number,
+    c: number,
+    visited: Set<string> = new Set(),
+    sheetName?: string,
+  ): number | string => {
+    const key = sheetName ? `${sheetName}!${toCellKey(r, c)}` : toCellKey(r, c);
     if (evalCacheRef.current.has(key)) return evalCacheRef.current.get(key) as any;
-    // 循環参照は 0 ではなくエラーとして返す（0 だと誤った計算結果に見えてしまう）
     if (visited.has(key)) return '#CIRCULAR!';
     visited.add(key);
-    const raw = getRaw(r, c);
-    const result = evaluateRaw(raw, visited);
+    const raw = getRaw(r, c, sheetName);
+    // 別シートのセルに入っている数式は、そのシートを基準に評価する
+    const result = evaluateRaw(raw, visited, sheetName);
     evalCacheRef.current.set(key, result);
     return result;
   };
 
-  /** シート全体をFirestore・localStorageへ保存（500msデバウンス） */
+  /**
+   * シート全体をFirestore・localStorageへ保存（500msデバウンス）。
+   *
+   * ★保存結果を必ず画面に出すこと。以前は catch {} で握りつぶしていたため、
+   *   Firestore の1ドキュメント上限（1MiB）を超えて保存が失敗しても何も表示されず、
+   *   ローカルには残るのでユーザーは保存できたと思い込んでいた。
+   *   別端末で開くと消えている、という最悪の壊れ方をする。
+   */
   const persistSheet = (next: SheetData) => {
     if (!currentUser) return;
     try {
       localStorage.setItem(`sheet:${currentUser.uid}:${currentSheetId}`, JSON.stringify(next));
-    } catch {}
+    } catch {
+      // localStorage の容量超過。Firestore には入る可能性があるので続行する
+    }
+    setSaveState('saving');
     if (sheetSaveTimer.current) window.clearTimeout(sheetSaveTimer.current);
     sheetSaveTimer.current = window.setTimeout(async () => {
+      const payload = {
+        name: next.name,
+        rows: next.rows,
+        cols: next.cols,
+        cells: next.cells,
+        formats: next.formats || {},
+        merges: next.merges || [],
+        condRules: next.condRules || [],
+        colWidths,
+      };
+      // Firestore の上限は 1MiB。近づいたら先に警告する（超えると保存自体が失敗する）
+      const bytes = new Blob([JSON.stringify(payload)]).size;
+      setDocBytes(bytes);
       try {
-        await setDoc(doc(db, 'users', currentUser.uid, 'sheets', currentSheetId), {
-          name: next.name,
-          rows: next.rows,
-          cols: next.cols,
-          cells: next.cells,
-          formats: next.formats || {},
-        });
-      } catch {}
+        await setDoc(doc(db, 'users', currentUser.uid, 'sheets', currentSheetId), payload);
+        setSaveState('saved');
+        setSaveError(null);
+      } catch (e) {
+        console.error('シートの保存に失敗しました', e);
+        setSaveState('error');
+        setSaveError(
+          bytes > 900_000
+            ? 'このシートは容量の上限に達しているため保存できません。不要な行・列を削除してください。'
+            : '保存できませんでした。通信状態を確認してください。',
+        );
+      }
     }, 500);
   };
 
@@ -144,29 +250,183 @@ const Spreadsheet: React.FC = () => {
     setCurrentSheetId(nextId)
   }
 
+  /** 書式から Excel の表示形式（z）を作る */
+  const excelNumberFormat = (fmt?: CellFormat): string | undefined => {
+    if (!fmt?.type) return undefined
+    const d = fmt.decimals ?? 0
+    const frac = d > 0 ? '.' + '0'.repeat(d) : ''
+    if (fmt.type === 'percent') return `0${frac}%`
+    if (fmt.type === 'currency') return `¥#,##0${frac}`
+    if (fmt.type === 'number') return `#,##0${frac}`
+    return undefined
+  }
+
+  /**
+   * Excel 書き出し。
+   *
+   * ★以前はセルの生テキストをそのまま並べていたため、
+   *   - 数式が `=SUM(A1:A3)` という「文字列」として出て計算されない
+   *   - 数値も文字列セルになり、Excel 側で集計できない
+   *   という状態だった。ここでは数式は数式として、数値は数値として書き出す。
+   */
   const exportExcel = () => {
-    const rows: any[][] = []
+    const ws: Record<string, any> = {}
     for (let r = 0; r < sheet.rows; r++) {
-      const row: any[] = []
-      for (let c = 0; c < sheet.cols; c++) row.push(sheet.cells[toCellKey(r, c)] || '')
-      rows.push(row)
+      for (let c = 0; c < sheet.cols; c++) {
+        const raw = sheet.cells[toCellKey(r, c)] || ''
+        if (raw === '') continue
+        const addr = XLSX.utils.encode_cell({ r, c })
+        const fmt = sheet.formats?.[toCellKey(r, c)]
+        const z = excelNumberFormat(fmt)
+
+        if (raw.trim().startsWith('=')) {
+          // 数式は f に入れる（先頭の = は付けない）。v には現在の計算結果を入れておく
+          const computed = evaluateRaw(raw, new Set())
+          const cell: any = { f: raw.trim().slice(1) }
+          if (typeof computed === 'number') { cell.t = 'n'; cell.v = computed }
+          else { cell.t = 's'; cell.v = String(computed) }
+          if (z) cell.z = z
+          ws[addr] = cell
+          continue
+        }
+
+        const num = Number(raw)
+        if (raw.trim() !== '' && !Number.isNaN(num) && Number.isFinite(num)) {
+          ws[addr] = z ? { t: 'n', v: num, z } : { t: 'n', v: num }
+        } else {
+          ws[addr] = { t: 's', v: raw }
+        }
+      }
     }
-    const ws = XLSX.utils.aoa_to_sheet(rows)
+    ws['!ref'] = XLSX.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: Math.max(0, sheet.rows - 1), c: Math.max(0, sheet.cols - 1) } })
+    ws['!cols'] = colWidths.slice(0, sheet.cols).map(w => ({ wpx: w }))
+    // 結合セルは Excel 側にもそのまま渡す
+    if (sheet.merges?.length) {
+      ws['!merges'] = sheet.merges.map(m => ({ s: { r: m.r, c: m.c }, e: { r: m.r + m.rs - 1, c: m.c + m.cs - 1 } }))
+    }
     const wb = XLSX.utils.book_new()
-    XLSX.utils.book_append_sheet(wb, ws, sheet.name || 'Sheet')
+    XLSX.utils.book_append_sheet(wb, ws as any, (sheet.name || 'Sheet').slice(0, 31))
     XLSX.writeFile(wb, `${sheet.name || 'sheet'}.xlsx`)
   }
 
-  const evaluateRaw = (raw: string, visited: Set<string>): number | string => {
+  /** CSV は計算結果を書き出す（数式の文字列ではなく値が欲しい用途のため） */
+  const exportCsv = () => {
+    const lines: string[] = []
+    for (let r = 0; r < sheet.rows; r++) {
+      const row: string[] = []
+      for (let c = 0; c < sheet.cols; c++) {
+        const raw = sheet.cells[toCellKey(r, c)] || ''
+        const v = raw.trim().startsWith('=') ? evaluateRaw(raw, new Set()) : raw
+        row.push('"' + String(v).replace(/"/g, '""') + '"')
+      }
+      lines.push(row.join(','))
+    }
+    // BOM を付けないと Excel が UTF-8 と判定せず日本語が化ける
+    const blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url; a.download = `${sheet.name}.csv`; a.click()
+    setTimeout(() => URL.revokeObjectURL(url), 5000)
+  }
+
+  /**
+   * Excel / CSV の読み込み。数式も取り込む。
+   * 取り込んだ内容に合わせて行数・列数を広げる（従来のCSV取込は既存の枠に切り捨てていた）。
+   */
+  const importFile = async (file: File) => {
+    try {
+      const buf = await file.arrayBuffer()
+      const wb = XLSX.read(buf, { type: 'array' })
+      const first = wb.SheetNames[0]
+      if (!first) { alert('シートが見つかりませんでした。'); return }
+      const ws = wb.Sheets[first] as Record<string, any>
+      const ref = ws['!ref']
+      if (!ref) { alert('データが空でした。'); return }
+      const range = XLSX.utils.decode_range(ref)
+
+      const cells: Record<string, string> = {}
+      for (let r = range.s.r; r <= range.e.r; r++) {
+        for (let c = range.s.c; c <= range.e.c; c++) {
+          const cell = ws[XLSX.utils.encode_cell({ r, c })]
+          if (!cell) continue
+          const rr = r - range.s.r
+          const cc = c - range.s.c
+          // 数式があれば数式を優先して取り込む
+          if (cell.f) cells[toCellKey(rr, cc)] = `=${cell.f}`
+          else if (cell.v !== undefined && cell.v !== null && cell.v !== '') cells[toCellKey(rr, cc)] = String(cell.v)
+        }
+      }
+
+      // 結合セルも取り込む（範囲の左上を原点に読み替える）
+      const merges: Merge[] = ((ws['!merges'] as any[]) || []).map(m => ({
+        r: m.s.r - range.s.r,
+        c: m.s.c - range.s.c,
+        rs: m.e.r - m.s.r + 1,
+        cs: m.e.c - m.s.c + 1,
+      })).filter(m => m.r >= 0 && m.c >= 0 && (m.rs > 1 || m.cs > 1))
+
+      const rows = Math.max(20, range.e.r - range.s.r + 1)
+      const cols = Math.max(10, range.e.c - range.s.c + 1)
+      if (!confirm(`「${file.name}」を読み込みます。\n${rows}行 × ${cols}列。現在のシートの内容は置き換わります。よろしいですか？`)) return
+
+      pushHistory()
+      setColWidths(prev => (prev.length >= cols ? prev : prev.concat(Array.from({ length: cols - prev.length }, () => 96))))
+      setSheet(prev => {
+        const next: SheetData = { ...prev, rows, cols, cells, formats: {}, merges, condRules: [] }
+        persistSheet(next)
+        return next
+      })
+    } catch (err) {
+      console.error('取り込みに失敗しました', err)
+      alert('ファイルを読み込めませんでした。Excel（.xlsx / .xls）または CSV を選んでください。')
+    }
+  }
+
+  /**
+   * 数式を評価する。
+   * baseSheet はこの数式が置かれているシート名（別シートのセルを評価するときに使う）。
+   */
+  const evaluateRaw = (raw: string, visited: Set<string>, baseSheet?: string): number | string => {
     const getCellValue = (cell: { row: number; col: number }) => {
       const key = toCellKey(cell.row, cell.col);
       return { value: sheet.cells[key] || '', formula: sheet.cells[key] || '' };
     };
-    const evaluateCellFn = (cell: { row: number; col: number }) => {
-      return evaluateCell(cell.row, cell.col, visited);
+    const evaluateCellFn = (cell: { row: number; col: number }, sheetName?: string) => {
+      // 参照にシート名が付いていなければ、数式が置かれているシートを見る
+      const target = sheetName ?? baseSheet;
+      if (target && !sheetExists(target)) return '#REF!';
+      return evaluateCell(cell.row, cell.col, visited, target);
     };
     return formulaEngine.current.evaluateRaw(raw, visited, getCellValue, evaluateCellFn);
   };
+
+  /**
+   * 別シート参照（Sheet1!A1）のために、全シートの内容を購読しておく。
+   *
+   * 評価はレンダー中に同期的に走るので、state ではなく ref で持つ
+   * （state だと1レンダー遅れて古い値で計算してしまう）。
+   * 再描画を促すために件数だけ state にも持つ。
+   */
+  const otherSheetsRef = useRef<Record<string, Record<string, string>>>({});
+  const [, setOtherSheetsVersion] = useState(0);
+
+  useEffect(() => {
+    if (!currentUser) { otherSheetsRef.current = {}; return }
+    const colRef = collection(db, 'users', currentUser.uid, 'sheets')
+    const unsub = onSnapshot(colRef, (snap) => {
+      const map: Record<string, Record<string, string>> = {}
+      snap.docs.forEach(d => {
+        const data = d.data() as any
+        const name = data?.name || d.id
+        map[name] = data?.cells || {}
+      })
+      otherSheetsRef.current = map
+      setOtherSheetsVersion(v => v + 1) // 参照先が変わったら再計算させる
+    }, (err) => {
+      console.error('シート一覧の購読に失敗しました', err)
+    })
+    return () => unsub()
+  }, [currentUser])
 
   // 表計算: シート一覧 + 選択シート購読
   useEffect(() => {
@@ -192,6 +452,12 @@ const Spreadsheet: React.FC = () => {
 
   useEffect(() => {
     if (!currentUser) return
+    // ★シートを切り替えたら Undo 履歴を捨てる。
+    //   同じ HistoryManager を持ち回すと、シートAを編集 → シートBへ切替 → Ctrl+Z で
+    //   シートAの内容がシートBに上書き保存され、復旧できなくなる。
+    historyManager.current.clear()
+    setSaveState('idle')
+    setSaveError(null)
     try {
       const cached = localStorage.getItem(`sheet:${currentUser.uid}:${currentSheetId}`)
       if (cached) setSheet(JSON.parse(cached))
@@ -202,8 +468,10 @@ const Spreadsheet: React.FC = () => {
       try {
         if (snap.exists()) {
           const data = snap.data() as any
-          const next: SheetData = { id: currentSheetId, name: data.name || 'シート1', rows: data.rows || 20, cols: data.cols || 10, cells: data.cells || {}, formats: data.formats || {} }
+          const next: SheetData = { id: currentSheetId, name: data.name || 'シート1', rows: data.rows || 20, cols: data.cols || 10, cells: data.cells || {}, formats: data.formats || {}, merges: data.merges || [], condRules: data.condRules || [] }
           setSheet(next)
+          // 列幅も復元する（以前は保存していなかったのでリロードで既定幅に戻っていた）
+          if (Array.isArray(data.colWidths) && data.colWidths.length) setColWidths(data.colWidths)
           try { localStorage.setItem(`sheet:${currentUser.uid}:${currentSheetId}`, JSON.stringify(next)) } catch {}
         }
       } catch {}
@@ -311,17 +579,20 @@ const Spreadsheet: React.FC = () => {
           const sourceKey = toCellKey(sourceR, sourceC);
           const targetKey = toCellKey(tr, tc);
           const sourceValue = prev.cells[sourceKey] || '';
-          
+
           // 数式の場合は参照を調整
           if (sourceValue.startsWith('=')) {
             const rowOffset = tr - sourceR;
             const colOffset = tc - sourceC;
             const adjustedFormula = formulaEngine.current.adjustFormula(sourceValue, rowOffset, colOffset);
             next.cells[targetKey] = adjustedFormula;
-          } else {
-            // 通常の値はそのままコピー
-            next.cells[targetKey] = sourceValue;
+            continue;
           }
+
+          // 連続データ。元が数値／日付なら「1,2,3…」「4/1,4/2…」と伸ばす。
+          // 従来は同じ値を繰り返すだけで、Excel のオートフィルとして期待外れだった。
+          const step = seriesStep(prev, origin, tr, tc, sourceR, sourceC);
+          next.cells[targetKey] = step ?? sourceValue;
         }
       }
       
@@ -331,18 +602,391 @@ const Spreadsheet: React.FC = () => {
   };
 
   // 書式適用（選択セルのみ）
+  /**
+   * 現在の選択範囲（範囲選択が無ければアクティブセル1つ）。
+   * 書式・並べ替え・検索置換など、範囲に対する操作はすべてこれを使う。
+   */
+  const selectedCells = (): { r: number; c: number }[] => {
+    if (selStart && selEnd) {
+      const out: { r: number; c: number }[] = []
+      const minR = Math.min(selStart.r, selEnd.r), maxR = Math.max(selStart.r, selEnd.r)
+      const minC = Math.min(selStart.c, selEnd.c), maxC = Math.max(selStart.c, selEnd.c)
+      for (let r = minR; r <= maxR; r++) for (let c = minC; c <= maxC; c++) out.push({ r, c })
+      return out
+    }
+    const rc = activeCellKey ? keyToRC(activeCellKey) : null
+    return rc ? [rc] : []
+  }
+
+  /**
+   * 書式適用。
+   * ★以前はアクティブセル1つにしか効かず、範囲を選んでも太字にできなかった。
+   *   pushHistory も呼んでいなかったので書式変更が Undo できなかった。
+   */
   const applyFormat = (fmt: Partial<CellFormat>) => {
-    if (!activeCellKey) return
+    const targets = selectedCells()
+    if (!targets.length) return
+    pushHistory()
     setSheet(prev => {
       const formats = { ...(prev.formats || {}) }
-      formats[activeCellKey] = { ...(formats[activeCellKey] || {}), ...fmt }
+      targets.forEach(({ r, c }) => {
+        const key = toCellKey(r, c)
+        const cur = formats[key] || {}
+        // border は入れ子なのでマージする（「上罫線だけ足す」が効くように）
+        formats[key] = fmt.border
+          ? { ...cur, ...fmt, border: { ...(cur.border || {}), ...fmt.border } }
+          : { ...cur, ...fmt }
+      })
       const next = { ...prev, formats }
-        if (currentUser) { try { localStorage.setItem(`sheet:${currentUser.uid}:${currentSheetId}`, JSON.stringify(next)) } catch {} }
-      if (sheetSaveTimer.current) window.clearTimeout(sheetSaveTimer.current)
-      sheetSaveTimer.current = window.setTimeout(async () => {
-        if (!currentUser) return
-          try { await setDoc(doc(db, 'users', currentUser.uid, 'sheets', currentSheetId), { name: next.name, rows: next.rows, cols: next.cols, cells: next.cells, formats: next.formats || {} }) } catch {}
-      }, 500)
+      persistSheet(next)
+      return next
+    })
+  }
+
+  /** 選択範囲の外周だけに罫線を引く（表を線で囲む） */
+  const applyOuterBorder = () => {
+    const targets = selectedCells()
+    if (!targets.length) return
+    const minR = Math.min(...targets.map(t => t.r)), maxR = Math.max(...targets.map(t => t.r))
+    const minC = Math.min(...targets.map(t => t.c)), maxC = Math.max(...targets.map(t => t.c))
+    pushHistory()
+    setSheet(prev => {
+      const formats = { ...(prev.formats || {}) }
+      targets.forEach(({ r, c }) => {
+        const key = toCellKey(r, c)
+        const cur = formats[key] || {}
+        formats[key] = {
+          ...cur,
+          border: {
+            ...(cur.border || {}),
+            top: r === minR ? true : cur.border?.top,
+            bottom: r === maxR ? true : cur.border?.bottom,
+            left: c === minC ? true : cur.border?.left,
+            right: c === maxC ? true : cur.border?.right,
+          },
+        }
+      })
+      const next = { ...prev, formats }
+      persistSheet(next)
+      return next
+    })
+  }
+
+  const ISO_DATE_RE = /^(\d{4})-(\d{1,2})-(\d{1,2})$/
+
+  /**
+   * オートフィルの連続データ。
+   *
+   * 元の選択が数値／日付なら、等差で伸ばした値を返す（伸ばせないときは null）。
+   * 元が1セルだけのときは +1 ずつ、2セル以上なら差分を等差とみなす。
+   */
+  const seriesStep = (
+    prev: SheetData,
+    origin: { start: { r: number; c: number }; end: { r: number; c: number } },
+    targetR: number,
+    targetC: number,
+    sourceR: number,
+    sourceC: number,
+  ): string | null => {
+    const vertical = targetC === sourceC
+    const originVals: string[] = []
+    const oMinR = Math.min(origin.start.r, origin.end.r), oMaxR = Math.max(origin.start.r, origin.end.r)
+    const oMinC = Math.min(origin.start.c, origin.end.c), oMaxC = Math.max(origin.start.c, origin.end.c)
+    if (vertical) {
+      for (let r = oMinR; r <= oMaxR; r++) originVals.push(prev.cells[toCellKey(r, sourceC)] || '')
+    } else {
+      for (let c = oMinC; c <= oMaxC; c++) originVals.push(prev.cells[toCellKey(sourceR, c)] || '')
+    }
+    if (!originVals.length) return null
+
+    // 何個ぶん先か
+    const distance = vertical ? targetR - oMinR : targetC - oMinC
+    if (distance < originVals.length) return null // 元の範囲内はそのまま
+
+    const nums = originVals.map(v => Number(v))
+    if (originVals.every(v => v.trim() !== '') && nums.every(n => !Number.isNaN(n))) {
+      const step = nums.length > 1 ? nums[1] - nums[0] : 1
+      // 差が一定でなければ連続データとみなさない（Excel と同じ）
+      const uniform = nums.every((n, i) => i === 0 || Math.abs(n - nums[i - 1] - step) < 1e-9)
+      if (!uniform) return null
+      const value = nums[0] + step * distance
+      return String(Number(value.toFixed(10)))
+    }
+
+    const dates = originVals.map(v => ISO_DATE_RE.exec(v.trim()))
+    if (dates.every(Boolean)) {
+      const toDate = (m: RegExpExecArray) => new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]))
+      const first = toDate(dates[0]!)
+      const DAY = 24 * 60 * 60 * 1000
+      const stepDays = dates.length > 1 ? Math.round((toDate(dates[1]!).getTime() - first.getTime()) / DAY) || 1 : 1
+      const d = new Date(first.getTime() + stepDays * distance * DAY)
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+    }
+
+    return null
+  }
+
+  /** 次の一致セルへ移動する。表示中の計算結果ではなく入力内容を対象にする */
+  const findNext = () => {
+    const needle = findText.trim()
+    if (!needle) return
+    const start = activeCellKey ? keyToRC(activeCellKey) : null
+    const from = start ? start.r * sheet.cols + start.c + 1 : 0
+    const total = sheet.rows * sheet.cols
+    for (let i = 0; i < total; i++) {
+      const pos = (from + i) % total
+      const r = Math.floor(pos / sheet.cols)
+      const c = pos % sheet.cols
+      const raw = sheet.cells[toCellKey(r, c)] || ''
+      if (raw.toLowerCase().includes(needle.toLowerCase())) {
+        const key = toCellKey(r, c)
+        setActiveCellKey(key)
+        setSelStart({ r, c })
+        setSelEnd({ r, c })
+        setFormulaBar(raw)
+        document.getElementById(`cell-${r}-${c}`)?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+        return
+      }
+    }
+    alert(`「${needle}」は見つかりませんでした。`)
+  }
+
+  /** シート全体を置換する。件数を出してから確定させる */
+  const replaceAll = () => {
+    const needle = findText
+    if (!needle) return
+    const hits: string[] = []
+    for (let r = 0; r < sheet.rows; r++) {
+      for (let c = 0; c < sheet.cols; c++) {
+        const key = toCellKey(r, c)
+        if ((sheet.cells[key] || '').includes(needle)) hits.push(key)
+      }
+    }
+    if (!hits.length) { alert(`「${needle}」は見つかりませんでした。`); return }
+    if (!confirm(`${hits.length} 件を「${replaceText}」に置き換えます。よろしいですか？`)) return
+    pushHistory()
+    setSheet(prev => {
+      const cells = { ...prev.cells }
+      hits.forEach(key => { cells[key] = cells[key].split(needle).join(replaceText) })
+      const next = { ...prev, cells }
+      persistSheet(next)
+      return next
+    })
+  }
+
+  /**
+   * 選択範囲を1列目の値で並べ替える。
+   * 行ごと入れ替えるので、選択範囲は表全体（見出しを除く）を選んでおく必要がある。
+   */
+  const sortSelection = (desc: boolean) => {
+    if (!selStart || !selEnd) { alert('並べ替える範囲を選択してください。'); return }
+    const minR = Math.min(selStart.r, selEnd.r), maxR = Math.max(selStart.r, selEnd.r)
+    const minC = Math.min(selStart.c, selEnd.c), maxC = Math.max(selStart.c, selEnd.c)
+    if (maxR - minR < 1) { alert('2行以上を選択してください。'); return }
+
+    const rows: string[][] = []
+    for (let r = minR; r <= maxR; r++) {
+      const values: string[] = []
+      for (let c = minC; c <= maxC; c++) values.push(sheet.cells[toCellKey(r, c)] || '')
+      rows.push(values)
+    }
+    const keyOf = (v: string) => {
+      const n = Number(v)
+      return v !== '' && !Number.isNaN(n) ? n : v
+    }
+    rows.sort((a, b) => {
+      const x = keyOf(a[0]), y = keyOf(b[0])
+      if (typeof x === 'number' && typeof y === 'number') return desc ? y - x : x - y
+      return desc ? String(y).localeCompare(String(x), 'ja') : String(x).localeCompare(String(y), 'ja')
+    })
+
+    pushHistory()
+    setSheet(prev => {
+      const cells = { ...prev.cells }
+      rows.forEach((values, i) => {
+        values.forEach((v, j) => {
+          const key = toCellKey(minR + i, minC + j)
+          if (v === '') delete cells[key]
+          else cells[key] = v
+        })
+      })
+      const next = { ...prev, cells }
+      persistSheet(next)
+      return next
+    })
+  }
+
+  // ------------------------------------------------------------ セル結合
+
+  /**
+   * 選択範囲を1つのセルに結合する。
+   * Excel と同じく、残るのは左上のセルの内容だけ。他に文字が入っていたら確認する。
+   */
+  const mergeSelection = () => {
+    if (!selStart || !selEnd) { alert('結合する範囲を選択してください。'); return }
+    const r = Math.min(selStart.r, selEnd.r), r2 = Math.max(selStart.r, selEnd.r)
+    const c = Math.min(selStart.c, selEnd.c), c2 = Math.max(selStart.c, selEnd.c)
+    if (r === r2 && c === c2) { alert('2つ以上のセルを選択してください。'); return }
+
+    // 既存の結合と重なるものは、まとめて解除してから作り直す
+    const overlaps = (m: Merge) => !(m.r + m.rs - 1 < r || m.r > r2 || m.c + m.cs - 1 < c || m.c > c2)
+
+    let dropped = 0
+    for (let rr = r; rr <= r2; rr++) {
+      for (let cc = c; cc <= c2; cc++) {
+        if (rr === r && cc === c) continue
+        if ((sheet.cells[toCellKey(rr, cc)] || '') !== '') dropped++
+      }
+    }
+    if (dropped > 0 && !confirm(`左上以外の ${dropped} セルの内容は削除されます。よろしいですか？`)) return
+
+    pushHistory()
+    setSheet(prev => {
+      const cells = { ...prev.cells }
+      const formats = { ...(prev.formats || {}) }
+      for (let rr = r; rr <= r2; rr++) {
+        for (let cc = c; cc <= c2; cc++) {
+          if (rr === r && cc === c) continue
+          delete cells[toCellKey(rr, cc)]
+          delete formats[toCellKey(rr, cc)]
+        }
+      }
+      const merges = [...(prev.merges || []).filter(m => !overlaps(m)), { r, c, rs: r2 - r + 1, cs: c2 - c + 1 }]
+      const next = { ...prev, cells, formats, merges }
+      persistSheet(next)
+      return next
+    })
+  }
+
+  /** 選択範囲に掛かっている結合を解除する */
+  const unmergeSelection = () => {
+    const targets = selectedCells()
+    if (!targets.length) return
+    const hit = (m: Merge) =>
+      targets.some(t => t.r >= m.r && t.r < m.r + m.rs && t.c >= m.c && t.c < m.c + m.cs)
+    const remaining = (sheet.merges || []).filter(m => !hit(m))
+    if (remaining.length === (sheet.merges || []).length) { alert('選択範囲に結合セルがありません。'); return }
+    pushHistory()
+    setSheet(prev => {
+      const next = { ...prev, merges: remaining }
+      persistSheet(next)
+      return next
+    })
+  }
+
+  /**
+   * 行・列の挿入削除に合わせて結合範囲もずらす。
+   * ここを忘れると、行を1つ挿しただけで結合位置が1行ズレる。
+   */
+  const shiftMerges = (merges: Merge[], axis: 'row' | 'col', target: number, action: 'insert' | 'delete'): Merge[] => {
+    const out: Merge[] = []
+    for (const m of merges) {
+      const start = axis === 'row' ? m.r : m.c
+      const span = axis === 'row' ? m.rs : m.cs
+      let nextStart = start
+      let nextSpan = span
+      if (action === 'insert') {
+        if (target <= start) nextStart = start + 1
+        else if (target < start + span) nextSpan = span + 1 // 結合の内側に挿入 → 広がる
+      } else {
+        if (target < start) nextStart = start - 1
+        else if (target < start + span) nextSpan = span - 1 // 結合の内側を削除 → 縮む
+      }
+      if (nextSpan < 1) continue // 結合が消滅
+      if (nextSpan === 1 && span > 1 && nextSpan === 1) {
+        // 1セルになったら結合を解除する（1x1 の結合は意味がない）
+        const otherSpan = axis === 'row' ? m.cs : m.rs
+        if (otherSpan <= 1) continue
+      }
+      out.push(
+        axis === 'row'
+          ? { ...m, r: nextStart, rs: nextSpan }
+          : { ...m, c: nextStart, cs: nextSpan },
+      )
+    }
+    return out
+  }
+
+  // -------------------------------------------------- 条件付き書式
+
+  /** ルールが1件のセルに当てはまるか。表示中の計算結果で判定する */
+  const condMatches = (rule: CondRule, value: number | string): boolean => {
+    const num = typeof value === 'number' ? value : Number(value)
+    const isNum = !Number.isNaN(num) && String(value).trim() !== ''
+    const rv = Number(rule.value)
+    const rvIsNum = !Number.isNaN(rv) && rule.value.trim() !== ''
+    const text = String(value)
+
+    switch (rule.op) {
+      case 'contains': return rule.value !== '' && text.includes(rule.value)
+      case 'eq': return rvIsNum && isNum ? num === rv : text === rule.value
+      case 'ne': return rvIsNum && isNum ? num !== rv : text !== rule.value
+      case 'gt': return isNum && rvIsNum && num > rv
+      case 'lt': return isNum && rvIsNum && num < rv
+      case 'ge': return isNum && rvIsNum && num >= rv
+      case 'le': return isNum && rvIsNum && num <= rv
+      case 'between': {
+        const rv2 = Number(rule.value2 ?? '')
+        if (!isNum || !rvIsNum || Number.isNaN(rv2)) return false
+        return num >= Math.min(rv, rv2) && num <= Math.max(rv, rv2)
+      }
+    }
+    return false
+  }
+
+  /**
+   * セルに適用する最終的な書式。
+   * 手動で付けた書式の上に、当てはまった条件付き書式を重ねる（後勝ち）。
+   */
+  const effectiveFormat = (r: number, c: number, computed: number | string): CellFormat | undefined => {
+    const base = sheet.formats?.[toCellKey(r, c)]
+    const rules = sheet.condRules || []
+    if (!rules.length) return base
+    let merged = base
+    for (const rule of rules) {
+      if (r < Math.min(rule.r1, rule.r2) || r > Math.max(rule.r1, rule.r2)) continue
+      if (c < Math.min(rule.c1, rule.c2) || c > Math.max(rule.c1, rule.c2)) continue
+      if (!condMatches(rule, computed)) continue
+      merged = { ...(merged || {}), ...rule.style }
+    }
+    return merged
+  }
+
+  const addCondRule = (op: CondOp, value: string, value2: string, style: CondRule['style']) => {
+    if (!selStart || !selEnd) { alert('条件付き書式を設定する範囲を選択してください。'); return }
+    pushHistory()
+    setSheet(prev => {
+      const rule: CondRule = {
+        id: `cr${Date.now()}`,
+        r1: Math.min(selStart.r, selEnd.r), r2: Math.max(selStart.r, selEnd.r),
+        c1: Math.min(selStart.c, selEnd.c), c2: Math.max(selStart.c, selEnd.c),
+        op, value, value2: value2 || undefined, style,
+      }
+      const next = { ...prev, condRules: [...(prev.condRules || []), rule] }
+      persistSheet(next)
+      return next
+    })
+  }
+
+  const removeCondRule = (id: string) => {
+    pushHistory()
+    setSheet(prev => {
+      const next = { ...prev, condRules: (prev.condRules || []).filter(r => r.id !== id) }
+      persistSheet(next)
+      return next
+    })
+  }
+
+  /** 選択範囲の書式をすべて消す */
+  const clearFormat = () => {
+    const targets = selectedCells()
+    if (!targets.length) return
+    pushHistory()
+    setSheet(prev => {
+      const formats = { ...(prev.formats || {}) }
+      targets.forEach(({ r, c }) => { delete formats[toCellKey(r, c)] })
+      const next = { ...prev, formats }
+      persistSheet(next)
       return next
     })
   }
@@ -780,6 +1424,27 @@ const Spreadsheet: React.FC = () => {
     return result;
   };
 
+  /**
+   * 行・列の挿入削除に合わせて、シート内すべての数式の参照を書き換える。
+   *
+   * ★これが無いと =SUM(A1:A3) が古い範囲を指したまま残り、
+   *   エラーも出さずに違う合計を出し続ける（Excel は自動で追従する）。
+   */
+  const reindexFormulas = (
+    cells: Record<string, string>,
+    axis: 'row' | 'col',
+    target: number,
+    action: 'insert' | 'delete',
+  ): Record<string, string> => {
+    const out: Record<string, string> = {};
+    for (const [key, value] of Object.entries(cells)) {
+      out[key] = value.startsWith('=')
+        ? formulaEngine.current.adjustFormulaForStructuralChange(value, axis, target, action)
+        : value;
+    }
+    return out;
+  };
+
   const executeContextAction = (action: 'insert' | 'delete') => {
     if (!contextMenu) return;
 
@@ -813,8 +1478,11 @@ const Spreadsheet: React.FC = () => {
         ...prev,
         rows: axis === 'row' ? prev.rows + delta : prev.rows,
         cols: axis === 'col' ? prev.cols + delta : prev.cols,
-        cells: shiftCells(prev.cells, axis, target, action),
+        // セルの位置を詰め直したあと、数式の中の参照も追従させる
+        cells: reindexFormulas(shiftCells(prev.cells, axis, target, action), axis, target, action),
         formats: shiftCells(prev.formats || {}, axis, target, action),
+        // 結合範囲もずらす。忘れると行を1つ挿しただけで結合位置がズレる
+        merges: shiftMerges(prev.merges || [], axis, target, action),
       };
       persistSheet(next);
       return next;
@@ -1166,8 +1834,9 @@ const Spreadsheet: React.FC = () => {
               const next: SheetData = {
                 ...prev,
                 rows: prev.rows - 1,
-                cells: shiftCells(prev.cells, 'row', target, 'delete'),
+                cells: reindexFormulas(shiftCells(prev.cells, 'row', target, 'delete'), 'row', target, 'delete'),
                 formats: shiftCells(prev.formats || {}, 'row', target, 'delete'),
+                merges: shiftMerges(prev.merges || [], 'row', target, 'delete'),
               }
               persistSheet(next)
               return next
@@ -1187,8 +1856,9 @@ const Spreadsheet: React.FC = () => {
               const next: SheetData = {
                 ...prev,
                 cols: prev.cols - 1,
-                cells: shiftCells(prev.cells, 'col', target, 'delete'),
+                cells: reindexFormulas(shiftCells(prev.cells, 'col', target, 'delete'), 'col', target, 'delete'),
                 formats: shiftCells(prev.formats || {}, 'col', target, 'delete'),
+                merges: shiftMerges(prev.merges || [], 'col', target, 'delete'),
               }
               persistSheet(next)
               return next
@@ -1313,48 +1983,163 @@ const Spreadsheet: React.FC = () => {
           </button>
 
           {/* CSV/Excel 入出力 */}
-          <button type="button" className="px-2 py-1 text-xs rounded border bg-white hover:bg-gray-50" onClick={() => {
-            const lines: string[] = []
-            for (let r = 0; r < sheet.rows; r++) {
-              const row: string[] = []
-              for (let c = 0; c < sheet.cols; c++) {
-                const v = sheet.cells[toCellKey(r, c)] || ''
-                const esc = '"' + String(v).replace(/"/g, '""') + '"'
-                row.push(esc)
-              }
-              lines.push(row.join(','))
-            }
-            const blob = new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8' })
-            const url = URL.createObjectURL(blob)
-            const a = document.createElement('a')
-            a.href = url; a.download = `${sheet.name}.csv`; a.click(); URL.revokeObjectURL(url)
-          }}>CSV出力</button>
+          <button type="button" className="px-2 py-1 text-xs rounded border bg-white hover:bg-gray-50" onClick={exportCsv}>CSV出力</button>
           <button type="button" className="px-2 py-1 text-xs rounded border bg-white hover:bg-gray-50" onClick={exportExcel}>Excel出力</button>
-          <label className="px-2 py-1 text-xs rounded border bg-white hover:bg-gray-50 cursor-pointer">
-            CSV取込
-            <input type="file" accept=".csv,text/csv" className="hidden" onChange={async (e) => {
+          <button
+            type="button"
+            className="px-2 py-1 text-xs rounded border bg-white hover:bg-gray-50"
+            onClick={() => importInputRef.current?.click()}
+          >Excel/CSV取込</button>
+          <input
+            ref={importInputRef}
+            type="file"
+            accept=".xlsx,.xls,.csv,text/csv"
+            className="hidden"
+            onChange={async (e) => {
               const file = e.target.files?.[0]
-              if (!file) return
-              const text = await file.text()
-              const rows = text.replace(/\r/g, '').split('\n')
-              setSheet(prev => {
-                const next = { ...prev, cells: { ...prev.cells } as Record<string, string> }
-                rows.forEach((line, ri) => {
-                  const cols = line.split(',').map(s => s.replace(/^"|"$/g, '').replace(/""/g, '"'))
-                  cols.forEach((val, ci) => { if (ri < prev.rows && ci < prev.cols) next.cells[toCellKey(ri, ci)] = val })
-                })
-                if (currentUser) { try { localStorage.setItem(`sheet:${currentUser.uid}:${currentSheetId}`, JSON.stringify(next)) } catch {} }
-                if (sheetSaveTimer.current) window.clearTimeout(sheetSaveTimer.current)
-                sheetSaveTimer.current = window.setTimeout(async () => {
-                  if (!currentUser) return
-                  try { await setDoc(doc(db, 'users', currentUser.uid, 'sheets', currentSheetId), { name: next.name, rows: next.rows, cols: next.cols, cells: next.cells, formats: next.formats || {} }) } catch {}
-                }, 500)
-                return next
-              })
-            }} />
-          </label>
+              e.target.value = '' // 同じファイルを続けて選べるようにする
+              if (file) await importFile(file)
+            }}
+          />
+          <button type="button" className="px-2 py-1 text-xs rounded border bg-white hover:bg-gray-50" onClick={() => window.print()}>印刷</button>
         </div>
       </div>
+
+      {/* 書式ツールバー（罫線・色・サイズ・折り返し） */}
+      <div className="flex items-center gap-1 flex-wrap mb-2 text-xs">
+        <span className="text-gray-500 mr-1">罫線</span>
+        <button type="button" title="外枠" className="px-2 py-1 rounded border bg-white hover:bg-gray-50" onClick={applyOuterBorder}>外枠</button>
+        <button type="button" title="格子（すべての辺）" className="px-2 py-1 rounded border bg-white hover:bg-gray-50"
+          onClick={() => applyFormat({ border: { top: true, right: true, bottom: true, left: true } })}>格子</button>
+        <button type="button" title="下罫線" className="px-2 py-1 rounded border bg-white hover:bg-gray-50"
+          onClick={() => applyFormat({ border: { bottom: true } })}>下線</button>
+        <button type="button" title="罫線を消す" className="px-2 py-1 rounded border bg-white hover:bg-gray-50"
+          onClick={() => applyFormat({ border: { top: false, right: false, bottom: false, left: false } })}>なし</button>
+
+        <span className="text-gray-500 ml-3 mr-1">色</span>
+        <label className="flex items-center gap-1 px-1 py-0.5 rounded border bg-white" title="背景色">
+          <span className="text-[10px] text-gray-500">背景</span>
+          <input type="color" className="w-6 h-5 cursor-pointer" defaultValue="#fff7cc"
+            onChange={(e) => applyFormat({ bg: e.target.value })} />
+        </label>
+        <label className="flex items-center gap-1 px-1 py-0.5 rounded border bg-white" title="文字色">
+          <span className="text-[10px] text-gray-500">文字</span>
+          <input type="color" className="w-6 h-5 cursor-pointer" defaultValue="#c00000"
+            onChange={(e) => applyFormat({ color: e.target.value })} />
+        </label>
+
+        <span className="text-gray-500 ml-3 mr-1">文字</span>
+        <button type="button" title="斜体" className="px-2 py-1 rounded border bg-white hover:bg-gray-50 italic"
+          onClick={() => applyFormat({ italic: true })}>I</button>
+        <select className="px-1 py-1 rounded border bg-white" defaultValue="" title="文字サイズ"
+          onChange={(e) => { if (e.target.value) applyFormat({ fontSize: Number(e.target.value) }) }}>
+          <option value="">サイズ</option>
+          {[10, 11, 12, 14, 16, 18, 24].map(s => <option key={s} value={s}>{s}px</option>)}
+        </select>
+        <button type="button" title="折り返して全体を表示" className="px-2 py-1 rounded border bg-white hover:bg-gray-50"
+          onClick={() => applyFormat({ wrap: true })}>折返</button>
+        <button type="button" title="書式をすべて消す" className="px-2 py-1 rounded border bg-white hover:bg-gray-50"
+          onClick={clearFormat}>書式解除</button>
+
+        <span className="text-gray-500 ml-3 mr-1">結合</span>
+        <button type="button" title="選択範囲を1つのセルに結合する" className="px-2 py-1 rounded border bg-white hover:bg-gray-50"
+          onClick={mergeSelection}>セル結合</button>
+        <button type="button" title="結合を解除する" className="px-2 py-1 rounded border bg-white hover:bg-gray-50"
+          onClick={unmergeSelection}>結合解除</button>
+        <button type="button" title="選択範囲に条件付き書式を設定する" className="px-2 py-1 rounded border bg-white hover:bg-gray-50 ml-3"
+          onClick={() => setCondOpen(v => !v)}>条件付き書式</button>
+
+        <span className="text-gray-500 ml-3 mr-1">並べ替え</span>
+        <button type="button" title="選択範囲を1列目の昇順で並べ替え" className="px-2 py-1 rounded border bg-white hover:bg-gray-50"
+          onClick={() => sortSelection(false)}>昇順</button>
+        <button type="button" title="選択範囲を1列目の降順で並べ替え" className="px-2 py-1 rounded border bg-white hover:bg-gray-50"
+          onClick={() => sortSelection(true)}>降順</button>
+
+        <button type="button" className="px-2 py-1 rounded border bg-white hover:bg-gray-50 ml-3"
+          onClick={() => setFindOpen(v => !v)}>検索・置換</button>
+
+        {/* 保存状態。以前はここが無く、保存に失敗しても気づけなかった */}
+        <span className="ml-auto flex items-center gap-2">
+          {docBytes > 700_000 && (
+            <span className="text-amber-700" title="Firestore の1シート上限は約1MBです">
+              容量 {Math.round(docBytes / 1024)}KB / 1024KB
+            </span>
+          )}
+          {saveState === 'saving' && <span className="text-gray-400">保存中...</span>}
+          {saveState === 'saved' && <span className="text-gray-400">保存しました</span>}
+          {saveState === 'error' && <span className="text-red-600 font-semibold">{saveError}</span>}
+        </span>
+      </div>
+
+      {condOpen && (
+        <div className="mb-2 text-xs bg-gray-50 border rounded p-2 space-y-2">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-gray-600">選択範囲が</span>
+            <select value={condOp} onChange={(e) => setCondOp(e.target.value as CondOp)} className="px-2 py-1 border rounded">
+              <option value="gt">より大きい</option>
+              <option value="ge">以上</option>
+              <option value="lt">より小さい</option>
+              <option value="le">以下</option>
+              <option value="eq">等しい</option>
+              <option value="ne">等しくない</option>
+              <option value="between">の範囲内</option>
+              <option value="contains">文字を含む</option>
+            </select>
+            <input value={condValue} onChange={(e) => setCondValue(e.target.value)} placeholder="値"
+              className="px-2 py-1 border rounded w-24" />
+            {condOp === 'between' && (
+              <input value={condValue2} onChange={(e) => setCondValue2(e.target.value)} placeholder="〜"
+                className="px-2 py-1 border rounded w-24" />
+            )}
+            <span className="text-gray-600">とき</span>
+            <label className="flex items-center gap-1 px-1 py-0.5 rounded border bg-white">
+              <span className="text-[10px] text-gray-500">背景</span>
+              <input type="color" value={condBg} onChange={(e) => setCondBg(e.target.value)} className="w-6 h-5" />
+            </label>
+            <label className="flex items-center gap-1 px-1 py-0.5 rounded border bg-white">
+              <span className="text-[10px] text-gray-500">文字</span>
+              <input type="color" value={condColor} onChange={(e) => setCondColor(e.target.value)} className="w-6 h-5" />
+            </label>
+            <label className="flex items-center gap-1 text-gray-600">
+              <input type="checkbox" checked={condBold} onChange={(e) => setCondBold(e.target.checked)} />太字
+            </label>
+            <button type="button" className="px-2 py-1 rounded border bg-white hover:bg-gray-50"
+              onClick={() => addCondRule(condOp, condValue, condValue2, { bg: condBg, color: condColor, bold: condBold || undefined })}>
+              追加
+            </button>
+            <button type="button" className="px-2 py-1 rounded border bg-white hover:bg-gray-50 ml-auto"
+              onClick={() => setCondOpen(false)}>閉じる</button>
+          </div>
+          {(sheet.condRules || []).length > 0 && (
+            <ul className="space-y-1">
+              {(sheet.condRules || []).map(rule => (
+                <li key={rule.id} className="flex items-center gap-2">
+                  <span className="px-2 py-0.5 rounded border" style={{ backgroundColor: rule.style.bg, color: rule.style.color, fontWeight: rule.style.bold ? 700 : undefined }}>
+                    {rcToAddress(Math.min(rule.r1, rule.r2), Math.min(rule.c1, rule.c2))}:
+                    {rcToAddress(Math.max(rule.r1, rule.r2), Math.max(rule.c1, rule.c2))}
+                  </span>
+                  <span className="text-gray-600">
+                    {COND_OP_LABEL[rule.op]} {rule.value}{rule.op === 'between' ? ` 〜 ${rule.value2 ?? ''}` : ''}
+                  </span>
+                  <button type="button" className="text-red-600 hover:underline" onClick={() => removeCondRule(rule.id)}>削除</button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+
+      {findOpen && (
+        <div className="flex items-center gap-2 mb-2 text-xs bg-gray-50 border rounded p-2">
+          <input value={findText} onChange={(e) => setFindText(e.target.value)} placeholder="検索する文字列"
+            className="px-2 py-1 border rounded" />
+          <input value={replaceText} onChange={(e) => setReplaceText(e.target.value)} placeholder="置換後"
+            className="px-2 py-1 border rounded" />
+          <button type="button" className="px-2 py-1 rounded border bg-white hover:bg-gray-50" onClick={() => findNext()}>次を検索</button>
+          <button type="button" className="px-2 py-1 rounded border bg-white hover:bg-gray-50" onClick={() => replaceAll()}>すべて置換</button>
+          <button type="button" className="px-2 py-1 rounded border bg-white hover:bg-gray-50 ml-auto" onClick={() => setFindOpen(false)}>閉じる</button>
+        </div>
+      )}
       <div className="grid grid-cols-[1fr_210px] gap-4 items-start">
         <div 
           ref={gridRef} 
@@ -1512,6 +2297,9 @@ const Spreadsheet: React.FC = () => {
             lines.push(row.join('\t'))
           }
           const text = lines.join('\n')
+          // コピー元の位置を覚えておく。同じ内容を貼り付けたときに、
+          // Excel と同じく相対参照を移動量ぶんずらすために使う
+          copySourceRef.current = { r: minR, c: minC, text }
           try { void navigator.clipboard.writeText(text) } catch {}
           return
         }
@@ -1554,6 +2342,8 @@ const Spreadsheet: React.FC = () => {
           cols={sheet.cols}
           cells={sheet.cells}
           formats={sheet.formats}
+          merges={sheet.merges}
+          effectiveFormat={effectiveFormat}
           colWidths={colWidths}
           editingCellKey={editingCellKey}
           activeCellKey={activeCellKey}
@@ -1820,9 +2610,21 @@ const Spreadsheet: React.FC = () => {
                 cols: neededCols,
                 cells: { ...prev.cells },
               };
+              // このツール内でコピーした内容をそのまま貼るときは、
+              // Excel と同じく相対参照を移動量ぶんずらす。
+              // 外部からのテキスト貼り付けでは書き換えない（Excel の text 貼り付けも同じ）。
+              const src = copySourceRef.current;
+              const isInternalCopy = src !== null && src.text === text;
+              const rowOffset = isInternalCopy ? r - src!.r : 0;
+              const colOffset = isInternalCopy ? c - src!.c : 0;
+
               grid.forEach((rowVals, rr) => {
                 rowVals.forEach((val, cc) => {
-                  next.cells[toCellKey(r + rr, c + cc)] = val;
+                  const shifted =
+                    isInternalCopy && val.startsWith('=') && (rowOffset !== 0 || colOffset !== 0)
+                      ? formulaEngine.current.adjustFormula(val, rowOffset, colOffset)
+                      : val;
+                  next.cells[toCellKey(r + rr, c + cc)] = shifted;
                 });
               });
               // ここで formats を渡し忘れると setDoc がドキュメントを置き換えて書式が全消しになる

@@ -4,9 +4,37 @@ import React, { useState, useRef, useEffect } from 'react';
 
 interface CellFormat {
   bold?: boolean;
+  italic?: boolean;
   align?: 'left' | 'center' | 'right';
   type?: 'text' | 'number' | 'percent' | 'currency';
   decimals?: number;
+  /** 罫線。見積書や拾い出し表の体裁に必須 */
+  border?: { top?: boolean; right?: boolean; bottom?: boolean; left?: boolean };
+  /** 背景色・文字色（CSSの色文字列） */
+  bg?: string;
+  color?: string;
+  fontSize?: number;
+  /** 折り返して全体を表示 */
+  wrap?: boolean;
+}
+
+const BORDER = '1px solid #6b7280';
+
+/** 書式からセルの見た目を組み立てる。編集中の input と表示用 div の両方で使う。 */
+export function formatToStyle(format?: CellFormat): React.CSSProperties {
+  if (!format) return {};
+  const s: React.CSSProperties = {};
+  if (format.bg) s.backgroundColor = format.bg;
+  if (format.color) s.color = format.color;
+  if (format.fontSize) s.fontSize = `${format.fontSize}px`;
+  if (format.italic) s.fontStyle = 'italic';
+  if (format.border) {
+    if (format.border.top) s.borderTop = BORDER;
+    if (format.border.right) s.borderRight = BORDER;
+    if (format.border.bottom) s.borderBottom = BORDER;
+    if (format.border.left) s.borderLeft = BORDER;
+  }
+  return s;
 }
 
 interface CellProps {
@@ -31,6 +59,9 @@ interface CellProps {
   isFillHandleVisible?: boolean;
   onFillStart?: (e: React.MouseEvent) => void;
   colWidth: number;
+  /** 結合セルの左上に付ける span。結合していないときは undefined */
+  rowSpan?: number;
+  colSpan?: number;
   onStartEdit: () => void;
   onEndEdit: (value: string) => void;
   onCancelEdit: () => void;
@@ -60,6 +91,8 @@ const Cell: React.FC<CellProps> = ({
   formulaReferenceColor,
   selectionEdge,
   colWidth,
+  rowSpan,
+  colSpan,
   onStartEdit,
   onEndEdit,
   onCancelEdit,
@@ -193,10 +226,13 @@ const Cell: React.FC<CellProps> = ({
     }
   };
 
-  // セルのスタイル
+  // セルのスタイル（書式＝罫線・背景色・文字色などをここで反映する）
   const cellStyle: React.CSSProperties = {
-    width: colWidth,
+    // 横に結合しているセルに単一列ぶんの幅を指定すると列幅の計算が壊れるので、
+    // colSpan があるときは幅指定を外してブラウザに任せる
+    width: colSpan && colSpan > 1 ? undefined : colWidth,
     position: 'relative',
+    ...formatToStyle(format),
   };
 
   // 選択範囲のスタイル（数式参照でない場合のみ）
@@ -243,6 +279,8 @@ const Cell: React.FC<CellProps> = ({
     <td
       key={cellKey}
       className={cellClassName}
+      rowSpan={rowSpan}
+      colSpan={colSpan}
       style={mergedStyle}
       onMouseDown={(e) => {
         // ★ バグ修正: ここでイベントの伝播を止める
@@ -295,7 +333,7 @@ const Cell: React.FC<CellProps> = ({
         />
       ) : (
         <div
-          className={`w-full h-7 px-2 flex items-center select-none relative ${
+          className={`w-full ${format?.wrap ? 'min-h-7' : 'h-7'} px-2 flex items-center select-none relative ${
             format?.bold ? 'font-bold' : ''
           } ${
             format?.align === 'center'
@@ -316,7 +354,7 @@ const Cell: React.FC<CellProps> = ({
             onSelect();
           }}
         >
-          <span className="truncate w-full">
+          <span className={format?.wrap ? 'w-full whitespace-pre-wrap break-words py-1' : 'truncate w-full'}>
             {/* ★重要: 空の場合でも高さを確保するために &nbsp; を表示 */}
             {(displayValue === '' || displayValue === null || displayValue === undefined) 
               ? '\u00A0' 
