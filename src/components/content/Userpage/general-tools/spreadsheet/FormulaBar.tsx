@@ -15,11 +15,12 @@ interface FormulaBarProps {
   onFormulaBarFocus?: () => void;
 }
 
-// 既知の関数名リスト
+// サジェストに出す関数名。
+// FormulaEngine に実装があるものだけを並べる。未実装の関数を候補に出すと
+// 選んだ瞬間 #NAME? になるため（以前は SUMIF / VLOOKUP など10個が並んでいた）。
 const knownFunctions = [
-  'SUM', 'AVERAGE', 'MIN', 'MAX', 'COUNT', 'IF', 'ROUND', 
-  'TODAY', 'NOW', 'ABS', 'SUMIF', 'COUNTIF', 'VLOOKUP', 
-  'HLOOKUP', 'INDEX', 'MATCH', 'CONCATENATE', 'LEFT', 'RIGHT', 'MID'
+  'SUM', 'AVERAGE', 'MIN', 'MAX', 'COUNT', 'COUNTA',
+  'IF', 'ROUND', 'ABS', 'TODAY', 'NOW',
 ];
 
 const FormulaBar: React.FC<FormulaBarProps> = ({

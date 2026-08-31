@@ -246,12 +246,25 @@ const FileTransferTool: React.FC = () => {
     [origin],
   );
 
+  // 共有コードはファイルへの唯一のアクセス制御なので、
+  // 予測可能な Math.random ではなく暗号論的乱数で作り、長さも8文字に伸ばす
+  // （32^8 ≈ 1.1×10^12 通り。6文字だと約10億通りで総当たりの射程に入る）。
+  // 既存の6文字コードのリンクはそのまま使える。
+  const SHORT_CODE_CHARS = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ'; // 紛らわしい 0/O/1/I を除いた32文字
+  const SHORT_CODE_LENGTH = 8;
+
   const generateShortCode = useCallback(async () => {
-    const chars = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
     for (let attempt = 0; attempt < 5; attempt += 1) {
+      const bytes = new Uint8Array(SHORT_CODE_LENGTH);
+      if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
+        crypto.getRandomValues(bytes);
+      } else {
+        for (let i = 0; i < SHORT_CODE_LENGTH; i += 1) bytes[i] = Math.floor(Math.random() * 256);
+      }
       let code = '';
-      for (let i = 0; i < 6; i += 1) {
-        code += chars[Math.floor(Math.random() * chars.length)];
+      for (let i = 0; i < SHORT_CODE_LENGTH; i += 1) {
+        // 32文字なので 256 は割り切れ、剰余による偏りは出ない
+        code += SHORT_CODE_CHARS[bytes[i] % SHORT_CODE_CHARS.length];
       }
       const candidateRef = doc(db, 'shareLinks', code);
       const snap = await getDoc(candidateRef);
@@ -519,8 +532,15 @@ const FileTransferTool: React.FC = () => {
                 owner: uid,
                 fileId,
                 path,
-                downloadUrl,
                 fileName: fileToUpload.name,
+                // ★downloadUrl はここに載せない。
+                //   shareLinks はコードを知っていれば誰でも読めるので、トークン付きの
+                //   実URLを置くと /api/share/download の帯域チェックと計測を通さずに
+                //   ファイルを落とせてしまう。実URLはオーナー限定の uploads/{fileId} に
+                //   だけ持たせ、サーバー側で払い出す。
+                // ダウンロード帯域の集計に使う。ここに持たせておくと
+                // 集計時に uploads を追加で読まずに済む
+                size: fileToUpload.size,
                 createdAt: serverTimestamp(),
                 expiresAt,
                 retentionDays,
@@ -599,8 +619,9 @@ const FileTransferTool: React.FC = () => {
             owner: uid,
             fileId: file.id,
             path: file.path,
-            downloadUrl: file.downloadUrl,
+            // downloadUrl は載せない（理由は上のアップロード処理のコメント参照）
             fileName: file.fileName,
+            size: file.size,
             createdAt: serverTimestamp(),
             expiresAt,
             retentionDays,

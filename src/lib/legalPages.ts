@@ -38,6 +38,7 @@ export const LEGAL_APPS: LegalApp[] = [
   { label: 'Trailmark', privacy: '/trailmark-privacy-policy/' },
   { label: 'Noteleaf', privacy: '/noteleaf-app-privacy-policy/' },
   { label: 'Weatherchime', privacy: '/weatherchime-privacy-policy/' },
+  { label: 'Accoria', privacy: '/accoria-privacy-policy/' },
 ];
 
 /** 末尾スラッシュを外して比較用に揃える（next.config.js の trailingSlash 対策） */

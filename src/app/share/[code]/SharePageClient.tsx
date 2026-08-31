@@ -2,32 +2,27 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { doc, getDoc, Timestamp, setDoc, increment } from 'firebase/firestore';
-import { getDownloadURL, getStorage, ref } from 'firebase/storage';
-import { app, db } from '@/lib/firebaseClient';
-
-const storage = getStorage(app);
+import { doc, getDoc, Timestamp } from 'firebase/firestore';
+import { db } from '@/lib/firebaseClient';
 
 type ShareDoc = {
   path?: string;
-  downloadUrl?: string;
   fileName?: string;
   expiresAt?: Timestamp | null;
   fileId?: string;
   owner?: string;
 };
 
-function getMonthKey(date = new Date()) {
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, '0');
-  return `${y}-${m}`;
-}
-
 export default function SharePageClient({ code }: { code: string }) {
   const router = useRouter();
   const [message, setMessage] = useState<string>('リンクを確認しています...');
-  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
+  // 実ダウンロードURLはここでは持たない。
+  // shareLinks はコードを知っていれば誰でも読めるため、URLを画面に載せると
+  // /api/share/download の帯域チェックと計測を通さずに落とせてしまう。
+  // このフラグはボタンを出してよいかだけを表す。
+  const [isReady, setIsReady] = useState(false);
   const [fileName, setFileName] = useState<string | undefined>(undefined);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -52,14 +47,7 @@ export default function SharePageClient({ code }: { code: string }) {
         if (!cancelled) {
           setMessage('ファイルの準備ができました');
           setFileName(data.fileName);
-          
-          // ダウンロードURLを取得（使用量更新はボタンクリック時に行う）
-          const url =
-            data.downloadUrl ||
-            (await getDownloadURL(ref(storage, data.path as string)));
-          if (!cancelled) {
-            setDownloadUrl(url);
-          }
+          setIsReady(true);
         }
       } catch (error) {
         console.error('[share] failed to resolve link', error);
@@ -73,58 +61,47 @@ export default function SharePageClient({ code }: { code: string }) {
   }, [code]);
 
   const handleDownload = async () => {
-    if (!downloadUrl) return;
-    
-    // ファイルサイズを取得して使用量を更新
-    let fileSize = 0;
+    if (!isReady || isDownloading) return;
+    setIsDownloading(true);
+
+    // 使用量の記録と帯域上限の判定、そして実URLの払い出しはすべてサーバー側で行う。
+    // 共有リンクの受け取り手は未ログインのため、ブラウザからは
+    // uploads/{fileId} を読むことも usage/* に書くこともルールで許可されておらず、
+    // これまで downloadedBytes は一度も増えていなかった（＝帯域上限が機能していなかった）。
+    let url: string;
     try {
-      const shareRef = doc(db, 'shareLinks', code);
-      const snap = await getDoc(shareRef);
-      if (snap.exists()) {
-        const data = snap.data() as ShareDoc;
-        if (data.fileId) {
-          const uploadRef = doc(db, 'uploads', data.fileId);
-          const uploadSnap = await getDoc(uploadRef);
-          if (uploadSnap.exists()) {
-            fileSize = uploadSnap.data().size || 0;
-          }
+      const resp = await fetch('/api/share/download', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code }),
+      });
+      const result = await resp.json().catch(() => null);
+
+      if (!resp.ok || !result?.ok || typeof result.downloadUrl !== 'string') {
+        setIsDownloading(false);
+        if (result?.reason === 'expired') {
+          setMessage('この共有リンクは期限切れです。');
+          setIsReady(false);
+        } else if (result?.reason === 'site_bandwidth_exceeded') {
+          setMessage('今月のダウンロード帯域の上限に達しているため、現在ダウンロードできません。時間をおいてお試しください。');
+        } else if (result?.reason === 'too_many_requests') {
+          setMessage('このリンクへのアクセスが集中しています。しばらく時間をおいてお試しください。');
+        } else {
+          setMessage('ダウンロードを開始できませんでした。時間をおいて再度お試しください。');
         }
-        
-        // 使用量を更新（非同期で実行、エラーが発生してもダウンロードは続行）
-        if (fileSize > 0) {
-          const monthKey = getMonthKey();
-          const siteUsageRef = doc(db, 'usage', `site_${monthKey}`);
-          setDoc(
-            siteUsageRef,
-            {
-              downloadedBytes: increment(fileSize),
-            },
-            { merge: true },
-          ).catch(error => {
-            console.error('使用量更新に失敗', error);
-          });
-          
-          // オーナーの使用量も更新
-          if (data.owner) {
-            const userUsageRef = doc(db, 'usage', `${data.owner}_${monthKey}`);
-            setDoc(
-              userUsageRef,
-              {
-                downloadedBytes: increment(fileSize),
-              },
-              { merge: true },
-            ).catch(error => {
-              console.error('ユーザー使用量更新に失敗', error);
-            });
-          }
-        }
+        return;
       }
+      url = result.downloadUrl;
     } catch (error) {
-      console.error('使用量更新処理に失敗', error);
+      console.error('ダウンロード記録に失敗', error);
+      setIsDownloading(false);
+      setMessage('ダウンロードを開始できませんでした。時間をおいて再度お試しください。');
+      return;
     }
-    
+
     // ダウンロードを開始
-    window.location.href = downloadUrl;
+    window.location.href = url;
+    setIsDownloading(false);
   };
 
   const handleBack = () => {
@@ -139,16 +116,17 @@ export default function SharePageClient({ code }: { code: string }) {
           <p className="text-sm text-gray-600 font-semibold">建築・建設業界の業務支援ポータルサイト</p>
         </div>
         <p className="text-sm text-gray-600">{message}</p>
-        {downloadUrl && (
+        {isReady && (
           <div className="space-y-3">
             {fileName && <p className="text-xs text-gray-500 break-all">ファイル名: {fileName}</p>}
             <button
               type="button"
               onClick={handleDownload}
-              className="px-6 py-3 rounded text-white text-sm font-semibold hover:opacity-90 transition-opacity"
+              disabled={isDownloading}
+              className="px-6 py-3 rounded text-white text-sm font-semibold hover:opacity-90 transition-opacity disabled:opacity-60 disabled:cursor-wait"
               style={{ backgroundColor: '#1DAD95' }}
             >
-              共有ファイルをダウンロード
+              {isDownloading ? '準備中...' : '共有ファイルをダウンロード'}
             </button>
           </div>
         )}

@@ -156,7 +156,12 @@ service cloud.firestore {
 
     // 短縮共有リンク
     match /shareLinks/{code} {
-      allow read: if true;
+      // 単体取得（get）のみ許可。共有コードを知っている人がリンクを開けるようにする。
+      // read でまとめて許可すると list も通ってしまい、
+      // コレクションを丸ごと取得するだけで全ユーザーのファイルの
+      // downloadUrl（トークン付きの実ダウンロードURL）を抜き取れる。
+      allow get: if true;
+      allow list: if false;
       allow create: if request.auth != null
         && request.resource.data.owner == request.auth.uid
         && request.resource.data.keys().hasOnly([
@@ -165,11 +170,21 @@ service cloud.firestore {
           'path',
           'downloadUrl',
           'fileName',
+          'size',
           'createdAt',
           'expiresAt',
           'retentionDays'
         ]);
       allow delete: if request.auth != null && resource.data.owner == request.auth.uid;
+    }
+
+    // 共有リンクのダウンロード計測ガード（/api/share/download が Admin SDK で読み書きする）。
+    // クライアントから触れると計測を水増しできてしまうので完全に閉じる。
+    match /shareDownloadMarks/{markId} {
+      allow read, write: if false;
+    }
+    match /shareDownloadDaily/{dailyId} {
+      allow read, write: if false;
     }
 
     // チャットルーム（参加者のみ読み書き可能）
@@ -221,10 +236,38 @@ service cloud.firestore {
 
     // スケジュール調整ツール
     match /schedules/{scheduleId} {
-      // 読み取り: 公開設定なら誰でも、非公開ならログインユーザーのみ
-      allow read: if resource.data.isPublic == true
-        || (request.auth != null && resource.data.ownerUid == request.auth.uid);
-      
+      function scheduleData() {
+        return get(/databases/$(database)/documents/schedules/$(scheduleId)).data;
+      }
+      function isScheduleOwner() {
+        return request.auth != null && scheduleData().ownerUid == request.auth.uid;
+      }
+      // 回答期限を過ぎているか。deadline は任意項目なので存在確認を挟む。
+      function isPastDeadline() {
+        return 'deadline' in scheduleData()
+          && scheduleData().deadline != null
+          && scheduleData().deadline < request.time;
+      }
+
+      // 単体取得（get）: 公開設定なら誰でも。共有URLを知っている人が開けるようにする。
+      //
+      // ★存在しないドキュメントでは resource が null になり、resource.data を
+      //   参照した時点で評価エラー＝deny になる。ScheduleTool は新しい共有URLを
+      //   発行する前に「その slug が未使用か」を getDoc で確かめるため、
+      //   ここを塞ぐとスケジュールが1件も作成できなくなる。
+      //   未使用 slug の確認はログインユーザーにのみ許可する。
+      allow get: if resource == null
+        ? request.auth != null
+        : (resource.data.isPublic == true
+           || (request.auth != null && resource.data.ownerUid == request.auth.uid));
+
+      // 一覧取得（list）: 自分のスケジュールのみ。
+      // get と list をまとめて read で許可すると、
+      // where('isPublic','==',true) というクエリで全ユーザーの公開スケジュールを
+      // 列挙でき、URL を知らない第三者にタイトル・作成者名まで見えてしまう。
+      allow list: if request.auth != null
+        && resource.data.ownerUid == request.auth.uid;
+
       // 作成: ログインユーザーなら誰でも作成可能（ownerUidが自分のuidであることを確認）
       allow create: if request.auth != null
         && request.resource.data.ownerUid == request.auth.uid
@@ -250,9 +293,12 @@ service cloud.firestore {
       match /participants/{participantId} {
         allow read: if get(/databases/$(database)/documents/schedules/$(scheduleId)).data.isPublic == true
           || (request.auth != null && get(/databases/$(database)/documents/schedules/$(scheduleId)).data.ownerUid == request.auth.uid);
-        // 作成・更新: 公開なら誰でも、非公開ならログインユーザーのみ
-        allow create, update: if (get(/databases/$(database)/documents/schedules/$(scheduleId)).data.isPublic == true
+        // 作成・更新: 公開なら誰でも、非公開ならログインユーザーのみ。
+        // ただし回答期限を過ぎたら主催者以外は書き込めない
+        // （締切はこれまで画面表示だけで、ルール側は素通りだった）。
+        allow create, update: if (scheduleData().isPublic == true
             || request.auth != null)
+          && (!isPastDeadline() || isScheduleOwner())
           && request.resource.data.keys().hasOnly(['name', 'comment', 'createdAt', 'updatedAt'])
           && request.resource.data.name is string
           && request.resource.data.name.size() > 0
@@ -269,9 +315,11 @@ service cloud.firestore {
       match /responses/{responseId} {
         allow read: if get(/databases/$(database)/documents/schedules/$(scheduleId)).data.isPublic == true
           || (request.auth != null && get(/databases/$(database)/documents/schedules/$(scheduleId)).data.ownerUid == request.auth.uid);
-        // 作成・更新: 公開なら誰でも、非公開ならログインユーザーのみ
-        allow create, update: if (get(/databases/$(database)/documents/schedules/$(scheduleId)).data.isPublic == true
+        // 作成・更新: 公開なら誰でも、非公開ならログインユーザーのみ。
+        // 参加者と同じく、回答期限を過ぎたら主催者以外は書き込めない。
+        allow create, update: if (scheduleData().isPublic == true
             || request.auth != null)
+          && (!isPastDeadline() || isScheduleOwner())
           && request.resource.data.keys().hasOnly(['participantId', 'optionId', 'value'])
           && request.resource.data.participantId is string
           && request.resource.data.participantId.size() <= 128

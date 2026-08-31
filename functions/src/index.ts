@@ -204,3 +204,37 @@ export const cleanupTempFiles = onSchedule({
   await Promise.all(promises);
   console.log(`🗑️ 合計 ${expiredDocs.size} 件のファイルを削除しました。`);
 });
+/**
+ * 共有リンクのダウンロード計測ガード（shareDownloadMarks / shareDownloadDaily）の掃除。
+ *
+ * /api/share/download は「同じコード・同じ送信元・同じ1時間」で二重に計上しないための
+ * マーカーと、1コードあたりの日次カウンタを書き込む。放置すると溜まり続けるので、
+ * expiresAt を過ぎたものを定期的に消す。
+ */
+export const cleanupShareDownloadGuards = onSchedule({
+  schedule: 'every 6 hours',
+  timeZone: 'Asia/Tokyo',
+}, async () => {
+  const db = admin.firestore();
+  const now = admin.firestore.Timestamp.now();
+  let removed = 0;
+
+  for (const name of ['shareDownloadMarks', 'shareDownloadDaily']) {
+    // 1回の実行で消しすぎないよう上限を付ける（次の実行で続きを消す）
+    const expired = await db.collection(name)
+      .where('expiresAt', '<', now)
+      .limit(2000)
+      .get();
+    if (expired.empty) continue;
+
+    // Firestore のバッチ上限は500件
+    for (let i = 0; i < expired.docs.length; i += 450) {
+      const batch = db.batch();
+      expired.docs.slice(i, i + 450).forEach((d) => batch.delete(d.ref));
+      await batch.commit();
+    }
+    removed += expired.size;
+  }
+
+  console.log(`🗑️ ダウンロード計測ガードを ${removed} 件削除しました。`);
+});

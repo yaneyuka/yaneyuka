@@ -34,6 +34,23 @@ const INITIAL_PROJECTS: Project[] = [
 
 const INITIAL_ENTRY: TimeEntry = { id: '1', projectId: '', description: '', hours: '' };
 
+// 日付はローカルタイム基準で扱う。
+// toISOString() はUTCに変換されるため、JSTの朝9時前は前日の日付になってしまう。
+const toLocalDateString = (d: Date): string => {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+};
+
+const parseLocalDate = (s: string): Date => {
+  const [y, m, d] = s.split('-').map(Number);
+  return new Date(y, (m || 1) - 1, d || 1);
+};
+
+// CSVの1セルを安全にエスケープする（案件名にカンマや改行が入っても列がずれないように）
+const csvCell = (value: unknown): string => `"${String(value ?? '').replace(/"/g, '""')}"`;
+
 const AlarmTool: React.FC = () => {
   // ==========================================
   //  共通・タブ管理 State
@@ -57,6 +74,14 @@ const AlarmTool: React.FC = () => {
   const workerRef = useRef<Worker | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const beepIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  // worker.onmessage は初回マウント時に1度だけ登録されるため、
+  // そこから呼ばれる fireAlarm は state を直接読むと初期値で固定される（stale closure）。
+  // トグルの最新値を必ず反映させるため ref 経由で参照する。
+  const soundEnabledRef = useRef(soundEnabled);
+  const notificationEnabledRef = useRef(notificationEnabled);
+
+  useEffect(() => { soundEnabledRef.current = soundEnabled; }, [soundEnabled]);
+  useEffect(() => { notificationEnabledRef.current = notificationEnabled; }, [notificationEnabled]);
 
   useEffect(() => {
     const now = new Date();
@@ -109,7 +134,7 @@ const AlarmTool: React.FC = () => {
   };
 
   const playBeep = () => {
-    if (!audioContextRef.current || !soundEnabled) return;
+    if (!audioContextRef.current || !soundEnabledRef.current) return;
     try {
       const oscillator = audioContextRef.current.createOscillator();
       const gainNode = audioContextRef.current.createGain();
@@ -133,11 +158,11 @@ const AlarmTool: React.FC = () => {
     if (audioContextRef.current && audioContextRef.current.state === 'suspended') {
       audioContextRef.current.resume();
     }
-    if (soundEnabled) {
+    if (soundEnabledRef.current) {
       playBeep();
       beepIntervalRef.current = setInterval(() => playBeep(), 1000);
     }
-    if (notificationEnabled && typeof window !== 'undefined' && 'Notification' in window && Notification.permission === 'granted') {
+    if (notificationEnabledRef.current && typeof window !== 'undefined' && 'Notification' in window && Notification.permission === 'granted') {
       new Notification('時間です！', {
           body: '予定時刻になりました。画面を確認してください。',
           icon: '/favicon.png',
@@ -198,7 +223,7 @@ const AlarmTool: React.FC = () => {
   //  Time Tracker Logic
   // ==========================================
   const [trackerTab, setTrackerTab] = useState<TrackerTab>('daily');
-  const [trackerDate, setTrackerDate] = useState(new Date().toISOString().split('T')[0]);
+  const [trackerDate, setTrackerDate] = useState(() => toLocalDateString(new Date()));
   
   // 日付ごとのデータを保持するState
   const [dailyRecords, setDailyRecords] = useState<Record<string, TimeEntry[]>>({});
@@ -208,9 +233,9 @@ const AlarmTool: React.FC = () => {
   const [summaryStartDate, setSummaryStartDate] = useState(() => {
     const d = new Date();
     d.setDate(1); // 今月1日
-    return d.toISOString().split('T')[0];
+    return toLocalDateString(d);
   });
-  const [summaryEndDate, setSummaryEndDate] = useState(() => new Date().toISOString().split('T')[0]);
+  const [summaryEndDate, setSummaryEndDate] = useState(() => toLocalDateString(new Date()));
 
   // 初期ロード
   useEffect(() => {
@@ -285,12 +310,12 @@ const AlarmTool: React.FC = () => {
     const projectTotals: Record<string, number> = {};
     const dailySummaries: { date: string; projectDetails: { projectId: string; hours: number }[] }[] = [];
     
-    const start = new Date(summaryStartDate);
-    const end = new Date(summaryEndDate);
+    const start = parseLocalDate(summaryStartDate);
+    const end = parseLocalDate(summaryEndDate);
 
     // 日付ループ
     for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-      const dateStr = d.toISOString().split('T')[0];
+      const dateStr = toLocalDateString(d);
       const dayEntries = dailyRecords[dateStr] || [];
       const validEntries = dayEntries.filter(e => e.projectId && Number(e.hours) > 0);
 
@@ -336,12 +361,12 @@ const AlarmTool: React.FC = () => {
 
   // --- Export CSV Handler ---
   const handleExportCSV = () => {
-    const start = new Date(summaryStartDate);
-    const end = new Date(summaryEndDate);
+    const start = parseLocalDate(summaryStartDate);
+    const end = parseLocalDate(summaryEndDate);
     let csvContent = "\uFEFF日付,プロジェクトNo,プロジェクト名,作業内容,工数(h)\n";
 
     for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-      const dateStr = d.toISOString().split('T')[0];
+      const dateStr = toLocalDateString(d);
       const dayEntries = dailyRecords[dateStr] || [];
       const validEntries = dayEntries.filter(e => e.projectId && Number(e.hours) > 0);
 
@@ -354,12 +379,13 @@ const AlarmTool: React.FC = () => {
 
       validEntries.forEach(e => {
         const project = projects.find(p => p.id === e.projectId);
+        // 全セルをクォートする。案件名や作業内容にカンマ・改行が入っても列がずれない
         const line = [
-          dateStr,
-          project?.code || '',
-          project?.name || '',
-          `"${(e.description || '').replace(/"/g, '""')}"`, // エスケープ処理
-          e.hours
+          csvCell(dateStr),
+          csvCell(project?.code),
+          csvCell(project?.name),
+          csvCell(e.description),
+          csvCell(e.hours),
         ].join(",");
         csvContent += line + "\n";
       });

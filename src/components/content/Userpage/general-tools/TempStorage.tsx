@@ -3,7 +3,7 @@
 import React, { useState, useEffect, DragEvent } from 'react';
 import { db, storage } from '@/lib/firebaseClient';
 import { collection, addDoc, query, orderBy, onSnapshot, deleteDoc, doc, where, Timestamp } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
+import { ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebase/storage';
 import { useAuth } from '@/lib/AuthContext';
 import { FiUpload, FiTrash2, FiDownload, FiClock, FiPackage, FiFile } from 'react-icons/fi';
 // JSZipは動的インポートで使用（SSR対応）
@@ -36,133 +36,41 @@ const TempStorage: React.FC = () => {
   // ファイル一覧を取得（期限切れでないものだけ表示、自分のファイルのみ）
   useEffect(() => {
     if (!isLoggedIn || !currentUser?.uid) {
-      console.log('[TempStorage] ログイン状態またはユーザーIDがありません', { isLoggedIn, uid: currentUser?.uid });
       setFiles([]);
       return;
     }
 
-    try {
-    console.log('[TempStorage] ファイル一覧の取得を開始', { uid: currentUser.uid });
-
-    // インデックスエラーを回避するため、シンプルなクエリを使用し、
-    // クライアント側で期限切れをフィルタリング
+    // 複合インデックスを避けるためクエリは userId のみ。
+    // 期限切れの除外はクライアント側で行う（実体の削除は cleanupTempFiles 関数が担当）
     const q = query(
       collection(db, 'tempFiles'),
       where('userId', '==', currentUser.uid)
     );
 
-    const unsubscribe = onSnapshot(q, 
+    const unsubscribe = onSnapshot(
+      q,
       (snapshot) => {
-          try {
-        console.log('[TempStorage] スナップショット取得', { 
-          docsCount: snapshot.docs.length,
-          fromCache: snapshot.metadata.fromCache,
-          hasPendingWrites: snapshot.metadata.hasPendingWrites
-        });
+        // キャッシュからの空読み込みは一覧を消してしまうのでスキップ
+        if (snapshot.empty && snapshot.metadata.fromCache) return;
 
-        // キャッシュからの読み込みで空の場合はスキップ
-        if (snapshot.empty && snapshot.metadata.fromCache) {
-          console.log('[TempStorage] キャッシュからの空の読み込みをスキップ');
-          return;
-        }
-
-        const allFiles = snapshot.docs.map(doc => {
-          const data = doc.data();
-              try {
-          console.log('[TempStorage] ファイルデータ:', { 
-            id: doc.id, 
-            name: data.name, 
-            userId: data.userId,
-            expiresAt: data.expiresAt?.toDate(),
-            expiresAtMs: data.expiresAt?.toMillis()
-          });
-              } catch (logError) {
-                console.warn('[TempStorage] ログ出力エラー:', logError);
-              }
-          return {
-            id: doc.id,
-            ...data
-          } as TempFile;
-        });
-        
-        // クライアント側で期限切れをフィルタリング
         const nowMs = Date.now();
-        const validFiles = allFiles.filter(file => {
-          if (!file.expiresAt) {
-            console.warn('[TempStorage] expiresAtが存在しないファイルをスキップ:', file.id);
-            return false;
-          }
-              try {
-          const expiresMs = file.expiresAt.toMillis();
-          const isValid = expiresMs > nowMs;
-          if (!isValid) {
-                  try {
-            console.log('[TempStorage] 期限切れファイルを除外:', { 
-              id: file.id, 
-              name: file.name,
-              expiresAt: file.expiresAt.toDate(),
-              now: new Date(nowMs)
-            });
-                  } catch (logError) {
-                    console.warn('[TempStorage] ログ出力エラー:', logError);
-                  }
-          }
-          return isValid;
-              } catch (dateError) {
-                console.error('[TempStorage] 日付処理エラー:', dateError);
-                return false;
-              }
-        });
-        
-            // 最新のファイルを上に表示（作成日時の降順）
-            try {
-        validFiles.sort((a, b) => {
-                try {
-                  const aTime = a.createdAt?.toMillis() || 0;
-                  const bTime = b.createdAt?.toMillis() || 0;
-                  return bTime - aTime; // 新しい順（降順）
-                } catch (sortError) {
-                  console.error('[TempStorage] ソートエラー:', sortError);
-                  return 0;
-                }
-              });
-            } catch (sortError) {
-              console.error('[TempStorage] ソート処理エラー:', sortError);
-            }
-        
-        console.log('[TempStorage] ファイル一覧を更新', { 
-          totalCount: allFiles.length,
-          validCount: validFiles.length 
-        });
+        const validFiles = snapshot.docs
+          .map(docSnap => ({ id: docSnap.id, ...docSnap.data() } as TempFile))
+          .filter(file => {
+            const expiresMs = file.expiresAt?.toMillis?.();
+            return typeof expiresMs === 'number' && expiresMs > nowMs;
+          })
+          .sort((a, b) => (b.createdAt?.toMillis?.() ?? 0) - (a.createdAt?.toMillis?.() ?? 0));
+
         setFiles(validFiles);
-          } catch (processError) {
-            console.error('[TempStorage] ファイル処理エラー:', processError);
-            setFiles([]);
-          }
-      }, 
+      },
       (error) => {
-        console.error('[TempStorage] ファイル一覧の取得エラー:', error);
-        console.error('[TempStorage] エラー詳細:', {
-          code: error.code,
-          message: error.message,
-          stack: error.stack
-        });
+        console.error('[TempStorage] ファイル一覧の取得に失敗しました:', error);
         setFiles([]);
       }
     );
 
-    return () => {
-        try {
-      console.log('[TempStorage] 購読を解除');
-      unsubscribe();
-        } catch (cleanupError) {
-          console.error('[TempStorage] クリーンアップエラー:', cleanupError);
-        }
-    };
-    } catch (initError) {
-      console.error('[TempStorage] 初期化エラー:', initError);
-      setFiles([]);
-    }
+    return () => unsubscribe();
   }, [isLoggedIn, currentUser?.uid]);
 
   // ファイル処理とアップロードの統合関数
@@ -179,13 +87,28 @@ const TempStorage: React.FC = () => {
       return;
     }
 
+    // --- 0. 圧縮前チェック ---
+    // ZIP圧縮はブラウザのメモリ上で行うため、巨大なフォルダを先に圧縮すると
+    // 上限判定に到達する前にタブが落ちる。生サイズの段階で先に弾く。
+    const rawTotalMB = inputFiles.reduce((sum, f) => sum + f.size, 0) / (1024 * 1024);
+    if (rawTotalMB > MAX_FILE_SIZE_MB) {
+      alert(`選択されたファイルの合計サイズが上限（${MAX_FILE_SIZE_MB}MB）を超えています。\n選択サイズ: ${rawTotalMB.toFixed(2)}MB\n\n※圧縮後のサイズが上限内でも、圧縮処理自体がブラウザの負荷になるため事前に制限しています。`);
+      return;
+    }
+
+    const alreadyUploaded = files.filter(f => f.userId === currentUser.uid);
+    if (alreadyUploaded.length >= MAX_FILES_COUNT) {
+      alert(`ファイル数の上限（${MAX_FILES_COUNT}ファイル）に達しています。\n古いファイルを削除してから再度お試しください。`);
+      return;
+    }
+
     setStatus('準備中...');
     setCompressionProgress(null);
     setUploadProgress(null);
 
     try {
       let fileToUpload: File;
-    
+
       // --- 1. 圧縮判定ロジック ---
       // フォルダアップロードかどうかを判定（webkitRelativePathが存在するかどうか）
       const isFolderUpload = inputFiles.length > 0 && 'webkitRelativePath' in inputFiles[0] && (inputFiles[0] as any).webkitRelativePath;
@@ -308,11 +231,23 @@ const TempStorage: React.FC = () => {
       const storagePath = `temp/${currentUser.uid}/${timestamp}_${fileToUpload.name}`;
       const storageRef = ref(storage, storagePath);
       
-      await uploadBytes(storageRef, fileToUpload);
-      setUploadProgress(50);
-      
+      // 実際の転送量から進捗を出す（uploadBytes では進捗が取れず固定値になっていた）
+      const task = uploadBytesResumable(storageRef, fileToUpload);
+      await new Promise<void>((resolve, reject) => {
+        task.on(
+          'state_changed',
+          (snapshot) => {
+            const percent = snapshot.totalBytes > 0
+              ? Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+              : 0;
+            setUploadProgress(percent);
+          },
+          reject,
+          () => resolve()
+        );
+      });
+
       const url = await getDownloadURL(storageRef);
-      setUploadProgress(80);
 
       const now = new Date();
       const expiresAt = new Date(now.getTime() + 24 * 60 * 60 * 1000);
@@ -417,12 +352,9 @@ const TempStorage: React.FC = () => {
 
   // 手動削除
   const handleDelete = async (file: TempFile) => {
-    if (typeof window === 'undefined' || !window.confirm) {
     if (!confirm(`「${file.name}」を削除しますか？`)) return;
-    } else {
-      if (!window.confirm(`「${file.name}」を削除しますか？`)) return;
-    }
-    
+
+
     if (!storage) {
       alert('ストレージ機能が利用できません。');
       return;

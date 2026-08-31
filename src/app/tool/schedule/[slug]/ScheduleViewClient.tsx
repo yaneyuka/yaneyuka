@@ -7,12 +7,11 @@ import {
   getDoc,
   getDocs,
   addDoc,
-  updateDoc,
   query,
-  where,
   orderBy,
   serverTimestamp,
   Timestamp,
+  writeBatch,
 } from 'firebase/firestore';
 import { db } from '@/lib/firebaseClient';
 import {
@@ -42,6 +41,14 @@ const ScheduleViewClient: React.FC<ScheduleViewClientProps> = ({ slug }) => {
   const [error, setError] = useState<string | null>(null);
   // 一時的な回答状態（送信前）
   const [tempResponses, setTempResponses] = useState<Map<string, ResponseValue>>(new Map());
+  // 締切判定用の現在時刻。開いたままのタブでも締切を跨いだら受付を止めたいので、
+  // レンダー時の Date.now() を1回読むのではなく定期的に進める。
+  const [now, setNow] = useState(() => Date.now());
+
+  useEffect(() => {
+    const timer = setInterval(() => setNow(Date.now()), 30_000);
+    return () => clearInterval(timer);
+  }, []);
 
   // スケジュールを読み込む
   const loadSchedule = useCallback(async () => {
@@ -160,10 +167,20 @@ const ScheduleViewClient: React.FC<ScheduleViewClientProps> = ({ slug }) => {
     }
   }, [myParticipantId, options, responses]);
 
+  // 締切を過ぎていないか（保存はされていたが、これまでどこでも判定していなかった）
+  const isPastDeadline = (target: Schedule | null): boolean => {
+    const d = target?.deadline?.toDate?.();
+    return d ? d.getTime() < Date.now() : false;
+  };
+
   // 参加者を追加
   const handleAddParticipant = async () => {
     if (!schedule || !participantName.trim()) {
       alert('名前を入力してください');
+      return;
+    }
+    if (isPastDeadline(schedule)) {
+      alert('回答期限を過ぎているため、参加を受け付けられません。');
       return;
     }
 
@@ -214,6 +231,10 @@ const ScheduleViewClient: React.FC<ScheduleViewClientProps> = ({ slug }) => {
   // 回答を一括送信
   const handleSubmitResponses = async () => {
     if (!schedule || !myParticipantId) return;
+    if (isPastDeadline(schedule)) {
+      alert('回答期限を過ぎているため、回答を更新できません。');
+      return;
+    }
 
     // すべての候補日が選択されているかチェック
     const unselectedOptions = options.filter(option => !tempResponses.has(option.id));
@@ -223,29 +244,28 @@ const ScheduleViewClient: React.FC<ScheduleViewClientProps> = ({ slug }) => {
     }
 
     try {
-      // すべての回答を送信
+      // 候補ごとに1往復していたのを1バッチにまとめる。
+      // 途中で失敗して一部の候補だけ更新された状態になるのも防げる。
+      const batch = writeBatch(db);
       for (const option of options) {
         const value = tempResponses.get(option.id);
         if (!value) continue;
 
-        // 既存の回答を検索
         const existingResponse = responses.find(
           (r) => r.participantId === myParticipantId && r.optionId === option.id
         );
 
         if (existingResponse) {
-          await updateDoc(
-            doc(db, 'schedules', schedule.id, 'responses', existingResponse.id),
-            { value }
-          );
+          batch.update(doc(db, 'schedules', schedule.id, 'responses', existingResponse.id), { value });
         } else {
-          await addDoc(collection(db, 'schedules', schedule.id, 'responses'), {
+          batch.set(doc(collection(db, 'schedules', schedule.id, 'responses')), {
             participantId: myParticipantId,
             optionId: option.id,
             value,
           });
         }
       }
+      await batch.commit();
 
       // 一時的な回答をクリア
       setTempResponses(new Map());
@@ -301,6 +321,12 @@ const ScheduleViewClient: React.FC<ScheduleViewClientProps> = ({ slug }) => {
     ? participants.find((p) => p.id === myParticipantId)
     : null;
 
+  // 締切は保存されているだけで、この画面では表示も判定もされていなかった。
+  // 締切後もいくらでも回答できてしまうため、表示と受付停止を入れる。
+  // 実際の受付停止は firestore.rules 側でも行う（画面の判定だけでは迂回できるため）。
+  const deadlineDate = schedule.deadline?.toDate?.() ?? null;
+  const isClosed = deadlineDate ? deadlineDate.getTime() < now : false;
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="max-w-md w-full bg-white border border-gray-200 rounded-lg p-6 space-y-4 text-center">
@@ -317,10 +343,26 @@ const ScheduleViewClient: React.FC<ScheduleViewClientProps> = ({ slug }) => {
           <p className="text-xs text-gray-500">
             主催者: {schedule.ownerName}
           </p>
+          {deadlineDate && (
+            <p className={`text-xs mt-1 font-medium ${isClosed ? 'text-red-600' : 'text-gray-500'}`}>
+              回答期限: {deadlineDate.toLocaleString('ja-JP', {
+                year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit',
+              })}
+              {isClosed && '（締切済み）'}
+            </p>
+          )}
         </div>
 
+        {isClosed && (
+          <div className="p-3 bg-red-50 border border-red-200 rounded">
+            <p className="text-xs text-red-700 font-medium">
+              回答期限を過ぎているため、新しい回答は受け付けていません。
+            </p>
+          </div>
+        )}
+
         {/* 参加者追加フォーム */}
-        {!currentParticipant ? (
+        {isClosed && !currentParticipant ? null : !currentParticipant ? (
           <div className="space-y-3">
             <div>
               <label className="block text-xs font-medium text-gray-700 mb-1 text-left">お名前</label>
@@ -393,7 +435,8 @@ const ScheduleViewClient: React.FC<ScheduleViewClientProps> = ({ slug }) => {
                           const savedValue = response?.value;
                           
                           // 自分の回答は一時的な回答を優先表示（未送信の場合）
-                          const isMyResponse = currentParticipant && currentParticipant.id === participant.id;
+                          // 締切後は自分の行も編集不可（表示のみ）にする
+                          const isMyResponse = !isClosed && currentParticipant && currentParticipant.id === participant.id;
                           const displayValue = isMyResponse && tempResponses.has(option.id)
                             ? tempResponses.get(option.id)!
                             : (savedValue || 'maybe');
@@ -474,16 +517,18 @@ const ScheduleViewClient: React.FC<ScheduleViewClientProps> = ({ slug }) => {
                 <span className="bg-green-50 px-2 py-1 rounded">緑色の行</span>は〇が最多の候補です
               </p>
             )}
-            {/* 送信ボタン */}
-            <div className="mt-4">
-              <button
-                onClick={handleSubmitResponses}
-                className="w-full px-6 py-3 rounded text-white text-sm font-semibold hover:opacity-90 transition-opacity"
-                style={{ backgroundColor: '#1DAD95' }}
-              >
-                回答を送信
-              </button>
-            </div>
+            {/* 送信ボタン（締切後は出さない） */}
+            {!isClosed && (
+              <div className="mt-4">
+                <button
+                  onClick={handleSubmitResponses}
+                  className="w-full px-6 py-3 rounded text-white text-sm font-semibold hover:opacity-90 transition-opacity"
+                  style={{ backgroundColor: '#1DAD95' }}
+                >
+                  回答を送信
+                </button>
+              </div>
+            )}
           </div>
         )}
 

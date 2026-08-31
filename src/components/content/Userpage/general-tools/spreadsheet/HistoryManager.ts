@@ -7,6 +7,9 @@ export interface HistorySnapshot {
   cells: Record<string, string>;
   formats: Record<string, any>;
   colWidths: number[];
+  // 行・列の増減も Undo 対象にする（従来は cells だけ戻り、行数がズレていた）
+  rows: number;
+  cols: number;
 }
 
 export interface IAction {
@@ -36,23 +39,31 @@ class HistoryManager {
 
   /**
    * 元に戻す（Undo）
-   * @returns 元に戻す前の状態スナップショット、またはnull
+   *
+   * Redo するには「戻す直前の状態」を退避しておく必要がある。
+   * 以前は undo で取り出したスナップショット（＝操作前の状態）を
+   * そのまま redoStack に積んでいたため、Redo しても同じ状態が
+   * 再適用されるだけで何も起きなかった。
+   *
+   * @param current 現在の状態（Redo 用に退避される）
+   * @returns 適用すべき「操作前」のスナップショット、またはnull
    */
-  undo(): HistorySnapshot | null {
+  undo(current: HistorySnapshot): HistorySnapshot | null {
     const snapshot = this.undoStack.pop();
     if (!snapshot) return null;
-    this.redoStack.push(snapshot);
+    this.redoStack.push(current);
     return snapshot;
   }
 
   /**
    * やり直す（Redo）
-   * @returns やり直す後の状態スナップショット、またはnull
+   * @param current 現在の状態（Undo 用に退避される）
+   * @returns 適用すべきスナップショット、またはnull
    */
-  redo(): HistorySnapshot | null {
+  redo(current: HistorySnapshot): HistorySnapshot | null {
     const snapshot = this.redoStack.pop();
     if (!snapshot) return null;
-    this.undoStack.push(snapshot);
+    this.undoStack.push(current);
     return snapshot;
   }
 

@@ -66,13 +66,53 @@ const Spreadsheet: React.FC = () => {
   const evaluateCell = (r: number, c: number, visited: Set<string> = new Set()): number | string => {
     const key = toCellKey(r, c);
     if (evalCacheRef.current.has(key)) return evalCacheRef.current.get(key) as any;
-    if (visited.has(key)) return 0; // 循環参照は0扱い
+    // 循環参照は 0 ではなくエラーとして返す（0 だと誤った計算結果に見えてしまう）
+    if (visited.has(key)) return '#CIRCULAR!';
     visited.add(key);
     const raw = getRaw(r, c);
     const result = evaluateRaw(raw, visited);
     evalCacheRef.current.set(key, result);
     return result;
   };
+
+  /** シート全体をFirestore・localStorageへ保存（500msデバウンス） */
+  const persistSheet = (next: SheetData) => {
+    if (!currentUser) return;
+    try {
+      localStorage.setItem(`sheet:${currentUser.uid}:${currentSheetId}`, JSON.stringify(next));
+    } catch {}
+    if (sheetSaveTimer.current) window.clearTimeout(sheetSaveTimer.current);
+    sheetSaveTimer.current = window.setTimeout(async () => {
+      try {
+        await setDoc(doc(db, 'users', currentUser.uid, 'sheets', currentSheetId), {
+          name: next.name,
+          rows: next.rows,
+          cols: next.cols,
+          cells: next.cells,
+          formats: next.formats || {},
+        });
+      } catch {}
+    }, 500);
+  };
+
+  /** 現在の状態をUndo履歴に積む */
+  const pushHistory = () => {
+    historyManager.current.add({
+      cells: { ...sheet.cells },
+      formats: { ...(sheet.formats || {}) },
+      colWidths: [...colWidths],
+      rows: sheet.rows,
+      cols: sheet.cols,
+    });
+  };
+
+  const currentSnapshot = (): HistorySnapshot => ({
+    cells: { ...sheet.cells },
+    formats: { ...(sheet.formats || {}) },
+    colWidths: [...colWidths],
+    rows: sheet.rows,
+    cols: sheet.cols,
+  });
 
   // 表計算: シート管理（追加/名称変更/削除/エクスポート）
   const createNewSheet = async () => {
@@ -115,49 +155,6 @@ const Spreadsheet: React.FC = () => {
     const wb = XLSX.utils.book_new()
     XLSX.utils.book_append_sheet(wb, ws, sheet.name || 'Sheet')
     XLSX.writeFile(wb, `${sheet.name || 'sheet'}.xlsx`)
-  }
-
-  const parseArgsToValues = (argStr: string, visited: Set<string>): number[] => {
-    const args = argStr.split(',')
-    const values: number[] = []
-    for (const a of args) {
-      const t = a.trim()
-      if (t.includes(':')) {
-        const [start, end] = t.split(':')
-        const s = addressToRC(start)
-        const e = addressToRC(end)
-        if (s && e) {
-          const r0 = Math.min(s.row, e.row), r1 = Math.max(s.row, e.row)
-          const c0 = Math.min(s.col, e.col), c1 = Math.max(s.col, e.col)
-          for (let rr = r0; rr <= r1; rr++) {
-            for (let cc = c0; cc <= c1; cc++) {
-              const v = Number(evaluateCell(rr, cc, new Set(visited)))
-              if (!Number.isNaN(v)) values.push(v)
-            }
-          }
-        }
-      } else if (/^[A-Za-z]+\d+$/.test(t)) {
-        const rc = addressToRC(t)
-        if (rc) {
-          const v = Number(evaluateCell(rc.row, rc.col, new Set(visited)))
-          if (!Number.isNaN(v)) values.push(v)
-        }
-      } else {
-        const v = Number(t)
-        if (!Number.isNaN(v)) values.push(v)
-      }
-    }
-    return values
-  }
-
-  const safeEvalArith = (expr: string): number => {
-    // 許可: 数字,+-*/(). スペース除去
-    const cleaned = expr.replace(/\s+/g, '')
-    if (!/^[-+*/().0-9]+$/.test(cleaned)) return NaN
-    try {
-       
-      return Function(`return (${cleaned})`)()
-    } catch { return NaN }
   }
 
   const evaluateRaw = (raw: string, visited: Set<string>): number | string => {
@@ -246,27 +243,34 @@ const Spreadsheet: React.FC = () => {
       return;
     }
     // 履歴に積む（直前状態）
-    historyManager.current.add({
-      cells: { ...sheet.cells },
-      formats: { ...(sheet.formats || {}) },
-      colWidths: [...colWidths],
-    });
+    pushHistory();
     setSheet(prev => {
       const key = `R${r}C${c}`;
       const next = { ...prev, cells: { ...prev.cells, [key]: value } };
-      if (currentUser) { try { localStorage.setItem(`sheet:${currentUser.uid}:${currentSheetId}`, JSON.stringify(next)) } catch {} }
-      // debounce save
-      if (sheetSaveTimer.current) window.clearTimeout(sheetSaveTimer.current);
-      sheetSaveTimer.current = window.setTimeout(async () => {
-        if (!currentUser) return;
-        try { await setDoc(doc(db, 'users', currentUser.uid, 'sheets', currentSheetId), { name: next.name, rows: next.rows, cols: next.cols, cells: next.cells, formats: next.formats || {} }) } catch {}
-      }, 500);
+      persistSheet(next);
       return next;
     });
   };
 
-  const addRow = () => setSheet(prev => ({ ...prev, rows: prev.rows + 1 }));
-  const addCol = () => setSheet(prev => ({ ...prev, cols: prev.cols + 1 }));
+  // 行・列の追加もFirestoreへ保存する（従来はstateだけ変えていたためリロードで消えていた）
+  const addRow = () => {
+    pushHistory();
+    setSheet(prev => {
+      const next = { ...prev, rows: prev.rows + 1 };
+      persistSheet(next);
+      return next;
+    });
+  };
+
+  const addCol = () => {
+    pushHistory();
+    setColWidths(prev => [...prev, 96]);
+    setSheet(prev => {
+      const next = { ...prev, cols: prev.cols + 1 };
+      persistSheet(next);
+      return next;
+    });
+  };
 
   // オートフィル機能
   const handleFillStart = (r: number, c: number) => {
@@ -291,15 +295,11 @@ const Spreadsheet: React.FC = () => {
     const targetMinC = Math.min(target.start.c, target.end.c);
     const targetMaxC = Math.max(target.start.c, target.end.c);
 
-    historyManager.current.add({
-      cells: { ...sheet.cells },
-      formats: { ...(sheet.formats || {}) },
-      colWidths: [...colWidths],
-    });
+    pushHistory();
 
     setSheet(prev => {
       const next = { ...prev, cells: { ...prev.cells } as Record<string, string> };
-      
+
       for (let tr = targetMinR; tr <= targetMaxR; tr++) {
         for (let tc = targetMinC; tc <= targetMaxC; tc++) {
           // 元の範囲内の相対位置を計算
@@ -325,26 +325,7 @@ const Spreadsheet: React.FC = () => {
         }
       }
       
-      if (currentUser) {
-        try {
-          localStorage.setItem(`sheet:${currentUser.uid}:${currentSheetId}`, JSON.stringify(next));
-        } catch {}
-      }
-      
-      if (sheetSaveTimer.current) window.clearTimeout(sheetSaveTimer.current);
-      sheetSaveTimer.current = window.setTimeout(async () => {
-        if (!currentUser) return;
-        try {
-          await setDoc(doc(db, 'users', currentUser.uid, 'sheets', currentSheetId), {
-            name: next.name,
-            rows: next.rows,
-            cols: next.cols,
-            cells: next.cells,
-            formats: next.formats || {},
-          });
-        } catch {}
-      }, 500);
-      
+      persistSheet(next);
       return next;
     });
   };
@@ -376,15 +357,19 @@ const Spreadsheet: React.FC = () => {
   const formatCellNumber = (val: number, fmt?: CellFormat): string => {
     if (!isFinite(val)) return String(val)
     const decimals = fmt?.decimals ?? 0
+    const withSeparator = (n: number, d: number) =>
+      n.toLocaleString('ja-JP', { minimumFractionDigits: d, maximumFractionDigits: d })
     switch (fmt?.type) {
       case 'percent':
         return `${(val * 100).toFixed(decimals)}%`
       case 'currency':
-        return `¥${val.toFixed(decimals)}`
+        return `¥${withSeparator(val, decimals)}`
       case 'number':
-        return val.toFixed(decimals)
+        return withSeparator(val, decimals)
       default:
-        return String(val)
+        // 表示形式未指定でも「桁数を増やす／減らす」ボタンは効くようにする
+        // （従来は type を設定するまで decimals が無視され、ボタンが壊れて見えた）
+        return fmt?.decimals !== undefined ? val.toFixed(decimals) : String(val)
     }
   }
 
@@ -427,7 +412,6 @@ const Spreadsheet: React.FC = () => {
     // activeCellKeyがなければ、editingCellKeyまたはactiveCellKeyを使用
     const targetKey = activeCellKey || editingCellKey;
     if (!targetKey) {
-      console.warn('insertCellReferenceToFormula: No target cell key');
       return;
     }
     
@@ -461,7 +445,6 @@ const Spreadsheet: React.FC = () => {
     inputEl.focus();
     const currentFormula = inputEl.value || formulaBar;
     if (!currentFormula.startsWith('=')) {
-      console.log('Not a formula:', currentFormula, 'formulaBar:', formulaBar);
       return;
     }
     
@@ -469,7 +452,6 @@ const Spreadsheet: React.FC = () => {
     const caretStart = inputEl.selectionStart ?? currentFormula.length;
     const caretEnd = inputEl.selectionEnd ?? caretStart;
     
-    console.log('Inserting reference:', addr, 'into formula:', currentFormula, 'at position:', caretStart);
     
     let newText = currentFormula;
     
@@ -536,12 +518,9 @@ const Spreadsheet: React.FC = () => {
           const color = colorPalette[index % colorPalette.length];
           const key = `${rc.row}-${rc.col}`;
           newRefCells.set(key, { r: rc.row, c: rc.col, color });
-          console.log('[insertCellReferenceToFormula] Setting formulaReferenceCell:', cellAddr, '->', key, rc);
         } else {
-          console.warn('[insertCellReferenceToFormula] Failed to parse cell address:', cellAddr);
         }
       });
-      console.log('[insertCellReferenceToFormula] formulaReferenceCells updated:', Array.from(newRefCells.entries()), 'formula:', newText, 'matches:', matches);
       setFormulaReferenceCells(newRefCells);
     } else {
       setFormulaReferenceCells(new Map());
@@ -623,8 +602,14 @@ const Spreadsheet: React.FC = () => {
 
   const rows = Array.from({ length: sheet.rows }, (_, i) => i)
   const cols = Array.from({ length: sheet.cols }, (_, i) => i)
-  // 列幅初期化
-  if (colWidths.length < sheet.cols) setColWidths(w => w.concat(Array.from({ length: sheet.cols - w.length }, () => 96)))
+
+  // 列幅の初期化。レンダー本体で setState すると余分な再レンダーを誘発するので effect で行う
+  useEffect(() => {
+    if (colWidths.length < sheet.cols) {
+      setColWidths(w => w.concat(Array.from({ length: sheet.cols - w.length }, () => 96)))
+    }
+  }, [sheet.cols, colWidths.length])
+
   // よく使う関数テンプレ（右エリア）
   const commonFuncs = [
     { name: 'SUM', tpl: '=SUM(A1:A10)', hint: '合計' },
@@ -660,20 +645,31 @@ const Spreadsheet: React.FC = () => {
   // グローバルなキーダウンイベントは削除（グリッドのonKeyDownで処理するため）
 
   // Undo/Redoハンドラー
+  const applySnapshot = (snap: HistorySnapshot) => {
+    setSheet(prev => {
+      const next: SheetData = {
+        ...prev,
+        cells: snap.cells,
+        formats: snap.formats || {},
+        rows: snap.rows ?? prev.rows,
+        cols: snap.cols ?? prev.cols,
+      };
+      // Undo/Redoの結果もサーバへ反映しないと、リロードで元に戻ってしまう
+      persistSheet(next);
+      return next;
+    });
+    // 空配列も「列幅が無い状態」として正しい復元先なので length では判定しない
+    if (snap.colWidths) setColWidths(snap.colWidths);
+  };
+
   const handleUndo = () => {
-    const snap = historyManager.current.undo();
-    if (snap) {
-      setSheet(prev => ({ ...prev, cells: snap.cells, formats: snap.formats || {} }));
-      setColWidths(snap.colWidths || []);
-    }
+    const snap = historyManager.current.undo(currentSnapshot());
+    if (snap) applySnapshot(snap);
   };
 
   const handleRedo = () => {
-    const snap = historyManager.current.redo();
-    if (snap) {
-      setSheet(prev => ({ ...prev, cells: snap.cells, formats: snap.formats || {} }));
-      setColWidths(snap.colWidths || []);
-    }
+    const snap = historyManager.current.redo(currentSnapshot());
+    if (snap) applySnapshot(snap);
   };
 
   // Ctrl+Sで保存、Ctrl+Z/YでUndo/Redo（Excelライクなショートカット）
@@ -737,7 +733,10 @@ const Spreadsheet: React.FC = () => {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentUser, currentSheetId, sheet]);
+    // colWidths も必要。これが無いと Ctrl+Z / Ctrl+Y の中で呼ぶ currentSnapshot() が
+    // 「最後に sheet が変わった時点の列幅」を掴んだままになり、
+    // 列幅だけ変えた直後の Undo→Redo で幅が巻き戻る。
+  }, [currentUser, currentSheetId, sheet, colWidths]);
 
   // 右クリックメニューのハンドラー
   const handleContextMenu = (e: React.MouseEvent, type: 'row' | 'col' | 'cell', rowIndex?: number, colIndex?: number) => {
@@ -745,91 +744,91 @@ const Spreadsheet: React.FC = () => {
     setContextMenu({ x: e.clientX, y: e.clientY, type, rowIndex, colIndex });
   };
 
+  /**
+   * 行・列の挿入／削除に合わせてセルを詰め直す。
+   *
+   * 従来は「対象の行のセルを消して rows を1減らす」だけだったため、
+   * 下の行が上に詰まらず、代わりに最下行が画面から消えてデータが失われて見えた。
+   * 挿入も末尾に1行足すだけで、指定位置に入らなかった。
+   */
+  const shiftCells = <T,>(
+    source: Record<string, T>,
+    axis: 'row' | 'col',
+    target: number,
+    action: 'insert' | 'delete'
+  ): Record<string, T> => {
+    const result: Record<string, T> = {};
+    for (const [k, v] of Object.entries(source)) {
+      const m = k.match(/^R(\d+)C(\d+)$/);
+      if (!m) continue;
+      let r = Number(m[1]);
+      let c = Number(m[2]);
+      const index = axis === 'row' ? r : c;
+
+      if (action === 'delete') {
+        if (index === target) continue; // 対象行/列は破棄
+        if (index > target) {
+          if (axis === 'row') r -= 1;
+          else c -= 1;
+        }
+      } else if (index >= target) {
+        if (axis === 'row') r += 1;
+        else c += 1;
+      }
+      result[`R${r}C${c}`] = v;
+    }
+    return result;
+  };
+
   const executeContextAction = (action: 'insert' | 'delete') => {
     if (!contextMenu) return;
-    
-    historyManager.current.add({
-      cells: { ...sheet.cells },
-      formats: { ...(sheet.formats || {}) },
-      colWidths: [...colWidths],
-    });
 
-    if (contextMenu.type === 'row' && contextMenu.rowIndex !== undefined) {
-      if (action === 'insert') {
-        // 行の挿入（簡易版：行数を増やす）
-        setSheet(prev => ({ ...prev, rows: prev.rows + 1 }));
-      } else if (action === 'delete') {
-        // 行の削除
-        const target = contextMenu.rowIndex;
-        if (sheet.rows <= 1) return;
-        const hasData = Object.keys(sheet.cells).some(k => {
-          const m = k.match(/^R(\d+)C(\d+)$/);
-          return m && Number(m[1]) === target;
-        });
-        if (hasData && !window.confirm('この行にデータがあります。削除しますか？')) {
-          setContextMenu(null);
-          return;
-        }
-        setSheet(prev => {
-          const cells = { ...prev.cells };
-          const formats = { ...(prev.formats || {}) };
-          Object.keys(cells).forEach(k => {
-            const m = k.match(/^R(\d+)C(\d+)$/);
-            if (m && Number(m[1]) === target) delete cells[k];
-          });
-          Object.keys(formats).forEach(k => {
-            const m = k.match(/^R(\d+)C(\d+)$/);
-            if (m && Number(m[1]) === target) delete formats[k];
-          });
-          const next = { ...prev, rows: prev.rows - 1, cells, formats };
-          if (currentUser) {
-            try {
-              localStorage.setItem(`sheet:${currentUser.uid}:${currentSheetId}`, JSON.stringify(next));
-            } catch {}
-          }
-          return next;
-        });
-      }
-    } else if (contextMenu.type === 'col' && contextMenu.colIndex !== undefined) {
-      if (action === 'insert') {
-        // 列の挿入（簡易版：列数を増やす）
-        setSheet(prev => ({ ...prev, cols: prev.cols + 1 }));
-        setColWidths(prev => [...prev, 96]);
-      } else if (action === 'delete') {
-        // 列の削除
-        const target = contextMenu.colIndex;
-        if (sheet.cols <= 1) return;
-        const hasData = Object.keys(sheet.cells).some(k => {
-          const m = k.match(/^R(\d+)C(\d+)$/);
-          return m && Number(m[2]) === target;
-        });
-        if (hasData && !window.confirm('この列にデータがあります。削除しますか？')) {
-          setContextMenu(null);
-          return;
-        }
-        setSheet(prev => {
-          const cells = { ...prev.cells };
-          const formats = { ...(prev.formats || {}) };
-          Object.keys(cells).forEach(k => {
-            const m = k.match(/^R(\d+)C(\d+)$/);
-            if (m && Number(m[2]) === target) delete cells[k];
-          });
-          Object.keys(formats).forEach(k => {
-            const m = k.match(/^R(\d+)C(\d+)$/);
-            if (m && Number(m[2]) === target) delete formats[k];
-          });
-          const next = { ...prev, cols: prev.cols - 1, cells, formats };
-          if (currentUser) {
-            try {
-              localStorage.setItem(`sheet:${currentUser.uid}:${currentSheetId}`, JSON.stringify(next));
-            } catch {}
-          }
-          return next;
-        });
-        setColWidths(prev => prev.filter((_, i) => i !== target));
+    const axis: 'row' | 'col' | null =
+      contextMenu.type === 'row' && contextMenu.rowIndex !== undefined ? 'row'
+      : contextMenu.type === 'col' && contextMenu.colIndex !== undefined ? 'col'
+      : null;
+    if (!axis) { setContextMenu(null); return; }
+
+    const target = (axis === 'row' ? contextMenu.rowIndex : contextMenu.colIndex) as number;
+
+    if (action === 'delete') {
+      const limit = axis === 'row' ? sheet.rows : sheet.cols;
+      if (limit <= 1) { setContextMenu(null); return; }
+      const hasData = Object.keys(sheet.cells).some(k => {
+        const m = k.match(/^R(\d+)C(\d+)$/);
+        return m && Number(axis === 'row' ? m[1] : m[2]) === target;
+      });
+      const label = axis === 'row' ? '行' : '列';
+      if (hasData && !window.confirm(`この${label}にデータがあります。削除しますか？`)) {
+        setContextMenu(null);
+        return;
       }
     }
-    
+
+    pushHistory();
+
+    const delta = action === 'insert' ? 1 : -1;
+    setSheet(prev => {
+      const next: SheetData = {
+        ...prev,
+        rows: axis === 'row' ? prev.rows + delta : prev.rows,
+        cols: axis === 'col' ? prev.cols + delta : prev.cols,
+        cells: shiftCells(prev.cells, axis, target, action),
+        formats: shiftCells(prev.formats || {}, axis, target, action),
+      };
+      persistSheet(next);
+      return next;
+    });
+
+    if (axis === 'col') {
+      setColWidths(prev => {
+        const nextWidths = [...prev];
+        if (action === 'insert') nextWidths.splice(target, 0, 96);
+        else nextWidths.splice(target, 1);
+        return nextWidths;
+      });
+    }
+
     setContextMenu(null);
   };
 
@@ -1162,13 +1161,15 @@ const Spreadsheet: React.FC = () => {
             // データ有無チェック
             const hasData = Object.keys(sheet.cells).some(k => /^R\d+C\d+$/.test(k) && Number(k.match(/^R(\d+)C/)! [1]) === target)
             if (hasData && !window.confirm('最下行にデータがあります。削除しますか？')) return
-            historyManager.current.add({ cells: { ...sheet.cells }, formats: { ...(sheet.formats || {}) }, colWidths: [...colWidths] });
+            pushHistory();
             setSheet(prev => {
-              const cells = { ...prev.cells }; const formats = { ...(prev.formats || {}) }
-              Object.keys(cells).forEach(k => { const m = k.match(/^R(\d+)C(\d+)$/)!; if (Number(m[1]) === target) delete cells[k] })
-              Object.keys(formats).forEach(k => { const m = k.match(/^R(\d+)C(\d+)$/)!; if (Number(m[1]) === target) delete formats[k] })
-              const next = { ...prev, rows: prev.rows - 1, cells, formats }
-              try { if (currentUser) localStorage.setItem(`sheet:${currentUser.uid}:${currentSheetId}`, JSON.stringify(next)) } catch {}
+              const next: SheetData = {
+                ...prev,
+                rows: prev.rows - 1,
+                cells: shiftCells(prev.cells, 'row', target, 'delete'),
+                formats: shiftCells(prev.formats || {}, 'row', target, 'delete'),
+              }
+              persistSheet(next)
               return next
             })
           }}
@@ -1181,13 +1182,15 @@ const Spreadsheet: React.FC = () => {
             const target = sheet.cols - 1
             const hasData = Object.keys(sheet.cells).some(k => /^R\d+C\d+$/.test(k) && Number(k.match(/C(\d+)$/)! [1]) === target)
             if (hasData && !window.confirm('最右列にデータがあります。削除しますか？')) return
-            historyManager.current.add({ cells: { ...sheet.cells }, formats: { ...(sheet.formats || {}) }, colWidths: [...colWidths] });
+            pushHistory();
             setSheet(prev => {
-              const cells = { ...prev.cells }; const formats = { ...(prev.formats || {}) }
-              Object.keys(cells).forEach(k => { const m = k.match(/^R(\d+)C(\d+)$/)!; if (Number(m[2]) === target) delete cells[k] })
-              Object.keys(formats).forEach(k => { const m = k.match(/^R(\d+)C(\d+)$/)!; if (Number(m[2]) === target) delete formats[k] })
-              const next = { ...prev, cols: prev.cols - 1, cells, formats }
-              try { if (currentUser) localStorage.setItem(`sheet:${currentUser.uid}:${currentSheetId}`, JSON.stringify(next)) } catch {}
+              const next: SheetData = {
+                ...prev,
+                cols: prev.cols - 1,
+                cells: shiftCells(prev.cells, 'col', target, 'delete'),
+                formats: shiftCells(prev.formats || {}, 'col', target, 'delete'),
+              }
+              persistSheet(next)
               return next
             })
             setColWidths(w => w.slice(0, -1))
@@ -1512,18 +1515,9 @@ const Spreadsheet: React.FC = () => {
           try { void navigator.clipboard.writeText(text) } catch {}
           return
         }
-        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') {
-          e.preventDefault();
-          const snap = historyManager.current.undo();
-          if (!snap) return;
-          setSheet(prev => ({ ...prev, cells: snap.cells, formats: snap.formats })); setColWidths(snap.colWidths);
-        }
-        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'y') {
-          e.preventDefault();
-          const snap = historyManager.current.redo();
-          if (!snap) return;
-          setSheet(prev => ({ ...prev, cells: snap.cells, formats: snap.formats })); setColWidths(snap.colWidths);
-        }
+        // Ctrl+Z / Ctrl+Y は window 側のリスナーで処理する。
+        // ここでも処理すると1回の押下で2回Undoが走ってしまうため、あえて何もしない。
+
         // Delete/Backspace: 選択セル（範囲）をクリア（編集モードでないとき）
         if (!editingCellKey && (e.key === 'Delete' || e.key === 'Backspace')) {
           e.preventDefault()
@@ -1540,7 +1534,7 @@ const Spreadsheet: React.FC = () => {
             const rc = keyToRC(activeCellKey); if (rc) targets = [rc]
           }
           if (targets.length) {
-            historyManager.current.add({ cells: { ...sheet.cells }, formats: { ...(sheet.formats || {}) }, colWidths: [...colWidths] });
+            pushHistory();
             setSheet(prev => {
               const cells = { ...prev.cells }
               const formats = { ...(prev.formats || {}) }
@@ -1549,12 +1543,7 @@ const Spreadsheet: React.FC = () => {
                 if (formats[toCellKey(r, c)]) delete formats[toCellKey(r, c)]
               })
               const next = { ...prev, cells, formats }
-              try { if (currentUser) localStorage.setItem(`sheet:${currentUser.uid}:${currentSheetId}`, JSON.stringify(next)) } catch {}
-              if (sheetSaveTimer.current) window.clearTimeout(sheetSaveTimer.current)
-              sheetSaveTimer.current = window.setTimeout(async () => {
-                if (!currentUser) return
-                try { await setDoc(doc(db, 'users', currentUser.uid, 'sheets', currentSheetId), { name: next.name, rows: next.rows, cols: next.cols, cells: next.cells, formats: next.formats || {} }) } catch {}
-              }, 300)
+              persistSheet(next)
               return next
             })
           }
@@ -1817,27 +1806,35 @@ const Spreadsheet: React.FC = () => {
             const text = e.clipboardData.getData('text');
             if (!text || (!text.includes('\t') && !text.includes('\n'))) return;
             e.preventDefault();
-            const rows = text.replace(/\r/g, '').split('\n').filter(Boolean);
-            const grid = rows.map(row => row.split('\t'));
+            const pastedRows = text.replace(/\r/g, '').split('\n').filter(Boolean);
+            const grid = pastedRows.map(row => row.split('\t'));
+            // 貼り付けもUndo対象にする
+            pushHistory();
             setSheet(prev => {
-              const next = { ...prev, cells: { ...prev.cells } as Record<string, string> };
+              // 貼り付け先がグリッドをはみ出す場合は行・列を広げる（従来は黙って切り捨てていた）
+              const neededRows = Math.max(prev.rows, r + grid.length);
+              const neededCols = Math.max(prev.cols, c + Math.max(...grid.map(g => g.length)));
+              const next: SheetData = {
+                ...prev,
+                rows: neededRows,
+                cols: neededCols,
+                cells: { ...prev.cells },
+              };
               grid.forEach((rowVals, rr) => {
                 rowVals.forEach((val, cc) => {
-                  const rrIdx = r + rr;
-                  const ccIdx = c + cc;
-                  if (rrIdx < prev.rows && ccIdx < prev.cols) {
-                    next.cells[toCellKey(rrIdx, ccIdx)] = val;
-                  }
+                  next.cells[toCellKey(r + rr, c + cc)] = val;
                 });
               });
-              if (currentUser) { try { localStorage.setItem(`sheet:${currentUser.uid}:${currentSheetId}`, JSON.stringify(next)) } catch {} }
-              if (sheetSaveTimer.current) window.clearTimeout(sheetSaveTimer.current);
-              sheetSaveTimer.current = window.setTimeout(async () => {
-                if (!currentUser) return;
-                try { await setDoc(doc(db, 'users', currentUser.uid, 'sheets', currentSheetId), { name: next.name, rows: next.rows, cols: next.cols, cells: next.cells }) } catch {}
-              }, 500);
+              // ここで formats を渡し忘れると setDoc がドキュメントを置き換えて書式が全消しになる
+              persistSheet(next);
               return next;
             });
+            if (c + Math.max(...grid.map(g => g.length)) > colWidths.length) {
+              setColWidths(prev => {
+                const needed = c + Math.max(...grid.map(g => g.length));
+                return prev.length >= needed ? prev : prev.concat(Array.from({ length: needed - prev.length }, () => 96));
+              });
+            }
           }}
           isLoggedIn={isLoggedIn}
           gridRef={gridRef}

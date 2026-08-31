@@ -183,7 +183,10 @@ const MemoTool: React.FC = () => {
     if (!draggedMemoId || draggedMemoId === targetMemoId) return;
     if (!currentUser) return;
 
-    const newMemos = [...memos];
+    // 並べ替えは「画面に見えている順」(filteredMemos: ★優先ソート済み) を基準にする。
+    // 元の memos 配列でインデックスを取ると、★付きメモがあるだけで
+    // 表示順とズレて意図しない行が動いてしまう。
+    const newMemos = [...filteredMemos];
     const dragIndex = newMemos.findIndex(m => m.id === draggedMemoId);
     const dropIndex = newMemos.findIndex(m => m.id === targetMemoId);
 
@@ -363,15 +366,12 @@ const MemoTool: React.FC = () => {
       } else {
         await setDoc(doc(db, 'users', currentUser.uid, 'memos', memoId), { title: updatedMemo.title, content: updatedMemo.content, category: updatedMemo.category, tags: updatedMemo.tags, updatedAt: now.getTime(), isFavorite: updatedMemo.isFavorite || false, isLocked: updatedMemo.isLocked || false, order: updatedMemo.order ?? 0 } as any, { merge: true })
       }
-      if (!isAutoSave) {
-        setSaveStatus('保存しました')
-        setTimeout(() => setSaveStatus(''), 2000)
-      }
+      // 手動保存ボタンが無く自動保存のみのため、自動保存でも結果を表示する
+      setSaveStatus(isAutoSave ? '自動保存しました' : '保存しました')
+      setTimeout(() => setSaveStatus(''), 2000)
     } catch {
-      if (!isAutoSave) {
-        setSaveStatus('保存に失敗しました')
-        setTimeout(() => setSaveStatus(''), 2000)
-      }
+      setSaveStatus('保存に失敗しました')
+      setTimeout(() => setSaveStatus(''), 3000)
     }
   };
 

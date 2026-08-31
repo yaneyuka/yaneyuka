@@ -84,6 +84,23 @@ const Grid: React.FC<GridProps> = ({
   const rowsArray = Array.from({ length: rows }, (_, i) => i);
   const colsArray = Array.from({ length: cols }, (_, i) => i);
 
+  // 再計算キャッシュは「1レンダーにつき1回」クリアする。
+  // 以前はセル描画ループの中でクリアしていたためキャッシュが常に空で、
+  // 依存の深い数式ほど再帰的に再計算され続けていた。
+  evalCacheRef.current = new Map();
+
+  // 26列を超えても正しい列名を出す（String.fromCharCode(65+c) では Z の次が '[' になる）
+  const colName = (index: number): string => {
+    let name = '';
+    let n = index + 1;
+    while (n > 0) {
+      const rem = (n - 1) % 26;
+      name = String.fromCharCode(65 + rem) + name;
+      n = Math.floor((n - 1) / 26);
+    }
+    return name;
+  };
+
   // 現在選択されている行・列のインデックスを特定
   let activeR = -1;
   let activeC = -1;
@@ -155,7 +172,7 @@ const Grid: React.FC<GridProps> = ({
                     }
                   }}
                 >
-                  {String.fromCharCode(65 + c)}
+                  {colName(c)}
                 </th>
               );
             })}
@@ -191,8 +208,6 @@ const Grid: React.FC<GridProps> = ({
               {colsArray.map(c => {
                 const key = toCellKey(r, c);
                 const raw = cells[key] || '';
-                // 再計算キャッシュはレンダー毎にクリア
-                evalCacheRef.current = new Map();
                 const computed = evaluateRaw(raw, new Set());
                 const fmt = formats?.[key];
                 // 選択範囲の見た目

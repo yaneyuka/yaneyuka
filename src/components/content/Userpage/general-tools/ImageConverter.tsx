@@ -34,7 +34,8 @@ interface ConversionOptions {
 }
 
 const MAX_BROWSER_FILE_MB = 25;
-const MAX_SERVER_FILE_MB = 50;
+// HEIC はデコード後にJPEGへ展開されるぶんメモリを食うので、やや低めに抑える
+const MAX_HEIC_FILE_MB = 30;
 const MAX_CONCURRENT = 3;
 const MAX_FILES = 100;
 
@@ -79,17 +80,12 @@ const FORMAT_DESCRIPTIONS = [
     title: 'HEIC / HEIF',
     summary: 'Appleデバイス標準の高圧縮画像形式。',
     suitedFor: 'iPhone/iPadで撮影された写真の保存向き。',
-    caution: 'ブラウザによっては表示不可。変換はサーバ経由で行います。',
-  },
-  {
-    key: 'raw',
-    title: 'RAW（CR2 / NEF など）',
-    summary: '一眼カメラ用の非圧縮／可逆圧縮データ。',
-    suitedFor: '現像・編集を前提としたプロ／ハイアマ用途。',
-    caution: 'ブラウザでは直接扱えないため、サーバでJPEG/PNGに変換します。',
+    caution: 'ブラウザ内で変換します（初回のみデコーダの読み込みに数秒かかります）。',
   },
 ];
 
+// RAW（CR2 / NEF）は現像処理が必要でブラウザでは扱えず、
+// 変換先の実装も存在しなかったため受付から外している。
 const ACCEPTED_EXTENSIONS = [
   'png',
   'jpg',
@@ -101,11 +97,11 @@ const ACCEPTED_EXTENSIONS = [
   'heif',
   'heics',
   'heifs',
-  'cr2',
-  'nef',
   'tif',
   'tiff',
 ];
+
+const HEIC_EXTENSIONS = ['heic', 'heif', 'heics', 'heifs'];
 
 function generateId() {
   return typeof crypto !== 'undefined' && 'randomUUID' in crypto
@@ -123,12 +119,14 @@ function getExtension(file: File) {
   return '';
 }
 
-function shouldUseServer(ext: string, type: string) {
+// HEIC/HEIF はブラウザが直接デコードできないので、先に JPEG へ起こしてから
+// 通常のcanvas経路に流す。
+// 以前はこれを /api/convert/heic というサーバ経路に投げていたが、
+// そのAPIルートは存在せず、HEICを入れると必ず HTTP 404 で失敗していた。
+function isHeic(ext: string, type: string) {
   const lower = ext.toLowerCase();
-  if (['heic', 'heif', 'heics', 'heifs'].includes(lower)) return true;
-  if (['cr2', 'nef', 'raw'].includes(lower)) return true;
-  if (type === 'image/heic' || type === 'image/heif') return true;
-  return false;
+  if (HEIC_EXTENSIONS.includes(lower)) return true;
+  return type === 'image/heic' || type === 'image/heif';
 }
 
 function needsBackground(format: SupportedFormat) {
@@ -193,7 +191,10 @@ async function getImageDimensions(file: File): Promise<{ width: number; height: 
 async function loadImageBitmap(file: File) {
   if ('createImageBitmap' in window) {
     const blob = file.slice(0, file.size, file.type || 'image/*');
-    return await createImageBitmap(blob);
+    // imageOrientation は既定でブラウザがEXIFの回転を適用してしまう実装がある。
+    // このツールは exifr で読んだ orientation を自前でcanvasに適用するので、
+    // ここで適用されると二重に回転する。明示的に無効化しておく。
+    return await createImageBitmap(blob, { imageOrientation: 'none' });
   }
 
   const url = URL.createObjectURL(file);
@@ -282,11 +283,11 @@ async function processImageWithScale(
   ctx.save();
   applyOrientationTransform(ctx, canvas.width, canvas.height, orientation);
 
-  if ('transferFromImageBitmap' in ctx && image instanceof ImageBitmap) {
-    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-  } else {
-    ctx.drawImage(image as CanvasImageSource, 0, 0, canvas.width, canvas.height);
-  }
+  // 回転後の座標系に描くので、描画サイズは「回転前」の寸法を渡す。
+  // ここで canvas.width / canvas.height（回転後の寸法）を渡すと、
+  // EXIF orientation 5〜8（90度回転／iPhoneの縦位置写真など）で
+  // 縦横が入れ替わったまま描かれ、はみ出し・潰れが起きる。
+  ctx.drawImage(image as CanvasImageSource, 0, 0, targetWidthRaw, targetHeightRaw);
   ctx.restore();
 
   const mime =
@@ -434,21 +435,18 @@ async function convertInBrowser(
   return new File([blob], newName, { type: blob.type });
 }
 
-async function convertViaServer(file: File, targetFormat: SupportedFormat) {
-  const endpoint = '/api/convert/heic';
-  const params = new URLSearchParams();
-  params.set('target', targetFormat);
-  const res = await fetch(`${endpoint}?${params.toString()}`, {
-    method: 'POST',
-    body: file,
-  });
-  if (!res.ok) {
-    throw new Error(`サーバ変換に失敗しました (HTTP ${res.status})`);
-  }
-  const buffer = await res.arrayBuffer();
-  const mime = targetFormat === 'jpeg' ? 'image/jpeg' : targetFormat === 'png' ? 'image/png' : 'image/webp';
-  const newName = file.name.replace(/\.[^.]+$/, '') + `_conv.${targetFormat}`;
-  return new File([buffer], newName, { type: mime });
+/**
+ * HEIC/HEIF を JPEG の File に起こす。
+ * デコーダ（libheif の wasm）は数MBあるので、HEICを実際に投入したときだけ
+ * 動的importで読み込む。
+ */
+async function decodeHeicToJpeg(file: File): Promise<File> {
+  const { heicTo } = await import('heic-to');
+  // ここでは劣化を避けるため高品質で中間JPEGを作り、
+  // 実際の品質・リサイズは後段の canvas 処理に任せる
+  const blob = await heicTo({ blob: file, type: 'image/jpeg', quality: 0.95 });
+  const newName = file.name.replace(/\.[^.]+$/, '') + '.jpg';
+  return new File([blob], newName, { type: 'image/jpeg' });
 }
 
 // 予測サイズ計算ロジック
@@ -574,32 +572,39 @@ const ImageConverter: React.FC = () => {
           updateTask(taskId, { progress: 10, message: '変換を準備中...' });
           const options = optionsRef.current;
           const ext = getExtension(task.file);
-          const useServer = shouldUseServer(ext, task.file.type);
-          let converted: File;
-          if (useServer) {
-            updateTask(taskId, { message: 'サーバ変換中...', fallback: true });
-            converted = await convertViaServer(task.file, options.targetFormat);
+
+          // HEIC はブラウザが直接デコードできないので、先にJPEGへ起こしてから
+          // 通常の canvas 経路（リサイズ・品質調整・目標サイズ）に流す
+          let sourceFile = task.file;
+          let orientation = 1;
+          if (isHeic(ext, task.file.type)) {
+            updateTask(taskId, { message: 'HEICを展開中...', fallback: true });
+            sourceFile = await decodeHeicToJpeg(task.file);
+            // libheif は HEIC の回転情報(irot)を展開時に適用済みなので、
+            // ここで元ファイルのEXIF orientation を重ねると二重に回ってしまう。
+            orientation = 1;
           } else {
-            const orientation = await readOrientation(task.file);
-            updateTask(taskId, { orientation, message: 'ブラウザ変換中...' });
-            const longSide = resizeMode !== 'original' ? Number(resizeMode) || null : null;
-            const resizeModeForConvert: 'original' | 'longer' = resizeMode === 'original' ? 'original' : 'longer';
-            const resizeOptions = {
-              mode: resizeModeForConvert,
-              customWidth: null as number | null,
-              customHeight: null as number | null,
-              allowUpscale: false as boolean,
-            };
-            const adjustedOptions: ConversionOptions = {
-              ...options,
-              longSide,
-            };
-            converted = await convertInBrowser(
-              { ...task, orientation },
-              adjustedOptions,
-              resizeOptions,
-            );
+            orientation = await readOrientation(task.file);
           }
+
+          updateTask(taskId, { orientation, message: 'ブラウザ変換中...' });
+          const longSide = resizeMode !== 'original' ? Number(resizeMode) || null : null;
+          const resizeModeForConvert: 'original' | 'longer' = resizeMode === 'original' ? 'original' : 'longer';
+          const resizeOptions = {
+            mode: resizeModeForConvert,
+            customWidth: null as number | null,
+            customHeight: null as number | null,
+            allowUpscale: false as boolean,
+          };
+          const adjustedOptions: ConversionOptions = {
+            ...options,
+            longSide,
+          };
+          const converted: File = await convertInBrowser(
+            { ...task, file: sourceFile, orientation },
+            adjustedOptions,
+            resizeOptions,
+          );
           updateTask(taskId, {
             status: 'completed',
             converted,
@@ -689,21 +694,21 @@ const ImageConverter: React.FC = () => {
           warnings.push(`${file.name}: 未対応の形式です。`);
           continue;
         }
-        const useServer = shouldUseServer(ext, file.type);
-        const limitMB = useServer ? MAX_SERVER_FILE_MB : MAX_BROWSER_FILE_MB;
+        const heic = isHeic(ext, file.type);
+        const limitMB = heic ? MAX_HEIC_FILE_MB : MAX_BROWSER_FILE_MB;
         if (file.size > limitMB * 1024 * 1024) {
           warnings.push(`${file.name}: ファイルサイズが上限 ${limitMB}MB を超えています。`);
           continue;
         }
         const id = generateId();
-        
+
         // とりあえずタスクを作成
         const task: ConversionTask = {
           id,
           file,
           status: 'pending',
           progress: 0,
-          fallback: useServer,
+          fallback: heic,
           originalSize: file.size,
         };
         newTasks.push(task);
@@ -934,7 +939,7 @@ const ImageConverter: React.FC = () => {
                   onChange={handleInputChange}
                 />
                 <p className="mt-4 text-[10px] text-gray-500">
-                  対応形式: PNG / JPEG / WebP / GIF / SVG / HEIC / HEIF / CR2 / NEF（最大 {MAX_BROWSER_FILE_MB}MB、HEIC/RAW は {MAX_SERVER_FILE_MB}MB） | 最大 {MAX_FILES} 枚
+                  対応形式: PNG / JPEG / WebP / GIF / SVG / HEIC / HEIF（最大 {MAX_BROWSER_FILE_MB}MB、HEIC は {MAX_HEIC_FILE_MB}MB） | 最大 {MAX_FILES} 枚
                 </p>
               </div>
             </div>
@@ -1206,7 +1211,7 @@ const ImageConverter: React.FC = () => {
                         )}
 
                         {task.fallback && (
-                          <p className="text-[9px] text-purple-600 mt-1">サーバ変換</p>
+                          <p className="text-[9px] text-purple-600 mt-1">HEIC展開</p>
                         )}
                       </div>
                     );

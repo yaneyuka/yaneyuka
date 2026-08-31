@@ -153,11 +153,6 @@ const UnitConverter: React.FC = () => {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!isLoggedIn) {
-      alert('入力するには会員登録（無料）が必要です。');
-      e.target.value = '';
-      return;
-    }
     const val = e.target.value;
     setInputValue(val);
     const result = evaluateInput(val);
@@ -278,12 +273,14 @@ const UnitConverter: React.FC = () => {
                     <div>
                         <label className="block text-[11px] font-bold text-gray-500 mb-1.5">値を入力 (計算式も可)</label>
                         <div className="relative">
+                            {/* 未ログイン時はキー入力ごとの alert ではなく入力自体を無効化する */}
                             <input
                                 type="text"
                                 value={inputValue}
                                 onChange={handleInputChange}
-                                placeholder="例: 100, 1.8*2"
-                                className="w-full p-2.5 text-sm font-bold border border-gray-200 rounded-lg bg-white focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all placeholder-gray-300"
+                                disabled={!isLoggedIn}
+                                placeholder={isLoggedIn ? '例: 100, 1.8*2' : '会員登録（無料）で利用できます'}
+                                className="w-full p-2.5 text-sm font-bold border border-gray-200 rounded-lg bg-white focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all placeholder-gray-300 disabled:bg-gray-50 disabled:cursor-not-allowed"
                             />
                             {/* 計算結果プレビュー */}
                             {calculatedValue !== null && inputValue !== String(calculatedValue) && (
@@ -336,14 +333,9 @@ const UnitConverter: React.FC = () => {
                                 type="number"
                                 value={inputPrice}
                                 onChange={(e) => setInputPrice(e.target.value)}
-                                onClick={(e) => {
-                                    if (!isLoggedIn) {
-                                        alert('入力するには会員登録（無料）が必要です。');
-                                        e.preventDefault();
-                                    }
-                                }}
+                                disabled={!isLoggedIn}
                                 placeholder="0"
-                                className="w-full text-right font-bold text-sm p-1.5 border border-yellow-200 rounded bg-white focus:ring-1 focus:ring-yellow-400 outline-none text-gray-800 placeholder-yellow-200"
+                                className="w-full text-right font-bold text-sm p-1.5 border border-yellow-200 rounded bg-white focus:ring-1 focus:ring-yellow-400 outline-none text-gray-800 placeholder-yellow-200 disabled:bg-gray-50 disabled:cursor-not-allowed"
                             />
                             <span className="text-xs text-yellow-700 font-bold shrink-0">円</span>
                         </div>
@@ -356,7 +348,9 @@ const UnitConverter: React.FC = () => {
                 <div className="flex items-start gap-2">
                     <FiRefreshCw className="w-3.5 h-3.5 text-blue-500 mt-0.5 shrink-0" />
                     <p className="text-[10px] text-blue-600 leading-relaxed">
-                        数値を入力すると、同じカテゴリー内の全ての単位に自動変換されます。
+                        {isLoggedIn
+                          ? '数値を入力すると、同じカテゴリー内の全ての単位に自動変換されます。'
+                          : 'このツールを使うには会員登録（無料）が必要です。'}
                     </p>
                 </div>
             </div>

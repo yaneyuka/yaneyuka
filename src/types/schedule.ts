@@ -10,7 +10,9 @@ export interface Schedule {
   description?: string;
   ownerUid?: string;
   ownerName: string;
-  ownerEmail?: string;
+  // ownerEmail は意図的に持たない。
+  // このドキュメントは公開スケジュールだと誰でも読めるため、
+  // メールアドレスを載せると共有URLの受け取り手全員に見えてしまう。
   mode: ScheduleMode;
   isPublic: boolean;
   deadline?: Timestamp;

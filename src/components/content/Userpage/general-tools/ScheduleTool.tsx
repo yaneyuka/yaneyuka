@@ -15,7 +15,7 @@ import {
   orderBy,
   serverTimestamp,
   Timestamp,
-  onSnapshot,
+  writeBatch,
 } from 'firebase/firestore';
 import { db } from '@/lib/firebaseClient';
 import { useAuth } from '@/lib/AuthContext';
@@ -33,14 +33,37 @@ import {
   FiX, FiMinus, FiCircle, FiEye, FiShare2, FiList, FiUsers, FiMessageSquare, FiClock, FiRefreshCw 
 } from 'react-icons/fi';
 
-// 短いランダム文字列を生成
+// 共有URL用のランダム文字列を生成。
+// このslugは公開スケジュールへの唯一のアクセス制御なので、
+// 予測可能な Math.random ではなく暗号論的乱数を使い、長さも10文字に伸ばす
+// （62^10 ≈ 8.4×10^17 通り）。既存の8文字slugはそのまま使える。
+const SLUG_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+const SLUG_LENGTH = 10;
+
 const generateSlug = (): string => {
-  const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const bytes = new Uint8Array(SLUG_LENGTH);
+  if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
+    crypto.getRandomValues(bytes);
+  } else {
+    for (let i = 0; i < SLUG_LENGTH; i++) bytes[i] = Math.floor(Math.random() * 256);
+  }
   let result = '';
-  for (let i = 0; i < 8; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  for (let i = 0; i < SLUG_LENGTH; i++) {
+    result += SLUG_CHARS.charAt(bytes[i] % SLUG_CHARS.length);
   }
   return result;
+};
+
+// 既存スケジュールと衝突しないslugを取る。
+// slugはドキュメントIDそのものなので、衝突したまま setDoc すると
+// 自分の既存スケジュールを黙って上書きしてしまう。
+const generateUniqueSlug = async (): Promise<string> => {
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const candidate = generateSlug();
+    const existing = await getDoc(doc(db, 'schedules', candidate));
+    if (!existing.exists()) return candidate;
+  }
+  throw new Error('共有URLの生成に失敗しました');
 };
 
 const ScheduleTool: React.FC = () => {
@@ -176,22 +199,24 @@ const ScheduleTool: React.FC = () => {
       orderBy('createdAt', 'desc')
     );
 
-    const cleanupOldSchedules = async (schedules: Schedule[]) => {
-      const now = new Date();
-      const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-      
+    // 締切から1週間経過したスケジュールを自動削除する。
+    // ※この挙動はUI上どこにも書かれておらず、ユーザーには予告なくデータが消える。
+    //   仕様として残すか要確認（残す場合は画面に明示すべき）。
+    const cleanupOldSchedules = async (schedules: Schedule[]): Promise<Set<string>> => {
+      const removed = new Set<string>();
+      const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+
       for (const schedule of schedules) {
         if (!schedule.deadline) continue;
-        const deadlineDate = schedule.deadline.toDate();
-        
-        if (deadlineDate < oneWeekAgo) {
-          try {
-            await deleteDoc(doc(db, 'schedules', schedule.id));
-          } catch (error) {
-            console.error('スケジュール削除エラー:', error);
-          }
+        if (schedule.deadline.toDate() >= oneWeekAgo) continue;
+        try {
+          await deleteDoc(doc(db, 'schedules', schedule.id));
+          removed.add(schedule.id);
+        } catch (error) {
+          console.error('スケジュール削除エラー:', error);
         }
       }
+      return removed;
     };
 
     const loadOnce = async () => {
@@ -206,31 +231,21 @@ const ScheduleTool: React.FC = () => {
           );
           snapshot = await getDocs(qWithoutOrderBy);
         }
-        
+
         if (isUnmounted) return;
         const data = snapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),
         })) as Schedule[];
-        
-        await cleanupOldSchedules(data);
-        
-        let updatedSnapshot;
-        try {
-          updatedSnapshot = await getDocs(q);
-        } catch (orderByError: any) {
-          const qWithoutOrderBy = query(
-            collection(db, 'schedules'),
-            where('ownerUid', '==', currentUser.uid)
-          );
-          updatedSnapshot = await getDocs(qWithoutOrderBy);
-        }
-        
-        const updatedData = updatedSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as Schedule[];
-        
+
+        // 削除対象のIDを受け取り、取得済みの一覧から差し引く。
+        // 以前は削除後にもう一度コレクション全体を getDocs しており、
+        // 表示のたびに読み取り回数が倍になっていた。
+        const removedIds = await cleanupOldSchedules(data);
+        const updatedData = removedIds.size
+          ? data.filter((s) => !removedIds.has(s.id))
+          : data;
+
         setSchedules(prev => {
           const merged = new Map<string, Schedule>();
           prev.forEach(s => {
@@ -321,14 +336,17 @@ const ScheduleTool: React.FC = () => {
     if (!currentUser || !currentUser.uid) { alert('スケジュールを作成するにはログインが必要です'); return; }
 
     try {
-      const slug = generateSlug();
+      const slug = await generateUniqueSlug();
       const scheduleData: Omit<Schedule, 'id'> = {
         slug,
         title: title.trim(),
         description: description.trim() || undefined,
         ownerUid: currentUser.uid,
         ownerName: currentUser.username || currentUser.email?.split('@')[0] || '匿名',
-        ownerEmail: currentUser.email || undefined,
+        // ownerEmail は保存しない。
+        // このドキュメントは isPublic な場合に誰でも読めるため、
+        // 共有URLを受け取った全員に作成者のメールアドレスが見えてしまっていた。
+        // アプリ内でこの値を読んでいる箇所も無い。
         mode,
         isPublic,
         deadline: deadlineDate 
@@ -409,17 +427,19 @@ const ScheduleTool: React.FC = () => {
         updatedAt: serverTimestamp(),
       });
 
-      // pendingResponsesの内容を使って回答を保存
-      // 指定がない場合は'maybe'とする
-      const addPromises = options.map(option => {
-        const value = pendingResponses[option.id] || 'maybe';
-        return addDoc(collection(db, 'schedules', currentSchedule.id, 'responses'), {
+      // pendingResponsesの内容を使って回答を保存（指定がない場合は'maybe'）。
+      // 候補数ぶんの個別書き込みではなく1バッチにまとめる（途中で失敗して
+      // 一部だけ登録された状態になるのも防げる）
+      const batch = writeBatch(db);
+      options.forEach(option => {
+        const responseRef = doc(collection(db, 'schedules', currentSchedule.id, 'responses'));
+        batch.set(responseRef, {
           participantId: participantRef.id,
           optionId: option.id,
-          value: value,
+          value: pendingResponses[option.id] || 'maybe',
         });
       });
-      await Promise.all(addPromises);
+      await batch.commit();
 
       resetParticipantForm();
       await loadSchedule(currentSchedule.id);
@@ -439,24 +459,30 @@ const ScheduleTool: React.FC = () => {
             comment: participantComment.trim() || null,
         });
 
-        const updatePromises = options.map(async (option) => {
+        // 候補ごとの回答をまとめて1バッチで更新する
+        const batch = writeBatch(db);
+        let hasChange = false;
+        options.forEach((option) => {
              const existing = responses.find(r => r.participantId === editingParticipantId && r.optionId === option.id);
              const newValue = pendingResponses[option.id] || 'maybe';
-             
+
              if (existing) {
                  if (existing.value !== newValue) {
-                     await updateDoc(doc(db, 'schedules', currentSchedule.id, 'responses', existing.id), { value: newValue });
+                     batch.update(doc(db, 'schedules', currentSchedule.id, 'responses', existing.id), { value: newValue });
+                     hasChange = true;
                  }
              } else {
-                 await addDoc(collection(db, 'schedules', currentSchedule.id, 'responses'), {
+                 batch.set(doc(collection(db, 'schedules', currentSchedule.id, 'responses')), {
                      participantId: editingParticipantId,
                      optionId: option.id,
-                     value: newValue
+                     value: newValue,
                  });
+                 hasChange = true;
              }
         });
-        await Promise.all(updatePromises);
-        
+        if (hasChange) await batch.commit();
+
+
         resetParticipantForm();
         await loadSchedule(currentSchedule.id);
     } catch (e) {

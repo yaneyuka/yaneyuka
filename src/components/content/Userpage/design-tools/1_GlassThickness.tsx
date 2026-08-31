@@ -38,38 +38,32 @@ const GlassThickness: React.FC<GlassThicknessProps> = ({ hideHeader }) => {
   const [glassErrorMessage, setGlassErrorMessage] = useState<string>('');
   const [windErrorMessage, setWindErrorMessage] = useState<string>('');
 
-  // 地表面粗度係数 Er の計算（告示1454号に基づく）
-  // 地表面粗度区分と建物高さHに依存
+  // 平成12年建設省告示第1454号 第1 の地表面粗度区分ごとの定数
+  //   Zb: 地表付近で風速が一定とみなせる高さ [m]
+  //   ZG: 地表面の影響が及ばなくなる高さ [m]
+  //   alpha: 平均風速の高さ方向の分布を表す指数
+  const ROUGHNESS_PARAMS: Record<number, { Zb: number; ZG: number; alpha: number }> = {
+    1: { Zb: 5, ZG: 250, alpha: 0.10 },  // Ⅰ 海岸沿い
+    2: { Zb: 5, ZG: 350, alpha: 0.15 },  // Ⅱ 田畑・住宅が散在
+    3: { Zb: 5, ZG: 450, alpha: 0.20 },  // Ⅲ 通常の市街地
+    4: { Zb: 10, ZG: 550, alpha: 0.27 }, // Ⅳ 大都市中心部
+  };
+
+  /**
+   * 平均風速の高さ方向の分布を表す係数 Er（告示1454号）
+   *   H ≦ Zb のとき  Er = 1.7 × (Zb/ZG)^α
+   *   H >  Zb のとき  Er = 1.7 × (H /ZG)^α
+   *
+   * ★修正前は ZG を全区分 250 固定、係数を 1.38/1.00/0.69/0.47 とする独自式で、
+   *   さらに区分Ⅱのときだけ 1.624 を掛けて辻褄を合わせていた。
+   *   その結果、区分Ⅱ以外では速度圧が大幅に過小評価されていた
+   *   （告示比で 区分Ⅰ≒0.6倍、区分Ⅲ≒0.23倍、区分Ⅳ≒0.16倍）。
+   *   区分Ⅱは補正係数のおかげで結果的にほぼ正しく、今回の修正での変化は約1%。
+   */
   const calculateEr = (regionTypeNum: number, buildingHeightNum: number): number => {
-    // H < 5m の場合は 5m として扱う（ここで補正してしまう）
-    const H = Math.max(buildingHeightNum, 5);
-
-    // 地域区分ごとの係数定義 [係数, 指数]
-    // 1:海岸, 2:平地, 3:丘陵, 4:山岳
-    const factors: Record<number, { base: number; exp: number }> = {
-      1: { base: 1.38, exp: 0.12 },
-      2: { base: 1.00, exp: 0.15 },
-      3: { base: 0.69, exp: 0.18 },
-      4: { base: 0.47, exp: 0.21 }
-    };
-
-    const factor = factors[regionTypeNum] || factors[2]; // デフォルトはⅡ地域
-
-    // 基本Er算出 (告示簡略式ベース)
-    const baseEr = factor.base * Math.pow(H / 250, factor.exp);
-
-    // 計算方法による分岐
-    if (pressureMethod === 'KOKUJI_SIMPLE') {
-      return baseEr;
-    } else {
-      // NSG簡略などはⅡ地域のみ補正係数を掛ける運用
-      // ★補正係数1.624の根拠: 板硝子協会の簡略表（実務手引き）において、
-      // Ⅱ地域・H=20m付近での速度圧を告示簡略式の結果に近似させるための補正係数。
-      // 告示簡略式のみでは実測値や実務表値より低めに出る傾向があるため、
-      // 安全側（高め）に補正する目的で導入。出典: 板硝子協会「板ガラスの強度と安全」等の実務手引き
-      const scale = regionTypeNum === 2 ? 1.624 : 1.0;
-      return baseEr * scale;
-    }
+    const p = ROUGHNESS_PARAMS[regionTypeNum] || ROUGHNESS_PARAMS[2];
+    const H = buildingHeightNum <= p.Zb ? p.Zb : buildingHeightNum;
+    return 1.7 * Math.pow(H / p.ZG, p.alpha);
   };
 
   // 合わせガラスの推奨組み合わせ表示（合計板厚→代表的な構成）
@@ -106,7 +100,7 @@ const GlassThickness: React.FC<GlassThicknessProps> = ({ hideHeader }) => {
       isNaN(buildingHeightNum) || buildingHeightNum <= 0 ||
       isNaN(basicWindSpeedNum) || basicWindSpeedNum <= 0
     ) {
-      setWindErrorMessage('有効な地域区分、建物高さ（>0）、基準風速を入力してください。');
+      setWindErrorMessage('有効な地表面粗度区分、建物高さ（>0）、基準風速を入力してください。');
       return;
     }
     setWindErrorMessage('');
@@ -396,19 +390,33 @@ const GlassThickness: React.FC<GlassThicknessProps> = ({ hideHeader }) => {
                 <option value="KOKUJI_SIMPLE">告示簡略（従来式）</option>
                 <option value="KOKUJI_FULL">告示フル（Gf・外圧/内圧係数で正味）</option>
               </select>
+              {pressureMethod !== 'KOKUJI_FULL' && (
+                <p className="mt-1 text-[10px] text-amber-700 bg-amber-50 border border-amber-200 rounded px-2 py-1">
+                  簡略計算は<strong>ガスト影響係数 Gf を含みません</strong>。告示に基づく設計用風圧力より小さい値になります。設計値としては「告示フル」で照査してください。
+                </p>
+              )}
             </div>
             <div>
-              <label className="block text-[11px] text-gray-600 mb-1">地域区分</label>
+              <label className="block text-[11px] text-gray-600 mb-1">地表面粗度区分</label>
+              {/*
+                ★修正前は「Ⅲ=丘陵部」「Ⅳ=山岳部」と地形の起伏で説明していたが、
+                  告示1454号の粗度区分は「周囲の建物・樹木の多さ」の区分であり別物。
+                  市街地の設計者がⅢ/Ⅳを選べず、逆に平坦地の設計者が「山岳部」と誤解して
+                  Ⅳを選ぶと風圧が大幅に小さく出る（＝危険側）ため、告示の定義に合わせる。
+              */}
               <select
                 value={regionType}
                 onChange={(e) => setRegionType(e.target.value)}
                 className="w-full text-[11px] border rounded px-2 py-1"
               >
-                <option value="1">Ⅰ地域（海岸部）</option>
-                <option value="2">Ⅱ地域（平地部）</option>
-                <option value="3">Ⅲ地域（丘陵部）</option>
-                <option value="4">Ⅳ地域（山岳部）</option>
+                <option value="1">Ⅰ（極めて平坦で障害物がない・海岸線付近）</option>
+                <option value="2">Ⅱ（田園地帯・樹木や低層建築物が散在）</option>
+                <option value="3">Ⅲ（一般の市街地）</option>
+                <option value="4">Ⅳ（中高層建築物が密集する大都市中心部）</option>
               </select>
+              <p className="mt-1 text-[10px] text-gray-500">
+                周囲の建物・樹木が多いほど番号が大きくなります（＝風圧は小さくなります）。地形の起伏ではありません。
+              </p>
             </div>
             
             <div>

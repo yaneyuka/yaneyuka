@@ -120,7 +120,7 @@ const MapView: React.FC<MapViewProps> = ({ searchQuery, onSearchQueryChange }) =
             type="text"
             value={searchQuery}
             onChange={(e) => onSearchQueryChange(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+            onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
             placeholder="場所を検索..."
             className="flex-1 px-3 py-1.5 text-[11px] border border-gray-200 rounded focus:outline-none focus:border-gray-300"
           />

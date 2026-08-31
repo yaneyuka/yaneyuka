@@ -26,9 +26,15 @@ const usePDFJS = () => {
 
         const pdfjsLib = await import('pdfjs-dist')
 
-        const v = (pdfjsLib as any).version || '4.10.38'
-
-        ;(pdfjsLib as any).GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${v}/build/pdf.worker.min.mjs`
+        // ワーカーは同一オリジンから配信する。
+        // 以前は jsdelivr の CDN を指しており、
+        //   - CDN を遮断している社内ネットワークでは PDF 圧縮が丸ごと動かない
+        //   - pdfjs-dist を更新するとURLのバージョンが変わり404になり得る
+        // という問題があった。webpack が import.meta.url を解決してアセットを出力する。
+        ;(pdfjsLib as any).GlobalWorkerOptions.workerSrc = new URL(
+          'pdfjs-dist/build/pdf.worker.min.mjs',
+          import.meta.url,
+        ).toString()
 
         if (!cancelled) setLib(pdfjsLib)
 
@@ -144,7 +150,10 @@ const PDFCompressor: React.FC = () => {
 
     setCompressedSize(0);
 
-    setDownloadUrl(null);
+    setDownloadUrl(prev => {
+      if (prev) URL.revokeObjectURL(prev)
+      return null
+    });
 
     setError(null);
 
@@ -216,8 +225,7 @@ const PDFCompressor: React.FC = () => {
 
 
 
-        const preset = compressionLevel === 'high' ? { q: 0.4, dpi: 120 } : compressionLevel === 'low' ? { q: 0.8, dpi: 200 } : { q: 0.6, dpi: 144 }
-
+        // 圧縮レベルは compressionLevel の useEffect で dpi/quality に反映済み
         const targetQuality = quality
 
         const targetDpi = dpi
@@ -289,7 +297,16 @@ const PDFCompressor: React.FC = () => {
 
           pageOut.drawImage(jpg, { x: 0, y: 0, width: jpg.width, height: jpg.height })
 
+          // ページごとにcanvasとpdf.js側のバッファを解放する。
+          // 200dpiのA4は約1700×2200=15MB/枚あり、
+          // 数十ページのPDFではこれを溜め込むとタブが落ちる。
+          canvas.width = 0
+          canvas.height = 0
+          page.cleanup()
+
         }
+
+        await pdf.destroy()
 
         
 
@@ -307,13 +324,20 @@ const PDFCompressor: React.FC = () => {
 
       setError(err instanceof Error ? err.message : '処理に失敗しました');
 
+      // 失敗したのに進捗100%だと成功したように見えるので、ここでは進めない
+      setProgress(0);
+
+      setIsProcessing(false);
+
+      return;
+
     } finally {
 
       setIsProcessing(false);
 
-      setProgress(100);
-
     }
+
+    setProgress(100);
 
   };
 
@@ -327,7 +351,12 @@ const PDFCompressor: React.FC = () => {
 
     const url = URL.createObjectURL(outBlob)
 
-    setDownloadUrl(url)
+    // 前回の結果のオブジェクトURLを解放する。
+    // 解放しないと圧縮を繰り返すたびに数十MB単位でメモリに残り続ける。
+    setDownloadUrl(prev => {
+      if (prev) URL.revokeObjectURL(prev)
+      return url
+    })
 
     setDownloadFileName(`${prefix}_${fileName}`)
 

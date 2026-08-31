@@ -35,41 +35,42 @@ const PdfDiffTool: React.FC = () => {
   const diffCacheRef = useRef<Record<number, PageCache>>({});
   const lastDiffRef = useRef<PageCache | null>(null);
   const viewContainerRef = useRef<HTMLDivElement>(null);
-  const pdfjsLoadedRef = useRef(false);
   const pdfjsLibRef = useRef<any>(null);
 
-  // Load pdf.js dynamically
-  const loadPdfJs = useCallback((): Promise<any> => {
-    return new Promise((resolve, reject) => {
-      if (pdfjsLibRef.current) {
-        resolve(pdfjsLibRef.current);
-        return;
-      }
-      if ((window as any)['pdfjs-dist/build/pdf']) {
-        const lib = (window as any)['pdfjs-dist/build/pdf'];
-        pdfjsLibRef.current = lib;
-        resolve(lib);
-        return;
-      }
-      const script = document.createElement('script');
-      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
-      script.onload = () => {
-        const lib = (window as any)['pdfjs-dist/build/pdf'];
-        lib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-        pdfjsLibRef.current = lib;
-        resolve(lib);
-      };
-      script.onerror = reject;
-      document.head.appendChild(script);
-    });
+  // pdf.js は同一オリジンから読み込む。
+  // 以前は cdnjs から <script> で pdf.js 3.11 を、jsPDF も CDN から読んでいたため
+  //   - CDN を遮断している社内ネットワークではツールが丸ごと動かない
+  //   - 同じリポジトリで使っている pdfjs-dist 4.x と別バージョンが同居する
+  // という状態だった。PDF圧縮ツールと同じく npm 版を動的 import する。
+  const loadPdfJs = useCallback(async (): Promise<any> => {
+    if (pdfjsLibRef.current) return pdfjsLibRef.current;
+    const pdfjsLib = await import('pdfjs-dist');
+    ;(pdfjsLib as any).GlobalWorkerOptions.workerSrc = new URL(
+      'pdfjs-dist/build/pdf.worker.min.mjs',
+      import.meta.url,
+    ).toString();
+    pdfjsLibRef.current = pdfjsLib;
+    return pdfjsLib;
   }, []);
 
   const processFile = useCallback(async (idx: number, file: File) => {
-    const pdfjsLib = await loadPdfJs();
-    const ab = await file.arrayBuffer();
-    const pdf = await pdfjsLib.getDocument({ data: ab }).promise;
-    setFiles(prev => { const n = [...prev]; n[idx] = file; return n; });
-    setPdfs(prev => { const n = [...prev]; n[idx] = pdf; return n; });
+    // 読み込み失敗（破損・パスワード付きPDFなど）を握りつぶすと、
+    // 「差分を検出」ボタンが有効にならない理由が利用者に分からない。
+    try {
+      setStatusMsg(`${file.name} を読み込み中...`);
+      const pdfjsLib = await loadPdfJs();
+      const ab = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({ data: ab }).promise;
+      setFiles(prev => { const n = [...prev]; n[idx] = file; return n; });
+      setPdfs(prev => { const n = [...prev]; n[idx] = pdf; return n; });
+      setStatusMsg('');
+    } catch (err) {
+      console.error('[PdfDiff] PDFの読み込みに失敗', err);
+      setFiles(prev => { const n = [...prev]; n[idx] = null; return n; });
+      setPdfs(prev => { const n = [...prev]; n[idx] = null; return n; });
+      setStatusMsg('');
+      alert(`「${file.name}」を読み込めませんでした。\nPDFが破損しているか、パスワードで保護されている可能性があります。`);
+    }
   }, [loadPdfJs]);
 
   const handleFileChange = useCallback((idx: number, e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,7 +81,13 @@ const PdfDiffTool: React.FC = () => {
   const handleDrop = useCallback((idx: number, e: React.DragEvent) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
-    if (file && file.name.endsWith('.pdf')) processFile(idx, file);
+    if (!file) return;
+    // 拡張子は大文字のこともある（.PDF）。以前は無言で無視していた。
+    if (!/\.pdf$/i.test(file.name)) {
+      alert('PDFファイルをドロップしてください。');
+      return;
+    }
+    processFile(idx, file);
   }, [processFile]);
 
   const makeCanvas = (w: number, h: number): HTMLCanvasElement => {
@@ -127,6 +134,29 @@ const PdfDiffTool: React.FC = () => {
     return oc;
   }, [opacity]);
 
+  /**
+   * 元ページの上に差分ハイライトを重ねた1枚のcanvasを作る。
+   *
+   * ★putImageData は「合成」ではなく「置き換え」で、既存のピクセルも
+   *   globalAlpha も無視する。以前は drawImage(元ページ) の直後に
+   *   putImageData(差分) していたため、元ページが丸ごと消えて
+   *   「透明な背景に赤い印だけ」の画像になっていた。
+   *   PNG書き出しでは背景が透明に、PDF書き出し（JPEG化）では真っ黒になる。
+   *   重ねるときは必ず別canvasに描いてから drawImage で合成する。
+   */
+  const makeCompositeCanvas = useCallback(
+    (base: HTMLCanvasElement, diff: DiffResult, W: number, H: number): HTMLCanvasElement => {
+      const out = makeCanvas(W, H);
+      const ctx = out.getContext('2d')!;
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, W, H);
+      ctx.drawImage(base, 0, 0);
+      ctx.drawImage(makeOverlayCanvas(diff, W, H), 0, 0);
+      return out;
+    },
+    [makeOverlayCanvas],
+  );
+
   const renderView = useCallback(() => {
     const container = viewContainerRef.current;
     if (!container || !lastDiffRef.current) return;
@@ -171,12 +201,13 @@ const PdfDiffTool: React.FC = () => {
       container.appendChild(grid);
 
     } else if (currentView === 'diff') {
+      // 白地に差分だけを表示する。putImageData だと白の下地ごと置き換えて
+      // しまうので、下地を塗ってから overlay を drawImage で重ねる。
       const dc = makeCanvas(W, H);
       const dctx = dc.getContext('2d')!;
       dctx.fillStyle = '#fff';
       dctx.fillRect(0, 0, W, H);
-      const id = new ImageData(diff.data.slice(), W, H);
-      dctx.putImageData(id, 0, 0);
+      dctx.drawImage(makeOverlayCanvas(diff, W, H), 0, 0);
       dc.style.width = '100%';
       dc.style.height = 'auto';
       dc.style.display = 'block';
@@ -276,15 +307,21 @@ const PdfDiffTool: React.FC = () => {
   // Redraw diff when sensitivity changes
   useEffect(() => {
     if (!lastDiffRef.current || !showStats) return;
-    const { c1, c2, W, H } = lastDiffRef.current;
-    const ctx1 = c1.getContext('2d')!;
-    const ctx2 = c2.getContext('2d')!;
-    const d1 = ctx1.getImageData(0, 0, W, H);
-    const d2 = ctx2.getImageData(0, 0, W, H);
-    const diffResult = computeDiff(d1, d2, W, H);
-    lastDiffRef.current.diff = diffResult;
-    diffCacheRef.current[currentPage].diff = diffResult;
-    updateStats(diffResult, totalPages);
+    // ★キャッシュ済みの全ページを作り直す。
+    //   以前は表示中のページしか再計算しておらず、感度を変えたあとに
+    //   前のページへ戻ると古いしきい値の差分がそのまま表示され、
+    //   その状態で書き出すとページごとに基準の違うPDFができていた。
+    for (const cached of Object.values(diffCacheRef.current)) {
+      const { c1, c2, W, H } = cached;
+      const d1 = c1.getContext('2d')!.getImageData(0, 0, W, H);
+      const d2 = c2.getContext('2d')!.getImageData(0, 0, W, H);
+      cached.diff = computeDiff(d1, d2, W, H);
+    }
+    const current = diffCacheRef.current[currentPage];
+    if (current) {
+      lastDiffRef.current = current;
+      updateStats(current.diff, totalPages);
+    }
     renderView();
   }, [sensitivity]);
 
@@ -306,58 +343,76 @@ const PdfDiffTool: React.FC = () => {
   const exportPNG = useCallback(() => {
     if (!lastDiffRef.current) return;
     const { c1, diff, W, H } = lastDiffRef.current;
-    const op = opacity / 100;
-    const out = makeCanvas(W, H);
-    const ctx = out.getContext('2d')!;
-    ctx.drawImage(c1, 0, 0);
-    const id = new ImageData(diff.data.slice(), W, H);
-    for (let i = 3; i < id.data.length; i += 4) id.data[i] = Math.round(id.data[i] * op);
-    ctx.putImageData(id, 0, 0);
+    const out = makeCompositeCanvas(c1, diff, W, H);
     const a = document.createElement('a');
     a.download = `diff_page${currentPage}.png`;
     a.href = out.toDataURL('image/png');
     a.click();
-  }, [currentPage, opacity]);
+  }, [currentPage, makeCompositeCanvas]);
 
-  const exportDiffPDF = useCallback(() => {
-    if (!lastDiffRef.current) return;
-    const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-    script.onload = async () => {
-      const { jsPDF } = (window as any).jspdf;
-      const op = 220 / 255;
-
-      const buildComposite = (pc1: HTMLCanvasElement, pdiff: DiffResult, pW: number, pH: number) => {
-        const out = makeCanvas(pW, pH);
-        const ctx = out.getContext('2d')!;
-        ctx.drawImage(pc1, 0, 0);
-        const id = new ImageData(pdiff.data.slice(), pW, pH);
-        for (let i = 3; i < id.data.length; i += 4) id.data[i] = Math.round(id.data[i] * op);
-        ctx.putImageData(id, 0, 0);
-        return out;
-      };
-
-      const { c1, diff, W, H } = lastDiffRef.current!;
-      const first = buildComposite(c1, diff, W, H);
-      const pdf = new jsPDF({
-        orientation: W > H ? 'landscape' : 'portrait',
-        unit: 'px',
-        format: [W, H],
-      });
-      pdf.addImage(first.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, W, H);
-
-      for (let p = 2; p <= totalPages; p++) {
-        if (diffCacheRef.current[p]) {
-          const { c1: pc1, diff: pd, W: pW, H: pH } = diffCacheRef.current[p];
-          const composite = buildComposite(pc1, pd, pW, pH);
-          pdf.addPage([pW, pH], pW > pH ? 'landscape' : 'portrait');
-          pdf.addImage(composite.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, pW, pH);
+  // 差分PDFの書き出し。
+  // 以前はクリックのたびに CDN から jsPDF の <script> を足していた
+  // （CDN遮断環境では無反応、押すたびに再ダウンロード）。
+  // PDF圧縮ツールと同じく、依存に入っている pdf-lib をそのまま使う。
+  const exportDiffPDF = useCallback(async () => {
+    if (!lastDiffRef.current || isComparing) return;
+    setIsComparing(true);
+    setShowStatus(true);
+    try {
+      // ★以前は「まだ開いていないページ」を黙って飛ばしていたため、
+      //   1ページ目だけ見て書き出すと1ページだけのPDFが出てきていた。
+      //   未計算のページはここで計算してから全ページ入れる。
+      for (let p = 1; p <= totalPages; p++) {
+        if (!diffCacheRef.current[p]) {
+          setStatusMsg(`ページ ${p}/${totalPages} を計算中...`);
+          setProgress(Math.round((p / totalPages) * 100));
+          await renderAndCompare(p, pdfs, totalPages);
         }
       }
-      pdf.save('pdf_diff_result.pdf');
-    };
-    document.head.appendChild(script);
-  }, [totalPages]);
+
+      setStatusMsg('PDFを作成中...');
+      const { PDFDocument } = await import('pdf-lib');
+      const outPdf = await PDFDocument.create();
+
+      for (let p = 1; p <= totalPages; p++) {
+        const pc = diffCacheRef.current[p];
+        if (!pc) continue;
+        const composite = makeCompositeCanvas(pc.c1, pc.diff, pc.W, pc.H);
+        const dataUrl = composite.toDataURL('image/jpeg', 0.92);
+        const jpg = await outPdf.embedJpg(dataUrl);
+        const page = outPdf.addPage([jpg.width, jpg.height]);
+        page.drawImage(jpg, { x: 0, y: 0, width: jpg.width, height: jpg.height });
+        // 書き出し用の一時canvasはここで手放す
+        composite.width = 0;
+        composite.height = 0;
+      }
+
+      const bytes = await outPdf.save();
+      const blob = new Blob([bytes as BlobPart], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.download = 'pdf_diff_result.pdf';
+      a.href = url;
+      a.click();
+      // 解放しないと結果PDFのぶんだけメモリに残り続ける
+      setTimeout(() => URL.revokeObjectURL(url), 10_000);
+
+      // 書き出しのために他ページを計算したので、表示と統計を元のページに戻す
+      const shown = diffCacheRef.current[currentPage];
+      if (shown) {
+        lastDiffRef.current = shown;
+        updateStats(shown.diff, totalPages);
+        renderView();
+      }
+    } catch (err) {
+      console.error('[PdfDiff] 差分PDFの書き出しに失敗', err);
+      alert('差分PDFを作成できませんでした。');
+    } finally {
+      setShowStatus(false);
+      setIsComparing(false);
+      setProgress(0);
+    }
+  }, [currentPage, isComparing, makeCompositeCanvas, pdfs, renderAndCompare, renderView, totalPages, updateStats]);
 
   const canCompare = pdfs[0] && pdfs[1];
 

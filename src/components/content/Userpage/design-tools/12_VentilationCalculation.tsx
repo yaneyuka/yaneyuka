@@ -32,8 +32,28 @@ const VentilationCalculation: React.FC<VentilationCalculationProps> = ({ default
   const [ach, setAch] = useState<number>(0.5); // 換気回数 (0.5回/h)
 
   // 火気使用室用
+  // 昭和45年建設省告示第1826号: V = N × K × Q
+  //   N: 排気設備の種類による定数
+  //   K: 燃料の単位燃焼量あたりの理論廃ガス量
+  //   Q: 燃料消費量（発熱量）
+  // ★修正前は V = N × Q と K を掛け忘れており、かつ N（40/30）を「K値」と表示していた。
+  //   さらに換気フードⅠ型とⅡ型を区別せず両方 30 にしていた（Ⅱ型は 20）。
+  const EXHAUST_TYPES = [
+    { n: 40, label: 'フードなし', note: '排気口・排気筒（換気扇等）' },
+    { n: 30, label: '換気フードⅠ型', note: '一般的なレンジフード' },
+    { n: 20, label: '換気フードⅡ型', note: '整流板付など捕集効率の高いもの' },
+    { n: 2, label: '煙突', note: '密閉式・煙突排気' },
+  ] as const;
+
+  const FUEL_TYPES = [
+    { k: 0.93, label: '都市ガス13A', unit: 'kW', note: 'K=0.93 ㎥/kWh' },
+    { k: 0.93, label: 'LPガス（プロパン）', unit: 'kW', note: 'K=0.93 ㎥/kWh' },
+    { k: 12.1, label: '灯油', unit: 'kg/h', note: 'K=12.1 ㎥/kg' },
+  ] as const;
+
   const [gasKw, setGasKw] = useState<number | ''>('');
-  const [hoodType, setHoodType] = useState<number>(30); // K値 (レンジフード=30, 一般=40)
+  const [hoodType, setHoodType] = useState<number>(30); // 定数 N
+  const [fuelIndex, setFuelIndex] = useState<number>(0); // 燃料種別（K値）
 
   // 居室（人数）用
   const [people, setPeople] = useState<number | ''>('');
@@ -65,11 +85,13 @@ const VentilationCalculation: React.FC<VentilationCalculationProps> = ({ default
       sub = `室気積: ${vol.toFixed(1)}㎥ (換気回数${ach}回/h)`;
     } 
     else if (activeTab === 'fire') {
-      // 火気使用室計算 V = K × Q
-      const kw = Number(gasKw) || 0;
-      res = hoodType * kw;
-      sub = `係数(K): ${hoodType} (理論廃ガス量考慮)`;
-    } 
+      // 火気使用室計算（告示1826号）V = N × K × Q
+      const q = Number(gasKw) || 0;
+      const fuel = FUEL_TYPES[fuelIndex] ?? FUEL_TYPES[0];
+      res = hoodType * fuel.k * q;
+      const typeLabel = EXHAUST_TYPES.find(t => t.n === hoodType)?.label ?? '';
+      sub = `V = N×K×Q = ${hoodType} × ${fuel.k} × ${q}（${typeLabel} / ${fuel.label}）`;
+    }
     else if (activeTab === 'occupancy') {
       // 居室計算
       const p = Number(people) || 0;
@@ -81,7 +103,7 @@ const VentilationCalculation: React.FC<VentilationCalculationProps> = ({ default
     setReqInletArea(parseFloat(inlet.toFixed(1)));
     setSubResult(sub);
 
-  }, [activeTab, areaM2, height, ach, gasKw, hoodType, people, perPersonAir]);
+  }, [activeTab, areaM2, height, ach, gasKw, hoodType, fuelIndex, people, perPersonAir]);
 
 
 
@@ -125,8 +147,9 @@ const VentilationCalculation: React.FC<VentilationCalculationProps> = ({ default
     if (activeTab === 'sickhouse') {
       text += `■24時間換気\n床面積: ${areaM2}㎡ (${areaTatami}帖 / ${areaTsubo}坪)\n天井高: ${height}m\n----------------\n必要換気量: ${resultVal} ㎥/h\n推奨給気口面積: 約${reqInletArea}c㎡`;
     } else if (activeTab === 'fire') {
-      const hoodName = hoodType === 30 ? 'レンジフード(Ⅰ/Ⅱ型)' : '一般換気扇';
-      text += `■火気使用室(キッチン)\nガス消費量: ${gasKw}kW\n排気設備: ${hoodName}\n----------------\n必要換気量: ${resultVal} ㎥/h`;
+      const hoodName = EXHAUST_TYPES.find(t => t.n === hoodType)?.label ?? '';
+      const fuel = FUEL_TYPES[fuelIndex] ?? FUEL_TYPES[0];
+      text += `■火気使用室(キッチン)  V = N×K×Q（告示1826号）\n燃料: ${fuel.label} (K=${fuel.k})\n燃料消費量 Q: ${gasKw}${fuel.unit}\n排気設備: ${hoodName} (N=${hoodType})\n----------------\n必要換気量: ${resultVal} ㎥/h`;
     } else {
       text += `■居室人数計算\n収容人数: ${people}人\n設定基準: ${perPersonAir}㎥/h/人\n----------------\n必要換気量: ${resultVal} ㎥/h`;
     }
@@ -261,32 +284,45 @@ const VentilationCalculation: React.FC<VentilationCalculationProps> = ({ default
         {activeTab === 'fire' && (
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-bold text-gray-500 mb-1">ガス消費量 (kW)</label>
-              <input 
-                type="number" 
-                value={gasKw} 
-                onChange={(e) => setGasKw(e.target.value === '' ? '' : parseFloat(e.target.value))} 
-                className="w-full px-2 py-1.5 border border-gray-300 rounded focus:ring-1 focus:ring-red-500 outline-none text-right font-mono text-[12px]" 
-                placeholder="例: 10.5" 
-                step="0.1" 
+              <label className="block text-xs font-bold text-gray-500 mb-2">燃料種別（理論廃ガス量 K）</label>
+              <div className="grid grid-cols-3 gap-2">
+                {FUEL_TYPES.map((f, i) => (
+                  <button
+                    key={f.label}
+                    onClick={() => setFuelIndex(i)}
+                    className={`py-2 px-1 text-[11px] rounded border transition-colors ${fuelIndex === i ? 'bg-red-50 border-red-500 text-red-700 font-bold' : 'bg-white text-gray-600 hover:bg-gray-50 border-gray-300'}`}
+                  >
+                    {f.label}<br/><span className="text-[9px] font-normal">{f.note}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-gray-500 mb-1">
+                燃料消費量 Q ({FUEL_TYPES[fuelIndex]?.unit ?? 'kW'})
+              </label>
+              <input
+                type="number"
+                value={gasKw}
+                onChange={(e) => setGasKw(e.target.value === '' ? '' : parseFloat(e.target.value))}
+                className="w-full px-2 py-1.5 border border-gray-300 rounded focus:ring-1 focus:ring-red-500 outline-none text-right font-mono text-[12px]"
+                placeholder="例: 10.5"
+                step="0.1"
               />
               <p className="text-[10px] text-gray-400 mt-1">※3口コンロで約9~10kW程度</p>
             </div>
             <div>
-              <label className="block text-xs font-bold text-gray-500 mb-2">排気フードの種類</label>
+              <label className="block text-xs font-bold text-gray-500 mb-2">排気設備の種類（定数 N）</label>
               <div className="grid grid-cols-2 gap-2">
-                <button 
-                  onClick={() => setHoodType(30)} 
-                  className={`py-2 px-2 text-[12px] rounded border transition-colors ${hoodType === 30 ? 'bg-red-50 border-red-500 text-red-700 font-bold' : 'bg-white text-gray-600 hover:bg-gray-50 border-gray-300'}`}
-                >
-                  レンジフード<br/><span className="text-[10px] font-normal">(Ⅰ型/Ⅱ型) 係数30</span>
-                </button>
-                <button 
-                  onClick={() => setHoodType(40)} 
-                  className={`py-2 px-2 text-[12px] rounded border transition-colors ${hoodType === 40 ? 'bg-red-50 border-red-500 text-red-700 font-bold' : 'bg-white text-gray-600 hover:bg-gray-50 border-gray-300'}`}
-                >
-                  一般換気扇<br/><span className="text-[10px] font-normal">(フードなし) 係数40</span>
-                </button>
+                {EXHAUST_TYPES.map(t => (
+                  <button
+                    key={t.n}
+                    onClick={() => setHoodType(t.n)}
+                    className={`py-2 px-2 text-[12px] rounded border transition-colors ${hoodType === t.n ? 'bg-red-50 border-red-500 text-red-700 font-bold' : 'bg-white text-gray-600 hover:bg-gray-50 border-gray-300'}`}
+                  >
+                    {t.label}<br/><span className="text-[10px] font-normal">N={t.n}／{t.note}</span>
+                  </button>
+                ))}
               </div>
             </div>
           </div>
@@ -361,6 +397,14 @@ const VentilationCalculation: React.FC<VentilationCalculationProps> = ({ default
                      100φ(約35c㎡) × <strong>{Math.ceil(reqInletArea / 35)}</strong> 個
                    </span>
                 </div>
+                {/*
+                  「必要換気量 × 2.0」は法令や特定の規格に基づく式ではなく社内の目安。
+                  実際の必要開口面積は給気口の有効開口率と設計圧力差で決まるため、
+                  根拠がない値であることを明示しておく。
+                */}
+                <p className="mt-1 text-[9px] text-gray-500 leading-snug">
+                  ※「必要換気量×2.0」による概算です。法令・規格に基づく値ではありません。実際は給気口の有効開口率と設計圧力差からメーカー資料で確認してください。
+                </p>
               </div>
             )}
 

@@ -1,7 +1,7 @@
 // firestore.rules の検証用スクリプト（使い捨て。検証後に削除する）
 import { initializeApp } from 'firebase/app';
 import { getAuth, connectAuthEmulator, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { getFirestore, connectFirestoreEmulator, doc, setDoc, updateDoc, deleteDoc, getDoc } from 'firebase/firestore';
+import { getFirestore, connectFirestoreEmulator, doc, setDoc, updateDoc, deleteDoc, getDoc, getDocs, collection, query, where } from 'firebase/firestore';
 
 const app = initializeApp({ apiKey: 'fake-api-key', projectId: 'testsite-7f2a6' });
 const auth = getAuth(app);
@@ -124,6 +124,23 @@ await check('C: サイト全体の使用量を巨大な値に改竄  ★今回�
 await check('C: 想定外フィールドを混入', 'deny', () =>
   setDoc(doc(db, 'usage', `${uidC}_202608`), { uploadedBytes: 2500, isAdmin: true }));
 
+// ===== 共有リンク (shareLinks) =====
+console.log('\n--- ファイル転送の共有リンク ---');
+const uidS = await as('sam@example.com');
+await check('S: 自分の共有リンクを作成', 'allow', () =>
+  setDoc(doc(db, 'shareLinks', 'ABCD2345'), {
+    owner: uidS, fileId: 'f1', path: `userUploads/${uidS}/f1`,
+    downloadUrl: 'https://example.com/f1?token=secret', fileName: 'a.pdf', size: 1234,
+    createdAt: new Date(), expiresAt: null, retentionDays: 7,
+  }));
+
+await signOut(auth); // 共有リンクの受け取り手（未ログイン）
+await check('未ログイン: コードを知って単体取得（正規の利用）', 'allow', () =>
+  getDoc(doc(db, 'shareLinks', 'ABCD2345')));
+// コレクションを丸ごと引ければ、全ユーザーのファイルのダウンロードURLが取れてしまう
+await check('未ログイン: 共有リンクを一覧取得  ★今回の修正対象', 'deny', () =>
+  getDocs(collection(db, 'shareLinks')));
+
 // ===== 公開スケジュールの回答 (schedules/*/participants, responses) =====
 console.log('\n--- 公開スケジュールの回答 ---');
 await as('alice@example.com');
@@ -144,6 +161,57 @@ await check('未ログイン: 回答に巨大な値を入れる  ★今回の修
   setDoc(doc(db, 'schedules', SCHED, 'responses', 'r2'), { participantId: 'p1', optionId: 'o1', value: 'x'.repeat(100000) }));
 await check('未ログイン: 参加者を削除', 'deny', () =>
   deleteDoc(doc(db, 'schedules', SCHED, 'participants', 'p1')));
+
+// 共有URL（=ドキュメントID）を知っていれば開ける必要がある
+await check('未ログイン: 共有URLから単体取得（正規の利用）', 'allow', () =>
+  getDoc(doc(db, 'schedules', SCHED)));
+
+// URLを知らない第三者が公開スケジュールを総なめできてはいけない
+await check('未ログイン: 公開スケジュールを列挙  ★今回の修正対象', 'deny', () =>
+  getDocs(query(collection(db, 'schedules'), where('isPublic', '==', true))));
+
+const uidD = await as('trudy@example.com');
+await check('D: 他人の公開スケジュールを列挙  ★今回の修正対象', 'deny', () =>
+  getDocs(query(collection(db, 'schedules'), where('isPublic', '==', true))));
+await check('D: 自分のスケジュール一覧を取得（正規の利用）', 'allow', () =>
+  getDocs(query(collection(db, 'schedules'), where('ownerUid', '==', uidD))));
+
+// ScheduleTool は新しい共有URLを発行する前に「その slug が未使用か」を getDoc で確認する。
+// 存在しないドキュメントの get が deny だと、スケジュールが1件も作成できない。
+await check('D: 未使用slugの空き確認（新規作成の前提）  ★今回の修正対象', 'allow', () =>
+  getDoc(doc(db, 'schedules', 'NoSuchSlug1')));
+await signOut(auth);
+await check('未ログイン: 未使用slugを総当たりで探索', 'deny', () =>
+  getDoc(doc(db, 'schedules', 'NoSuchSlug2')));
+
+// ===== 回答期限を過ぎたスケジュール =====
+console.log('\n--- 回答期限（締切）後の書き込み ---');
+await as('alice@example.com');
+const CLOSED = 'closed-schedule-1';
+const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000);
+await check('A: 締切が過ぎた公開スケジュールを作成', 'allow', () =>
+  setDoc(doc(db, 'schedules', CLOSED), { ownerUid: uidA, isPublic: true, title: '締切済', deadline: yesterday }));
+// 主催者は締切後も参加者を追加・修正できる必要がある
+await check('A(主催者): 締切後に参加者を追加（正規の利用）', 'allow', () =>
+  setDoc(doc(db, 'schedules', CLOSED, 'participants', 'p1'), { name: '山田', createdAt: new Date(), updatedAt: new Date() }));
+
+await signOut(auth);
+await check('未ログイン: 締切後に参加者として登録  ★今回の修正対象', 'deny', () =>
+  setDoc(doc(db, 'schedules', CLOSED, 'participants', 'p9'), { name: '遅刻', createdAt: new Date(), updatedAt: new Date() }));
+await check('未ログイン: 締切後に回答を送信  ★今回の修正対象', 'deny', () =>
+  setDoc(doc(db, 'schedules', CLOSED, 'responses', 'r9'), { participantId: 'p1', optionId: 'o1', value: 'ok' }));
+// 締切が無いスケジュールはこれまで通り回答できる
+await check('未ログイン: 締切なしのスケジュールには回答できる（回帰確認）', 'allow', () =>
+  setDoc(doc(db, 'schedules', SCHED, 'responses', 'r3'), { participantId: 'p1', optionId: 'o2', value: 'ng' }));
+
+// ===== ダウンロード計測ガード（サーバー専用コレクション） =====
+console.log('\n--- ダウンロード計測ガード ---');
+await check('未ログイン: 計測マーカーを読む', 'deny', () =>
+  getDoc(doc(db, 'shareDownloadMarks', 'ABCD2345_x_2026083100')));
+await check('未ログイン: 計測マーカーを書き換えて計測を無効化', 'deny', () =>
+  setDoc(doc(db, 'shareDownloadMarks', 'ABCD2345_x_2026083100'), { createdAt: new Date() }));
+await check('未ログイン: 日次カウンタを書き換え', 'deny', () =>
+  setDoc(doc(db, 'shareDownloadDaily', 'ABCD2345_20260831'), { count: 0 }));
 
 const failed = results.filter((r) => !r.pass).length;
 console.log(`\n${results.length - failed}/${results.length} 件成功`);

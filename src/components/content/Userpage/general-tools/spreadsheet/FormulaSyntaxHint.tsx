@@ -3,27 +3,21 @@
 import React from 'react';
 
 // 関数名 -> 構文説明 のマップ
+// ★ここに載せてよいのは FormulaEngine に実装がある関数だけ。
+//   未実装のものを載せるとサジェストに出た関数が #NAME? になり、使えると誤解させる。
+//   （以前は SUMIF / VLOOKUP / INDEX / MATCH / LEFT など未実装の10個が並んでいた）
 const functionSignatures: Record<string, string> = {
   IF: 'IF(条件, 真の場合の値, 偽の場合の値)',
   SUM: 'SUM(数値1, 数値2, ...)',
   AVERAGE: 'AVERAGE(数値1, 数値2, ...)',
   MIN: 'MIN(数値1, 数値2, ...)',
   MAX: 'MAX(数値1, 数値2, ...)',
-  COUNT: 'COUNT(数値1, 数値2, ...)',
+  COUNT: 'COUNT(数値1, 数値2, ...)  ※数値セルのみ',
+  COUNTA: 'COUNTA(値1, 値2, ...)  ※空でないセル',
   ROUND: 'ROUND(数値, 桁数)',
+  ABS: 'ABS(数値)',
   TODAY: 'TODAY()',
   NOW: 'NOW()',
-  ABS: 'ABS(数値)',
-  SUMIF: 'SUMIF(範囲, 条件, [合計範囲])',
-  COUNTIF: 'COUNTIF(範囲, 条件)',
-  VLOOKUP: 'VLOOKUP(検索値, 範囲, 列番号, [完全一致])',
-  HLOOKUP: 'HLOOKUP(検索値, 範囲, 行番号, [完全一致])',
-  INDEX: 'INDEX(範囲, 行番号, [列番号])',
-  MATCH: 'MATCH(検索値, 範囲, [照合の型])',
-  CONCATENATE: 'CONCATENATE(文字列1, 文字列2, ...)',
-  LEFT: 'LEFT(文字列, 文字数)',
-  RIGHT: 'RIGHT(文字列, 文字数)',
-  MID: 'MID(文字列, 開始位置, 文字数)',
 };
 
 interface FormulaSyntaxHintProps {

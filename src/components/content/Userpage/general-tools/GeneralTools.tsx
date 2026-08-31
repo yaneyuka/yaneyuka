@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 // ★修正: ルーティング関連は削除（タブ切り替えでURLを変えないため）
 // import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import MapView from './MapView';
@@ -14,7 +14,7 @@ import BookmarkTool from './Bookmark';
 import UnitConverter from './UnitConverter';
 import AlarmTool from './AlarmTool';
 import MemoTool from './Memo';
-import { FiPlus, FiCheck, FiTrash2, FiCalendar, FiEdit2, FiPlusCircle } from 'react-icons/fi';
+import { FiEdit2, FiPlusCircle } from 'react-icons/fi';
 import { LockClosedIcon, LockOpenIcon } from '@heroicons/react/20/solid';
 import { 
   SiZoom, 
@@ -26,7 +26,7 @@ import {
 import { BsMicrosoftTeams } from 'react-icons/bs';
 import { useAuth } from '@/lib/AuthContext';
 import { db } from '@/lib/firebaseClient';
-import { collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot, setDoc, getDoc, getDocs, query, orderBy, serverTimestamp, writeBatch } from 'firebase/firestore';
+import { collection, addDoc, doc, updateDoc, onSnapshot, getDocs, query, orderBy, serverTimestamp, writeBatch } from 'firebase/firestore';
 
 interface CalculationHistory {
   id: string;
@@ -118,11 +118,43 @@ const formatExpressionForDisplay = (expression: string): string => {
   return result;
 };
 
-interface SearchResult {
-  lat: string;
-  lon: string;
-  display_name: string;
-}
+// --- 関数電卓の数式変換 ---
+// 表示用の式（sin( / nCr / π / ^ など）をJavaScriptで評価できる形に直す。
+// 置換は「1回のパスでまとめて」行う。個別に .replace を重ねると
+// asin( → Math.asin( を作った直後に sin( が再マッチして壊れるため。
+const FUNC_MAP: Record<string, string> = {
+  asin: 'Math.asin',
+  acos: 'Math.acos',
+  atan: 'Math.atan',
+  sin: 'Math.sin',
+  cos: 'Math.cos',
+  tan: 'Math.tan',
+  log: 'Math.log10',
+  ln: 'Math.log',
+  sqrt: 'Math.sqrt',
+  cbrt: 'Math.cbrt',
+  exp: 'Math.exp',
+};
+
+// nCr（組合せ）。乗除を交互に行い、途中で桁溢れしないようにする。
+const nCr = (n: number, r: number): number => {
+  if (!Number.isInteger(n) || !Number.isInteger(r) || n < 0 || r < 0 || r > n) return NaN;
+  let result = 1;
+  for (let i = 1; i <= r; i++) {
+    result = (result * (n - r + i)) / i;
+  }
+  return Math.round(result);
+};
+
+const toEvaluableExpression = (raw: string): string =>
+  raw
+    // nCr は中置記法なので先に関数呼び出しへ（例: 5nCr2 → nCr(5,2)）
+    .replace(/(\d+(?:\.\d+)?)nCr(\d+(?:\.\d+)?)/g, 'nCr($1,$2)')
+    .replace(/\b(asin|acos|atan|sin|cos|tan|log|ln|sqrt|cbrt|exp)\(/g, (_m, name: string) => `${FUNC_MAP[name]}(`)
+    .replace(/π/g, 'Math.PI')
+    .replace(/\^/g, '**')
+    // JSは -2**2 を構文エラーにするので、負数の底を括弧でくくる（電卓と同じ (-2)²=4）
+    .replace(/(^|[+\-*/(,])(-\d+(?:\.\d+)?)\*\*/g, '$1($2)**');
 
 const MapSection: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -192,6 +224,17 @@ const ONLINE_MEETING_TOOLS = [
 ];
 
 
+// SHIFT併用時に切り替わるボタン（表示ラベル → 入力トークン）
+const SHIFT_ALIASES: Record<string, { label: string; input: string }> = {
+  sin: { label: 'sin⁻¹', input: 'asin(' },
+  cos: { label: 'cos⁻¹', input: 'acos(' },
+  tan: { label: 'tan⁻¹', input: 'atan(' },
+  log: { label: '10ˣ', input: '10^(' },
+  ln: { label: 'eˣ', input: 'exp(' },
+  '√': { label: '∛', input: 'cbrt(' },
+  'x²': { label: 'x³', input: '^3' },
+};
+
 type TabType =
   | 'memo'
   | 'sheet'
@@ -206,22 +249,6 @@ type TabType =
   | 'unit-converter'
   | 'bookmark'
   | 'alarm';
-
-const VALID_TABS: TabType[] = [
-  'memo',
-  'sheet',
-  'calc',
-  'olmt',
-  'schedule',
-  'map',
-  'image-converter',
-  'pdf-compressor',
-  'temp-storage',
-  'file-transfer',
-  'unit-converter',
-  'bookmark',
-  'alarm'
-];
 
 const GeneralTools: React.FC = () => {
   // ★修正: ルーター関連の処理を削除
@@ -243,10 +270,6 @@ const GeneralTools: React.FC = () => {
   const [tempMemo, setTempMemo] = useState('');
   const [lastCalculated, setLastCalculated] = useState<boolean>(false); // 計算直後かどうかを示すフラグ
   
-  // ハイライト色の状態
-  const [highlightColor, setHighlightColor] = useState('#ffff00');
-  const highlightColorInputRef = useRef<HTMLInputElement>(null);
-
   const { currentUser, isLoggedIn } = useAuth();
 
   useEffect(() => {
@@ -326,9 +349,17 @@ const GeneralTools: React.FC = () => {
       case 'SHIFT':
         setShiftMode(!shiftMode);
         break;
-      case 'ALPHA':
-      case 'MODE':
-        // 実装予定
+      case 'π':
+        appendToExpression('π');
+        setLastCalculated(false);
+        break;
+      case 'x⁻¹':
+        appendToExpression('^(-1)');
+        setLastCalculated(false);
+        break;
+      case 'nCr':
+        appendToExpression('nCr');
+        setLastCalculated(false);
         break;
       case 'Ans':
         if (lastCalculated) {
@@ -349,49 +380,35 @@ const GeneralTools: React.FC = () => {
         appendToExpression('/');
         setLastCalculated(false);
         break;
+      // SHIFT併用で逆関数に切り替わるキー群
       case 'x²':
-        appendToExpression('^2');
+      case '√':
+      case 'log':
+      case 'ln':
+      case 'sin':
+      case 'cos':
+      case 'tan': {
+        const normal: Record<string, string> = {
+          'x²': '^2', '√': 'sqrt(', log: 'log(', ln: 'ln(',
+          sin: 'sin(', cos: 'cos(', tan: 'tan(',
+        };
+        appendToExpression(shiftMode ? SHIFT_ALIASES[input].input : normal[input]);
+        if (shiftMode) setShiftMode(false); // 実機と同じくSHIFTは1回押すと解除
         setLastCalculated(false);
         break;
+      }
       case 'x^':
         appendToExpression('^');
         setLastCalculated(false);
         break;
-      case '√':
-        appendToExpression('sqrt(');
-        setLastCalculated(false);
-        break;
-      case 'log':
-        appendToExpression('log(');
-        setLastCalculated(false);
-        break;
-      case 'ln':
-        appendToExpression('ln(');
-        setLastCalculated(false);
-        break;
-      case 'sin':
-        appendToExpression('sin(');
-        setLastCalculated(false);
-        break;
-      case 'cos':
-        appendToExpression('cos(');
-        setLastCalculated(false);
-        break;
-      case 'tan':
-        appendToExpression('tan(');
-        setLastCalculated(false);
-        break;
       case 'EXP':
-        appendToExpression('e^');
+        // 電卓の EXP は指数入力（×10ˣ）
+        appendToExpression('*10^');
         setLastCalculated(false);
         break;
       case '(-)':
-        if (calculatorExpression === '' || calculatorExpression === '0') {
-          setCalculatorExpression('-');
-          setCalculatorDisplay('-');
-        } else {
-          appendToExpression('*(-1)');
-        }
+        // 符号入力。JS は -5 / 5+-3 をそのまま解釈できる
+        appendToExpression('-');
         setLastCalculated(false);
         break;
       default:
@@ -414,15 +431,18 @@ const GeneralTools: React.FC = () => {
 
   // 安全な数式評価（evalを使わない）
   const safeEvaluate = (expr: string): number => {
-    // 許可する文字: 数字, 演算子, 括弧, 小数点, スペース, Math関数
+    // 許可する文字: 数字, 演算子, 括弧, 小数点, スペース, 既知のMath関数, nCr
     const sanitized = expr.replace(/\s/g, '');
-    // 危険な文字列が含まれていないかチェック
-    if (/[a-zA-Z]/.test(sanitized.replace(/Math\.(sin|cos|tan|log10|log|sqrt|PI|exp|abs|ceil|floor|round|pow|min|max|E)\b/g, ''))) {
+    const withoutKnownTokens = sanitized
+      .replace(/Math\.(asin|acos|atan|sin|cos|tan|log10|log|sqrt|cbrt|exp|PI|E)\b/g, '')
+      .replace(/nCr/g, '');
+    // 未知の識別子が残っていたら評価しない
+    if (/[a-zA-Z]/.test(withoutKnownTokens)) {
       throw new Error('Invalid expression');
     }
-    // Function constructorで安全に評価（グローバルスコープにアクセスできない）
-    const fn = new Function('Math', `"use strict"; return (${expr});`);
-    const result = fn(Math);
+    // Function constructorで評価（グローバルスコープにアクセスできない）
+    const fn = new Function('Math', 'nCr', `"use strict"; return (${expr});`);
+    const result = fn(Math, nCr);
     if (typeof result !== 'number' || !isFinite(result)) {
       throw new Error('Invalid result');
     }
@@ -432,18 +452,7 @@ const GeneralTools: React.FC = () => {
   // 計算結果を履歴に追加する関数を更新
   const calculateResult = async () => {
     try {
-      const expression = calculatorExpression
-        .replace(/sin\(/g, 'Math.sin(')
-        .replace(/cos\(/g, 'Math.cos(')
-        .replace(/tan\(/g, 'Math.tan(')
-        .replace(/log\(/g, 'Math.log10(')
-        .replace(/ln\(/g, 'Math.log(')
-        .replace(/sqrt\(/g, 'Math.sqrt(')
-        .replace(/\^/g, '**')
-        .replace(/π/g, 'Math.PI')
-        .replace(/e\^/g, 'Math.exp(');
-
-      const result = safeEvaluate(expression);
+      const result = safeEvaluate(toEvaluableExpression(calculatorExpression));
       const resultString = result.toString();
       
       setCalculatorDisplay(resultString);
@@ -486,6 +495,10 @@ const GeneralTools: React.FC = () => {
   };
 
   const clearCalculatorHistory = async () => {
+    const deletable = calculatorHistory.filter(item => !item.isLocked);
+    if (deletable.length === 0) return;
+    if (!confirm(`ロックしていない履歴 ${deletable.length} 件を削除します。よろしいですか？`)) return;
+
     setCalculatorHistory(prev => prev.filter(item => item.isLocked));
     if (!currentUser) return;
 
@@ -644,6 +657,9 @@ const GeneralTools: React.FC = () => {
     );
   };
 
+  // SHIFT中は逆関数ラベルに差し替える
+  const keyLabel = (key: string) => (shiftMode && SHIFT_ALIASES[key] ? SHIFT_ALIASES[key].label : key);
+
   // 計算機本体の表示部分を更新
   const renderCalculator = () => (
     <div className="w-full bg-white rounded-b-lg shadow-sm border-b border-gray-100">
@@ -679,22 +695,22 @@ const GeneralTools: React.FC = () => {
             <div className="grid grid-cols-5 gap-1">
               {/* Row 1 */}
               <button onClick={() => calculatorInput('SHIFT')} className={`text-[10px] ${shiftMode ? 'bg-blue-600' : 'bg-gray-700'} hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded`}>SHIFT</button>
-              <button onClick={() => calculatorInput('ALPHA')} className="text-[10px] bg-gray-700 hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">ALPHA</button>
-              <button onClick={() => calculatorInput('MODE')} className="text-[10px] bg-gray-700 hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">MODE</button>
+              <button onClick={() => calculatorInput('π')} className="text-[10px] bg-gray-700 hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">π</button>
+              <button onClick={() => calculatorInput('x⁻¹')} className="text-[10px] bg-gray-700 hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">x⁻¹</button>
               <button onClick={() => calculatorInput('DEL')} className="text-[10px] bg-gray-700 hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">DEL</button>
               <button onClick={() => calculatorInput('AC')} className="text-[10px] bg-gray-600 hover:bg-gray-500 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">AC</button>
 
               {/* Row 2 */}
-              <button onClick={() => calculatorInput('x²')} className="text-[10px] bg-gray-700 hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">x²</button>
+              <button onClick={() => calculatorInput('x²')} className="text-[10px] bg-gray-700 hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">{keyLabel('x²')}</button>
               <button onClick={() => calculatorInput('x^')} className="text-[10px] bg-gray-700 hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">x^</button>
-              <button onClick={() => calculatorInput('√')} className="text-[10px] bg-gray-700 hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">√</button>
-              <button onClick={() => calculatorInput('log')} className="text-[10px] bg-gray-700 hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">log</button>
-              <button onClick={() => calculatorInput('ln')} className="text-[10px] bg-gray-700 hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">ln</button>
+              <button onClick={() => calculatorInput('√')} className="text-[10px] bg-gray-700 hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">{keyLabel('√')}</button>
+              <button onClick={() => calculatorInput('log')} className="text-[10px] bg-gray-700 hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">{keyLabel('log')}</button>
+              <button onClick={() => calculatorInput('ln')} className="text-[10px] bg-gray-700 hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">{keyLabel('ln')}</button>
 
               {/* Row 3 */}
-              <button onClick={() => calculatorInput('sin')} className="text-[10px] bg-gray-700 hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">sin</button>
-              <button onClick={() => calculatorInput('cos')} className="text-[10px] bg-gray-700 hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">cos</button>
-              <button onClick={() => calculatorInput('tan')} className="text-[10px] bg-gray-700 hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">tan</button>
+              <button onClick={() => calculatorInput('sin')} className="text-[10px] bg-gray-700 hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">{keyLabel('sin')}</button>
+              <button onClick={() => calculatorInput('cos')} className="text-[10px] bg-gray-700 hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">{keyLabel('cos')}</button>
+              <button onClick={() => calculatorInput('tan')} className="text-[10px] bg-gray-700 hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">{keyLabel('tan')}</button>
               <button onClick={() => calculatorInput('nCr')} className="text-[10px] bg-gray-700 hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">nCr</button>
               <button onClick={() => calculatorInput('EXP')} className="text-[10px] bg-gray-700 hover:bg-gray-600 text-gray-200 shadow-sm active:shadow-inner active:translate-y-[0.5px] transition-all py-2 px-1 text-center rounded">EXP</button>
 
@@ -795,165 +811,6 @@ const GeneralTools: React.FC = () => {
   );
 
 
-  const renderTools = () => (
-    <div className="p-4">
-      <div className="flex space-x-2 mb-4">
-        <button
-          onClick={() => setActiveTab('map')}
-          className={`px-4 py-2 rounded ${
-            activeTab === 'map'
-              ? 'bg-blue-500 text-white'
-              : 'bg-gray-100 hover:bg-gray-200'
-          }`}
-        >
-          地図
-        </button>
-
-        <button
-          onClick={() => setActiveTab('olmt')}
-          className={`px-4 py-2 rounded ${
-            activeTab === 'olmt'
-              ? 'bg-blue-500 text-white'
-              : 'bg-gray-100 hover:bg-gray-200'
-          }`}
-        >
-          OLMT
-        </button>
-
-        <button
-          onClick={() => setActiveTab('schedule')}
-          className={`px-4 py-2 rounded ${
-            activeTab === 'schedule'
-              ? 'bg-blue-500 text-white'
-              : 'bg-gray-100 hover:bg-gray-200'
-          }`}
-        >
-          スケ調
-        </button>
-
-        <button
-          onClick={() => setActiveTab('memo')}
-          className={`px-4 py-2 rounded ${
-            activeTab === 'memo'
-              ? 'bg-blue-500 text-white'
-              : 'bg-gray-100 hover:bg-gray-200'
-          }`}
-        >
-          メモ
-        </button>
-
-          <button
-            onClick={() => setActiveTab('sheet')}
-            className={`px-4 py-1 text-xs rounded focus:outline-none transition ${
-              activeTab === 'sheet' 
-                ? 'bg-gray-700 text-white' 
-                : 'bg-gray-200 hover:bg-gray-700 hover:text-white'
-            }`}
-          >
-            表計算
-        </button>
-
-        <button
-          onClick={() => setActiveTab('calc')}
-          className={`px-4 py-2 rounded ${
-            activeTab === 'calc'
-              ? 'bg-blue-500 text-white'
-              : 'bg-gray-100 hover:bg-gray-200'
-          }`}
-        >
-          関数電卓
-        </button>
-
-        <button
-          onClick={() => setActiveTab('image-converter')}
-          className={`px-4 py-2 rounded ${
-            activeTab === 'image-converter'
-              ? 'bg-blue-500 text-white'
-              : 'bg-gray-100 hover:bg-gray-200'
-          }`}
-        >
-          画像変換
-        </button>
-
-        <button
-          onClick={() => setActiveTab('pdf-compressor')}
-          className={`px-4 py-2 rounded ${
-            activeTab === 'pdf-compressor'
-              ? 'bg-blue-500 text-white'
-              : 'bg-gray-100 hover:bg-gray-200'
-          }`}
-        >
-          PDF圧縮
-        </button>
-
-        <button
-          onClick={() => setActiveTab('temp-storage')}
-          className={`px-4 py-2 rounded ${
-            activeTab === 'temp-storage'
-              ? 'bg-blue-500 text-white'
-              : 'bg-gray-100 hover:bg-gray-200'
-          }`}
-        >
-          一時ファイル
-        </button>
-
-        <button
-          onClick={() => setActiveTab('file-transfer')}
-          className={`px-4 py-2 rounded ${
-            activeTab === 'file-transfer'
-              ? 'bg-blue-500 text-white'
-              : 'bg-gray-100 hover:bg-gray-200'
-          }`}
-        >
-          ファイル転送
-        </button>
-
-        <button
-          onClick={() => setActiveTab('unit-converter')}
-          className={`px-4 py-2 rounded ${
-            activeTab === 'unit-converter'
-              ? 'bg-blue-500 text-white'
-              : 'bg-gray-100 hover:bg-gray-200'
-          }`}
-        >
-          単位変換
-        </button>
-
-        <button
-          onClick={() => setActiveTab('alarm')}
-          className={`px-4 py-2 rounded ${
-            activeTab === 'alarm'
-              ? 'bg-blue-500 text-white'
-              : 'bg-gray-100 hover:bg-gray-200'
-          }`}
-        >
-          アラーム
-        </button>
-
-        <button
-          onClick={() => setActiveTab('bookmark')}
-          className={`px-4 py-2 rounded ${
-            activeTab === 'bookmark'
-              ? 'bg-blue-500 text-white'
-              : 'bg-gray-100 hover:bg-gray-200'
-          }`}
-        >
-          ブックマーク
-        </button>
-      </div>
-
-      {activeTab === 'memo' && <MemoTool />}
-      {activeTab === 'olmt' && renderOLMT()}
-      {activeTab === 'calc' && renderCalculator()}
-      {activeTab === 'image-converter' && <ImageConverter />}
-      {activeTab === 'map' && <MapSection />}
-      {activeTab === 'pdf-compressor' && <PDFCompressor />}
-      {activeTab === 'unit-converter' && <UnitConverter />}
-      {activeTab === 'alarm' && <AlarmTool />}
-      {activeTab === 'bookmark' && <BookmarkTool />}
-    </div>
-  );
-
   // キーボードイベントのハンドラーを追加
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -971,6 +828,12 @@ const GeneralTools: React.FC = () => {
       // アクティブタブが関数電卓の場合のみ処理
       if (activeTab !== 'calc') {
         return;
+      }
+
+      // 電卓が受け取るキーはブラウザ既定動作（Backspaceで前ページへ戻る等）を止める
+      const handledKeys = ['0','1','2','3','4','5','6','7','8','9','.','+','-','*','/','Enter','Backspace','Escape','(',')','^'];
+      if (handledKeys.includes(e.key)) {
+        e.preventDefault();
       }
 
       // キーに応じた処理

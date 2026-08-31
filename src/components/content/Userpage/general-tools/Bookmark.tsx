@@ -6,16 +6,38 @@ import { useAuth } from '@/lib/AuthContext';
 import { db } from '@/lib/firebaseClient';
 import { collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot, query, orderBy } from 'firebase/firestore';
 
+// スキームを省略して入力されたURL（例: example.com）は相対リンク扱いになり
+// サイト内に飛んでしまうため、https:// を補って正規化する。
+const normalizeUrl = (url: string): string => {
+  const trimmed = (url || '').trim();
+  if (!trimmed) return '';
+  if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(trimmed)) return trimmed; // http: https: mailto: など
+  return `https://${trimmed}`;
+};
+
 // --- ファビコン取得用ヘルパー関数 ---
 const getFaviconUrl = (url: string) => {
   try {
     if (!url) return null;
-    const domain = new URL(url).hostname;
+    const domain = new URL(normalizeUrl(url)).hostname;
     // Googleの非公式APIを使用してファビコンを取得 (sz=64はサイズ)
     return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
   } catch {
     return null;
   }
+};
+
+// Firestoreには createdAt/updatedAt を数値(ミリ秒)で書き込んでいるので、
+// 読み出しも数値優先で扱う。Timestamp前提で toDate() だけを見ると
+// 常に現在時刻へフォールバックしてしまい、日時が意味を失う。
+const toDate = (value: any): Date => {
+  if (typeof value === 'number') return new Date(value);
+  if (value?.toDate) return value.toDate();
+  if (typeof value === 'string') {
+    const parsed = new Date(value);
+    if (!isNaN(parsed.getTime())) return parsed;
+  }
+  return new Date(0);
 };
 
 interface Bookmark {
@@ -55,6 +77,13 @@ const BookmarkTool: React.FC = () => {
   const autoSaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isComposingRef = useRef<boolean>(false);
   const isEditingRef = useRef<boolean>(false);
+  // onSnapshot は [currentUser] で1度だけ購読するため、
+  // ハンドラ内で currentBookmark を直接読むと購読時点の値（null）で固定される。
+  const currentBookmarkRef = useRef<Bookmark | null>(null);
+
+  useEffect(() => {
+    currentBookmarkRef.current = currentBookmark;
+  }, [currentBookmark]);
 
   // Firestore購読 (既存ロジックそのまま)
   useEffect(() => {
@@ -88,8 +117,8 @@ const BookmarkTool: React.FC = () => {
           description: data.description || '',
           category: data.category || '',
           tags: data.tags || [],
-          createdAt: data.createdAt?.toDate?.() || new Date(),
-          updatedAt: data.updatedAt?.toDate?.() || new Date(),
+          createdAt: toDate(data.createdAt),
+          updatedAt: toDate(data.updatedAt),
           isFavorite: data.isFavorite || false,
         };
       });
@@ -102,8 +131,9 @@ const BookmarkTool: React.FC = () => {
       } catch {}
       
       // 選択状態の復元
-      if (currentBookmark) {
-        const updated = list.find((b) => b.id === currentBookmark.id);
+      const active = currentBookmarkRef.current;
+      if (active) {
+        const updated = list.find((b) => b.id === active.id);
         if (updated) setCurrentBookmark(updated);
       }
     });
@@ -183,7 +213,7 @@ const BookmarkTool: React.FC = () => {
     const updatedBookmark = {
       ...currentBookmark,
       title: bookmarkTitle,
-      url: bookmarkUrl,
+      url: normalizeUrl(bookmarkUrl),
       description: bookmarkDescription,
       category: bookmarkCategory,
       tags: bookmarkTags.split(',').map((t) => t.trim()).filter(Boolean),
@@ -217,6 +247,7 @@ const BookmarkTool: React.FC = () => {
   // 削除処理 (既存ロジック)
   const deleteCurrentBookmark = async () => {
     if (!currentBookmark || !currentUser) return;
+    if (!confirm(`「${currentBookmark.title || '無題'}」を削除します。よろしいですか？`)) return;
     const id = currentBookmark.id;
     setBookmarks((prev) => prev.filter((b) => b.id !== id));
     const nextList = bookmarks.filter((b) => b.id !== id);
@@ -372,7 +403,7 @@ const BookmarkTool: React.FC = () => {
               {filteredBookmarks.map((bookmark) => (
                 <a
                   key={bookmark.id}
-                  href={bookmark.url}
+                  href={normalizeUrl(bookmark.url)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group relative flex flex-col items-center p-4 bg-white border border-gray-200 rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
@@ -468,6 +499,18 @@ const BookmarkTool: React.FC = () => {
                     </option>
                   ))}
                 </select>
+                <select
+                  value={tagFilter}
+                  onChange={(e) => setTagFilter(e.target.value)}
+                  className="w-full text-[11px] border rounded px-2 py-1.5"
+                >
+                  <option value="">全タグ</option>
+                  {allTags.map((t) => (
+                    <option key={t} value={t}>
+                      {t}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="flex-1 overflow-y-auto space-y-2">
@@ -516,9 +559,9 @@ const BookmarkTool: React.FC = () => {
                   {currentBookmark && (
                     <div className="flex gap-2">
                       <a
-                        href={bookmarkUrl}
+                        href={normalizeUrl(bookmarkUrl)}
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noopener noreferrer"
                         className="p-2 bg-gray-100 rounded hover:bg-gray-200 text-gray-600"
                       >
                         <FiExternalLink />
@@ -581,7 +624,7 @@ const BookmarkTool: React.FC = () => {
                     </div>
                   </div>
                   <div>
-                    <label className="text-[10px] text-gray-500 font-bold">メモ・ログイン情報など</label>
+                    <label className="text-[10px] text-gray-500 font-bold">メモ</label>
                     <textarea
                       value={bookmarkDescription}
                       onChange={(e) => {
@@ -589,7 +632,7 @@ const BookmarkTool: React.FC = () => {
                         setBookmarkDescription(e.target.value);
                       }}
                       className="w-full text-[12px] p-2 border rounded h-32 resize-none"
-                      placeholder="共有事項があればここに記入"
+                      placeholder="共有事項があればここに記入（パスワード等の認証情報は保存しないでください）"
                     />
                   </div>
                 </div>
