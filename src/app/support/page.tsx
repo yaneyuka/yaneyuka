@@ -94,6 +94,13 @@ const SUPPORTED_APPS: SupportedApp[] = [
     enDesc: 'Japanese Fire Service Law reference',
     privacy: 'https://yaneyuka.com/shoubouhou-app-privacy-policy/',
   },
+  {
+    name: '計測ボックス / MeasureBox',
+    jaDesc: 'iPhone のセンサーを使う24種の計測ツール',
+    enDesc: '24 measuring tools using the iPhone sensors',
+    privacy: 'https://yaneyuka.com/measurebox-privacy-policy/',
+    terms: 'https://yaneyuka.com/measurebox-terms/',
+  },
 ];
 
 export default function SupportPage() {
@@ -114,7 +121,7 @@ function JapaneseContent() {
   return (
     <div className="bg-white p-4 rounded border border-gray-300 text-[13px] leading-6 text-gray-800 space-y-4">
       <p className="text-[12px] text-gray-500">
-        <strong>最終更新日:</strong> 2026年5月29日
+        <strong>最終更新日:</strong> 2026年9月1日
       </p>
       <p>yaneyuka.com で配信している iOS アプリ全般のサポートページです。各アプリ共通のお問い合わせ先、よくある質問、対応アプリ一覧を掲載しています。</p>
 
@@ -199,7 +206,7 @@ function EnglishContent() {
   return (
     <div className="bg-white p-4 rounded border border-gray-300 text-[13px] leading-6 text-gray-800 space-y-4">
       <p className="text-[12px] text-gray-500">
-        <strong>Last updated:</strong> May 29, 2026
+        <strong>Last updated:</strong> September 1, 2026
       </p>
       <p>This page provides general support for all iOS apps distributed under yaneyuka.com. You will find contact information, frequently asked questions, and a list of supported apps below.</p>
 

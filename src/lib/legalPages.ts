@@ -39,6 +39,9 @@ export const LEGAL_APPS: LegalApp[] = [
   { label: 'Noteleaf', privacy: '/noteleaf-app-privacy-policy/' },
   { label: 'Weatherchime', privacy: '/weatherchime-privacy-policy/' },
   { label: 'Accoria', privacy: '/accoria-privacy-policy/' },
+  // 計測ボックス。計測値の免責が必要なため独自の利用規約を持つ
+  // （サポートは全アプリ共通の /support/ を使うので support は持たせない）
+  { label: '計測ボックス', privacy: '/measurebox-privacy-policy/', terms: '/measurebox-terms/' },
 ];
 
 /** 末尾スラッシュを外して比較用に揃える（next.config.js の trailingSlash 対策） */
