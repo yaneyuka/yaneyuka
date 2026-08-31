@@ -178,6 +178,36 @@ service cloud.firestore {
       allow delete: if request.auth != null && resource.data.owner == request.auth.uid;
     }
 
+    // 表計算シートの閲覧専用公開。
+    // 所有者が「共有」したときだけ、その時点の内容の写しがここに置かれる。
+    // 元データ（users/{uid}/sheets/*）は本人しか読めないままなので、
+    // 公開したいシートだけを、コードを知っている人に見せられる。
+    match /sheetShares/{code} {
+      // 単体取得のみ。list を許すとコードを知らなくても全件読めてしまう
+      allow get: if true;
+      allow list: if false;
+      function sheetShareShapeOk() {
+        return request.resource.data.keys().hasOnly([
+            'owner', 'sheetId', 'name', 'rows', 'cols',
+            'cells', 'formats', 'merges', 'condRules', 'colWidths',
+            'createdAt', 'updatedAt'
+          ])
+          && request.resource.data.name is string
+          && request.resource.data.name.size() <= 100;
+      }
+      allow create: if request.auth != null
+        && request.resource.data.owner == request.auth.uid
+        && sheetShareShapeOk();
+      // ★update は「今の持ち主が自分であること」も見る。
+      //   request.resource（これから書く内容）の owner だけを見ていると、
+      //   第三者が owner を自分の uid にして他人の公開シートを乗っ取れる。
+      allow update: if request.auth != null
+        && resource.data.owner == request.auth.uid
+        && request.resource.data.owner == request.auth.uid
+        && sheetShareShapeOk();
+      allow delete: if request.auth != null && resource.data.owner == request.auth.uid;
+    }
+
     // 共有リンクのダウンロード計測ガード（/api/share/download が Admin SDK で読み書きする）。
     // クライアントから触れると計測を水増しできてしまうので完全に閉じる。
     match /shareDownloadMarks/{markId} {

@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useAuth } from '@/lib/AuthContext';
 import { db } from '@/lib/firebaseClient';
-import { collection, doc, deleteDoc, onSnapshot, setDoc, getDoc, getDocs } from 'firebase/firestore';
+import { collection, doc, deleteDoc, onSnapshot, setDoc, updateDoc, deleteField, getDoc, getDocs } from 'firebase/firestore';
 import * as XLSX from 'xlsx';
 import { 
   ArrowUturnLeftIcon, 
@@ -98,6 +98,12 @@ const Spreadsheet: React.FC = () => {
   const [findText, setFindText] = useState('');
   const [replaceText, setReplaceText] = useState('');
   const importInputRef = useRef<HTMLInputElement>(null);
+  const [shareCode, setShareCode] = useState<string | null>(null);
+  const [sharing, setSharing] = useState(false);
+  /** 直近に Firestore へ書いた内容。次回の差分計算の基準になる */
+  const lastSavedRef = useRef<(SheetData & { colWidths: number[] }) | null>(null);
+  /** デバウンス待ちの保存内容 */
+  const pendingSheetRef = useRef<(SheetData & { colWidths: number[] }) | null>(null);
   /** 直前に Ctrl+C したときの範囲。貼り付け時の参照ずらしに使う */
   const copySourceRef = useRef<{ r: number; c: number; text: string } | null>(null);
   const [condOpen, setCondOpen] = useState(false);
@@ -170,35 +176,88 @@ const Spreadsheet: React.FC = () => {
       // localStorage の容量超過。Firestore には入る可能性があるので続行する
     }
     setSaveState('saving');
+    pendingSheetRef.current = { ...next, colWidths } as SheetData & { colWidths: number[] };
     if (sheetSaveTimer.current) window.clearTimeout(sheetSaveTimer.current);
-    sheetSaveTimer.current = window.setTimeout(async () => {
-      const payload = {
-        name: next.name,
-        rows: next.rows,
-        cols: next.cols,
-        cells: next.cells,
-        formats: next.formats || {},
-        merges: next.merges || [],
-        condRules: next.condRules || [],
-        colWidths,
-      };
-      // Firestore の上限は 1MiB。近づいたら先に警告する（超えると保存自体が失敗する）
-      const bytes = new Blob([JSON.stringify(payload)]).size;
-      setDocBytes(bytes);
-      try {
-        await setDoc(doc(db, 'users', currentUser.uid, 'sheets', currentSheetId), payload);
-        setSaveState('saved');
-        setSaveError(null);
-      } catch (e) {
-        console.error('シートの保存に失敗しました', e);
-        setSaveState('error');
-        setSaveError(
-          bytes > 900_000
-            ? 'このシートは容量の上限に達しているため保存できません。不要な行・列を削除してください。'
-            : '保存できませんでした。通信状態を確認してください。',
-        );
+    sheetSaveTimer.current = window.setTimeout(() => { void flushSave(); }, 500);
+  };
+
+  /**
+   * 実際の書き込み。前回保存した内容と突き合わせて、変わったセルだけを送る。
+   *
+   * ★シート全体を setDoc で上書きしていると、別のタブや別の端末で開いている
+   *   同じシートの編集を丸ごと踏み潰す（後勝ち）。フィールド単位の updateDoc なら
+   *   Firestore 側で別々のセルの変更がマージされるので、両方が残る。
+   *   送信量も 1セル数十バイトで済む。
+   */
+  const flushSave = async () => {
+    const next = pendingSheetRef.current;
+    if (!currentUser || !next) return;
+    pendingSheetRef.current = null;
+    const ref = doc(db, 'users', currentUser.uid, 'sheets', currentSheetId);
+
+    const full: SheetData & { colWidths: number[] } = {
+      id: currentSheetId,
+      name: next.name,
+      rows: next.rows,
+      cols: next.cols,
+      cells: next.cells,
+      formats: next.formats || {},
+      merges: next.merges || [],
+      condRules: next.condRules || [],
+      colWidths: next.colWidths,
+    };
+    // Firestore の1ドキュメント上限は 1MiB。近づいたら警告する（超えると保存自体が失敗する）
+    const bytes = new Blob([JSON.stringify(full)]).size;
+    setDocBytes(bytes);
+
+    const prev = lastSavedRef.current;
+    // 変更点を「フィールドパス → 値」に落とす。消えたセルは deleteField を入れる
+    const patch: Record<string, any> = {};
+    let cellChanges = 0;
+    if (prev) {
+      for (const [key, value] of Object.entries(next.cells)) {
+        if (prev.cells[key] !== value) { patch[`cells.${key}`] = value; cellChanges++; }
       }
-    }, 500);
+      for (const key of Object.keys(prev.cells)) {
+        if (!(key in next.cells)) { patch[`cells.${key}`] = deleteField(); cellChanges++; }
+      }
+      const nf = next.formats || {}, pf = prev.formats || {};
+      for (const [key, value] of Object.entries(nf)) {
+        if (JSON.stringify(pf[key]) !== JSON.stringify(value)) patch[`formats.${key}`] = value;
+      }
+      for (const key of Object.keys(pf)) {
+        if (!(key in nf)) patch[`formats.${key}`] = deleteField();
+      }
+      // 配列・スカラーは丸ごと入れ替える（小さいので差分にする意味がない）
+      if (prev.name !== next.name) patch.name = next.name;
+      if (prev.rows !== next.rows) patch.rows = next.rows;
+      if (prev.cols !== next.cols) patch.cols = next.cols;
+      if (JSON.stringify(prev.merges || []) !== JSON.stringify(next.merges || [])) patch.merges = next.merges || [];
+      if (JSON.stringify(prev.condRules || []) !== JSON.stringify(next.condRules || [])) patch.condRules = next.condRules || [];
+      if (JSON.stringify(prev.colWidths) !== JSON.stringify(next.colWidths)) patch.colWidths = next.colWidths;
+    }
+
+    try {
+      // 初回、または行列の挿入削除・取込のようにほぼ全セルが動いたときは丸ごと書く
+      if (!prev || cellChanges > 400) {
+        const { id: _id, ...payload } = full; // id はドキュメントIDなので中身には入れない
+        void _id;
+        await setDoc(ref, payload);
+      } else if (Object.keys(patch).length > 0) {
+        await updateDoc(ref, patch);
+      }
+      lastSavedRef.current = full;
+      setSaveState('saved');
+      setSaveError(null);
+    } catch (e) {
+      console.error('シートの保存に失敗しました', e);
+      setSaveState('error');
+      setSaveError(
+        bytes > 900_000
+          ? 'このシートは容量の上限に達しているため保存できません。不要な行・列を削除してください。'
+          : '保存できませんでした。通信状態を確認してください。',
+      );
+    }
   };
 
   /** 現在の状態をUndo履歴に積む */
@@ -458,6 +517,11 @@ const Spreadsheet: React.FC = () => {
     historyManager.current.clear()
     setSaveState('idle')
     setSaveError(null)
+    // 差分の基準もリセットする。別シートの内容を基準に差分を出すと、
+    // 「消えたセル」を大量に検出して他シートを壊しかねない
+    lastSavedRef.current = null
+    pendingSheetRef.current = null
+    try { setShareCode(localStorage.getItem(`sheetShare:${currentUser.uid}:${currentSheetId}`)) } catch { setShareCode(null) }
     try {
       const cached = localStorage.getItem(`sheet:${currentUser.uid}:${currentSheetId}`)
       if (cached) setSheet(JSON.parse(cached))
@@ -472,6 +536,15 @@ const Spreadsheet: React.FC = () => {
           setSheet(next)
           // 列幅も復元する（以前は保存していなかったのでリロードで既定幅に戻っていた）
           if (Array.isArray(data.colWidths) && data.colWidths.length) setColWidths(data.colWidths)
+          // 差分の基準をサーバーの内容に合わせる。
+          // 別のタブや端末が書き込んだあとに古い基準で差分を出すと、
+          // 相手の変更を「消えたセル」とみなして削除してしまう。
+          if (!snap.metadata.hasPendingWrites) {
+            lastSavedRef.current = {
+              ...next,
+              colWidths: Array.isArray(data.colWidths) && data.colWidths.length ? data.colWidths : colWidths,
+            }
+          }
           try { localStorage.setItem(`sheet:${currentUser.uid}:${currentSheetId}`, JSON.stringify(next)) } catch {}
         }
       } catch {}
@@ -975,6 +1048,89 @@ const Spreadsheet: React.FC = () => {
       persistSheet(next)
       return next
     })
+  }
+
+  /**
+   * シートを閲覧専用リンクとして公開する。
+   *
+   * 元データ（users/{uid}/sheets/*）は本人しか読めないので、
+   * 公開用に「その時点の写し」を sheetShares に置く。相手に Excel も
+   * アカウントも要らず、こちらがファイルを送る必要もない。
+   * 数式ではなく計算結果を書き出すので、計算式は相手に見えない。
+   */
+  const publishSheet = async () => {
+    if (!currentUser) { alert('共有するにはログインが必要です。'); return }
+    if (!confirm('このシートを閲覧専用リンクとして公開します。\nリンクを知っている人は誰でも内容を見られます。よろしいですか？')) return
+    setSharing(true)
+    try {
+      // 数式は結果に置き換えて渡す（相手の環境では再計算できないため）
+      const cells: Record<string, string> = {}
+      for (let r = 0; r < sheet.rows; r++) {
+        for (let c = 0; c < sheet.cols; c++) {
+          const key = toCellKey(r, c)
+          const raw = sheet.cells[key]
+          if (!raw) continue
+          const shown = raw.startsWith('=') ? evaluateRaw(raw, new Set()) : raw
+          const text = typeof shown === 'number' ? formatCellNumber(shown, sheet.formats?.[key]) : String(shown)
+          if (text !== '') cells[key] = text
+        }
+      }
+
+      // 既に公開済みなら同じコードを使い回して上書きする（リンクを配り直さずに済む）
+      const code = shareCode || (await generateSheetShareCode())
+      await setDoc(doc(db, 'sheetShares', code), {
+        owner: currentUser.uid,
+        sheetId: currentSheetId,
+        name: sheet.name,
+        rows: sheet.rows,
+        cols: sheet.cols,
+        cells,
+        formats: sheet.formats || {},
+        merges: sheet.merges || [],
+        condRules: sheet.condRules || [],
+        colWidths,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      })
+      setShareCode(code)
+      try { localStorage.setItem(`sheetShare:${currentUser.uid}:${currentSheetId}`, code) } catch {}
+      const url = `${window.location.origin}/sheet/${code}/`
+      try { await navigator.clipboard.writeText(url) } catch {}
+      alert(`公開しました。リンクをコピーしました。\n\n${url}`)
+    } catch (e) {
+      console.error('シートの公開に失敗しました', e)
+      alert('公開できませんでした。時間をおいて再度お試しください。')
+    } finally {
+      setSharing(false)
+    }
+  }
+
+  /** 未使用の共有コードを作る。衝突したまま書くと他人の公開を上書きしかねない */
+  const generateSheetShareCode = async (): Promise<string> => {
+    const chars = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ'
+    for (let attempt = 0; attempt < 5; attempt++) {
+      const bytes = new Uint8Array(10)
+      crypto.getRandomValues(bytes)
+      let code = ''
+      for (let i = 0; i < 10; i++) code += chars[bytes[i] % chars.length]
+      const existing = await getDoc(doc(db, 'sheetShares', code))
+      if (!existing.exists()) return code
+    }
+    throw new Error('共有コードの生成に失敗しました')
+  }
+
+  /** 公開を取り消す */
+  const unpublishSheet = async () => {
+    if (!currentUser || !shareCode) return
+    if (!confirm('公開を取り消します。配ったリンクは開けなくなります。よろしいですか？')) return
+    try {
+      await deleteDoc(doc(db, 'sheetShares', shareCode))
+      setShareCode(null)
+      try { localStorage.removeItem(`sheetShare:${currentUser.uid}:${currentSheetId}`) } catch {}
+    } catch (e) {
+      console.error('公開の取り消しに失敗しました', e)
+      alert('取り消せませんでした。')
+    }
   }
 
   /** 選択範囲の書式をすべて消す */
@@ -2002,6 +2158,24 @@ const Spreadsheet: React.FC = () => {
             }}
           />
           <button type="button" className="px-2 py-1 text-xs rounded border bg-white hover:bg-gray-50" onClick={() => window.print()}>印刷</button>
+          <button
+            type="button"
+            disabled={sharing}
+            className="px-2 py-1 text-xs rounded border bg-white hover:bg-gray-50 disabled:opacity-50"
+            title="閲覧専用リンクを作る。相手にアカウントもExcelも要りません"
+            onClick={publishSheet}
+          >{sharing ? '公開中...' : shareCode ? '公開を更新' : '共有リンク'}</button>
+          {shareCode && (
+            <>
+              <a
+                href={`/sheet/${shareCode}/`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-2 py-1 text-xs rounded border bg-white hover:bg-gray-50 text-blue-600"
+              >公開ページを開く</a>
+              <button type="button" className="px-2 py-1 text-xs rounded border bg-white hover:bg-gray-50 text-red-600" onClick={unpublishSheet}>公開停止</button>
+            </>
+          )}
         </div>
       </div>
 

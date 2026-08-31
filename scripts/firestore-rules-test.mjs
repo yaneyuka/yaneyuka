@@ -204,6 +204,44 @@ await check('未ログイン: 締切後に回答を送信  ★今回の修正対
 await check('未ログイン: 締切なしのスケジュールには回答できる（回帰確認）', 'allow', () =>
   setDoc(doc(db, 'schedules', SCHED, 'responses', 'r3'), { participantId: 'p1', optionId: 'o2', value: 'ng' }));
 
+// ===== 表計算シートの閲覧専用公開 =====
+console.log('\n--- 表計算シートの共有 ---');
+const uidSheet = await as('sheetowner@example.com');
+await check('所有者: シートを公開', 'allow', () =>
+  setDoc(doc(db, 'sheetShares', 'SHEETCODE1'), {
+    owner: uidSheet, sheetId: 'default', name: '見積書', rows: 20, cols: 10,
+    cells: { R0C0: '合計' }, formats: {}, merges: [], condRules: [], colWidths: [96],
+    createdAt: new Date(), updatedAt: new Date(),
+  }));
+await check('所有者: 想定外フィールドを混入', 'deny', () =>
+  setDoc(doc(db, 'sheetShares', 'SHEETCODE2'), {
+    owner: uidSheet, sheetId: 'default', name: 'x', rows: 1, cols: 1,
+    cells: {}, formats: {}, merges: [], condRules: [], colWidths: [],
+    createdAt: new Date(), updatedAt: new Date(), payload: 'x'.repeat(1000),
+  }));
+
+const uidOther = await as('sheetstranger@example.com');
+await check('第三者: 他人名義で公開', 'deny', () =>
+  setDoc(doc(db, 'sheetShares', 'SHEETCODE3'), {
+    owner: uidSheet, sheetId: 'x', name: 'なりすまし', rows: 1, cols: 1,
+    cells: {}, formats: {}, merges: [], condRules: [], colWidths: [],
+    createdAt: new Date(), updatedAt: new Date(),
+  }));
+await check('第三者: 公開済みシートを書き換え', 'deny', () =>
+  setDoc(doc(db, 'sheetShares', 'SHEETCODE1'), {
+    owner: uidOther, sheetId: 'x', name: '改竄', rows: 1, cols: 1,
+    cells: {}, formats: {}, merges: [], condRules: [], colWidths: [],
+    createdAt: new Date(), updatedAt: new Date(),
+  }));
+await check('第三者: 公開済みシートを削除', 'deny', () =>
+  deleteDoc(doc(db, 'sheetShares', 'SHEETCODE1')));
+
+await signOut(auth);
+await check('未ログイン: コードを知って閲覧（正規の利用）', 'allow', () =>
+  getDoc(doc(db, 'sheetShares', 'SHEETCODE1')));
+await check('未ログイン: 公開シートを一覧取得', 'deny', () =>
+  getDocs(collection(db, 'sheetShares')));
+
 // ===== ダウンロード計測ガード（サーバー専用コレクション） =====
 console.log('\n--- ダウンロード計測ガード ---');
 await check('未ログイン: 計測マーカーを読む', 'deny', () =>
