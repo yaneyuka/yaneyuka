@@ -11,6 +11,8 @@
  * ここでは構文木を組んでから評価し、解釈できないものは #ERROR 系の値を返す。
  */
 
+import * as K from './kenchikuFormulas';
+
 export type CellId = { row: number; col: number };
 
 export class CellError {
@@ -967,6 +969,98 @@ class FormulaEngine {
       const months = argNum(args, 1, 0); if (isErr(months)) return months;
       if (!d) return new CellError(ERR.VALUE);
       return formatDate(new Date(d.getFullYear(), d.getMonth() + months, d.getDate()));
+    },
+
+    // ============================================ 建築計算（このツール独自）
+    //
+    // 設計ツール（design-tools/）と同じ式をセル関数として使えるようにしたもの。
+    // 数量拾いや見積の表の中で、別画面へ行かずに必要換気量や風圧を出せる。
+    // 実体は kenchikuFormulas.ts にあり、根拠の告示番号もそこに書いてある。
+    // 関数名は日本語で登録している（字句解析が非ASCIIの識別子を受けるため）。
+
+    // =換気量(床面積㎡, 天井高m, [換気回数=0.5]) 24時間換気の必要換気量 ㎥/h
+    '換気量': (args) => {
+      const area = argNum(args, 0); if (isErr(area)) return area;
+      const h = argNum(args, 1); if (isErr(h)) return h;
+      const ach = args.length > 2 ? argNum(args, 2, 0.5) : 0.5; if (isErr(ach)) return ach;
+      if (area <= 0 || h <= 0) return new CellError(ERR.NUM);
+      return K.ventilation24h(area, h, ach);
+    },
+
+    // =火気換気(排気設備, 燃料, 燃料消費量) 告示1826号 V=N×K×Q
+    //   排気設備: "フードなし" "フードⅠ" "フードⅡ" "煙突"、または定数Nの数値
+    //   燃料: "都市ガス" "LPガス" "灯油"、または理論廃ガス量Kの数値
+    '火気換気': (args) => {
+      const nRaw = arg1(args, 0);
+      const kRaw = arg1(args, 1);
+      const n = typeof nRaw === 'number' ? nRaw : K.EXHAUST_N[toText(nRaw).trim()];
+      const k = typeof kRaw === 'number' ? kRaw : K.FUEL_K[toText(kRaw).trim()];
+      if (n === undefined) return new CellError(ERR.VALUE);
+      if (k === undefined) return new CellError(ERR.VALUE);
+      const q = argNum(args, 2); if (isErr(q)) return q;
+      return K.ventilationFire(n, k, q);
+    },
+
+    // =居室換気(人数, [一人あたり=30]) ㎥/h
+    '居室換気': (args) => {
+      const p = argNum(args, 0); if (isErr(p)) return p;
+      const per = args.length > 1 ? argNum(args, 1, 30) : 30; if (isErr(per)) return per;
+      return K.ventilationOccupancy(p, per);
+    },
+
+    // =風圧(粗度区分1〜4, 建物高さm, 基準風速m/s, [ガスト影響係数]) N/m²
+    //   Gf を省くと簡略計算（告示の設計用風圧力より小さく出る）
+    '風圧': (args) => {
+      const kubun = argNum(args, 0); if (isErr(kubun)) return kubun;
+      const h = argNum(args, 1); if (isErr(h)) return h;
+      const v0 = argNum(args, 2); if (isErr(v0)) return v0;
+      const gf = args.length > 3 ? argNum(args, 3, 1) : 1; if (isErr(gf)) return gf;
+      const q = K.windVelocityPressure(kubun, h, v0, gf);
+      return q === null ? new CellError(ERR.NUM) : q;
+    },
+
+    // =Er(粗度区分1〜4, 建物高さm) 風速の高さ方向分布係数
+    'ER': (args) => {
+      const kubun = argNum(args, 0); if (isErr(kubun)) return kubun;
+      const h = argNum(args, 1); if (isErr(h)) return h;
+      const er = K.roughnessEr(kubun, h);
+      return er === null ? new CellError(ERR.NUM) : er;
+    },
+
+    // =雨水流量(屋根面積㎡, [降雨強度mm/h=120], [流出係数=1]) L/min
+    '雨水流量': (args) => {
+      const area = argNum(args, 0); if (isErr(area)) return area;
+      const i = args.length > 1 ? argNum(args, 1, 120) : 120; if (isErr(i)) return i;
+      const c = args.length > 2 ? argNum(args, 2, 1) : 1; if (isErr(c)) return c;
+      if (area < 0) return new CellError(ERR.NUM);
+      return K.rainFlow(area, i, c);
+    },
+
+    // =管流量(呼び径mm, 勾配, [粗度係数=0.010]) L/min マニング式
+    //   勾配は 1/100 なら 0.01
+    '管流量': (args) => {
+      const d = argNum(args, 0); if (isErr(d)) return d;
+      const slope = argNum(args, 1); if (isErr(slope)) return slope;
+      const n = args.length > 2 ? argNum(args, 2, 0.010) : 0.010; if (isErr(n)) return n;
+      const q = K.manningCapacity(d, slope, n);
+      return q === null ? new CellError(ERR.NUM) : q;
+    },
+
+    // ---- 面積・寸法の換算（現場でよく混在する単位）
+    '坪': (args) => { const v = argNum(args, 0); return isErr(v) ? v : K.m2ToTsubo(v); },
+    '平米': (args) => { const v = argNum(args, 0); return isErr(v) ? v : K.tsuboToM2(v); },
+    '帖': (args) => { const v = argNum(args, 0); return isErr(v) ? v : K.m2ToJo(v); },
+    '間': (args) => { const v = argNum(args, 0); return isErr(v) ? v : K.mmToKen(v); },
+    'ミリ': (args) => { const v = argNum(args, 0); return isErr(v) ? v : K.kenToMm(v); },
+
+    // ---- 勾配（屋根）
+    // =勾配角度(寸) 4寸勾配 → 21.8度
+    '勾配角度': (args) => { const v = argNum(args, 0); return isErr(v) ? v : K.sunToDegree(v); },
+    // =勾配長さ(水平距離, 寸) 屋根の流れ長さ
+    '勾配長さ': (args) => {
+      const h = argNum(args, 0); if (isErr(h)) return h;
+      const sun = argNum(args, 1); if (isErr(sun)) return sun;
+      return K.slopeLength(h, sun);
     },
   };
 
