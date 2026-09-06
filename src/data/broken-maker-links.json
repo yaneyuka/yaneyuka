@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-08-30",
+  "generatedAt": "2026-09-06",
   "checked": 2061,
   "summary": {
-    "ok": 1564,
+    "ok": 1578,
     "broken": 331,
-    "unreachable": 160,
+    "unreachable": 146,
     "error": 6
   },
   "broken": [
@@ -492,6 +492,11 @@
       "url": "https://www.daikin.co.jp/products/",
       "status": 404,
       "fallback": "https://www.daikin.co.jp"
+    },
+    {
+      "url": "https://www.daikure.co.jp/network/",
+      "status": 404,
+      "fallback": "https://www.daikure.co.jp"
     },
     {
       "url": "https://www.danto.co.jp/company/base/",
@@ -1319,11 +1324,6 @@
       "fallback": "https://www.sign-japan.com"
     },
     {
-      "url": "https://www.sincol.co.jp/contact.html",
-      "status": 404,
-      "fallback": "https://www.sincol.co.jp"
-    },
-    {
       "url": "https://www.sincol.co.jp/digicata/index.html",
       "status": 404,
       "fallback": "https://www.sincol.co.jp"
@@ -1666,28 +1666,12 @@
   ],
   "unreachable": [
     {
-      "url": "https://08tent.co.jp/company/#profile",
-      "reason": "UND_ERR_CONNECT_TIMEOUT"
-    },
-    {
-      "url": "https://08tent.co.jp/contact_us/",
-      "reason": "UND_ERR_CONNECT_TIMEOUT"
-    },
-    {
-      "url": "https://08tent.co.jp/products/hiyoke/awning/",
-      "reason": "UND_ERR_CONNECT_TIMEOUT"
-    },
-    {
       "url": "https://st.sankyo-tateyama.co.jp/inquiry/business/",
       "reason": "ENOTFOUND"
     },
     {
       "url": "https://st.sankyo-tateyama.co.jp/service/catalog/",
       "reason": "ENOTFOUND"
-    },
-    {
-      "url": "https://webcatalog.koizumi-lt.co.jp/iportal/CatalogViewInterfaceStartUpAction.do?method=startUp&mode=PAGE&volumeID=DIGICATA&catalogId=8642230000&pageGroupId=1&catalogCategoryId=",
-      "reason": "EAI_AGAIN"
     },
     {
       "url": "https://www.3mcompany.jp/3M/ja_JP/architectural-design-jp/",
@@ -1838,18 +1822,6 @@
       "reason": "ENOTFOUND"
     },
     {
-      "url": "https://www.ic-ryowa.com/catalog/",
-      "reason": "UND_ERR_SOCKET"
-    },
-    {
-      "url": "https://www.ic-ryowa.com/office/",
-      "reason": "UND_ERR_SOCKET"
-    },
-    {
-      "url": "https://www.ic-ryowa.com/products/",
-      "reason": "UND_ERR_SOCKET"
-    },
-    {
       "url": "https://www.ig-kogyou.co.jp/company/locations/",
       "reason": "ENOTFOUND"
     },
@@ -1916,34 +1888,6 @@
     {
       "url": "https://www.kenchiku-shizai.co.jp/pigeon/",
       "reason": "ENOTFOUND"
-    },
-    {
-      "url": "https://www.koizumi-lt.co.jp/catalog/",
-      "reason": "UND_ERR_CONNECT_TIMEOUT"
-    },
-    {
-      "url": "https://www.koizumi-lt.co.jp/company/",
-      "reason": "EAI_AGAIN"
-    },
-    {
-      "url": "https://www.koizumi-lt.co.jp/company/office.html",
-      "reason": "EAI_AGAIN"
-    },
-    {
-      "url": "https://www.koizumi-lt.co.jp/contact/",
-      "reason": "EAI_AGAIN"
-    },
-    {
-      "url": "https://www.koizumi-lt.co.jp/l-design/",
-      "reason": "EAI_AGAIN"
-    },
-    {
-      "url": "https://www.koizumi-lt.co.jp/product/",
-      "reason": "EAI_AGAIN"
-    },
-    {
-      "url": "https://www.koizumi-lt.co.jp/support/",
-      "reason": "EAI_AGAIN"
     },
     {
       "url": "https://www.kyowa-kb.co.jp/branch/",
